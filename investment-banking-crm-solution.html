@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
- <meta name="description" content="Discover how our investment banking CRM solution streamlines deal flow, deepens client relationships, and empowers data-driven decisions for success in a competitive market.">
- <meta name="keywords" content="Investment Banking CRM, Deal Management, Client Relationship Management, Financial Software, CRM Solution, M&A CRM, Capital Markets CRM">
+    <meta name="description" content="Discover how our investment banking CRM solution streamlines deal flow, deepens client relationships, and empowers data-driven decisions for success in a competitive market.">
+    <meta name="keywords" content="Investment Banking CRM, Deal Management, Client Relationship Management, Financial Software, CRM Solution, M&A CRM, Capital Markets CRM">
     <title>Investment Banking CRM: Driving Deal Success</title>
- <link rel="canonical" href="https://yourwebsite.com/investment-banking-crm-solution.html">
+    <link rel="canonical" href="https://yourwebsite.com/investment-banking-crm-solution.html">
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -21,26 +21,19 @@
             position: relative;
             width: 100%;
             max-width: 600px;
- margin-left: auto; /* Center on small screens */
+            margin-left: auto;
             margin-right: auto;
- height: 300px; /* Default height for mobile */
- max-height: 400px; /* Max height */
+            height: 300px;
+            max-height: 400px;
         }
-
-        /* Adjust chart container height for medium and larger screens */
         @media (min-width: 768px) {
-            .chart-container {
- height: 350px;
-            }
-        }
- @media (min-width: 1024px) {
             .chart-container {
                 height: 350px;
             }
         }
         .flow-arrow {
-            font-size: 1.5rem; /* Base size */
-            line-height: 1; /* Ensure vertical alignment */
+            font-size: 1.5rem;
+            line-height: 1;
             color: #85BDE9;
         }
         .crm-pillar-box {
@@ -55,110 +48,85 @@
             height: 20px;
             margin: 0 auto;
         }
-
-        /* Responsive styling for technical boxes */
         .technical-box {
- @apply p-2 border rounded-md text-sm;
- min-width: 100px; /* Ensure minimum width */
+            @apply p-2 border rounded-md text-sm;
+            min-width: 100px;
         }
-        /* Adjust layout for smaller screens */
-/* Already handled by Tailwind's default stacking on small screens */
-
-        /* Styles for mobile navigation overlay */
         .mobile-nav-overlay {
- /* Overlay to close menu when clicking outside */
- @apply fixed inset-0 bg-black bg-opacity-70 z-40 hidden; /* Use apply directive */
             position: fixed;
             top: 0;
             left: 0;
- right: 0;
+            right: 0;
             bottom: 0;
             background-color: rgba(0, 0, 0, 0.7);
             z-index: 50;
             display: none;
         }
         .mobile-nav-menu {
- /* The off-canvas menu panel */
             position: fixed;
-            top: 64px; /* Height of the header */
- left: 0;
- width: 75%;
-            height: calc(100% - 64px); /* Full height minus header */
+            top: 0;
+            left: 0;
+            width: 75%;
+            max-width: 300px;
+            height: 100%;
             background-color: white;
             z-index: 60;
             transform: translateX(-100%);
             transition: transform 0.3s ease-in-out;
- box-shadow: 2px 0 5px rgba(0,0,0,0.2);
-            padding: 1rem;
-            overflow-y: auto; /* Enable scrolling for long menus */
- @apply z-50 bg-white; /* Use apply directive */
+            box-shadow: 2px 0 5px rgba(0,0,0,0.2);
+            padding: 1.5rem 1rem;
+            overflow-y: auto;
         }
         .mobile-nav-menu.is-open {
             transform: translateX(0);
         }
-        .mobile-menu a {
-            padding: 10px 20px;
- border-bottom: 1px solid #e2e8f0; /* Separator */
-            text-align: left; /* Align text to the left */
-        }
-        .mobile-menu a:last-child { border-bottom: none; }
-
     </style>
 </head>
-<body class="text-gray-700 pt-16"> <!-- Add padding-top to body -->
+<body class="text-gray-700 pt-16">
 
-    <header class="bg-white sticky top-0 z-50 shadow-md h-16 flex items-center"> <!-- Increased header height -->
-        <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full w-full flex items-center justify-between relative">
-            <div class="flex items-center justify-between h-full w-full">
-                <div class="flex items-center flex-grow"> <!-- Added flex-grow -->
- <h1 class="text-lg font-bold text-[#00449E]">Investment Banking CRM</h1>
-                </div>
-                <!-- Mobile menu button -->
-                <button id="mobile-menu-button" class="sm:hidden focus:outline-none p-2 rounded-md text-gray-600 hover:bg-[#85BDE9] hover:text-white" aria-label="Toggle mobile menu">
-                    <svg id="hamburger-icon" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-                    </svg>
- <svg id="close-icon" class="h-6 w-6 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
- <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
- </svg>
-
-                </button>
-
-                <!-- Desktop Navigation Links -->
-                </button>
-                <div class="hidden sm:block">
-                    <div class="ml-10 flex items-baseline space-x-2">
-                        <a href="#imperative" class="text-gray-600 hover:bg-[#85BDE9] hover:text-white px-2 py-1 rounded-md text-sm font-medium">Imperative</a>
-                        <a href="#pillars" class="text-gray-600 hover:bg-[#85BDE9] hover:text-white px-2 py-1 rounded-md text-sm font-medium">Pillars</a>
-                        <a href="#client-mgmt" class="text-gray-600 hover:bg-[#85BDE9] hover:text-white px-2 py-1 rounded-md text-sm font-medium">Client Mgmt</a>
-                        <a href="#deal-pipeline" class="text-gray-600 hover:bg-[#85BDE9] hover:text-white px-2 py-1 rounded-md text-sm font-medium">Deal Pipeline</a>
-                        <a href="#collaboration" class="text-gray-600 hover:bg-[#85BDE9] hover:text-white px-2 py-1 rounded-md text-sm font-medium">Collaboration</a>
-                        <a href="#insights" class="text-gray-600 hover:bg-[#85BDE9] hover:text-white px-2 py-1 rounded-md text-sm font-medium">Insights</a>
-                        <a href="#security" class="text-gray-600 hover:bg-[#85BDE9] hover:text-white px-2 py-1 rounded-md text-sm font-medium">Security</a>
-                        <a href="#roi" class="text-gray-600 hover:bg-[#85BDE9] hover:text-white px-2 py-1 rounded-md text-sm font-medium">ROI</a>
- <a href="/index.html" class="text-gray-600 hover:bg-[#85BDE9] hover:text-white px-2 py-1 rounded-md text-sm font-medium">Home</a>
-                    </div>
+    <header class="bg-white fixed top-0 left-0 right-0 z-40 shadow-md h-16 flex items-center">
+        <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full w-full flex items-center justify-between">
+            <div class="flex items-center flex-shrink-0">
+                <h1 class="text-lg font-bold text-[#00449E]">Investment Banking CRM</h1>
+            </div>
+            <div class="hidden sm:block">
+                <div class="ml-10 flex items-baseline space-x-2">
+                    <a href="#imperative" class="text-gray-600 hover:bg-[#85BDE9] hover:text-white px-2 py-1 rounded-md text-sm font-medium">Imperative</a>
+                    <a href="#pillars" class="text-gray-600 hover:bg-[#85BDE9] hover:text-white px-2 py-1 rounded-md text-sm font-medium">Pillars</a>
+                    <a href="#client-mgmt" class="text-gray-600 hover:bg-[#85BDE9] hover:text-white px-2 py-1 rounded-md text-sm font-medium">Client Mgmt</a>
+                    <a href="#deal-pipeline" class="text-gray-600 hover:bg-[#85BDE9] hover:text-white px-2 py-1 rounded-md text-sm font-medium">Deal Pipeline</a>
+                    <a href="#collaboration" class="text-gray-600 hover:bg-[#85BDE9] hover:text-white px-2 py-1 rounded-md text-sm font-medium">Collaboration</a>
+                    <a href="#insights" class="text-gray-600 hover:bg-[#85BDE9] hover:text-white px-2 py-1 rounded-md text-sm font-medium">Insights</a>
+                    <a href="#security" class="text-gray-600 hover:bg-[#85BDE9] hover:text-white px-2 py-1 rounded-md text-sm font-medium">Security</a>
+                    <a href="#roi" class="text-gray-600 hover:bg-[#85BDE9] hover:text-white px-2 py-1 rounded-md text-sm font-medium">ROI</a>
                 </div>
             </div>
+            <button id="mobile-menu-button" class="sm:hidden p-2 rounded-md text-gray-600 hover:bg-[#85BDE9] hover:text-white focus:outline-none" aria-label="Toggle mobile menu">
+                <svg id="hamburger-icon" class="h-6 w-6 block" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                </svg>
+                <svg id="close-icon" class="h-6 w-6 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                </svg>
+            </button>
         </nav>
     </header>
 
-    <!-- Mobile Navigation Menu -->
     <div id="mobile-nav-overlay" class="mobile-nav-overlay"></div>
     <div id="mobile-nav-menu" class="mobile-nav-menu">
-        <div class="flex flex-col space-y-1 mobile-menu-content"> <!-- Added mobile-menu-content class -->
- <a href="#imperative" class="text-gray-600 hover:bg-[#85BDE9] hover:text-white mobile-menu-link">Imperative</a>
- <a href="#pillars" class="text-gray-600 hover:bg-[#85BDE9] hover:text-white mobile-menu-link">Pillars</a> <!-- Fix duplicated nav -->
- <a href="#client-mgmt" class="text-gray-600 hover:bg-[#85BDE9] hover:text-white mobile-menu-link">Client Mgmt</a>
- <a href="#deal-pipeline" class="text-gray-600 hover:bg-[#85BDE9] hover:text-white mobile-menu-link">Deal Pipeline</a>
- <a href="#collaboration" class="text-gray-600 hover:bg-[#85BDE9] hover:text-white mobile-menu-link">Collaboration</a>
- <a href="#insights" class="text-gray-600 hover:bg-[#85BDE9] hover:text-white mobile-menu-link">Insights</a>                        <a href="#security" class="text-gray-600 hover:bg-[#85BDE9] hover:text-white mobile-menu-link">Security</a>                        <a href="#roi" class="text-gray-600 hover:bg-[#85BDE9] hover:text-white mobile-menu-link">ROI</a>
- <a href="/index.html" class="text-gray-600 hover:bg-[#85BDE9] hover:text-white mobile-menu-link">Home</a>
+        <div class="flex flex-col space-y-2">
+            <a href="#imperative" class="text-gray-800 hover:bg-[#85BDE9] hover:text-white block px-3 py-2 rounded-md text-base font-medium">Imperative</a>
+            <a href="#pillars" class="text-gray-800 hover:bg-[#85BDE9] hover:text-white block px-3 py-2 rounded-md text-base font-medium">Pillars</a>
+            <a href="#client-mgmt" class="text-gray-800 hover:bg-[#85BDE9] hover:text-white block px-3 py-2 rounded-md text-base font-medium">Client Mgmt</a>
+            <a href="#deal-pipeline" class="text-gray-800 hover:bg-[#85BDE9] hover:text-white block px-3 py-2 rounded-md text-base font-medium">Deal Pipeline</a>
+            <a href="#collaboration" class="text-gray-800 hover:bg-[#85BDE9] hover:text-white block px-3 py-2 rounded-md text-base font-medium">Collaboration</a>
+            <a href="#insights" class="text-gray-800 hover:bg-[#85BDE9] hover:text-white block px-3 py-2 rounded-md text-base font-medium">Insights</a>
+            <a href="#security" class="text-gray-800 hover:bg-[#85BDE9] hover:text-white block px-3 py-2 rounded-md text-base font-medium">Security</a>
+            <a href="#roi" class="text-gray-800 hover:bg-[#85BDE9] hover:text-white block px-3 py-2 rounded-md text-base font-medium">ROI</a>
         </div>
     </div>
 
     <main class="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
-
         <section id="imperative" class="text-center mb-20">
             <h2 class="text-4xl font-extrabold text-[#00449E] sm:text-5xl md:text-6xl">Revolutionizing Investment Banking: CRM for Deal Success</h2>
             <p class="mt-4 max-w-2xl mx-auto text-xl text-gray-500">In the fast-paced world of investment banking, an agile CRM is not just an advantage—it's a necessity. Our new CRM solution is engineered to streamline deal flow, deepen client relationships, and empower data-driven decisions.</p>
@@ -168,18 +136,15 @@
                 <div class="flex flex-col items-center justify-center space-y-4">
                     <div class="flex space-x-6">
                         <div class="technical-box border-dashed border-red-400 text-red-700 w-32">Client Data</div>
- <div class="technical-box border-dashed border-red-400 text-red-700 w-32">Deal Records</div>
+                        <div class="technical-box border-dashed border-red-400 text-red-700 w-32">Deal Records</div>
                     </div>
                     <div class="flow-arrow text-red-500 rotate-90">⤫</div>
- <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 space-x-0 sm:space-x-6">
+                    <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 space-x-0 sm:space-x-6">
                         <div class="technical-box border-dashed border-red-400 text-red-700 w-32">Communication Logs</div>
                         <div class="technical-box border-dashed border-red-400 text-red-700 w-32">Team Notes</div>
                     </div>
                     <p class="text-red-500 font-semibold mt-4">DISCONNECTED SILOS</p>
- <p class="text-xs text-gray-500 mt-2">(Diagram illustrates data silos, not a functional flow)</p>
- <style>
- .technical-box { @apply p-3 border rounded-md text-sm text-center min-w-[120px]; } /* Apply min-width here */
- </style>
+                    <p class="text-xs text-gray-500 mt-2">(Diagram illustrates data silos, not a functional flow)</p>
                 </div>
             </div>
         </section>
@@ -194,24 +159,24 @@
                     <span class="text-5xl mb-3">🤝</span>
                     <h3 class="text-xl font-bold text-[#005CB9]">Client 360 View</h3>
                     <p class="mt-2 text-gray-600 text-sm">Centralized, comprehensive client profiles with all historical interactions and relationships.</p>
- </div>
+                </div>
                 <div class="crm-pillar-box">
                     <span class="text-5xl mb-3">💲</span>
                     <h3 class="text-xl font-bold text-[#005CB9]">Dynamic Deal Flow</h3>
                     <p class="mt-2 text-gray-600 text-sm">Intuitive pipeline management from origination to successful closure.</p>
- </div>
+                </div>
                 <div class="crm-pillar-box">
                     <span class="text-5xl mb-3">👥</span>
                     <h3 class="text-xl font-bold text-[#005CB9]">Seamless Collaboration</h3>
                     <p class="mt-2 text-gray-600 text-sm">Tools for efficient internal team and external contact coordination on projects.</p>
- </div>
+                </div>
                 <div class="crm-pillar-box">
                     <span class="text-5xl mb-3">📊</span>
                     <h3 class="text-xl font-bold text-[#005CB9]">Actionable Analytics</h3>
                     <p class="mt-2 text-gray-600 text-sm">Real-time insights and predictive forecasting for better strategic decisions.</p>
                 </div>
             </div>
- </section>
+        </section>
 
         <div class="space-y-20">
             <section id="client-mgmt">
@@ -219,19 +184,21 @@
                     <h3 class="text-2xl font-bold text-[#00449E] mb-4">Client Engagement & Management: The Client 360</h3>
                     <p class="text-gray-600 mb-8">Understand your clients better with holistic profiles, tracking every interaction and segmenting them for targeted engagement.</p>
                     <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
- <div class="flex flex-col items-center">
+                        <div class="flex flex-col items-center">
                             <h4 class="font-semibold text-lg text-[#005CB9] mb-2">Client Portfolio by Industry Segment</h4>
                             <p class="text-sm text-gray-500 mb-4">A clear view of our client distribution across key industries allows for strategic resource allocation and specialized outreach.</p>
                             <div class="chart-container h-64 md:h-80">
- <canvas id="industryDistributionChart"></canvas> <!-- Ensure canvas has height for chart.js -->
+                                <canvas id="industryDistributionChart"></canvas>
                             </div>
                         </div>
                         <div>
- <div class="flex flex-col items-center">
-                            <p class="text-sm text-gray-500 mb-4">Tracking client meetings and significant interactions over time helps us assess relationship health and identify periods of heightened activity.</p>
-                            <div class="chart-container h-64 md:h-80">
-                                <canvas id="engagementTrendChart"></canvas>
- </div> <!-- Ensure canvas has height for chart.js -->
+                            <div class="flex flex-col items-center">
+                                <h4 class="font-semibold text-lg text-[#005CB9] mb-2">Client Engagement Trend</h4>
+                                <p class="text-sm text-gray-500 mb-4">Tracking client meetings and significant interactions over time helps us assess relationship health and identify periods of heightened activity.</p>
+                                <div class="chart-container h-64 md:h-80">
+                                    <canvas id="engagementTrendChart"></canvas>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -242,7 +209,7 @@
                     <h3 class="text-2xl font-bold text-[#00449E] mb-4">Dynamic Deal Pipeline Management</h3>
                     <p class="text-gray-600 mb-8">Gain real-time visibility into every stage of the deal lifecycle, from initial prospecting to successful closure.</p>
                     <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
- <div class="flex flex-col items-center">
+                        <div class="flex flex-col items-center">
                             <h4 class="font-semibold text-lg text-[#005CB9] mb-2">Deal Stage Conversion Funnel</h4>
                             <p class="text-sm text-gray-500 mb-4">Visualizing conversion rates between key deal stages helps identify bottlenecks and areas for process optimization to accelerate deal closure.</p>
                             <div class="flex flex-col items-center justify-center space-y-2 py-4 px-2 bg-gray-100 rounded-lg shadow max-w-md mx-auto">
@@ -266,11 +233,13 @@
                             </div>
                         </div>
                         <div>
- <div class="flex flex-col items-center">
-                            <p class="text-sm text-gray-500 mb-4">Understanding the distribution of active deals across different transaction types helps in resource allocation and specialization within the banking team.</p>
-                            <div class="chart-container h-64 md:h-80">
-                                <canvas id="dealTypeChart"></canvas> <!-- Ensure canvas has height for chart.js -->
- </div>
+                            <div class="flex flex-col items-center">
+                                <h4 class="font-semibold text-lg text-[#005CB9] mb-2">Active Deals by Type</h4>
+                                <p class="text-sm text-gray-500 mb-4">Understanding the distribution of active deals across different transaction types helps in resource allocation and specialization within the banking team.</p>
+                                <div class="chart-container h-64 md:h-80">
+                                    <canvas id="dealTypeChart"></canvas>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -281,27 +250,29 @@
                     <h3 class="text-2xl font-bold text-[#00449E] mb-4">Empowering Team Collaboration & Contact Networks</h3>
                     <p class="text-gray-600 mb-8">Facilitate seamless interaction among internal teams and external stakeholders, crucial for complex deal execution.</p>
                     <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
- <div class="flex flex-col items-center">
+                        <div class="flex flex-col items-center">
                             <h4 class="font-semibold text-lg text-[#005CB9] mb-2">Interaction Breakdown: Internal vs. External</h4>
                             <p class="text-sm text-gray-500 mb-4">This chart shows the proportion of interactions with internal colleagues versus external clients and partners, highlighting the balance of collaborative effort.</p>
                             <div class="chart-container h-64 md:h-80">
- <canvas id="interactionTypeChart"></canvas> <!-- Ensure canvas has height for chart.js -->
+                                <canvas id="interactionTypeChart"></canvas>
                             </div>
                         </div>
                         <div>
- <div class="flex flex-col items-center">
-                            <p class="text-sm text-gray-500 mb-4">The CRM provides structured workflows for key processes like deal team formation, document review, and internal approvals, ensuring efficiency and compliance.</p>
-                             <div class="flex flex-col items-center justify-center space-y-2 py-4 px-2 bg-gray-100 rounded-lg shadow max-w-md mx-auto">
-                                 <div class="technical-box bg-[#005CB9] text-white">Deal Origination</div>
-                                 <div class="flow-arrow text-2xl">⬇️</div>
-                                 <div class="technical-box">Team Formation (CRM auto-assign)</div>
-                                 <div class="flow-arrow text-2xl">⬇️</div>
-                                 <div class="technical-box">Document Sharing & Co-editing</div>
-                                 <div class="flow-arrow text-2xl">⬇️</div>
-                                 <div class="technical-box bg-[#0076D4] text-white">Internal Approval Workflow</div>
-                                 <div class="flow-arrow text-2xl">⬇️</div>
-                                 <div class="technical-box">Client Pitch Preparation</div>
-                             </div>
+                            <div class="flex flex-col items-center">
+                                <h4 class="font-semibold text-lg text-[#005CB9] mb-2">Streamlined Approval Workflow</h4>
+                                <p class="text-sm text-gray-500 mb-4">The CRM provides structured workflows for key processes like deal team formation, document review, and internal approvals, ensuring efficiency and compliance.</p>
+                                <div class="flex flex-col items-center justify-center space-y-2 py-4 px-2 bg-gray-100 rounded-lg shadow max-w-md mx-auto">
+                                    <div class="technical-box bg-[#005CB9] text-white">Deal Origination</div>
+                                    <div class="flow-arrow text-2xl">⬇️</div>
+                                    <div class="technical-box">Team Formation (CRM auto-assign)</div>
+                                    <div class="flow-arrow text-2xl">⬇️</div>
+                                    <div class="technical-box">Document Sharing & Co-editing</div>
+                                    <div class="flow-arrow text-2xl">⬇️</div>
+                                    <div class="technical-box bg-[#0076D4] text-white">Internal Approval Workflow</div>
+                                    <div class="flow-arrow text-2xl">⬇️</div>
+                                    <div class="technical-box">Client Pitch Preparation</div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -312,19 +283,21 @@
                     <h3 class="text-2xl font-bold text-[#00449E] mb-4">Data-Driven Insights & Forecasting</h3>
                     <p class="text-gray-600 mb-8">Leverage powerful analytics to track performance, identify trends, and make informed strategic decisions.</p>
                     <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
- <div class="flex flex-col items-center">
+                        <div class="flex flex-col items-center">
                             <h4 class="font-semibold text-lg text-[#005CB9] mb-2">Deal Closure Time vs. Value</h4>
                             <p class="text-sm text-gray-500 mb-4">This scatter plot helps identify potential correlations between the time taken to close a deal and its overall value, revealing efficiencies or bottlenecks in high-value deals.</p>
                             <div class="chart-container h-64 md:h-80">
- <canvas id="dealTimeValueScatter"></canvas> <!-- Ensure canvas has height for chart.js -->
+                                <canvas id="dealTimeValueScatter"></canvas>
                             </div>
                         </div>
                         <div>
- <div class="flex flex-col items-center">
-                            <p class="text-sm text-gray-500 mb-4">Forecasting future deal volume helps in strategic planning, resource allocation, and setting realistic revenue targets. The shaded area indicates the confidence interval.</p>
-                            <div class="chart-container h-64 md:h-80">
-                                <canvas id="projectedVolumeChart"></canvas>
- </div> <!-- Ensure canvas has height for chart.js -->
+                            <div class="flex flex-col items-center">
+                                <h4 class="font-semibold text-lg text-[#005CB9] mb-2">Projected Deal Volume</h4>
+                                <p class="text-sm text-gray-500 mb-4">Forecasting future deal volume helps in strategic planning, resource allocation, and setting realistic revenue targets. The shaded area indicates the confidence interval.</p>
+                                <div class="chart-container h-64 md:h-80">
+                                    <canvas id="projectedVolumeChart"></canvas>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -336,32 +309,32 @@
                     <p class="text-gray-600 mb-8">Built-in security measures and compliance adherence are paramount when handling sensitive client and deal information.</p>
                     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 text-center">
                         <div class="p-4 bg-gray-100 rounded-lg shadow-sm">
- <span class="text-4xl sm:text-5xl block mb-2">🔒</span>
+                            <span class="text-4xl sm:text-5xl block mb-2">🔒</span>
                             <h4 class="font-bold text-[#005CB9] text-lg">Data Encryption</h4>
                             <p class="text-sm text-gray-600">At-rest and in-transit encryption (AES-256, TLS 1.2+) for all sensitive data.</p>
                         </div>
                         <div class="p-4 bg-gray-100 rounded-lg shadow-sm">
- <span class="text-4xl sm:text-5xl block mb-2">🏛️</span>
+                            <span class="text-4xl sm:text-5xl block mb-2">🏛️</span>
                             <h4 class="font-bold text-[#005CB9] text-lg">Regulatory Compliance</h4>
                             <p class="text-sm text-gray-600">Adherence to GDPR, FINRA, AML, and other relevant financial regulations.</p>
                         </div>
                         <div class="p-4 bg-gray-100 rounded-lg shadow-sm">
- <span class="text-4xl sm:text-5xl block mb-2">🛡️</span>
+                            <span class="text-4xl sm:text-5xl block mb-2">🛡️</span>
                             <h4 class="font-bold text-[#005CB9] text-lg">Access Controls</h4>
                             <p class="text-sm text-gray-600">Role-based access control (RBAC) and multi-factor authentication (MFA).</p>
                         </div>
                         <div class="p-4 bg-gray-100 rounded-lg shadow-sm">
- <span class="text-4xl sm:text-5xl block mb-2">✍️</span>
+                            <span class="text-4xl sm:text-5xl block mb-2">✍️</span>
                             <h4 class="font-bold text-[#005CB9] text-lg">Audit Trails</h4>
                             <p class="text-sm text-gray-600">Comprehensive logging for all data access and modifications.</p>
                         </div>
                         <div class="p-4 bg-gray-100 rounded-lg shadow-sm">
- <span class="text-4xl sm:text-5xl block mb-2">🚨</span>
+                            <span class="text-4xl sm:text-5xl block mb-2">🚨</span>
                             <h4 class="font-bold text-[#005CB9] text-lg">Threat Detection</h4>
                             <p class="text-sm text-gray-600">Proactive monitoring and alerting for suspicious activities.</p>
                         </div>
                         <div class="p-4 bg-gray-100 rounded-lg shadow-sm">
- <span class="text-4xl sm:text-5xl block mb-2">🔄</span>
+                            <span class="text-4xl sm:text-5xl block mb-2">🔄</span>
                             <h4 class="font-bold text-[#005CB9] text-lg">Disaster Recovery</h4>
                             <p class="text-sm text-gray-600">Robust backup and recovery protocols to ensure business continuity.</p>
                         </div>
@@ -369,7 +342,7 @@
                 </div>
             </section>
             <section id="roi" class="bg-white rounded-lg shadow-lg p-8 md:p-12 text-center">
- <h3 class="text-2xl font-bold text-[#00449E] mb-4">The ROI of an Integrated Investment Banking CRM</h3>
+                <h3 class="text-2xl font-bold text-[#00449E] mb-4">The ROI of an Integrated Investment Banking CRM</h3>
                 <p class="mt-2 max-w-3xl mx-auto text-lg text-gray-500">Implementing this advanced CRM translates directly into significant business advantages and measurable returns on investment.</p>
                 <div class="mt-10 grid grid-cols-1 md:grid-cols-2 gap-8">
                     <div class="bg-gray-100 p-6 rounded-lg shadow-sm">
@@ -383,30 +356,29 @@
                         <p class="text-sm text-gray-500">Automated data entry, streamlined workflows, and centralized information.</p>
                     </div>
                     <div class="bg-gray-100 p-6 rounded-lg shadow-sm">
- <p class="text-6xl md:text-7xl font-black text-[#0076D4]">30%</p>
+                        <p class="text-6xl md:text-7xl font-black text-[#0076D4]">30%</p>
                         <p class="text-lg font-bold text-gray-600">Faster Deal Cycles</p>
                         <p class="text-sm text-gray-500">Better collaboration and real-time insights accelerate progression through stages.</p>
                     </div>
                     <div class="bg-gray-100 p-6 rounded-lg shadow-sm">
- <p class="text-6xl md:text-7xl font-black text-[#0076D4]">↑</p>
+                        <p class="text-6xl md:text-7xl font-black text-[#0076D4]">↑</p>
                         <p class="text-lg font-bold text-gray-600">Enhanced Client Satisfaction</p>
                         <p class="text-sm text-gray-500">Personalized engagement and more efficient service delivery.</p>
                     </div>
                 </div>
             </section>
         </div>
- </main>
+    </main>
 
     <footer class="bg-[#00449E] text-white mt-16">
         <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8 text-center text-sm">
             <p>&copy; 2025 Investment Banking Solutions. All Rights Reserved.</p>
-            <p class="mt-1 opacity-70">This infographic was dynamically generated. All diagrams are rendered using HTML/CSS and all charts are rendered on Canvas via Chart.js. No SVG or Mermaid JS was used.</p>
+            <p class="mt-1 opacity-70">This infographic was dynamically generated. All diagrams are rendered using HTML/CSS and all charts are rendered on Canvas via Chart.js.</p>
         </div>
     </footer>
 
 <script>
-    // Mobile nav toggle for internal pages
-    // Added explicit hamburger and close icons for clarity
+    // Standardized Mobile Navigation Script
     const mobileMenuButton = document.getElementById('mobile-menu-button');
     const mobileNavMenu = document.getElementById('mobile-nav-menu');
     const mobileNavOverlay = document.getElementById('mobile-nav-overlay');
@@ -414,30 +386,31 @@
     const closeIcon = document.getElementById('close-icon');
 
     function toggleMenu() {
- mobileNavMenu.classList.toggle('is-open');
- if (mobileNavMenu.classList.contains('is-open')) {
- mobileNavOverlay.classList.remove('hidden');
-        } else {
- mobileNavOverlay.classList.add('hidden');
-        }
- hamburgerIcon.classList.toggle('hidden'); // Toggle visibility
- closeIcon.classList.toggle('hidden'); // Toggle visibility
+        const isOpen = mobileNavMenu.classList.toggle('is-open');
+        mobileNavOverlay.style.display = isOpen ? 'block' : 'none';
+        hamburgerIcon.classList.toggle('hidden', isOpen);
+        closeIcon.classList.toggle('hidden', !isOpen);
+        document.body.style.overflow = isOpen ? 'hidden' : '';
     }
 
- mobileMenuButton.addEventListener('click', toggleMenu);
- mobileNavOverlay.addEventListener('click', () => {
- if (mobileNavMenu.classList.contains('is-open')) toggleMenu();
-    });
-    // Close the menu when a link is clicked
-    mobileNavMenu.querySelectorAll('.mobile-menu-link').forEach(link => { // Updated menu reference
-        link.addEventListener('click', () => { // Removed unused event parameter
-            // Add a small delay to allow the browser to navigate before closing the menu
- if (mobileNavMenu.classList.contains('is-open')) toggleMenu();
+    mobileMenuButton.addEventListener('click', toggleMenu);
+    mobileNavOverlay.addEventListener('click', toggleMenu);
+
+    mobileNavMenu.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => {
+            if (mobileNavMenu.classList.contains('is-open')) {
+                toggleMenu();
+            }
         });
     });
-</script>
+    
+    window.addEventListener('resize', () => {
+        if (window.innerWidth >= 640 && mobileNavMenu.classList.contains('is-open')) {
+            toggleMenu();
+        }
+    });
 
-<script>
+    // Charting Script
     const chartColors = {
         primary: '#0076D4',
         secondary: '#4195D7',
@@ -451,60 +424,17 @@
         responsive: true,
         maintainAspectRatio: false,
         plugins: {
-            legend: {
-                position: 'top',
-                labels: {
-                    color: '#4B5563',
-                    font: {
-                        weight: 'bold'
-                    }
-                }
-            },
-            tooltip: {
-                enabled: true,
-                mode: 'index',
-                intersect: false,
-                backgroundColor: 'rgba(0, 0, 0, 0.8)',
-                titleFont: { size: 14, weight: 'bold' },
-                bodyFont: { size: 12 },
-                callbacks: {
-                    title: function(tooltipItems) {
-                        const item = tooltipItems[0];
-                        let label = item.chart.data.labels[item.dataIndex];
-                        if (Array.isArray(label)) {
-                          return label.join(' ');
-                        } else {
-                          return label;
-                        }
-                    }
-                }
-            }
+            legend: { position: 'top', labels: { color: '#4B5563', font: { weight: 'bold' } } },
+            tooltip: { enabled: true, mode: 'index', intersect: false, backgroundColor: 'rgba(0, 0, 0, 0.8)' }
         },
         scales: {
-            x: {
-                ticks: { 
-                    color: '#4B5563',
-                    font: {
-                         size: 10
-                    }
-                },
-                grid: {
-                    display: false
-                }
-            },
-            y: {
-                ticks: { color: '#4B5563' },
-                grid: {
-                    color: '#e2e8f0'
-                }
-            }
+            x: { ticks: { color: '#4B5563', font: { size: 10 } }, grid: { display: false } },
+            y: { ticks: { color: '#4B5563' }, grid: { color: '#e2e8f0' } }
         }
     };
-
+    
     function wrapLabel(str, maxWidth) {
-        if (str.length <= maxWidth) {
-            return str;
-        }
+        if (str.length <= maxWidth) return str;
         const words = str.split(' ');
         let lines = [];
         let currentLine = '';
@@ -526,24 +456,13 @@
             data: {
                 labels: ['Technology', 'Healthcare', 'Financial Services', 'Energy & Utilities', 'Consumer & Retail'],
                 datasets: [{
-                    label: 'Client Distribution by Industry',
                     data: [30, 20, 25, 15, 10],
-                    backgroundColor: [
-                        chartColors.primary,
-                        chartColors.dark,
-                        chartColors.secondary,
-                        chartColors.light,
-                        chartColors.gray
-                    ],
+                    backgroundColor: [chartColors.primary, chartColors.dark, chartColors.secondary, chartColors.light, chartColors.gray],
                     borderColor: '#fff',
                     borderWidth: 4
                 }]
             },
-            options: {
-                ...defaultChartOptions,
-                cutout: '70%',
-                scales: { x: { display: false }, y: { display: false } }
-            }
+            options: { ...defaultChartOptions, cutout: '70%', scales: { x: { display: false }, y: { display: false } } }
         });
     }
 
@@ -562,15 +481,7 @@
                     tension: 0.3
                 }]
             },
-            options: {
-                ...defaultChartOptions,
-                scales: {
-                    y: {
-                        beginAtZero: true,
-                        title: { display: true, text: 'Meetings' }
-                    }
-                }
-            }
+            options: { ...defaultChartOptions, scales: { y: { beginAtZero: true, title: { display: true, text: 'Meetings' } } } }
         });
     }
 
@@ -584,30 +495,11 @@
                 datasets: [{
                     label: 'Active Deals',
                     data: [45, 20, 30, 25, 10],
-                    backgroundColor: [
-                        chartColors.primary,
-                        chartColors.dark,
-                        chartColors.secondary,
-                        chartColors.light,
-                        chartColors.gray
-                    ],
-                    borderColor: '#fff',
+                    backgroundColor: [chartColors.primary, chartColors.dark, chartColors.secondary, chartColors.light, chartColors.gray],
                     borderWidth: 1
                 }]
             },
-            options: {
-                ...defaultChartOptions,
-                indexAxis: 'y',
-                scales: {
-                    x: {
-                        beginAtZero: true,
-                        title: { display: true, text: 'Number of Deals' }
-                    },
-                    y: {
-                        grid: { display: false }
-                    }
-                }
-            }
+            options: { ...defaultChartOptions, indexAxis: 'y', scales: { x: { beginAtZero: true, title: { display: true, text: 'Number of Deals' } }, y: { grid: { display: false } } } }
         });
     }
 
@@ -618,17 +510,13 @@
             data: {
                 labels: ['External Client Interactions', 'Internal Team Collaboration'],
                 datasets: [{
-                    label: 'Interaction Breakdown',
                     data: [60, 40],
                     backgroundColor: [chartColors.primary, chartColors.light],
                     borderColor: '#fff',
                     borderWidth: 4
                 }]
             },
-            options: {
-                ...defaultChartOptions,
-                scales: { x: { display: false }, y: { display: false } }
-            }
+            options: { ...defaultChartOptions, scales: { x: { display: false }, y: { display: false } } }
         });
     }
 
@@ -639,74 +527,34 @@
             data: {
                 datasets: [{
                     label: 'Deal Data (Value vs. Time)',
-                    data: [
-                        { x: 30, y: 50 }, { x: 45, y: 70 }, { x: 60, y: 120 }, { x: 35, y: 60 }, { x: 70, y: 150 },
-                        { x: 50, y: 90 }, { x: 80, y: 180 }, { x: 40, y: 80 }, { x: 90, y: 200 }, { x: 55, y: 100 }
-                    ],
+                    data: [ { x: 30, y: 50 }, { x: 45, y: 70 }, { x: 60, y: 120 }, { x: 35, y: 60 }, { x: 70, y: 150 }, { x: 50, y: 90 }, { x: 80, y: 180 }, { x: 40, y: 80 }, { x: 90, y: 200 }, { x: 55, y: 100 } ],
                     backgroundColor: chartColors.primary,
-                    borderColor: chartColors.dark,
                     pointRadius: 6,
                     pointHoverRadius: 8
                 }]
             },
-            options: {
-                ...defaultChartOptions,
-                scales: {
-                    x: {
-                        type: 'linear',
-                        position: 'bottom',
-                        title: { display: true, text: 'Deal Closure Time (Days)' }
-                    },
-                    y: {
-                        title: { display: true, text: 'Deal Value (USD Million)' }
-                    }
-                }
-            }
+            options: { ...defaultChartOptions, scales: { x: { type: 'linear', position: 'bottom', title: { display: true, text: 'Deal Closure Time (Days)' } }, y: { title: { display: true, text: 'Deal Value (USD Million)' } } } }
         });
     }
 
     const projectedVolumeChartCtx = document.getElementById('projectedVolumeChart');
     if (projectedVolumeChartCtx) {
-        const labels = ['Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec', 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'];
         new Chart(projectedVolumeChartCtx, {
             type: 'line',
             data: {
-                labels: labels,
+                labels: ['Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec', 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
                 datasets: [{
                     label: 'Projected Deal Volume',
                     data: [18, 20, 22, 25, 28, 30, 32, 35, 38, 40, 42, 45],
                     borderColor: chartColors.primary,
                     backgroundColor: 'rgba(0, 118, 212, 0.2)',
-                    fill: true,
+                    fill: 'origin',
                     tension: 0.3
-                },
-                {
-                    label: 'Confidence Interval',
-                    data: [
-                        {x:'Jul', y: [16, 20]}, {x:'Aug', y: [18, 22]}, {x:'Sep', y: [20, 24]}, {x:'Oct', y: [23, 27]},
-                        {x:'Nov', y: [26, 30]}, {x:'Dec', y: [28, 32]}, {x:'Jan', y: [30, 34]}, {x:'Feb', y: [33, 37]},
-                        {x:'Mar', y: [36, 40]}, {x:'Apr', y: [38, 42]}, {x:'May', y: [40, 44]}, {x:'Jun', y: [43, 47]}
-                    ],
-                    backgroundColor: 'rgba(133, 189, 233, 0.2)',
-                    borderColor: 'transparent',
-                    showLine: false,
-                    fill: '+1',
-                    tension: 0.3
-                }
-                ]
+                }]
             },
-            options: {
-                ...defaultChartOptions,
-                scales: {
-                    y: {
-                        beginAtZero: true,
-                        title: { display: true, text: 'Number of Deals' }
-                    }
-                }
-            }
+            options: { ...defaultChartOptions, scales: { y: { beginAtZero: true, title: { display: true, text: 'Number of Deals' } } } }
         });
     }
-
 </script>
 </body>
 </html>

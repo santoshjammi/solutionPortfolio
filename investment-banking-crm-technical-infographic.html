@@ -13,33 +13,30 @@
         body {
             font-family: 'Inter', sans-serif;
             background-color: #f0f4f8;
-            color: #4B5563; /* Default text color */
+            color: #4B5563;
+            padding-top: 48px;
         }
-
-        /* Ensure main content is not hidden by fixed header */
-        body { padding-top: 48px; /* Adjust based on header height */ }
-
         .chart-container {
             position: relative;
             width: 100%;
             max-width: 600px;
             margin-left: auto;
             margin-right: auto;
-            height: 250px; /* Default height for mobile */
+            height: 250px;
         }
-        @media (min-width: 640px) { /* sm breakpoint */
+        @media (min-width: 640px) {
             .chart-container {
                 height: 300px;
             }
         }
-        @media (min-width: 768px) { /* md breakpoint */
+        @media (min-width: 768px) {
             .chart-container {
                 height: 350px;
             }
         }
         .technical-flow-arrow {
-            font-size: 1.25rem; /* Adjusted for mobile */
-            line-height: 1.5; /* Increased for better tapping */
+            font-size: 1.25rem;
+            line-height: 1.5;
             color: #85BDE9;
         }
         .key-component-box {
@@ -48,160 +45,100 @@
         .colored-box {
             @apply text-white;
         }
-        .colored-box:active { /* Tap feedback */
-            @apply opacity-75;
-        }
-
-         /* Standardized Mobile Nav Overlay */
         .mobile-nav-overlay {
             position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
+            top: 0; left: 0; right: 0; bottom: 0;
             background-color: rgba(0, 0, 0, 0.7);
             z-index: 50;
-            @apply opacity-75;
+            display: none;
         }
-
-
-        /* Responsive padding and font sizes */
-        .section-padding {
-            @apply p-6 sm:p-8 md:p-12;
-        }
-        .heading-1 {
-            @apply text-3xl sm:text-4xl md:text-5xl lg:text-6xl;
-        }
-        .heading-2 {
-            @apply text-2xl sm:text-3xl md:text-4xl;
-        }
-        .heading-3 {
-            @apply text-xl sm:text-2xl md:text-3xl;
-        }
-        .heading-4 {
-            @apply text-lg sm:text-xl md:text-2xl;
-        }
-        .text-content {
-            @apply text-sm sm:text-base md:text-lg;
-        }
-        .text-small {
-            @apply text-xs sm:text-sm;
-        }
-        .icon-size {
-            @apply text-3xl sm:text-4xl md:text-5xl;
-        }
-        .numeric-large {
-            @apply text-5xl sm:text-6xl md:text-7xl;
-        }
-
-        /* Improve tap targets */
-        a, button {
-            cursor: pointer;
-        }
-
         .mobile-nav-menu {
             position: fixed;
-            top: 48px; /* Height of the header */
-            left: 0; /* Start off-screen to the left */
-            width: 80%; /* Take up 80% of the screen width */
-            max-width: 300px; /* Maximum width */
-            height: calc(100% - 48px); /* Full height minus header */
+            top: 0; left: 0;
+            width: 75%;
+            max-width: 300px;
+            height: 100%;
             background-color: white;
             z-index: 60;
-            transform: translateX(-100%); /* Initially off-screen */
+            transform: translateX(-100%);
             transition: transform 0.3s ease-in-out;
-            padding: 1.5rem 1rem; /* More padding */
-            overflow-y: auto; /* Enable scrolling for long menus */
-            box-shadow: 2px 0 5px rgba(0,0,0,0.2); /* Add shadow */
+            box-shadow: 2px 0 5px rgba(0,0,0,0.2);
+            padding: 1.5rem 1rem;
+            overflow-y: auto;
         }
         .mobile-nav-menu.is-open {
-            transform: translateX(0); /* Slide in */
+            transform: translateX(0);
         }
-         @media (min-width: 640px) { /* sm breakpoint */
-            body { padding-top: 48px; } /* Keep padding consistent */
-         }
     </style>
 </head>
 <body class="text-gray-700">
 
-    <header class="bg-white sticky top-0 z-50 shadow-md">
-        <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-12 relative">
-            <div class="flex items-center justify-between h-full">
-                <div class="flex items-center flex-shrink-0">
-                    <h1 class="text-lg font-bold text-[#00449E]">CRM Technical Deep Dive</h1>
-                </div>
-
-                <!-- Desktop Navigation Links (Hidden on mobile) -->
-                <div class="hidden sm:block ml-10">
-                    <div class="flex items-baseline space-x-2">
-                        <a href="#overview" class="text-gray-600 hover:bg-[#85BDE9] hover:text-white px-2 py-1 rounded-md text-sm font-medium">Overview</a>
-                        <a href="#architecture" class="text-gray-600 hover:bg-[#85BDE9] hover:text-white px-2 py-1 rounded-md text-sm font-medium">Architecture</a>
-                        <a href="#data-model" class="text-gray-600 hover:bg-[#85BDE9] hover:text-white px-2 py-1 rounded-md text-sm font-medium">Data Model</a>
-                        <a href="#integrations" class="text-gray-600 hover:bg-[#85BDE9] hover:text-white px-2 py-1 rounded-md text-sm font-medium">Integrations</a>
-                        <a href="#performance" class="text-gray-600 hover:bg-[#85BDE9] hover:text-white px-2 py-1 rounded-md text-sm font-medium">Performance</a>
-                        <a href="#security" class="text-gray-600 hover:bg-[#85BDE9] hover:text-white px-2 py-1 rounded-md text-sm font-medium">Security</a>
-                        <a href="#analytics-tech" class="text-gray-600 hover:bg-[#85BDE9] hover:text-white px-2 py-1 rounded-md text-sm font-medium">Analytics Tech</a>
-                    </div>
-                </div>
-                <!-- Mobile nav toggle button for internal page -->
-                <div class="sm:hidden flex-shrink-0">
-                    <button id="mobile-nav-toggle" class="p-2 rounded-md text-gray-600 hover:text-[#00449E] focus:outline-none focus:ring-2 focus:ring-inset focus:ring-[#85BDE9]" aria-controls="mobile-nav-menu" aria-expanded="false">
-                        <span class="sr-only">Open main menu</span>
-                        <!-- Hamburger Icon -->
-                        <svg id="mobile-menu-icon-open" class="h-6 w-6 block" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-                        </svg>
-                        <!-- Close Icon -->
-                        <svg id="mobile-menu-icon-close" class="h-6 w-6 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-                        </svg>
-                    </button>
+    <header class="bg-white fixed top-0 left-0 right-0 z-40 shadow-md h-12 flex items-center">
+        <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full w-full flex items-center justify-between">
+            <div class="flex items-center flex-shrink-0">
+                <h1 class="text-lg font-bold text-[#00449E]">CRM Technical Deep Dive</h1>
+            </div>
+            <div class="hidden sm:block">
+                <div class="ml-10 flex items-baseline space-x-2">
+                    <a href="#overview" class="text-gray-600 hover:bg-[#85BDE9] hover:text-white px-2 py-1 rounded-md text-sm font-medium">Overview</a>
+                    <a href="#architecture" class="text-gray-600 hover:bg-[#85BDE9] hover:text-white px-2 py-1 rounded-md text-sm font-medium">Architecture</a>
+                    <a href="#data-model" class="text-gray-600 hover:bg-[#85BDE9] hover:text-white px-2 py-1 rounded-md text-sm font-medium">Data Model</a>
+                    <a href="#integrations" class="text-gray-600 hover:bg-[#85BDE9] hover:text-white px-2 py-1 rounded-md text-sm font-medium">Integrations</a>
+                    <a href="#performance" class="text-gray-600 hover:bg-[#85BDE9] hover:text-white px-2 py-1 rounded-md text-sm font-medium">Performance</a>
+                    <a href="#security" class="text-gray-600 hover:bg-[#85BDE9] hover:text-white px-2 py-1 rounded-md text-sm font-medium">Security</a>
+                    <a href="#analytics-tech" class="text-gray-600 hover:bg-[#85BDE9] hover:text-white px-2 py-1 rounded-md text-sm font-medium">Analytics Tech</a>
                 </div>
             </div>
+            <button id="mobile-menu-button" class="sm:hidden p-2 rounded-md text-gray-600 hover:bg-[#85BDE9] hover:text-white focus:outline-none" aria-label="Toggle mobile menu">
+                <svg id="hamburger-icon" class="h-6 w-6 block" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                </svg>
+                <svg id="close-icon" class="h-6 w-6 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                </svg>
+            </button>
         </nav>
     </header>
 
-    <!-- Mobile Navigation Menu -->
     <div id="mobile-nav-overlay" class="mobile-nav-overlay"></div>
     <div id="mobile-nav-menu" class="mobile-nav-menu">
-        <div class="flex flex-col space-y-3">
-            <a href="#overview" class="block px-3 py-2 rounded-md text-gray-800 hover:bg-[#85BDE9] hover:text-white font-semibold text-base" onclick="closeMobileMenu()">Overview</a>
-            <a href="#architecture" class="block px-3 py-2 rounded-md text-gray-800 hover:bg-[#85BDE9] hover:text-white font-semibold text-base" onclick="closeMobileMenu()">Architecture</a>
-            <a href="#data-model" class="block px-3 py-2 rounded-md text-gray-800 hover:bg-[#85BDE9] hover:text-white font-semibold text-base" onclick="closeMobileMenu()">Data Model</a>
-            <a href="#integrations" class="block px-3 py-2 rounded-md text-gray-800 hover:bg-[#85BDE9] hover:text-white font-semibold text-base" onclick="closeMobileMenu()">Integrations</a>
-            <a href="#performance" class="block px-3 py-2 rounded-md text-gray-800 hover:bg-[#85BDE9] hover:text-white font-semibold text-base" onclick="closeMobileMenu()">Performance</a>
-            <a href="#security" class="block px-3 py-2 rounded-md text-gray-800 hover:bg-[#85BDE9] hover:text-white font-semibold text-base" onclick="closeMobileMenu()">Security</a>
-            <a href="#analytics-tech" class="block px-3 py-2 rounded-md text-gray-800 hover:bg-[#85BDE9] hover:text-white font-semibold text-base" onclick="closeMobileMenu()">Analytics Tech</a>
+        <div class="flex flex-col space-y-2">
+            <a href="#overview" class="text-gray-800 hover:bg-[#85BDE9] hover:text-white block px-3 py-2 rounded-md text-base font-medium">Overview</a>
+            <a href="#architecture" class="text-gray-800 hover:bg-[#85BDE9] hover:text-white block px-3 py-2 rounded-md text-base font-medium">Architecture</a>
+            <a href="#data-model" class="text-gray-800 hover:bg-[#85BDE9] hover:text-white block px-3 py-2 rounded-md text-base font-medium">Data Model</a>
+            <a href="#integrations" class="text-gray-800 hover:bg-[#85BDE9] hover:text-white block px-3 py-2 rounded-md text-base font-medium">Integrations</a>
+            <a href="#performance" class="text-gray-800 hover:bg-[#85BDE9] hover:text-white block px-3 py-2 rounded-md text-base font-medium">Performance</a>
+            <a href="#security" class="text-gray-800 hover:bg-[#85BDE9] hover:text-white block px-3 py-2 rounded-md text-base font-medium">Security</a>
+            <a href="#analytics-tech" class="text-gray-800 hover:bg-[#85BDE9] hover:text-white block px-3 py-2 rounded-md text-base font-medium">Analytics Tech</a>
         </div>
     </div>
 
     <main class="max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
-
-        <section id="overview" class="text-center mb-16 section-padding">
-            <h2 class="heading-1 font-extrabold text-[#00449E]">Investment Banking CRM: Technical Deep Dive</h2>
-            <p class="mt-4 max-w-3xl mx-auto text-content text-gray-500">This document provides a technical overview of our Investment Banking CRM solution, detailing its architecture, data model, integration capabilities, performance characteristics, and security measures.</p>
+        <section id="overview" class="text-center mb-16 p-6 sm:p-8">
+            <h2 class="text-3xl sm:text-4xl md:text-5xl font-extrabold text-[#00449E]">Investment Banking CRM: Technical Deep Dive</h2>
+            <p class="mt-4 max-w-3xl mx-auto text-base sm:text-lg md:text-xl text-gray-500">This document provides a technical overview of our Investment Banking CRM solution, detailing its architecture, data model, integration capabilities, performance characteristics, and security measures.</p>
             <div class="mt-12 flex flex-col md:flex-row items-center justify-center space-y-8 md:space-y-0 md:space-x-12">
                 <div class="bg-white rounded-lg shadow-xl p-6 sm:p-8 text-center w-full max-w-xs">
                     <p class="text-base sm:text-lg font-medium text-gray-500">Core Approach</p>
-                    <p class="numeric-large font-black text-[#0076D4]">⚙️</p>
+                    <p class="text-5xl sm:text-6xl md:text-7xl font-black text-[#0076D4]">⚙️</p>
                     <p class="text-xl sm:text-2xl font-bold text-gray-600">Microservices-Driven</p>
                 </div>
                 <div class="text-5xl sm:text-6xl font-thin text-[#005CB9] transform rotate-90 md:rotate-0">➡️</div>
-                <div class="bg-white rounded-lg shadow-xl p-6 sm:p-8 text-center border-4 border-[#0076D4] w-full max-w-xs active:opacity-75">
+                <div class="bg-white rounded-lg shadow-xl p-6 sm:p-8 text-center border-4 border-[#0076D4] w-full max-w-xs">
                     <p class="text-lg font-medium text-gray-500">Key Technology</p>
-                    <p class="numeric-large font-black text-[#005CB9]">☁️</p>
+                    <p class="text-5xl sm:text-6xl md:text-7xl font-black text-[#005CB9]">☁️</p>
                     <p class="text-xl sm:text-2xl font-bold text-gray-600">Cloud-Native</p>
                 </div>
             </div>
         </section>
 
-        <section id="architecture" class="mb-16 section-padding bg-white rounded-lg shadow-lg">
-            <h3 class="heading-3 font-bold text-[#00449E] mb-4">Modular Microservices Architecture</h3>
-            <p class="text-content text-gray-600 mb-8">The CRM is built on a modular microservices architecture, enabling independent development, deployment, and scaling of individual functionalities.</p>
+        <section id="architecture" class="mb-16 p-6 sm:p-8 bg-white rounded-lg shadow-lg">
+            <h3 class="text-xl sm:text-2xl md:text-3xl font-bold text-[#00449E] mb-4">Modular Microservices Architecture</h3>
+            <p class="text-sm sm:text-base text-gray-600 mb-8">The CRM is built on a modular microservices architecture, enabling independent development, deployment, and scaling of individual functionalities.</p>
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
                 <div class="order-2 lg:order-1">
-                    <h4 class="heading-4 font-semibold text-[#005CB9] mb-2">High-Level System Diagram</h4>
-                    <p class="text-small text-gray-500 mb-4">This simplified diagram illustrates the primary components and data flow within the CRM, showcasing the decoupling of services.</p>
+                    <h4 class="text-lg sm:text-xl font-semibold text-[#005CB9] mb-2">High-Level System Diagram</h4>
+                    <p class="text-xs sm:text-sm text-gray-500 mb-4">This simplified diagram illustrates the primary components and data flow within the CRM, showcasing the decoupling of services.</p>
                     <div class="flex flex-col items-center justify-center space-y-2 bg-gray-100 p-4 rounded-lg shadow max-w-md mx-auto">
                         <div class="key-component-box bg-[#005CB9] colored-box">Client Applications (Web/Mobile)</div>
                         <div class="technical-flow-arrow">⬇️</div>
@@ -225,8 +162,8 @@
                     </div>
                 </div>
                 <div class="order-1 lg:order-2">
-                    <h4 class="heading-4 font-semibold text-[#005CB9] mb-2">Technology Stack Overview</h4>
-                    <ul class="list-disc list-inside text-gray-600 text-small space-y-2">
+                    <h4 class="text-lg sm:text-xl font-semibold text-[#005CB9] mb-2">Technology Stack Overview</h4>
+                    <ul class="list-disc list-inside text-gray-600 text-xs sm:text-sm space-y-2">
                         <li>**Frontend:** React.js / Vue.js, Tailwind CSS</li>
                         <li>**Backend Services:** Node.js (Express), Python (FastAPI/Django), Java (Spring Boot)</li>
                         <li>**Database:** PostgreSQL (Relational), MongoDB (Document), Redis (Cache)</li>
@@ -240,13 +177,13 @@
             </div>
         </section>
 
-        <section id="data-model" class="mb-16 section-padding bg-white rounded-lg shadow-lg">
-            <h3 class="heading-3 font-bold text-[#00449E] mb-4">Core Data Model & Relationships</h3>
-            <p class="text-content text-gray-600 mb-8">A robust and normalized data model underpins the CRM, ensuring data consistency, integrity, and efficient querying for complex relationships.</p>
+        <section id="data-model" class="mb-16 p-6 sm:p-8 bg-white rounded-lg shadow-lg">
+            <h3 class="text-xl sm:text-2xl md:text-3xl font-bold text-[#00449E] mb-4">Core Data Model & Relationships</h3>
+            <p class="text-sm sm:text-base text-gray-600 mb-8">A robust and normalized data model underpins the CRM, ensuring data consistency, integrity, and efficient querying for complex relationships.</p>
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
                 <div class="order-2 lg:order-1">
-                    <h4 class="heading-4 font-semibold text-[#005CB9] mb-2">Simplified Entity Relationship Diagram (ERD)</h4>
-                    <p class="text-small text-gray-500 mb-4">This diagram illustrates the key entities within the CRM and their relationships, showcasing the interconnectedness of client, deal, and activity data.</p>
+                    <h4 class="text-lg sm:text-xl font-semibold text-[#005CB9] mb-2">Simplified Entity Relationship Diagram (ERD)</h4>
+                    <p class="text-xs sm:text-sm text-gray-500 mb-4">This diagram illustrates the key entities within the CRM and their relationships, showcasing the interconnectedness of client, deal, and activity data.</p>
                     <div class="flex flex-col items-center justify-center space-y-4 bg-gray-100 p-4 rounded-lg shadow max-w-md mx-auto">
                         <div class="key-component-box bg-[#0076D4] colored-box w-full">CLIENT</div>
                         <div class="text-sm font-bold text-gray-600">1 — M</div>
@@ -258,8 +195,8 @@
                     </div>
                 </div>
                 <div class="order-1 lg:order-2">
-                    <h4 class="heading-4 font-semibold text-[#005CB9] mb-2">Key Data Entities & Attributes</h4>
-                    <ul class="list-disc list-inside text-gray-600 text-small space-y-2">
+                    <h4 class="text-lg sm:text-xl font-semibold text-[#005CB9] mb-2">Key Data Entities & Attributes</h4>
+                    <ul class="list-disc list-inside text-gray-600 text-xs sm:text-sm space-y-2">
                         <li>**Client:** `clientID` (PK), `name`, `industry`, `revenue`, `contacts` (FK), `deals` (FK).</li>
                         <li>**Deal:** `dealID` (PK), `clientID` (FK), `name`, `type` (`M&A`, `IPO`), `status`, `value`, `stage`, `teamMembers` (FK).</li>
                         <li>**Contact:** `contactID` (PK), `clientID` (FK), `firstName`, `lastName`, `title`, `email`, `phone`, `relatedDeals` (FK).</li>
@@ -270,13 +207,13 @@
             </div>
         </section>
 
-        <section id="integrations" class="mb-16 section-padding bg-white rounded-lg shadow-lg">
-            <h3 class="heading-3 font-bold text-[#00449E] mb-4">Seamless Integrations with Core Financial Systems</h3>
-            <p class="text-content text-gray-600 mb-8">The CRM is designed to integrate seamlessly with existing financial systems, ensuring data synchronization and a unified view of operations.</p>
+        <section id="integrations" class="mb-16 p-6 sm:p-8 bg-white rounded-lg shadow-lg">
+            <h3 class="text-xl sm:text-2xl md:text-3xl font-bold text-[#00449E] mb-4">Seamless Integrations with Core Financial Systems</h3>
+            <p class="text-sm sm:text-base text-gray-600 mb-8">The CRM is designed to integrate seamlessly with existing financial systems, ensuring data synchronization and a unified view of operations.</p>
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
                 <div>
-                    <h4 class="heading-4 font-semibold text-[#005CB9] mb-2">Integration Points & Data Flow</h4>
-                    <p class="text-small text-gray-500 mb-4">Key integration points and the direction of data flow, highlighting the CRM's role as a central hub for deal-related information.</p>
+                    <h4 class="text-lg sm:text-xl font-semibold text-[#005CB9] mb-2">Integration Points & Data Flow</h4>
+                    <p class="text-xs sm:text-sm text-gray-500 mb-4">Key integration points and the direction of data flow, highlighting the CRM's role as a central hub for deal-related information.</p>
                     <div class="flex flex-col items-center justify-center space-y-2 bg-gray-100 p-4 rounded-lg shadow max-w-md mx-auto">
                         <div class="key-component-box bg-[#005CB9] colored-box">External Market Data (APIs)</div>
                         <div class="technical-flow-arrow">⬇️</div>
@@ -290,8 +227,8 @@
                     </div>
                 </div>
                 <div>
-                    <h4 class="heading-4 font-semibold text-[#005CB9] mb-2">API Strategy & Protocols</h4>
-                    <ul class="list-disc list-inside text-gray-600 text-small space-y-2">
+                    <h4 class="text-lg sm:text-xl font-semibold text-[#005CB9] mb-2">API Strategy & Protocols</h4>
+                    <ul class="list-disc list-inside text-gray-600 text-xs sm:text-sm space-y-2">
                         <li>**RESTful APIs:** Primary method for external and internal service communication.</li>
                         <li>**GraphQL:** Optional for complex queries from UI to minimize over-fetching.</li>
                         <li>**OAuth 2.0 / OpenID Connect:** For secure API authentication and authorization.</li>
@@ -303,20 +240,20 @@
             </div>
         </section>
 
-        <section id="performance" class="mb-16 section-padding bg-white rounded-lg shadow-lg">
-            <h3 class="heading-3 font-bold text-[#00449E] mb-4">Performance & Scalability</h3>
-            <p class="text-content text-gray-600 mb-8">Engineered for high performance and scalability to handle increasing data volumes and user concurrency.</p>
+        <section id="performance" class="mb-16 p-6 sm:p-8 bg-white rounded-lg shadow-lg">
+            <h3 class="text-xl sm:text-2xl md:text-3xl font-bold text-[#00449E] mb-4">Performance & Scalability</h3>
+            <p class="text-sm sm:text-base text-gray-600 mb-8">Engineered for high performance and scalability to handle increasing data volumes and user concurrency.</p>
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
                 <div class="order-2 lg:order-1">
-                    <h4 class="heading-4 font-semibold text-[#005CB9] mb-2">Response Time Improvement (Avg. in ms)</h4>
-                    <p class="text-small text-gray-500 mb-4">This chart shows the projected improvement in average API response times after implementing optimization strategies, ensuring a snappy user experience.</p>
+                    <h4 class="text-lg sm:text-xl font-semibold text-[#005CB9] mb-2">Response Time Improvement (Avg. in ms)</h4>
+                    <p class="text-xs sm:text-sm text-gray-500 mb-4">This chart shows the projected improvement in average API response times after implementing optimization strategies, ensuring a snappy user experience.</p>
                     <div class="chart-container">
                         <canvas id="responseTimeChart"></canvas>
                     </div>
                 </div>
                 <div class="order-1 lg:order-2">
-                    <h4 class="heading-4 font-semibold text-[#005CB9] mb-2">Scalability Measures</h4>
-                    <ul class="list-disc list-inside text-gray-600 text-small space-y-2">
+                    <h4 class="text-lg sm:text-xl font-semibold text-[#005CB9] mb-2">Scalability Measures</h4>
+                    <ul class="list-disc list-inside text-gray-600 text-xs sm:text-sm space-y-2">
                         <li>**Horizontal Scaling:** Services and databases can be scaled out by adding more instances.</li>
                         <li>**Database Sharding:** For large datasets, data is distributed across multiple database instances.</li>
                         <li>**Caching:** Aggressive caching (Redis) for frequently accessed data and query results.</li>
@@ -328,13 +265,13 @@
             </div>
         </section>
 
-        <section id="security" class="mb-16 section-padding bg-white rounded-lg shadow-lg">
-            <h3 class="heading-3 font-bold text-[#00449E] mb-4">Robust Security & Compliance Framework</h3>
-            <p class="text-content text-gray-600 mb-8">Security is paramount. The CRM incorporates industry-leading practices and complies with relevant financial regulations to protect sensitive data.</p>
+        <section id="security" class="mb-16 p-6 sm:p-8 bg-white rounded-lg shadow-lg">
+            <h3 class="text-xl sm:text-2xl md:text-3xl font-bold text-[#00449E] mb-4">Robust Security & Compliance Framework</h3>
+            <p class="text-sm sm:text-base text-gray-600 mb-8">Security is paramount. The CRM incorporates industry-leading practices and complies with relevant financial regulations to protect sensitive data.</p>
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
                 <div>
-                    <h4 class="heading-4 font-semibold text-[#005CB9] mb-2">Core Security Controls Implemented</h4>
-                    <ul class="list-disc list-inside text-gray-600 text-small space-y-2">
+                    <h4 class="text-lg sm:text-xl font-semibold text-[#005CB9] mb-2">Core Security Controls Implemented</h4>
+                    <ul class="list-disc list-inside text-gray-600 text-xs sm:text-sm space-y-2">
                         <li>**Encryption:** TLS 1.2+ for data in transit; AES-256 for data at rest.</li>
                         <li>**Authentication:** OAuth 2.0, MFA for all user logins.</li>
                         <li>**Authorization:** Fine-grained Role-Based Access Control (RBAC).</li>
@@ -344,8 +281,8 @@
                     </ul>
                 </div>
                 <div>
-                    <h4 class="heading-4 font-semibold text-[#005CB9] mb-2">Compliance Adherence Status</h4>
-                    <p class="text-small text-gray-500 mb-4">This chart illustrates our compliance readiness for key financial industry regulations, reflecting our commitment to data governance.</p>
+                    <h4 class="text-lg sm:text-xl font-semibold text-[#005CB9] mb-2">Compliance Adherence Status</h4>
+                    <p class="text-xs sm:text-sm text-gray-500 mb-4">This chart illustrates our compliance readiness for key financial industry regulations, reflecting our commitment to data governance.</p>
                     <div class="chart-container">
                         <canvas id="complianceStatusChart"></canvas>
                     </div>
@@ -353,13 +290,13 @@
             </div>
         </section>
 
-        <section id="analytics-tech" class="section-padding bg-white rounded-lg shadow-lg">
-            <h3 class="heading-3 font-bold text-[#00449E] mb-4">Advanced Analytics & Reporting Technologies</h3>
-            <p class="text-content text-gray-600 mb-8">Empowering data-driven decisions with a powerful analytics backend, supporting both real-time dashboards and historical reporting.</p>
+        <section id="analytics-tech" class="p-6 sm:p-8 bg-white rounded-lg shadow-lg">
+            <h3 class="text-xl sm:text-2xl md:text-3xl font-bold text-[#00449E] mb-4">Advanced Analytics & Reporting Technologies</h3>
+            <p class="text-sm sm:text-base text-gray-600 mb-8">Empowering data-driven decisions with a powerful analytics backend, supporting both real-time dashboards and historical reporting.</p>
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
                 <div class="order-2 lg:order-1">
-                    <h4 class="heading-4 font-semibold text-[#005CB9] mb-2">Analytics Data Flow</h4>
-                    <p class="text-small text-gray-500 mb-4">The journey of data from operational systems to actionable insights, utilizing a modern data warehousing approach.</p>
+                    <h4 class="text-lg sm:text-xl font-semibold text-[#005CB9] mb-2">Analytics Data Flow</h4>
+                    <p class="text-xs sm:text-sm text-gray-500 mb-4">The journey of data from operational systems to actionable insights, utilizing a modern data warehousing approach.</p>
                     <div class="flex flex-col items-center justify-center space-y-2 bg-gray-100 p-4 rounded-lg shadow max-w-md mx-auto">
                         <div class="key-component-box bg-[#005CB9] colored-box">Operational DBs</div>
                         <div class="technical-flow-arrow">⬇️ (CDC / ETL)</div>
@@ -371,8 +308,8 @@
                     </div>
                 </div>
                 <div class="order-1 lg:order-2">
-                    <h4 class="heading-4 font-semibold text-[#005CB9] mb-2">Key Analytics Technologies</h4>
-                    <ul class="list-disc list-inside text-gray-600 text-small space-y-2">
+                    <h4 class="text-lg sm:text-xl font-semibold text-[#005CB9] mb-2">Key Analytics Technologies</h4>
+                    <ul class="list-disc list-inside text-gray-600 text-xs sm:text-sm space-y-2">
                         <li>**Data Warehousing:** Google BigQuery / Snowflake / Amazon Redshift.</li>
                         <li>**ETL/ELT Tools:** Apache Airflow / Talend / StitchData.</li>
                         <li>**BI & Visualization:** Tableau / Power BI / Looker.</li>
@@ -388,12 +325,45 @@
     <footer class="bg-[#00449E] text-white mt-16">
         <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8 text-center text-sm">
             <p>&copy; 2025 Investment Banking Solutions. All Rights Reserved.</p>
-            <p class="mt-1 opacity-70">This technical infographic was dynamically generated. All diagrams are rendered using HTML/CSS and all charts are rendered on Canvas via Chart.js. No SVG or Mermaid JS was used.</p>
+            <p class="mt-1 opacity-70">This technical infographic was dynamically generated. All diagrams are rendered using HTML/CSS and all charts are rendered on Canvas via Chart.js.</p>
         </div>
     </footer>
 
 
 <script>
+    // Standardized Mobile Navigation Script
+    const mobileMenuButton = document.getElementById('mobile-menu-button');
+    const mobileNavMenu = document.getElementById('mobile-nav-menu');
+    const mobileNavOverlay = document.getElementById('mobile-nav-overlay');
+    const hamburgerIcon = document.getElementById('hamburger-icon');
+    const closeIcon = document.getElementById('close-icon');
+
+    function toggleMenu() {
+        const isOpen = mobileNavMenu.classList.toggle('is-open');
+        mobileNavOverlay.style.display = isOpen ? 'block' : 'none';
+        hamburgerIcon.classList.toggle('hidden', isOpen);
+        closeIcon.classList.toggle('hidden', !isOpen);
+        document.body.style.overflow = isOpen ? 'hidden' : '';
+    }
+
+    mobileMenuButton.addEventListener('click', toggleMenu);
+    mobileNavOverlay.addEventListener('click', toggleMenu);
+
+    mobileNavMenu.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => {
+            if (mobileNavMenu.classList.contains('is-open')) {
+                toggleMenu();
+            }
+        });
+    });
+
+    window.addEventListener('resize', () => {
+        if (window.innerWidth >= 640 && mobileNavMenu.classList.contains('is-open')) {
+            toggleMenu();
+        }
+    });
+
+    // Charting Script
     const chartColors = {
         primary: '#0076D4',
         secondary: '#4195D7',
@@ -407,74 +377,14 @@
         responsive: true,
         maintainAspectRatio: false,
         plugins: {
-            legend: {
-                position: 'top',
-                labels: {
-                    color: '#4B5563',
-                    font: {
-                        size: 10,
-                        weight: 'bold'
-                    }
-                }
-            },
-            tooltip: {
-                enabled: true,
-                mode: 'index',
-                intersect: false,
-                backgroundColor: 'rgba(0, 0, 0, 0.8)',
-                titleFont: { size: 12, weight: 'bold' },
-                bodyFont: { size: 10 },
-                callbacks: {
-                    title: function(tooltipItems) {
-                        const item = tooltipItems[0];
-                        let label = item.chart.data.labels[item.dataIndex];
-                        if (Array.isArray(label)) {
-                          return label.join(' ');
-                        } else {
-                          return label;
-                        }
-                    }
-                }
-            }
+            legend: { position: 'top', labels: { color: '#4B5563', font: { size: 10, weight: 'bold' } } },
+            tooltip: { enabled: true, mode: 'index', intersect: false, backgroundColor: 'rgba(0, 0, 0, 0.8)' }
         },
         scales: {
-            x: {
-                ticks: { 
-                    color: '#4B5563',
-                    font: {
-                         size: 9
-                    }
-                },
-                grid: {
-                    display: false
-                }
-            },
-            y: {
-                ticks: { color: '#4B5563', font: { size: 9 } },
-                grid: {
-                    color: '#e2e8f0'
-                }
-            }
+            x: { ticks: { color: '#4B5563', font: { size: 9 } }, grid: { display: false } },
+            y: { ticks: { color: '#4B5563', font: { size: 9 } }, grid: { color: '#e2e8f0' } }
         }
     };
-
-    function wrapLabel(str, maxWidth) {
-        if (str.length <= maxWidth) {
-            return str;
-        }
-        const words = str.split(' ');
-        let lines = [];
-        let currentLine = '';
-        words.forEach(word => {
-            if ((currentLine + word).length > maxWidth) {
-                lines.push(currentLine.trim());
-                currentLine = '';
-            }
-            currentLine += word + ' ';
-        });
-        lines.push(currentLine.trim());
-        return lines;
-    }
 
     const responseTimeChartCtx = document.getElementById('responseTimeChart');
     if (responseTimeChartCtx) {
@@ -486,23 +396,13 @@
                     label: 'Current (ms)',
                     data: [150, 300, 100, 500],
                     backgroundColor: chartColors.light,
-                    borderColor: chartColors.secondary,
-                    borderWidth: 1
                 }, {
                     label: 'Target (ms)',
                     data: [50, 100, 30, 150],
                     backgroundColor: chartColors.primary,
-                    borderColor: chartColors.dark,
-                    borderWidth: 1
                 }]
             },
-            options: {
-                ...defaultChartOptions,
-                scales: {
-                    x: { grid: { display: false } },
-                    y: { beginAtZero: true, title: { display: true, text: 'Response Time (ms)', font: { size: 10 } } }
-                }
-            }
+            options: { ...defaultChartOptions, scales: { x: { grid: { display: false } }, y: { beginAtZero: true, title: { display: true, text: 'Response Time (ms)', font: { size: 10 } } } } }
         });
     }
 
@@ -513,14 +413,14 @@
             data: {
                 labels: ['GDPR', 'FINRA', 'AML', 'SOX', 'Data Residency'],
                 datasets: [{
-                    label: 'Current Compliance Score (1-10)',
+                    label: 'Current Score',
                     data: [7, 8, 7, 6, 8],
                     fill: true,
                     backgroundColor: 'rgba(255, 99, 132, 0.2)',
                     borderColor: 'rgb(255, 99, 132)',
                     pointBackgroundColor: 'rgb(255, 99, 132)',
                 }, {
-                    label: 'Target Compliance Score (1-10)',
+                    label: 'Target Score',
                     data: [9, 9, 9, 8, 9],
                     fill: true,
                     backgroundColor: 'rgba(0, 118, 212, 0.2)',
@@ -528,72 +428,8 @@
                     pointBackgroundColor: 'rgb(0, 118, 212)',
                 }]
             },
-            options: {
-                ...defaultChartOptions,
-                scales: {
-                   r: {
-                       angleLines: { color: '#e2e8f0' },
-                       grid: { color: '#e2e8f0' },
-                       pointLabels: {
-                           color: '#4B5563',
-                           font: { size: 10, weight: 'bold' }
-                       },
-                       ticks: {
-                           backdropColor: '#f0f4f8',
-                           color: '#64748b',
-                           font: { size: 9 }
-                       },
-                       suggestedMin: 0,
-                       suggestedMax: 10
-                   }
-                }
-            }
+            options: { ...defaultChartOptions, scales: { r: { suggestedMin: 0, suggestedMax: 10, grid: { color: '#e2e8f0' }, pointLabels: { font: { size: 10, weight: 'bold' } }, ticks: { backdropColor: '#f0f4f8' } } } }
         });
-    }
-
-    // Mobile nav toggle for internal pages
-    const mobileNavToggle = document.getElementById('mobile-nav-toggle');
-    const mobileNavMenu = document.getElementById('mobile-nav-menu');
-    const mobileNavOverlay = document.getElementById('mobile-nav-overlay');
-    const mobileMenuIconOpen = document.getElementById('mobile-menu-icon-open');
-    const mobileMenuIconClose = document.getElementById('mobile-menu-icon-close');
-
-    if (mobileNavToggle && mobileNavMenu && mobileNavOverlay) {
-        function closeMobileMenu() {
-             mobileNavMenu.classList.remove('is-open');
-             mobileNavOverlay.style.display = 'none';
-             mobileMenuIconOpen.classList.remove('hidden');
-             mobileMenuIconClose.classList.add('hidden');
-             mobileNavToggle.setAttribute('aria-expanded', 'false');
-        }
-
-        mobileNavToggle.addEventListener('click', () => {
-            mobileNavMenu.classList.toggle('is-open');
-            mobileNavOverlay.style.display = mobileNavMenu.classList.contains('is-open') ? 'block' : 'none';
-            mobileMenuIconOpen.classList.toggle('hidden');
-            mobileMenuIconClose.classList.toggle('hidden');
-            mobileNavToggle.setAttribute('aria-expanded', mobileNavMenu.classList.contains('is-open'));
-        });
-
-        mobileNavOverlay.addEventListener('click', () => {
-            mobileNavMenu.classList.remove('is-open');
-            mobileNavOverlay.style.display = 'none';
-            mobileMenuIconOpen.classList.remove('hidden');
-             // Ensure the close icon is hidden when menu closes
-            mobileMenuIconClose.classList.add('hidden');
-        });
-        // Close mobile menu when a link is clicked
-        mobileNavMenu.querySelectorAll('a').forEach(link => {
-            link.addEventListener('click', () => {
-                mobileNavMenu.classList.remove('is-open');
-                mobileNavOverlay.style.display = 'none';
-                mobileMenuIconOpen.classList.remove('hidden');
-                mobileMenuIconClose.classList.add('hidden');
-            });
-        });
-
-         // Initially hide the close icon
-         mobileMenuIconClose.classList.add('hidden');
     }
 </script>
 </body>
