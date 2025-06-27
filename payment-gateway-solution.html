@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Scaling Payment Gateway Throughput: 20 to 200 TPS</title>
+    <title>Payment Gateway Scaling: 20 to 200 TPS - Infographic</title>
     <!-- Tailwind CSS CDN for utility classes -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Chart.js CDN for rendering charts -->
@@ -112,7 +112,7 @@
         <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full w-full flex items-center justify-between relative">
             <div class="flex items-center justify-between h-full w-full">
  <div class="flex items-center flex-grow"> <!-- Added flex-grow to push menu button to the right -->
-                    <h1 class="text-lg font-bold text-[#00449E]">Payment Gateway Infographic</h1>
+                    <h1 class="text-lg font-bold text-[#00449E]">Payment Gateway Scaling</h1>
                 </div>
 
                 <!-- Desktop Navigation Links -->
@@ -128,10 +128,10 @@
                 <!-- Mobile nav toggle button for internal page -->
  <div class="block sm:hidden ml-4 flex-shrink-0"> <!-- Added flex-shrink-0 -->
                     <button id="mobile-nav-toggle" class="p-2 rounded-md text-gray-600 hover:bg-[#85BDE9] hover:text-white focus:outline-none">
- <svg id="hamburger-icon" class="h-6 w-6 block" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+ <svg id="hamburger-icon" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
  </svg>
- <svg id="close-icon" class="h-6 w-6 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+ <svg id="close-icon" class="h-6 w-6 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor">\n
  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
                         </svg>
                     </button>
@@ -677,13 +677,7 @@
     const mobileNavMenu = document.getElementById('mobile-nav-menu');
  const hamburgerIcon = document.getElementById('hamburger-icon');
  const closeIcon = document.getElementById('close-icon');
-    const mobileNavOverlay = document.getElementById('mobile-nav-overlay');
-
-    if (mobileNavToggle && mobileNavMenu && mobileNavOverlay) {
-        mobileNavToggle.addEventListener('click', () => {
-            mobileNavMenu.classList.toggle('is-open');
-            mobileNavOverlay.style.display = mobileNavMenu.classList.contains('is-open') ? 'block' : 'none';
-        });
+ const mobileNavOverlay = document.getElementById('mobile-nav-overlay');\n
         function toggleMenu() {
  mobileNavMenu.classList.toggle('is-open');
  mobileNavOverlay.style.display = mobileNavMenu.classList.contains('is-open') ? 'block' : 'none';
@@ -696,8 +690,8 @@
         });
         // Close mobile menu when a link is clicked
         mobileNavMenu.querySelectorAll('a').forEach(link => {
-            link.addEventListener('click', () => {
-                mobileNavMenu.classList.remove('is-open');
+            link.addEventListener('click', (event) => {
+ if (mobileNavMenu.classList.contains('is-open')) toggleMenu();
                 mobileNavOverlay.style.display = 'none';
             });
         });
