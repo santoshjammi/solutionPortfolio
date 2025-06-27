@@ -68,6 +68,25 @@
  text-align: center;
             }
         }
+        /* Mobile menu styles */
+        .mobile-menu {
+            display: none; /* Hidden by default */
+            position: absolute;
+            top: 48px; /* Adjust based on header height */
+            right: 0;
+            width: 100%;
+            background-color: white;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1000;
+            flex-direction: column; /* Stack links vertically */
+        }
+        .mobile-menu a {
+            padding: 10px 20px;
+            border-bottom: 1px solid #e2e8f0; /* Add separators */
+            text-align: center;
+        }
+        .mobile-menu a:last-child { border-bottom: none; }
+
     </style>
 </head>
 <body class="text-gray-700">
@@ -78,6 +97,12 @@
                 <div class="flex items-center">
                     <h1 class="text-lg font-bold text-[#00449E]">Investment Banking CRM</h1>
                 </div>
+                <!-- Mobile menu button -->
+                <button id="mobile-menu-button" class="sm:hidden focus:outline-none">
+                    <svg class="h-6 w-6 text-gray-600 hover:text-[#005CB9]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                    </svg>
+                </button>
                 <div class="hidden sm:block">
                     <div class="ml-10 flex items-baseline space-x-2">
                         <a href="#imperative" class="text-gray-600 hover:bg-[#85BDE9] hover:text-white px-2 py-1 rounded-md text-sm font-medium">Imperative</a>
@@ -91,6 +116,18 @@
                     </div>
                 </div>
             </div>
+        </nav>
+        <!-- Mobile Menu Content -->
+        <nav id="mobile-menu" class="mobile-menu">
+            <a href="#imperative" class="text-gray-600 hover:bg-[#85BDE9] hover:text-white">Imperative</a>
+            <a href="#pillars" class="text-gray-600 hover:bg-[#85BDE9] hover:text-white">Pillars</a>
+            <a href="#client-mgmt" class="text-gray-600 hover:bg-[#85BDE9] hover:text-white">Client Mgmt</a>
+            <a href="#deal-pipeline" class="text-gray-600 hover:bg-[#85BDE9] hover:text-white">Deal Pipeline</a>
+            <a href="#collaboration" class="text-gray-600 hover:bg-[#85BDE9] hover:text-white">Collaboration</a>
+            <a href="#insights" class="text-gray-600 hover:bg-[#85BDE9] hover:text-white">Insights</a>
+            <a href="#security" class="text-gray-600 hover:bg-[#85BDE9] hover:text-white">Security</a>
+            <a href="#roi" class="text-gray-600 hover:bg-[#85BDE9] hover:text-white">ROI</a>
+
         </nav>
     </header>
 
@@ -341,6 +378,21 @@
         </div>
     </footer>
 
+<script>
+    const mobileMenuButton = document.getElementById('mobile-menu-button');
+    const mobileMenu = document.getElementById('mobile-menu');
+
+    mobileMenuButton.addEventListener('click', () => {
+        mobileMenu.style.display = mobileMenu.style.display === 'flex' ? 'none' : 'flex';
+    });
+
+    // Close the menu when a link is clicked
+    mobileMenu.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => {
+            mobileMenu.style.display = 'none';
+        });
+    });
+</script>
 
 <script>
     const chartColors = {

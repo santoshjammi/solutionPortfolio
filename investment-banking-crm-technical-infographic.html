@@ -97,7 +97,7 @@
         .mobile-nav-menu {
             position: fixed;
             top: 48px; /* Height of the header */
-            left: 0;
+            right: 0; /* Start off-screen to the right */
             width: 100%;
             height: calc(100% - 48px); /* Full height minus header */
             background-color: white;
@@ -148,7 +148,7 @@
 
     <!-- Mobile Navigation Menu -->
     <div id="mobile-nav-overlay" class="mobile-nav-overlay"></div>
-    <div id="mobile-nav-menu" class="mobile-nav-menu">
+    <div id="mobile-nav-menu" class="mobile-nav-menu hidden sm:hidden">
         <div class="flex flex-col space-y-2">
             <a href="#overview" class="block px-4 py-2 rounded-md text-base font-medium text-gray-800 hover:bg-[#85BDE9] hover:text-white active:opacity-75">Overview</a>
             <a href="#architecture" class="block px-4 py-2 rounded-md text-base font-medium text-gray-800 hover:bg-[#85BDE9] hover:text-white active:opacity-75">Architecture</a>
