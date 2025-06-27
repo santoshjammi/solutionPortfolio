@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Gateway Scaling: A Technical Deep Dive</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f4f8;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 300px;
+            max-height: 400px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 350px;
+            }
+        }
+        .technical-flow-arrow {
+            font-size: 1.5rem;
+            line-height: 1;
+            color: #85BDE9;
+        }
+        .technical-box {
+            @apply bg-white p-4 rounded-lg shadow-md text-center font-medium text-sm border border-gray-200;
+        }
+    </style>
+</head>
+<body class="text-gray-700">
+
+    <header class="bg-white sticky top-0 z-50 shadow-md">
+        <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-12">
+                <div class="flex items-center">
+                    <h1 class="text-lg font-bold text-[#00449E]">Technical Deep Dive Infographic</h1>
+                </div>
+                <div class="hidden sm:block">
+                    <div class="ml-10 flex items-baseline space-x-2">
+                        <a href="#overview" class="text-gray-600 hover:bg-[#85BDE9] hover:text-white px-2 py-1 rounded-md text-sm font-medium">Overview</a>
+                        <a href="#bottlenecks" class="text-gray-600 hover:bg-[#85BDE9] hover:text-white px-2 py-1 rounded-md text-sm font-medium">Bottlenecks</a>
+                        <a href="#architecture" class="text-gray-600 hover:bg-[#85BDE9] hover:text-white px-2 py-1 rounded-md text-sm font-medium">Architecture</a>
+                        <a href="#data-infra" class="text-gray-600 hover:bg-[#85BDE9] hover:text-white px-2 py-1 rounded-md text-sm font-medium">Data & Infra</a>
+                        <a href="#code-security" class="text-gray-600 hover:bg-[#85BDE9] hover:text-white px-2 py-1 rounded-md text-sm font-medium">Code & Security</a>
+                        <a href="#metrics" class="text-gray-600 hover:bg-[#85BDE9] hover:text-white px-2 py-1 rounded-md text-sm font-medium">Metrics</a>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
+
+        <section id="overview" class="text-center mb-20">
+            <h2 class="text-4xl font-extrabold text-[#00449E] sm:text-5xl md:text-6xl">Achieving 200 TPS: A Technical Blueprint</h2>
+            <p class="mt-4 max-w-3xl mx-auto text-xl text-gray-500">This document outlines the technical strategies and architectural shifts required to scale our payment gateway from 20 to 200 Transactions Per Second (TPS), ensuring robust, high-performance operations.</p>
+            <div class="mt-12 flex flex-col md:flex-row items-center justify-center space-y-8 md:space-y-0 md:space-x-12">
+                <div class="bg-white rounded-lg shadow-xl p-8 text-center">
+                    <p class="text-lg font-medium text-gray-500">Current Capacity</p>
+                    <p class="text-7xl font-black text-[#0076D4]">20</p>
+                    <p class="text-2xl font-bold text-gray-600">TPS</p>
+                </div>
+                <div class="text-6xl font-thin text-[#005CB9] transform rotate-90 md:rotate-0">➡️</div>
+                <div class="bg-white rounded-lg shadow-xl p-8 text-center border-4 border-[#0076D4]">
+                    <p class="text-lg font-medium text-gray-500">Target Performance</p>
+                    <p class="text-7xl font-black text-[#005CB9]">200</p>
+                    <p class="text-2xl font-bold text-gray-600">TPS</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="bottlenecks" class="mb-20 bg-white rounded-lg shadow-lg p-6 md:p-8">
+            <h3 class="text-2xl font-bold text-[#00449E] mb-4">Current Bottlenecks & Their Impact</h3>
+            <p class="text-gray-600 mb-8">Detailed analysis reveals several key areas hindering our current throughput. Addressing these is paramount for achieving our 200 TPS target.</p>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+                <div>
+                    <h4 class="font-semibold text-lg text-[#005CB9] mb-2">Primary Performance Constraints</h4>
+                    <p class="text-sm text-gray-500 mb-4">This chart highlights the estimated percentage contribution of various system components to our current transaction processing delays. Database operations and tightly coupled services are the leading causes.</p>
+                    <div class="chart-container h-64 md:h-80">
+                        <canvas id="bottleneckChart"></canvas>
+                    </div>
+                </div>
+                <div>
+                    <h4 class="font-semibold text-lg text-[#005CB9] mb-2">Identifying Chokepoints</h4>
+                    <ul class="list-disc list-inside text-gray-600 text-base space-y-2">
+                        <li>**Monolithic Application Design:** Single point of failure, difficult to scale individual components.</li>
+                        <li>**Synchronous I/O Operations:** Blocking calls to external services or databases introduce latency.</li>
+                        <li>**Inefficient Database Schema/Queries:** Lack of proper indexing, complex joins, or unoptimized queries.</li>
+                        <li>**Limited Connection Pooling:** Inefficient management of database and external API connections.</li>
+                        <li>**Lack of Caching:** Repetitive data fetches from the primary database.</li>
+                        <li>**Single Server Dependencies:** No horizontal scaling or load balancing.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section id="architecture" class="mb-20 bg-white rounded-lg shadow-lg p-6 md:p-8">
+            <h3 class="text-2xl font-bold text-[#00449E] mb-4">Architectural Transformation: Microservices & Event-Driven Flows</h3>
+            <p class="text-gray-600 mb-8">A shift to a distributed, asynchronous architecture is fundamental for high-throughput and resilience.</p>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+                <div>
+                    <h4 class="font-semibold text-lg text-[#005CB9] mb-2">Transition to Microservices</h4>
+                    <p class="text-sm text-gray-500 mb-4">Breaking the monolith into independent, smaller services (Payment Core, Fraud, Notification, Ledger) allows for dedicated teams, independent deployment, and granular scaling of each function.</p>
+                    <div class="flex flex-col items-center justify-center space-y-4 bg-gray-100 p-6 rounded-lg shadow">
+                        <div class="technical-box text-[#00449E] w-48">Monolithic Gateway</div>
+                        <div class="technical-flow-arrow rotate-90">➡️</div>
+                        <div class="grid grid-cols-2 gap-4 w-full max-w-md">
+                            <div class="technical-box bg-[#0076D4] text-white">Payment Core Service</div>
+                            <div class="technical-box bg-[#0076D4] text-white">Fraud Service</div>
+                            <div class="technical-box bg-[#0076D4] text-white">Notification Service</div>
+                            <div class="technical-box bg-[#0076D4] text-white">Ledger Service</div>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <h4 class="font-semibold text-lg text-[#005CB9] mb-2">Asynchronous Transaction Processing</h4>
+                    <p class="text-sm text-gray-500 mb-4">Leveraging message queues (e.g., Kafka, RabbitMQ) decouples the API ingestion from backend processing, enabling rapid request acceptance and resilient, parallel execution by worker pools.</p>
+                    <div class="flex flex-col items-center justify-center space-y-2 bg-gray-100 p-6 rounded-lg shadow">
+                        <div class="technical-box bg-[#005CB9] text-white">Client Request</div>
+                        <div class="technical-flow-arrow">⬇️</div>
+                        <div class="technical-box">API Gateway</div>
+                        <div class="technical-flow-arrow">⬇️</div>
+                        <div class="technical-box bg-[#0076D4] text-white">Message Queue (e.g., Kafka)</div>
+                        <div class="technical-flow-arrow">⬇️</div>
+                        <div class="flex justify-around w-full">
+                            <div class="technical-box">Worker 1</div>
+                            <div class="technical-box">Worker 2</div>
+                            <div class="technical-box">Worker N</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="data-infra" class="mb-20 bg-white rounded-lg shadow-lg p-6 md:p-8">
+            <h3 class="text-2xl font-bold text-[#00449E] mb-4">Data Layer & Infrastructure Optimization</h3>
+            <p class="text-gray-600 mb-8">Strategic database management and elastic cloud infrastructure are vital for handling massive concurrent requests.</p>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
+                <div>
+                    <h4 class="font-semibold text-lg text-[#005CB9] mb-2">Database Sharding Strategies</h4>
+                    <p class="text-sm text-gray-500 mb-4">Horizontal partitioning of data across multiple database instances distributes write load. Common strategies include Hash Sharding (even distribution) and Range Sharding (data locality). Read replicas further offload read queries.</p>
+                    <div class="flex flex-col items-center justify-center space-y-4 bg-gray-100 p-6 rounded-lg shadow">
+                        <div class="technical-box bg-[#005CB9] text-white w-48">Main Database</div>
+                        <div class="technical-flow-arrow rotate-90">⬇️</div>
+                        <div class="flex space-x-4">
+                            <div class="technical-box">Shard A (e.g., User ID Range 0-999)</div>
+                            <div class="technical-box">Shard B (e.g., User ID Range 1000-1999)</div>
+                        </div>
+                        <div class="text-gray-500 text-xs mt-2">Plus: Multiple Read Replicas per Shard</div>
+                    </div>
+                </div>
+                <div>
+                    <h4 class="font-semibold text-lg text-[#005CB9] mb-2">Multi-Tier Caching Implementation</h4>
+                    <p class="text-sm text-gray-500 mb-4">Introducing distributed caching (e.g., Redis Cluster) for hot data and localized in-memory caches reduces database hits and improves response times for frequently accessed merchant configurations, fraud rules, or transaction statuses.</p>
+                    <div class="flex flex-col items-center justify-center space-y-2 bg-gray-100 p-6 rounded-lg shadow">
+                        <div class="technical-box">Application Service</div>
+                        <div class="technical-flow-arrow">⬇️</div>
+                        <div class="technical-box">In-Memory Cache (L1)</div>
+                        <div class="technical-flow-arrow">⬇️</div>
+                        <div class="technical-box bg-[#0076D4] text-white">Distributed Cache (L2 - Redis)</div>
+                        <div class="technical-flow-arrow">⬇️</div>
+                        <div class="technical-box">Database Cluster</div>
+                    </div>
+                </div>
+                <div class="lg:col-span-2">
+                    <h4 class="font-semibold text-lg text-[#005CB9] mb-2">Cloud-Native Elasticity & Orchestration</h4>
+                    <p class="text-sm text-gray-500 mb-4">Leveraging Kubernetes for container orchestration (Docker) on a cloud platform (AWS, Azure, GCP) enables automated horizontal scaling, self-healing, and efficient resource utilization, ensuring our infrastructure matches demand precisely.</p>
+                    <div class="flex flex-col items-center justify-center space-y-4 bg-gray-100 p-6 rounded-lg shadow">
+                        <div class="technical-box bg-[#005CB9] text-white w-48">Cloud Load Balancer</div>
+                        <div class="technical-flow-arrow rotate-90">➡️</div>
+                        <div class="technical-box w-64">Kubernetes Cluster (Auto-Scaling Groups)</div>
+                        <div class="technical-flow-arrow rotate-90">➡️</div>
+                        <div class="grid grid-cols-3 gap-2 w-full max-w-lg">
+                            <div class="technical-box bg-[#0076D4] text-white">Pod 1</div>
+                            <div class="technical-box bg-[#0076D4] text-white">Pod 2</div>
+                            <div class="technical-box bg-[#0076D4] text-white">Pod N</div>
+                            <div class="technical-box bg-gray-300">📈 HPA</div>
+                            <div class="technical-box bg-gray-300">⚙️ Desired State</div>
+                            <div class="technical-box bg-gray-300">🩺 Health Checks</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="code-security" class="mb-20 bg-white rounded-lg shadow-lg p-6 md:p-8">
+            <h3 class="text-2xl font-bold text-[#00449E] mb-4">Code Optimization & Advanced Security</h3>
+            <p class="text-gray-600 mb-8">Fine-tuning application logic and implementing robust security patterns are crucial for both performance and integrity.</p>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+                <div>
+                    <h4 class="font-semibold text-lg text-[#005CB9] mb-2">Impact of Code Optimization on Performance</h4>
+                    <p class="text-sm text-gray-500 mb-4">Targeted code profiling and optimization will significantly reduce average transaction latency and improve resource efficiency per transaction. This leads to higher overall throughput capacity.</p>
+                    <div class="chart-container h-64 md:h-80">
+                        <canvas id="codeMetricsChart"></canvas>
+                    </div>
+                </div>
+                <div>
+                    <h4 class="font-semibold text-lg text-[#005CB9] mb-2">API Management & Resilient Integrations</h4>
+                    <p class="text-sm text-gray-500 mb-4">Implementing an API Gateway for request validation, rate limiting, and centralized authentication. Employing Circuit Breakers and Idempotency for robust handling of external payment processor integrations.</p>
+                    <div class="flex flex-col items-center justify-center space-y-2 bg-gray-100 p-6 rounded-lg shadow">
+                        <div class="technical-box bg-[#005CB9] text-white">Client Request</div>
+                        <div class="technical-flow-arrow">⬇️</div>
+                        <div class="technical-box">API Gateway (Auth, Rate Limit, Validate)</div>
+                        <div class="technical-flow-arrow">⬇️</div>
+                        <div class="technical-box bg-[#0076D4] text-white">Payment Core Service</div>
+                        <div class="technical-flow-arrow">⬇️</div>
+                        <div class="technical-box">External Processor API (Circuit Breaker, Idempotent)</div>
+                    </div>
+                </div>
+                <div class="lg:col-span-2">
+                    <h4 class="font-semibold text-lg text-[#005CB9] mb-2">PCI DSS & Data Security Landscape</h4>
+                    <p class="text-sm text-gray-500 mb-4">Maintaining stringent PCI DSS compliance requires strategies such as tokenization of sensitive cardholder data, robust encryption for data at rest and in transit (TLS 1.2+), and rigorous access controls. Our architecture will be designed with these principles embedded from the ground up to minimize scope and maximize security.</p>
+                    <div class="flex items-center justify-center space-x-6 py-4">
+                        <div class="text-center">
+                            <span class="text-5xl">🔐</span>
+                            <p class="text-sm font-semibold text-gray-700">Tokenization</p>
+                        </div>
+                        <div class="text-center">
+                            <span class="text-5xl">🔑</span>
+                            <p class="text-sm font-semibold text-gray-700">Encryption (TLS, At-Rest)</p>
+                        </div>
+                        <div class="text-center">
+                            <span class="text-5xl">🚪</span>
+                            <p class="text-sm font-semibold text-gray-700">Access Control</p>
+                        </div>
+                        <div class="text-center">
+                            <span class="text-5xl">🚫</span>
+                            <p class="text-sm font-semibold text-gray-700">DDoS Protection</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="metrics" class="bg-white rounded-lg shadow-lg p-6 md:p-8">
+            <h3 class="text-2xl font-bold text-[#00449E] mb-4">Key Technical Metrics for Success</h3>
+            <p class="text-gray-600 mb-8">Continuous monitoring of these critical technical metrics will be essential to track progress and identify areas for further optimization.</p>
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                <div class="p-4 bg-gray-100 rounded-lg text-center shadow-sm">
+                    <p class="text-4xl font-bold text-[#0076D4]">180ms</p>
+                    <p class="text-md text-gray-600 font-semibold">Avg. Transaction Latency</p>
+                    <p class="text-xs text-gray-500">(Target &lt; 200ms)</p>
+                </div>
+                <div class="p-4 bg-gray-100 rounded-lg text-center shadow-sm">
+                    <p class="text-4xl font-bold text-[#0076D4]">0.01%</p>
+                    <p class="text-md text-gray-600 font-semibold">Error Rate</p>
+                    <p class="text-xs text-gray-500">(Target &lt; 0.05%)</p>
+                </div>
+                <div class="p-4 bg-gray-100 rounded-lg text-center shadow-sm">
+                    <p class="text-4xl font-bold text-[#0076D4]">60%</p>
+                    <p class="text-md text-gray-600 font-semibold">Peak CPU Utilization</p>
+                    <p class="text-xs text-gray-500">(Target &lt; 70%)</p>
+                </div>
+                <div class="p-4 bg-gray-100 rounded-lg text-center shadow-sm">
+                    <p class="text-4xl font-bold text-[#0076D4]">50ms</p>
+                    <p class="text-md text-gray-600 font-semibold">Database Query Time</p>
+                    <p class="text-xs text-gray-500">(Target &lt; 80ms)</p>
+                </div>
+                <div class="p-4 bg-gray-100 rounded-lg text-center shadow-sm">
+                    <p class="text-4xl font-bold text-[#0076D4]">2s</p>
+                    <p class="text-md text-gray-600 font-semibold">Queue Lag (Max)</p>
+                    <p class="text-xs text-gray-500">(Target &lt; 5s)</p>
+                </div>
+                 <div class="p-4 bg-gray-100 rounded-lg text-center shadow-sm">
+                    <p class="text-4xl font-bold text-[#0076D4]">99.99%</p>
+                    <p class="text-md text-gray-600 font-semibold">Service Uptime</p>
+                    <p class="text-xs text-gray-500">(Target 99.99%)</p>
+                </div>
+            </div>
+            <div class="mt-8 chart-container h-64 md:h-80">
+                <h4 class="font-semibold text-lg text-[#005CB9] mb-2 text-center">Load Test Results: Latency vs. TPS</h4>
+                <canvas id="latencyTpsChart"></canvas>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-[#00449E] text-white mt-16">
+        <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8 text-center text-sm">
+            <p>&copy; 2025 Enterprise Solution Architects. All Rights Reserved.</p>
+            <p class="mt-1 opacity-70">This technical infographic was dynamically generated. All diagrams are rendered using HTML/CSS and all charts are rendered on Canvas via Chart.js. No SVG or Mermaid JS was used.</p>
+        </div>
+    </footer>
+
+
+<script>
+    const chartColors = {
+        primary: '#0076D4',
+        secondary: '#4195D7',
+        light: '#85BDE9',
+        dark: '#005CB9',
+        accent: '#FF6384',
+        gray: '#cbd5e1'
+    };
+
+    const defaultChartOptions = {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+            legend: {
+                position: 'top',
+                labels: {
+                    color: '#4B5563',
+                    font: {
+                        weight: 'bold'
+                    }
+                }
+            },
+            tooltip: {
+                enabled: true,
+                mode: 'index',
+                intersect: false,
+                backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                titleFont: { size: 14, weight: 'bold' },
+                bodyFont: { size: 12 },
+                callbacks: {
+                    title: function(tooltipItems) {
+                        const item = tooltipItems[0];
+                        let label = item.chart.data.labels[item.dataIndex];
+                        if (Array.isArray(label)) {
+                          return label.join(' ');
+                        } else {
+                          return label;
+                        }
+                    }
+                }
+            }
+        },
+        scales: {
+            x: {
+                ticks: { 
+                    color: '#4B5563',
+                    font: {
+                         size: 10
+                    }
+                },
+                grid: {
+                    display: false
+                }
+            },
+            y: {
+                ticks: { color: '#4B5563' },
+                grid: {
+                    color: '#e2e8f0'
+                }
+            }
+        }
+    };
+
+    function wrapLabel(str, maxWidth) {
+        if (str.length <= maxWidth) {
+            return str;
+        }
+        const words = str.split(' ');
+        let lines = [];
+        let currentLine = '';
+        words.forEach(word => {
+            if ((currentLine + word).length > maxWidth) {
+                lines.push(currentLine.trim());
+                currentLine = '';
+            }
+            currentLine += word + ' ';
+        });
+        lines.push(currentLine.trim());
+        return lines;
+    }
+
+    const bottleneckChartCtx = document.getElementById('bottleneckChart');
+    if (bottleneckChartCtx) {
+        new Chart(bottleneckChartCtx, {
+            type: 'pie',
+            data: {
+                labels: ['Database I/O', 'Service Calls (Sync)', 'Application Logic', 'Network Latency', 'Other Overheads'],
+                datasets: [{
+                    label: 'Bottleneck Contribution',
+                    data: [35, 25, 20, 10, 10],
+                    backgroundColor: [
+                        chartColors.primary,
+                        chartColors.dark,
+                        chartColors.secondary,
+                        chartColors.light,
+                        chartColors.gray
+                    ],
+                    borderColor: '#fff',
+                    borderWidth: 2
+                }]
+            },
+            options: {
+                ...defaultChartOptions,
+                scales: { x: { display: false }, y: { display: false } }
+            }
+        });
+    }
+
+    const codeMetricsChartCtx = document.getElementById('codeMetricsChart');
+    if (codeMetricsChartCtx) {
+        const labels = ['Avg. Latency (ms)', 'CPU/Tx (%)', 'Memory/Tx (MB)'];
+        new Chart(codeMetricsChartCtx, {
+            type: 'bar',
+            data: {
+                labels: labels.map(l => wrapLabel(l, 16)),
+                datasets: [{
+                    label: 'Before Optimization',
+                    data: [250, 15, 20],
+                    backgroundColor: chartColors.light,
+                    borderColor: chartColors.secondary,
+                    borderWidth: 1
+                }, {
+                    label: 'After Optimization',
+                    data: [80, 5, 8],
+                    backgroundColor: chartColors.primary,
+                    borderColor: chartColors.dark,
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                ...defaultChartOptions,
+                indexAxis: 'y',
+                scales: {
+                    x: {
+                        beginAtZero: true,
+                        title: { display: true, text: 'Value' }
+                    },
+                    y: {
+                        grid: { display: false }
+                    }
+                }
+            }
+        });
+    }
+
+    const latencyTpsChartCtx = document.getElementById('latencyTpsChart');
+    if(latencyTpsChartCtx) {
+        new Chart(latencyTpsChartCtx, {
+            type: 'line',
+            data: {
+                labels: ['20 TPS', '50 TPS', '100 TPS', '150 TPS', '200 TPS', '220 TPS'],
+                datasets: [{
+                    label: 'Transaction Latency (ms)',
+                    data: [150, 160, 180, 220, 280, 450],
+                    borderColor: chartColors.primary,
+                    backgroundColor: 'rgba(0, 118, 212, 0.2)',
+                    fill: true,
+                    tension: 0.3
+                }]
+            },
+            options: {
+                ...defaultChartOptions,
+                scales: {
+                    x: {
+                        title: { display: true, text: 'Throughput (TPS)' }
+                    },
+                    y: {
+                        beginAtZero: true,
+                        title: { display: true, text: 'Latency (ms)' }
+                    }
+                }
+            }
+        });
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scaling Payment Gateway Throughput: 20 to 200 TPS</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f4f8;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 250px; /* Default height for mobile */
+        }
+        @media (min-width: 640px) { /* sm breakpoint */
+            .chart-container {
+                height: 300px;
+            }
+        }
+        @media (min-width: 768px) { /* md breakpoint */
+            .chart-container {
+                height: 350px;
+            }
+        }
+        .flow-arrow {
+            font-size: 1.25rem; /* Adjusted for mobile view */
+            line-height: 1;
+            color: #85BDE9;
+        }
+        /* Adjusted padding and font sizes for mobile optimization */
+        .section-padding {
+            @apply p-6 sm:p-8 md:p-12;
+        }
+        .heading-1 {
+            @apply text-3xl sm:text-4xl md:text-5xl lg:text-6xl;
+        }
+        .heading-2 {
+            @apply text-2xl sm:text-3xl md:text-4xl;
+        }
+        .heading-3 {
+            @apply text-xl sm:text-2xl md:text-3xl;
+        }
+        .heading-4 {
+            @apply text-lg sm:text-xl md:text-2xl;
+        }
+        .text-content {
+            @apply text-sm sm:text-base md:text-lg;
+        }
+        .text-small {
+            @apply text-xs sm:text-sm;
+        }
+        .icon-size {
+            @apply text-3xl sm:text-4xl md:text-5xl;
+        }
+        .numeric-large {
+            @apply text-5xl sm:text-6xl md:text-7xl;
+        }
+
+        /* Styles for mobile navigation overlay */
+        .mobile-nav-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.7); /* Dark overlay */
+            z-index: 50; /* Above content, below header */
+            display: none; /* Hidden by default */
+        }
+        .mobile-nav-menu {
+            position: fixed;
+            top: 48px; /* Height of the header */
+            left: 0;
+            width: 100%;
+            height: calc(100% - 48px); /* Full height minus header */
+            background-color: white;
+            z-index: 60;
+            transform: translateX(-100%); /* Start off-screen to the left */
+            transition: transform 0.3s ease-in-out;
+            padding: 1rem;
+            overflow-y: auto; /* Enable scrolling for long menus */
+        }
+        .mobile-nav-menu.is-open {
+            transform: translateX(0); /* Slide in */
+        }
+    </style>
+</head>
+<body class="text-gray-700">
+
+    <header class="bg-white sticky top-0 z-50 shadow-md">
+        <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-12 relative">
+            <div class="flex items-center justify-between h-full">
+                <div class="flex items-center">
+                    <h1 class="text-lg font-bold text-[#00449E]">Payment Gateway Infographic</h1>
+                </div>
+
+                <!-- Desktop Navigation Links -->
+                <div class="hidden sm:block ml-10">
+                    <div class="flex items-baseline space-x-2">
+                        <a href="#challenge" class="text-gray-600 hover:bg-[#85BDE9] hover:text-white px-2 py-1 rounded-md text-sm font-medium">Challenge</a>
+                        <a href="#pillars" class="text-gray-600 hover:bg-[#85BDE9] hover:text-white px-2 py-1 rounded-md text-sm font-medium">Pillars</a>
+                        <a href="#roadmap" class="text-gray-600 hover:bg-[#85BDE9] hover:text-white px-2 py-1 rounded-md text-sm font-medium">Roadmap</a>
+                        <a href="#impact" class="text-gray-600 hover:bg-[#85BDE9] hover:text-white px-2 py-1 rounded-md text-sm font-medium">Impact</a>
+                    </div>
+                </div>
+
+                <!-- Mobile nav toggle button for internal page -->
+                <div class="block sm:hidden">
+                    <button id="mobile-nav-toggle" class="p-2 rounded-md text-gray-600 hover:bg-[#85BDE9] hover:text-white focus:outline-none">
+                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Mobile Navigation Menu -->
+    <div id="mobile-nav-overlay" class="mobile-nav-overlay"></div>
+    <div id="mobile-nav-menu" class="mobile-nav-menu">
+        <div class="flex flex-col space-y-1">
+            <a href="#challenge" class="block px-3 py-2 rounded-md text-base font-medium text-gray-800 hover:bg-[#85BDE9] hover:text-white">Challenge</a>
+            <a href="#pillars" class="block px-3 py-2 rounded-md text-base font-medium text-gray-800 hover:bg-[#85BDE9] hover:text-white">Pillars</a>
+            <a href="#roadmap" class="block px-3 py-2 rounded-md text-base font-medium text-gray-800 hover:bg-[#85BDE9] hover:text-white">Roadmap</a>
+            <a href="#impact" class="block px-3 py-2 rounded-md text-base font-medium text-gray-800 hover:bg-[#85BDE9] hover:text-white">Impact</a>
+        </div>
+    </div>
+
+    <main class="max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
+
+        <section id="challenge" class="text-center mb-16 section-padding">
+            <h2 class="heading-1 font-extrabold text-[#00449E]">From Bottleneck to Superhighway</h2>
+            <p class="mt-4 max-w-2xl mx-auto text-content text-gray-500">Our objective is a 10x enhancement of our payment gateway's capacity, critical for accommodating business growth and ensuring competitive advantage.</p>
+            <div class="mt-12 flex flex-col md:flex-row items-center justify-center space-y-8 md:space-y-0 md:space-x-12">
+                <div class="bg-white rounded-lg shadow-xl p-6 sm:p-8 text-center w-full max-w-xs">
+                    <p class="text-lg font-medium text-gray-500">Current State</p>
+                    <p class="numeric-large font-black text-[#0076D4]">20</p>
+                    <p class="text-xl sm:text-2xl font-bold text-gray-600">TPS</p>
+                </div>
+                <div class="text-5xl sm:text-6xl font-thin text-[#005CB9] transform rotate-90 md:rotate-0">→</div>
+                <div class="bg-white rounded-lg shadow-xl p-6 sm:p-8 text-center border-4 border-[#0076D4] w-full max-w-xs">
+                    <p class="text-lg font-medium text-gray-500">Target State</p>
+                    <p class="numeric-large font-black text-[#005CB9]">200</p>
+                    <p class="text-xl sm:text-2xl font-bold text-gray-600">TPS</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="pillars" class="mb-16 section-padding">
+            <div class="text-center mb-12">
+                <h2 class="heading-2 font-bold text-[#00449E]">The Four Pillars of Throughput Improvement</h2>
+                <p class="mt-2 max-w-3xl mx-auto text-content text-gray-500">Achieving a 10x increase requires a multi-faceted approach, focusing on four core areas of technical and strategic enhancement.</p>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8 text-center">
+                <div class="bg-white p-5 rounded-lg shadow-md">
+                    <div class="icon-size mb-3">🏛️</div>
+                    <h3 class="heading-4 font-bold text-[#005CB9]">Architectural Reimagination</h3>
+                    <p class="mt-2 text-small text-gray-600">Modernizing the fundamental structure for resilience and independent scaling.</p>
+                </div>
+                <div class="bg-white p-5 rounded-lg shadow-md">
+                    <div class="icon-size mb-3">🗃️</div>
+                    <h3 class="heading-4 font-bold text-[#005CB9]">Data Layer Reinforcement</h3>
+                    <p class="mt-2 text-small text-gray-600">Optimizing data storage and access patterns for high-concurrency operations.</p>
+                </div>
+                <div class="bg-white p-5 rounded-lg shadow-md">
+                    <div class="icon-size mb-3">🏗️</div>
+                    <h3 class="heading-4 font-bold text-[#005CB9]">Infrastructure & Scalability</h3>
+                    <p class="mt-2 text-small text-gray-600">Ensuring our underlying systems can elastically handle massive load.</p>
+                </div>
+                 <div class="bg-white p-5 rounded-lg shadow-md">
+                    <div class="icon-size mb-3">⚙️</div>
+                    <h3 class="heading-4 font-bold text-[#005CB9]">Application & Code Optimization</h3>
+                    <p class="mt-2 text-small text-gray-600">Refining the efficiency of our software and external integrations.</p>
+                </div>
+            </div>
+        </section>
+        
+        <div class="space-y-16 sm:space-y-20">
+            <section id="pillar1">
+                <div class="bg-white rounded-lg shadow-lg section-padding">
+                    <h3 class="heading-3 font-bold text-[#00449E] mb-4">Pillar 1: Architectural Reimagination</h3>
+                    <p class="text-content text-gray-600 mb-8">We will decompose our system to enable independent scaling and improve fault tolerance. This involves moving from a rigid monolith to a flexible, event-driven architecture.</p>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                        <div>
+                            <h4 class="heading-4 font-semibold text-[#005CB9] mb-2">From Monolith to Microservices</h4>
+                             <p class="text-small text-gray-500 mb-4">Breaking down the application into smaller, independent services allows each component to scale based on its specific load, preventing a single bottleneck from affecting the entire system.</p>
+                            <div class="flex flex-col sm:flex-row justify-around items-center text-center space-y-4 sm:space-y-0 sm:space-x-4">
+                                <div class="w-full sm:w-2/5 p-4 bg-gray-100 rounded-lg">
+                                    <p class="font-bold">Monolith</p>
+                                    <div class="mt-2 p-4 bg-[#85BDE9] rounded text-white font-semibold text-small">All Functions</div>
+                                </div>
+                                <div class="flow-arrow font-bold transform sm:rotate-0 rotate-90">→</div>
+                                <div class="w-full sm:w-2/5 p-2">
+                                    <p class="font-bold">Microservices</p>
+                                    <div class="space-y-2 mt-2">
+                                        <div class="p-2 bg-[#0076D4] text-white rounded text-small">Auth</div>
+                                        <div class="p-2 bg-[#0076D4] text-white rounded text-small">Settle</div>
+                                        <div class="p-2 bg-[#0076D4] text-white rounded text-small">Fraud</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <h4 class="heading-4 font-semibold text-[#005CB9] mb-2">Introducing Asynchronous Processing</h4>
+                            <p class="text-small text-gray-500 mb-4">By decoupling request intake from processing using a message queue, we can handle traffic spikes smoothly, improve responsiveness, and build a more resilient system.</p>
+                             <div class="bg-gray-100 rounded-lg p-4">
+                                 <div class="flex flex-wrap items-center justify-center sm:justify-between text-center text-small font-semibold gap-2">
+                                     <div class="p-2 rounded bg-white shadow">Request</div>
+                                     <div class="flow-arrow text-base">→</div>
+                                     <div class="p-2 rounded bg-white shadow">API Gateway</div>
+                                     <div class="flow-arrow text-base">→</div>
+                                     <div class="p-2 rounded bg-[#0076D4] text-white shadow">Message Queue</div>
+                                     <div class="flow-arrow text-base">→</div>
+                                     <div class="p-2 rounded bg-white shadow">Workers</div>
+                                 </div>
+                             </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="pillar2">
+                <div class="bg-white rounded-lg shadow-lg section-padding">
+                    <h3 class="heading-3 font-bold text-[#00449E] mb-4">Pillar 2: Data Layer Reinforcement</h3>
+                     <p class="text-content text-gray-600 mb-8">High-throughput systems require a highly optimized data layer. We will distribute the database load and implement aggressive caching to minimize latency and contention.</p>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                         <div class="order-2 md:order-1">
+                             <h4 class="heading-4 font-semibold text-[#005CB9] mb-2">Database Load Reduction with Caching</h4>
+                            <p class="text-small text-gray-500 mb-4">A distributed cache will handle the majority of read requests for common data like merchant configurations. This chart illustrates the projected reduction in direct database hits.</p>
+                            <div class="chart-container">
+                                <canvas id="cachingChart"></canvas>
+                            </div>
+                        </div>
+                        <div class="order-1 md:order-2">
+                            <h4 class="heading-4 font-semibold text-[#005CB9] mb-2">Database Sharding & Replication</h4>
+                            <p class="text-small text-gray-500 mb-4"><strong>Sharding</strong> splits data across multiple databases to distribute write load. <strong>Replication</strong> creates read-only copies to scale read queries, isolating reporting from transactional workloads.</p>
+                            <div class="space-y-4">
+                                <div class="bg-gray-100 p-4 rounded-lg">
+                                    <p class="font-semibold text-center mb-2 text-small">Sharding (Distributes Writes)</p>
+                                    <div class="flex flex-col sm:flex-row items-center justify-around text-center text-small font-semibold gap-2">
+                                         <div class="p-3 bg-white rounded shadow">Main DB</div>
+                                         <div class="flow-arrow text-base transform sm:rotate-0 rotate-90">→</div>
+                                         <div class="p-3 bg-[#85BDE9] rounded text-white">Shard 1</div>
+                                         <div class="p-3 bg-[#85BDE9] rounded text-white">Shard 2</div>
+                                    </div>
+                                </div>
+                                <div class="bg-gray-100 p-4 rounded-lg">
+                                     <p class="font-semibold text-center mb-2 text-small">Replication (Scales Reads)</p>
+                                     <div class="flex flex-col sm:flex-row items-center justify-around text-center text-small font-semibold gap-2">
+                                         <div class="p-3 bg-white rounded shadow">Primary DB</div>
+                                         <div class="flow-arrow text-base transform sm:rotate-0 rotate-90">→</div>
+                                         <div class="p-3 bg-[#4195D7] rounded text-white">Replica 1</div>
+                                         <div class="p-3 bg-[#4195D7] rounded text-white">Replica 2</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <section id="pillar3">
+                 <div class="bg-white rounded-lg shadow-lg section-padding">
+                    <h3 class="heading-3 font-bold text-[#00449E] mb-4">Pillar 3: Infrastructure & Scalability</h3>
+                    <p class="text-content text-gray-600 mb-8">Modern infrastructure is elastic. By containerizing our applications and automating their management, we can build a system that automatically adapts to real-time demand.</p>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                        <div>
+                             <h4 class="heading-4 font-semibold text-[#005CB9] mb-2">Elasticity with Load Balancing & Auto-Scaling</h4>
+                             <p class="text-small text-gray-500 mb-4">Server instances will scale automatically based on traffic. This chart simulates how server count (blue bars) dynamically matches user load (red line) throughout the day, ensuring performance andraciones y eficiencia de costos.</p>
+                             <div class="chart-container">
+                                <canvas id="autoScalingChart"></canvas>
+                            </div>
+                        </div>
+                         <div>
+                            <h4 class="heading-4 font-semibold text-[#005CB9] mb-2">Containerization & Orchestration</h4>
+                            <p class="text-small text-gray-500 mb-4">We will package applications into portable Docker containers and manage them with Kubernetes. This standardizes deployments and enables powerful, automated scaling and self-healing capabilities.</p>
+                             <div class="bg-gray-100 rounded-lg p-4 space-y-4 text-center font-semibold">
+                                 <div class="p-3 bg-white rounded shadow text-small">Application Code</div>
+                                 <div class="text-xl text-[#85BDE9]">↓</div>
+                                 <div class="p-3 bg-white rounded shadow text-small">Docker Image (Portable Unit)</div>
+                                 <div class="text-xl text-[#85BDE9]">↓</div>
+                                 <div class="p-3 bg-[#0076D4] text-white rounded shadow text-small">Kubernetes Pods (Auto-Scaled)</div>
+                             </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="pillar4">
+                 <div class="bg-white rounded-lg shadow-lg section-padding">
+                    <h3 class="heading-3 font-bold text-[#00449E] mb-4">Pillar 4: Application & Code Optimization</h3>
+                    <p class="text-content text-gray-600 mb-8">Performance gains also come from within the application itself. We will refine critical code paths and strengthen how our system interacts with external dependencies.</p>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                        <div class="order-2 md:order-1">
+                             <h4 class="heading-4 font-semibold text-[#005CB9] mb-2">Improving Code Efficiency</h4>
+                            <p class="text-small text-gray-500 mb-4">By optimizing algorithms and reducing I/O, we can significantly lower the CPU usage and processing time for each transaction, freeing up resources for higher throughput.</p>
+                             <div class="chart-container">
+                                <canvas id="codeEfficiencyChart"></canvas>
+                            </div>
+                        </div>
+                        <div class="order-1 md:order-2">
+                             <h4 class="heading-4 font-semibold text-[#005CB9] mb-2">Optimizing External Integrations</h4>
+                            <p class="text-small text-gray-500 mb-4">Implementing patterns like circuit breakers and intelligent retries dramatically improves system resilience when interacting with third parties, enhancing overall stability and throughput.</p>
+                             <div class="chart-container">
+                                <canvas id="resilienceChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <section id="roadmap" class="mt-16 section-padding">
+            <div class="text-center mb-12">
+                <h2 class="heading-2 font-bold text-[#00449E]">The Implementation Roadmap: A Phased Journey</h2>
+                <p class="mt-2 max-w-3xl mx-auto text-content text-gray-500">Scaling is an iterative process. We will follow a structured, five-phase approach to ensure a smooth and successful transition.</p>
+            </div>
+            <div class="relative">
+                <div class="border-l-4 border-[#85BDE9] absolute h-full top-0 left-4 md:left-1/2 md:-translate-x-1/2"></div>
+                <div class="space-y-8 sm:space-y-12">
+                    <div class="flex flex-col md:flex-row md:justify-end items-start md:items-center w-full">
+                        <div class="hidden md:block w-5/12"></div>
+                        <div class="z-10 bg-[#005CB9] text-white w-8 h-8 rounded-full flex items-center justify-center font-bold flex-shrink-0 ml-2 md:ml-0 text-sm">1</div>
+                        <div class="w-full md:w-5/12 bg-white p-4 rounded-lg shadow-md ml-8 md:ml-8 mt-[-32px] md:mt-0">
+                            <h4 class="font-bold text-[#005CB9] text-base">Analyze & Profile</h4>
+                            <p class="text-xs text-gray-600">Identify current bottlenecks in the database, application, and network layers through rigorous performance profiling.</p>
+                        </div>
+                    </div>
+                     <div class="flex flex-col md:flex-row items-start md:items-center w-full">
+                        <div class="w-full md:w-5/12 md:text-right bg-white p-4 rounded-lg shadow-md mr-8 md:mr-8 mt-[-32px] md:mt-0 order-2 md:order-1">
+                             <h4 class="font-bold text-[#005CB9] text-base">Pilot & Prototype</h4>
+                             <p class="text-xs text-gray-600">Implement and test proposed solutions (e.g., caching, a single microservice) on a smaller, isolated scale to validate effectiveness.</p>
+                        </div>
+                        <div class="z-10 bg-[#005CB9] text-white w-8 h-8 rounded-full flex items-center justify-center font-bold flex-shrink-0 ml-2 md:ml-0 order-1 md:order-2 text-sm">2</div>
+                        <div class="hidden md:block w-5/12"></div>
+                    </div>
+                    <div class="flex flex-col md:flex-row md:justify-end items-start md:items-center w-full">
+                        <div class="hidden md:block w-5/12"></div>
+                        <div class="z-10 bg-[#005CB9] text-white w-8 h-8 rounded-full flex items-center justify-center font-bold flex-shrink-0 ml-2 md:ml-0 text-sm">3</div>
+                        <div class="w-full md:w-5/12 bg-white p-4 rounded-lg shadow-md ml-8 md:ml-8 mt-[-32px] md:mt-0">
+                             <h4 class="font-bold text-[#005CB9] text-base">Iterative Deployment</h4>
+                             <p class="text-xs text-gray-600">Roll out architectural changes in phases, continuously monitoring performance and stability at each step.</p>
+                        </div>
+                    </div>
+                     <div class="flex flex-col md:flex-row items-start md:items-center w-full">
+                        <div class="w-full md:w-5/12 md:text-right bg-white p-4 rounded-lg shadow-md mr-8 md:mr-8 mt-[-32px] md:mt-0 order-2 md:order-1">
+                            <h4 class="font-bold text-[#005CB9] text-base">Rigorous Load Testing</h4>
+                            <p class="text-xs text-gray-600">Conduct extensive load and stress testing to validate throughput targets and identify new bottlenecks under pressure.</p>
+                        </div>
+                        <div class="z-10 bg-[#005CB9] text-white w-8 h-8 rounded-full flex items-center justify-center font-bold flex-shrink-0 ml-2 md:ml-0 order-1 md:order-2 text-sm">4</div>
+                         <div class="hidden md:block w-5/12"></div>
+                    </div>
+                     <div class="flex flex-col md:flex-row md:justify-end items-start md:items-center w-full">
+                        <div class="hidden md:block w-5/12"></div>
+                        <div class="z-10 bg-[#005CB9] text-white w-8 h-8 rounded-full flex items-center justify-center font-bold flex-shrink-0 ml-2 md:ml-0 text-sm">5</div>
+                        <div class="w-full md:w-5/12 bg-white p-4 rounded-lg shadow-md ml-8 md:ml-8 mt-[-32px] md:mt-0">
+                             <h4 class="font-bold text-[#005CB9] text-base">Monitor & Optimize</h4>
+                             <p class="text-xs text-gray-600">Deploy advanced observability tools to track real-time performance, enabling continuous optimization.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="impact" class="mt-16 section-padding bg-white rounded-lg shadow-lg">
+            <div class="text-center">
+                 <h2 class="heading-2 font-bold text-[#00449E]">Conclusion: The Business Impact</h2>
+                <p class="mt-2 max-w-3xl mx-auto text-content text-gray-500">Achieving 200 TPS is a strategic imperative that delivers tangible business value across the organization.</p>
+            </div>
+            <div class="mt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+                <div class="text-center p-2">
+                    <div class="icon-size mb-4">📈</div>
+                    <h4 class="heading-4 font-bold text-[#005CB9]">Uninterrupted Growth</h4>
+                    <p class="mt-1 text-gray-600 text-small">Confidently scale the business to handle increasing transaction volumes from new markets and customers without performance degradation.</p>
+                </div>
+                 <div class="text-center p-2">
+                    <div class="icon-size mb-4">😊</div>
+                    <h4 class="heading-4 font-bold text-[#005CB9]">Enhanced Customer Experience</h4>
+                    <p class="mt-1 text-gray-600 text-small">Faster, more reliable payments mean happier customers.</p>
+                </div>
+                <div class="text-center p-2">
+                    <div class="icon-size mb-4">🏆</div>
+                    <h4 class="heading-4 font-bold text-[#005CB9]">Competitive Advantage</h4>
+                    <p class="mt-1 text-gray-600 text-small">Stay ahead in a fast-paced market.</p>
+                </div>
+                 <div class="text-center p-2">
+                    <div class="icon-size mb-4">⚙️</div>
+                    <h4 class="heading-4 font-bold text-[#005CB9]">Operational Efficiency</h4>
+                    <p class="mt-1 text-gray-600 text-small">Optimize resource usage and reduce operational costs at scale.</p>
+                </div>
+                 <div class="text-center p-2">
+                    <div class="icon-size mb-4">💰</div>
+                    <h4 class="heading-4 font-bold text-[#005CB9]">Increased Revenue Potential</h4>
+                    <p class="mt-1 text-gray-600 text-small">Handle more transactions, unlock new business opportunities.</p>
+                </div>
+                 <div class="text-center p-2">
+                    <div class="icon-size mb-4">🛡️</div>
+                    <h4 class="heading-4 font-bold text-[#005CB9]">Future-Ready Platform</h4>
+                    <p class="mt-1 text-gray-600 text-small">Provides a robust foundation for future products and services.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <footer class="bg-[#00449E] text-white mt-16">
+        <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8 text-center text-sm">
+            <p>&copy; 2025 Gateway Scaling Initiative. All Rights Reserved.</p>
+            <p class="mt-1 opacity-70">This infographic was dynamically generated. All diagrams are rendered using HTML/CSS and all charts are rendered on Canvas via Chart.js. No SVG or Mermaid JS was used.</p>
+        </div>
+    </footer>
+
+
+<script>
+    const chartColors = {
+        primary: '#0076D4',
+        secondary: '#4195D7',
+        light: '#85BDE9',
+        dark: '#005CB9',
+        accent: '#FF6384',
+        gray: '#cbd5e1'
+    };
+
+    const defaultChartOptions = {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+            legend: {
+                position: 'top',
+                labels: {
+                    color: '#4B5563',
+                    font: {
+                        size: 10, /* Adjusted for mobile */
+                        weight: 'bold'
+                    }
+                }
+            },
+            tooltip: {
+                enabled: true,
+                mode: 'index',
+                intersect: false,
+                backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                titleFont: { size: 12, weight: 'bold' }, /* Adjusted for mobile */
+                bodyFont: { size: 10 }, /* Adjusted for mobile */
+                callbacks: {
+                    title: function(tooltipItems) {
+                        const item = tooltipItems[0];
+                        let label = item.chart.data.labels[item.dataIndex];
+                        if (Array.isArray(label)) {
+                          return label.join(' ');
+                        } else {
+                          return label;
+                        }
+                    }
+                }
+            }
+        },
+        scales: {
+            x: {
+                ticks: { 
+                    color: '#4B5563',
+                    font: {
+                         size: 9 /* Adjusted for mobile */
+                    }
+                },
+                grid: {
+                    display: false
+                }
+            },
+            y: {
+                ticks: { color: '#4B5563', font: { size: 9 } }, /* Adjusted for mobile */
+                grid: {
+                    color: '#e2e8f0'
+                }
+            }
+        }
+    };
+
+    function wrapLabel(str, maxWidth) {
+        if (str.length <= maxWidth) {
+            return str;
+        }
+        const words = str.split(' ');
+        let lines = [];
+        let currentLine = '';
+        words.forEach(word => {
+            if ((currentLine + word).length > maxWidth) {
+                lines.push(currentLine.trim());
+                currentLine = '';
+            }
+            currentLine += word + ' ';
+        });
+        lines.push(currentLine.trim());
+        return lines;
+    }
+
+    const cachingChartCtx = document.getElementById('cachingChart');
+    if (cachingChartCtx) {
+        new Chart(cachingChartCtx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Handled by Cache', 'Direct Database Hits'],
+                datasets: [{
+                    label: 'Database Load Distribution',
+                    data: [70, 30],
+                    backgroundColor: [chartColors.primary, chartColors.light],
+                    borderColor: '#fff',
+                    borderWidth: 4
+                }]
+            },
+            options: {
+                ...defaultChartOptions,
+                cutout: '70%',
+                scales: { x: { display: false }, y: { display: false } }
+            }
+        });
+    }
+
+    const autoScalingChartCtx = document.getElementById('autoScalingChart');
+    if(autoScalingChartCtx) {
+        new Chart(autoScalingChartCtx, {
+            type: 'bar',
+            data: {
+                labels: ['00:00', '03:00', '06:00', '09:00', '12:00', '15:00', '18:00', '21:00'],
+                datasets: [
+                {
+                    type: 'line',
+                    label: 'User Load (%)',
+                    data: [10, 5, 15, 60, 90, 85, 40, 20],
+                    borderColor: chartColors.accent,
+                    backgroundColor: 'transparent',
+                    yAxisID: 'y1',
+                    tension: 0.4,
+                },
+                {
+                    label: 'Server Instances',
+                    data: [2, 2, 4, 10, 16, 15, 8, 4],
+                    backgroundColor: chartColors.primary,
+                    borderColor: chartColors.dark,
+                    borderWidth: 1,
+                    yAxisID: 'y',
+                }]
+            },
+            options: {
+                ...defaultChartOptions,
+                scales: {
+                    x: { stacked: true },
+                    y: {
+                        beginAtZero: true,
+                        type: 'linear',
+                        position: 'left',
+                        title: { display: true, text: 'Instances', font: { size: 10 } }
+                    },
+                    y1: {
+                        beginAtZero: true,
+                        max: 100,
+                        type: 'linear',
+                        position: 'right',
+                        title: { display: true, text: 'Load %', font: { size: 10 } },
+                        grid: {
+                           drawOnChartArea: false, 
+                        },
+                    }
+                }
+            }
+        });
+    }
+
+    const codeEfficiencyChartCtx = document.getElementById('codeEfficiencyChart');
+    if (codeEfficiencyChartCtx) {
+        const labels = ['CPU Usage (%)', 'Processing Time (ms)'];
+        new Chart(codeEfficiencyChartCtx, {
+            type: 'bar',
+            data: {
+                labels: labels.map(l => wrapLabel(l, 16)),
+                datasets: [{
+                    label: 'Inefficient Code',
+                    data: [85, 150],
+                    backgroundColor: chartColors.light,
+                    borderColor: chartColors.secondary,
+                    borderWidth: 1
+                }, {
+                    label: 'Optimized Code',
+                    data: [25, 40],
+                    backgroundColor: chartColors.primary,
+                    borderColor: chartColors.dark,
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                ...defaultChartOptions,
+                indexAxis: 'y'
+            }
+        });
+    }
+
+    const resilienceChartCtx = document.getElementById('resilienceChart');
+    if (resilienceChartCtx) {
+        new Chart(resilienceChartCtx, {
+            type: 'radar',
+            data: {
+                labels: ['Stability', 'Low Latency', 'Fault Tolerance', 'Retry Success', 'Throughput'],
+                datasets: [{
+                    label: 'Before Optimization',
+                    data: [4, 5, 3, 3, 4],
+                    fill: true,
+                    backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                    borderColor: 'rgb(255, 99, 132)',
+                    pointBackgroundColor: 'rgb(255, 99, 132)',
+                }, {
+                    label: 'After Optimization',
+                    data: [9, 8, 9, 8, 9],
+                    fill: true,
+                    backgroundColor: 'rgba(0, 118, 212, 0.2)',
+                    borderColor: 'rgb(0, 118, 212)',
+                    pointBackgroundColor: 'rgb(0, 118, 212)',
+                }]
+            },
+            options: {
+                ...defaultChartOptions,
+                scales: {
+                   r: {
+                       angleLines: { color: '#e2e8f0' },
+                       grid: { color: '#e2e8f0' },
+                       pointLabels: {
+                           color: '#4B5563',
+                           font: { size: 10, weight: 'bold' } /* Adjusted for mobile */
+                       },
+                       ticks: {
+                           backdropColor: '#f0f4f8',
+                           color: '#64748b',
+                           font: { size: 9 } /* Adjusted for mobile */
+                       },
+                       suggestedMin: 0,
+                       suggestedMax: 10
+                   }
+                }
+            }
+        });
+    }
+
+    // Mobile nav toggle for internal pages
+    const mobileNavToggle = document.getElementById('mobile-nav-toggle');
+    const mobileNavMenu = document.getElementById('mobile-nav-menu');
+    const mobileNavOverlay = document.getElementById('mobile-nav-overlay');
+
+    if (mobileNavToggle && mobileNavMenu && mobileNavOverlay) {
+        mobileNavToggle.addEventListener('click', () => {
+            mobileNavMenu.classList.toggle('is-open');
+            mobileNavOverlay.style.display = mobileNavMenu.classList.contains('is-open') ? 'block' : 'none';
+        });
+
+        mobileNavOverlay.addEventListener('click', () => {
+            mobileNavMenu.classList.remove('is-open');
+            mobileNavOverlay.style.display = 'none';
+        });
+
+        // Close mobile menu when a link is clicked
+        mobileNavMenu.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileNavMenu.classList.remove('is-open');
+                mobileNavOverlay.style.display = 'none';
+            });
+        });
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Investment Banking CRM: Driving Deal Success</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f4f8;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 300px;
+            max-height: 400px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 350px;
+            }
+        }
+        .flow-arrow {
+            font-size: 1.5rem;
+            line-height: 1;
+            color: #85BDE9;
+        }
+        .crm-pillar-box {
+            @apply bg-white p-4 rounded-lg shadow-md text-center flex flex-col items-center justify-center;
+        }
+        .deal-stage-box {
+            @apply bg-white p-4 rounded-lg shadow-md flex items-center justify-between text-sm font-semibold;
+        }
+        .vertical-line {
+            width: 2px;
+            background-color: #85BDE9;
+            height: 20px;
+            margin: 0 auto;
+        }
+    </style>
+</head>
+<body class="text-gray-700">
+
+    <header class="bg-white sticky top-0 z-50 shadow-md">
+        <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-12">
+                <div class="flex items-center">
+                    <h1 class="text-lg font-bold text-[#00449E]">Investment Banking CRM</h1>
+                </div>
+                <div class="hidden sm:block">
+                    <div class="ml-10 flex items-baseline space-x-2">
+                        <a href="#imperative" class="text-gray-600 hover:bg-[#85BDE9] hover:text-white px-2 py-1 rounded-md text-sm font-medium">Imperative</a>
+                        <a href="#pillars" class="text-gray-600 hover:bg-[#85BDE9] hover:text-white px-2 py-1 rounded-md text-sm font-medium">Pillars</a>
+                        <a href="#client-mgmt" class="text-gray-600 hover:bg-[#85BDE9] hover:text-white px-2 py-1 rounded-md text-sm font-medium">Client Mgmt</a>
+                        <a href="#deal-pipeline" class="text-gray-600 hover:bg-[#85BDE9] hover:text-white px-2 py-1 rounded-md text-sm font-medium">Deal Pipeline</a>
+                        <a href="#collaboration" class="text-gray-600 hover:bg-[#85BDE9] hover:text-white px-2 py-1 rounded-md text-sm font-medium">Collaboration</a>
+                        <a href="#insights" class="text-gray-600 hover:bg-[#85BDE9] hover:text-white px-2 py-1 rounded-md text-sm font-medium">Insights</a>
+                        <a href="#security" class="text-gray-600 hover:bg-[#85BDE9] hover:text-white px-2 py-1 rounded-md text-sm font-medium">Security</a>
+                        <a href="#roi" class="text-gray-600 hover:bg-[#85BDE9] hover:text-white px-2 py-1 rounded-md text-sm font-medium">ROI</a>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
+
+        <section id="imperative" class="text-center mb-20">
+            <h2 class="text-4xl font-extrabold text-[#00449E] sm:text-5xl md:text-6xl">Revolutionizing Investment Banking: CRM for Deal Success</h2>
+            <p class="mt-4 max-w-2xl mx-auto text-xl text-gray-500">In the fast-paced world of investment banking, an agile CRM is not just an advantage—it's a necessity. Our new CRM solution is engineered to streamline deal flow, deepen client relationships, and empower data-driven decisions.</p>
+            <div class="mt-12 bg-white rounded-lg shadow-xl p-8 max-w-3xl mx-auto">
+                <h3 class="text-2xl font-bold text-[#005CB9] mb-4">The Challenge: Fragmented Data & Missed Opportunities</h3>
+                <p class="text-gray-600 mb-6">Traditional CRMs often lead to siloed information, manual updates, and a lack of real-time visibility across client interactions and deal stages. This significantly impedes efficiency and deal conversion rates.</p>
+                <div class="flex flex-col items-center justify-center space-y-4">
+                    <div class="flex space-x-6">
+                        <div class="technical-box border-dashed border-red-400 text-red-700">Client Data</div>
+                        <div class="technical-box border-dashed border-red-400 text-red-700">Deal Records</div>
+                    </div>
+                    <div class="technical-flow-arrow text-red-500 rotate-90">⤫</div>
+                    <div class="flex space-x-6">
+                        <div class="technical-box border-dashed border-red-400 text-red-700">Communication Logs</div>
+                        <div class="technical-box border-dashed border-red-400 text-red-700">Team Notes</div>
+                    </div>
+                    <p class="text-red-500 font-semibold mt-4">DISCONNECTED SILOS</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="pillars" class="mb-20">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-[#00449E]">Four Core Pillars of Our New CRM</h2>
+                <p class="mt-2 max-w-3xl mx-auto text-lg text-gray-500">Our solution is built upon foundational pillars designed to address the specific needs of investment banking professionals.</p>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div class="crm-pillar-box">
+                    <span class="text-5xl mb-3">🤝</span>
+                    <h3 class="text-xl font-bold text-[#005CB9]">Client 360 View</h3>
+                    <p class="mt-2 text-gray-600 text-sm">Centralized, comprehensive client profiles with all historical interactions and relationships.</p>
+                </div>
+                <div class="crm-pillar-box">
+                    <span class="text-5xl mb-3">💲</span>
+                    <h3 class="text-xl font-bold text-[#005CB9]">Dynamic Deal Flow</h3>
+                    <p class="mt-2 text-gray-600 text-sm">Intuitive pipeline management from origination to successful closure.</p>
+                </div>
+                <div class="crm-pillar-box">
+                    <span class="text-5xl mb-3">👥</span>
+                    <h3 class="text-xl font-bold text-[#005CB9]">Seamless Collaboration</h3>
+                    <p class="mt-2 text-gray-600 text-sm">Tools for efficient internal team and external contact coordination on projects.</p>
+                </div>
+                <div class="crm-pillar-box">
+                    <span class="text-5xl mb-3">📊</span>
+                    <h3 class="text-xl font-bold text-[#005CB9]">Actionable Analytics</h3>
+                    <p class="mt-2 text-gray-600 text-sm">Real-time insights and predictive forecasting for better strategic decisions.</p>
+                </div>
+            </div>
+        </section>
+        
+        <div class="space-y-20">
+            <section id="client-mgmt">
+                <div class="bg-white rounded-lg shadow-lg p-6 md:p-8">
+                    <h3 class="text-2xl font-bold text-[#00449E] mb-4">Client Engagement & Management: The Client 360</h3>
+                    <p class="text-gray-600 mb-8">Understand your clients better with holistic profiles, tracking every interaction and segmenting them for targeted engagement.</p>
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+                        <div>
+                            <h4 class="font-semibold text-lg text-[#005CB9] mb-2">Client Portfolio by Industry Segment</h4>
+                            <p class="text-sm text-gray-500 mb-4">A clear view of our client distribution across key industries allows for strategic resource allocation and specialized outreach.</p>
+                            <div class="chart-container h-64 md:h-80">
+                                <canvas id="industryDistributionChart"></canvas>
+                            </div>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-lg text-[#005CB9] mb-2">Monthly Client Engagement Trend</h4>
+                            <p class="text-sm text-gray-500 mb-4">Tracking client meetings and significant interactions over time helps us assess relationship health and identify periods of heightened activity.</p>
+                            <div class="chart-container h-64 md:h-80">
+                                <canvas id="engagementTrendChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="deal-pipeline">
+                <div class="bg-white rounded-lg shadow-lg p-6 md:p-8">
+                    <h3 class="text-2xl font-bold text-[#00449E] mb-4">Dynamic Deal Pipeline Management</h3>
+                    <p class="text-gray-600 mb-8">Gain real-time visibility into every stage of the deal lifecycle, from initial prospecting to successful closure.</p>
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
+                        <div>
+                            <h4 class="font-semibold text-lg text-[#005CB9] mb-2">Deal Stage Conversion Funnel</h4>
+                            <p class="text-sm text-gray-500 mb-4">Visualizing conversion rates between key deal stages helps identify bottlenecks and areas for process optimization to accelerate deal closure.</p>
+                            <div class="flex flex-col items-center justify-center space-y-2 py-4 px-2 bg-gray-100 rounded-lg shadow max-w-md mx-auto">
+                                <div class="deal-stage-box w-full bg-[#0076D4] text-white">Prospecting (100 Deals)</div>
+                                <div class="vertical-line"></div>
+                                <div class="text-xs font-semibold text-gray-600">80% Conversion</div>
+                                <div class="vertical-line"></div>
+                                <div class="deal-stage-box w-11/12 bg-[#4195D7] text-white">Qualification (80 Deals)</div>
+                                <div class="vertical-line"></div>
+                                <div class="text-xs font-semibold text-gray-600">75% Conversion</div>
+                                <div class="vertical-line"></div>
+                                <div class="deal-stage-box w-10/12 bg-[#85BDE9] text-gray-800">Pitch & Proposal (60 Deals)</div>
+                                <div class="vertical-line"></div>
+                                <div class="text-xs font-semibold text-gray-600">70% Conversion</div>
+                                <div class="vertical-line"></div>
+                                <div class="deal-stage-box w-8/12 bg-[#BFDFF8] text-gray-800">Negotiation (42 Deals)</div>
+                                <div class="vertical-line"></div>
+                                <div class="text-xs font-semibold text-gray-600">90% Conversion</div>
+                                <div class="vertical-line"></div>
+                                <div class="deal-stage-box w-6/12 bg-gray-200">Closed Won (38 Deals)</div>
+                            </div>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-lg text-[#005CB9] mb-2">Active Deals by Type</h4>
+                            <p class="text-sm text-gray-500 mb-4">Understanding the distribution of active deals across different transaction types helps in resource allocation and specialization within the banking team.</p>
+                            <div class="chart-container h-64 md:h-80">
+                                <canvas id="dealTypeChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="collaboration">
+                <div class="bg-white rounded-lg shadow-lg p-6 md:p-8">
+                    <h3 class="text-2xl font-bold text-[#00449E] mb-4">Empowering Team Collaboration & Contact Networks</h3>
+                    <p class="text-gray-600 mb-8">Facilitate seamless interaction among internal teams and external stakeholders, crucial for complex deal execution.</p>
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+                        <div>
+                            <h4 class="font-semibold text-lg text-[#005CB9] mb-2">Interaction Breakdown: Internal vs. External</h4>
+                            <p class="text-sm text-gray-500 mb-4">This chart shows the proportion of interactions with internal colleagues versus external clients and partners, highlighting the balance of collaborative effort.</p>
+                            <div class="chart-container h-64 md:h-80">
+                                <canvas id="interactionTypeChart"></canvas>
+                            </div>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-lg text-[#005CB9] mb-2">Key Deal Team Collaboration Flow</h4>
+                            <p class="text-sm text-gray-500 mb-4">The CRM provides structured workflows for key processes like deal team formation, document review, and internal approvals, ensuring efficiency and compliance.</p>
+                             <div class="flex flex-col items-center justify-center space-y-2 py-4 px-2 bg-gray-100 rounded-lg shadow max-w-md mx-auto">
+                                 <div class="technical-box bg-[#005CB9] text-white">Deal Origination</div>
+                                 <div class="flow-arrow">⬇️</div>
+                                 <div class="technical-box">Team Formation (CRM auto-assign)</div>
+                                 <div class="flow-arrow">⬇️</div>
+                                 <div class="technical-box">Document Sharing & Co-editing</div>
+                                 <div class="flow-arrow">⬇️</div>
+                                 <div class="technical-box bg-[#0076D4] text-white">Internal Approval Workflow</div>
+                                 <div class="flow-arrow">⬇️</div>
+                                 <div class="technical-box">Client Pitch Preparation</div>
+                             </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="insights">
+                <div class="bg-white rounded-lg shadow-lg p-6 md:p-8">
+                    <h3 class="text-2xl font-bold text-[#00449E] mb-4">Data-Driven Insights & Forecasting</h3>
+                    <p class="text-gray-600 mb-8">Leverage powerful analytics to track performance, identify trends, and make informed strategic decisions.</p>
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+                        <div>
+                            <h4 class="font-semibold text-lg text-[#005CB9] mb-2">Deal Closure Time vs. Value</h4>
+                            <p class="text-sm text-gray-500 mb-4">This scatter plot helps identify potential correlations between the time taken to close a deal and its overall value, revealing efficiencies or bottlenecks in high-value deals.</p>
+                            <div class="chart-container h-64 md:h-80">
+                                <canvas id="dealTimeValueScatter"></canvas>
+                            </div>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-lg text-[#005CB9] mb-2">Projected Deal Volume for Next 12 Months</h4>
+                            <p class="text-sm text-gray-500 mb-4">Forecasting future deal volume helps in strategic planning, resource allocation, and setting realistic revenue targets. The shaded area indicates the confidence interval.</p>
+                            <div class="chart-container h-64 md:h-80">
+                                <canvas id="projectedVolumeChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="security">
+                <div class="bg-white rounded-lg shadow-lg p-6 md:p-8">
+                    <h3 class="text-2xl font-bold text-[#00449E] mb-4">Security & Compliance: Non-Negotiables for Financial Data</h3>
+                    <p class="text-gray-600 mb-8">Built-in security measures and compliance adherence are paramount when handling sensitive client and deal information.</p>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 text-center">
+                        <div class="p-4 bg-gray-100 rounded-lg shadow-sm">
+                            <span class="text-5xl block mb-2">🔒</span>
+                            <h4 class="font-bold text-[#005CB9]">Data Encryption</h4>
+                            <p class="text-sm text-gray-600">At-rest and in-transit encryption (AES-256, TLS 1.2+) for all sensitive data.</p>
+                        </div>
+                        <div class="p-4 bg-gray-100 rounded-lg shadow-sm">
+                            <span class="text-5xl block mb-2">🏛️</span>
+                            <h4 class="font-bold text-[#005CB9]">Regulatory Compliance</h4>
+                            <p class="text-sm text-gray-600">Adherence to GDPR, FINRA, AML, and other relevant financial regulations.</p>
+                        </div>
+                        <div class="p-4 bg-gray-100 rounded-lg shadow-sm">
+                            <span class="text-5xl block mb-2">🛡️</span>
+                            <h4 class="font-bold text-[#005CB9]">Access Controls</h4>
+                            <p class="text-sm text-gray-600">Role-based access control (RBAC) and multi-factor authentication (MFA).</p>
+                        </div>
+                        <div class="p-4 bg-gray-100 rounded-lg shadow-sm">
+                            <span class="text-5xl block mb-2">✍️</span>
+                            <h4 class="font-bold text-[#005CB9]">Audit Trails</h4>
+                            <p class="text-sm text-gray-600">Comprehensive logging for all data access and modifications.</p>
+                        </div>
+                        <div class="p-4 bg-gray-100 rounded-lg shadow-sm">
+                            <span class="text-5xl block mb-2">🚨</span>
+                            <h4 class="font-bold text-[#005CB9]">Threat Detection</h4>
+                            <p class="text-sm text-gray-600">Proactive monitoring and alerting for suspicious activities.</p>
+                        </div>
+                        <div class="p-4 bg-gray-100 rounded-lg shadow-sm">
+                            <span class="text-5xl block mb-2">🔄</span>
+                            <h4 class="font-bold text-[#005CB9]">Disaster Recovery</h4>
+                            <p class="text-sm text-gray-600">Robust backup and recovery protocols to ensure business continuity.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="roi" class="bg-white rounded-lg shadow-lg p-8 md:p-12 text-center">
+                <h3 class="text-2xl font-bold text-[#00449E] mb-4">The ROI of an Integrated Investment Banking CRM</h3>
+                <p class="mt-2 max-w-3xl mx-auto text-lg text-gray-500">Implementing this advanced CRM translates directly into significant business advantages and measurable returns on investment.</p>
+                <div class="mt-10 grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div class="bg-gray-100 p-6 rounded-lg shadow-sm">
+                        <p class="text-7xl font-black text-[#0076D4]">15%+</p>
+                        <p class="text-lg font-bold text-gray-600">Increase in Deal Win Rate</p>
+                        <p class="text-sm text-gray-500">Through improved client insights & efficient pipeline management.</p>
+                    </div>
+                    <div class="bg-gray-100 p-6 rounded-lg shadow-sm">
+                        <p class="text-7xl font-black text-[#0076D4]">20%</p>
+                        <p class="text-lg font-bold text-gray-600">Reduction in Admin Time</p>
+                        <p class="text-sm text-gray-500">Automated data entry, streamlined workflows, and centralized information.</p>
+                    </div>
+                    <div class="bg-gray-100 p-6 rounded-lg shadow-sm">
+                        <p class="text-7xl font-black text-[#0076D4]">30%</p>
+                        <p class="text-lg font-bold text-gray-600">Faster Deal Cycles</p>
+                        <p class="text-sm text-gray-500">Better collaboration and real-time insights accelerate progression through stages.</p>
+                    </div>
+                    <div class="bg-gray-100 p-6 rounded-lg shadow-sm">
+                        <p class="text-7xl font-black text-[#0076D4]">↑</p>
+                        <p class="text-lg font-bold text-gray-600">Enhanced Client Satisfaction</p>
+                        <p class="text-sm text-gray-500">Personalized engagement and more efficient service delivery.</p>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+    
+    <footer class="bg-[#00449E] text-white mt-16">
+        <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8 text-center text-sm">
+            <p>&copy; 2025 Investment Banking Solutions. All Rights Reserved.</p>
+            <p class="mt-1 opacity-70">This infographic was dynamically generated. All diagrams are rendered using HTML/CSS and all charts are rendered on Canvas via Chart.js. No SVG or Mermaid JS was used.</p>
+        </div>
+    </footer>
+
+
+<script>
+    const chartColors = {
+        primary: '#0076D4',
+        secondary: '#4195D7',
+        light: '#85BDE9',
+        dark: '#005CB9',
+        accent: '#FF6384',
+        gray: '#cbd5e1'
+    };
+
+    const defaultChartOptions = {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+            legend: {
+                position: 'top',
+                labels: {
+                    color: '#4B5563',
+                    font: {
+                        weight: 'bold'
+                    }
+                }
+            },
+            tooltip: {
+                enabled: true,
+                mode: 'index',
+                intersect: false,
+                backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                titleFont: { size: 14, weight: 'bold' },
+                bodyFont: { size: 12 },
+                callbacks: {
+                    title: function(tooltipItems) {
+                        const item = tooltipItems[0];
+                        let label = item.chart.data.labels[item.dataIndex];
+                        if (Array.isArray(label)) {
+                          return label.join(' ');
+                        } else {
+                          return label;
+                        }
+                    }
+                }
+            }
+        },
+        scales: {
+            x: {
+                ticks: { 
+                    color: '#4B5563',
+                    font: {
+                         size: 10
+                    }
+                },
+                grid: {
+                    display: false
+                }
+            },
+            y: {
+                ticks: { color: '#4B5563' },
+                grid: {
+                    color: '#e2e8f0'
+                }
+            }
+        }
+    };
+
+    function wrapLabel(str, maxWidth) {
+        if (str.length <= maxWidth) {
+            return str;
+        }
+        const words = str.split(' ');
+        let lines = [];
+        let currentLine = '';
+        words.forEach(word => {
+            if ((currentLine + word).length > maxWidth) {
+                lines.push(currentLine.trim());
+                currentLine = '';
+            }
+            currentLine += word + ' ';
+        });
+        lines.push(currentLine.trim());
+        return lines;
+    }
+
+    const industryDistributionChartCtx = document.getElementById('industryDistributionChart');
+    if (industryDistributionChartCtx) {
+        new Chart(industryDistributionChartCtx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Technology', 'Healthcare', 'Financial Services', 'Energy & Utilities', 'Consumer & Retail'],
+                datasets: [{
+                    label: 'Client Distribution by Industry',
+                    data: [30, 20, 25, 15, 10],
+                    backgroundColor: [
+                        chartColors.primary,
+                        chartColors.dark,
+                        chartColors.secondary,
+                        chartColors.light,
+                        chartColors.gray
+                    ],
+                    borderColor: '#fff',
+                    borderWidth: 4
+                }]
+            },
+            options: {
+                ...defaultChartOptions,
+                cutout: '70%',
+                scales: { x: { display: false }, y: { display: false } }
+            }
+        });
+    }
+
+    const engagementTrendChartCtx = document.getElementById('engagementTrendChart');
+    if (engagementTrendChartCtx) {
+        new Chart(engagementTrendChartCtx, {
+            type: 'line',
+            data: {
+                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+                datasets: [{
+                    label: 'Avg. Client Meetings',
+                    data: [8, 12, 10, 15, 13, 18, 16, 20, 19, 22, 21, 25],
+                    borderColor: chartColors.primary,
+                    backgroundColor: 'rgba(0, 118, 212, 0.2)',
+                    fill: true,
+                    tension: 0.3
+                }]
+            },
+            options: {
+                ...defaultChartOptions,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        title: { display: true, text: 'Meetings' }
+                    }
+                }
+            }
+        });
+    }
+
+    const dealTypeChartCtx = document.getElementById('dealTypeChart');
+    if (dealTypeChartCtx) {
+        const labels = ['Mergers & Acquisitions', 'Initial Public Offerings (IPOs)', 'Debt Financing', 'Equity Financing', 'Restructuring'];
+        new Chart(dealTypeChartCtx, {
+            type: 'bar',
+            data: {
+                labels: labels.map(l => wrapLabel(l, 16)),
+                datasets: [{
+                    label: 'Active Deals',
+                    data: [45, 20, 30, 25, 10],
+                    backgroundColor: [
+                        chartColors.primary,
+                        chartColors.dark,
+                        chartColors.secondary,
+                        chartColors.light,
+                        chartColors.gray
+                    ],
+                    borderColor: '#fff',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                ...defaultChartOptions,
+                indexAxis: 'y',
+                scales: {
+                    x: {
+                        beginAtZero: true,
+                        title: { display: true, text: 'Number of Deals' }
+                    },
+                    y: {
+                        grid: { display: false }
+                    }
+                }
+            }
+        });
+    }
+
+    const interactionTypeChartCtx = document.getElementById('interactionTypeChart');
+    if (interactionTypeChartCtx) {
+        new Chart(interactionTypeChartCtx, {
+            type: 'pie',
+            data: {
+                labels: ['External Client Interactions', 'Internal Team Collaboration'],
+                datasets: [{
+                    label: 'Interaction Breakdown',
+                    data: [60, 40],
+                    backgroundColor: [chartColors.primary, chartColors.light],
+                    borderColor: '#fff',
+                    borderWidth: 4
+                }]
+            },
+            options: {
+                ...defaultChartOptions,
+                scales: { x: { display: false }, y: { display: false } }
+            }
+        });
+    }
+
+    const dealTimeValueScatterCtx = document.getElementById('dealTimeValueScatter');
+    if (dealTimeValueScatterCtx) {
+        new Chart(dealTimeValueScatterCtx, {
+            type: 'scatter',
+            data: {
+                datasets: [{
+                    label: 'Deal Data (Value vs. Time)',
+                    data: [
+                        { x: 30, y: 50 }, { x: 45, y: 70 }, { x: 60, y: 120 }, { x: 35, y: 60 }, { x: 70, y: 150 },
+                        { x: 50, y: 90 }, { x: 80, y: 180 }, { x: 40, y: 80 }, { x: 90, y: 200 }, { x: 55, y: 100 }
+                    ],
+                    backgroundColor: chartColors.primary,
+                    borderColor: chartColors.dark,
+                    pointRadius: 6,
+                    pointHoverRadius: 8
+                }]
+            },
+            options: {
+                ...defaultChartOptions,
+                scales: {
+                    x: {
+                        type: 'linear',
+                        position: 'bottom',
+                        title: { display: true, text: 'Deal Closure Time (Days)' }
+                    },
+                    y: {
+                        title: { display: true, text: 'Deal Value (USD Million)' }
+                    }
+                }
+            }
+        });
+    }
+
+    const projectedVolumeChartCtx = document.getElementById('projectedVolumeChart');
+    if (projectedVolumeChartCtx) {
+        const labels = ['Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec', 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'];
+        new Chart(projectedVolumeChartCtx, {
+            type: 'line',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Projected Deal Volume',
+                    data: [18, 20, 22, 25, 28, 30, 32, 35, 38, 40, 42, 45],
+                    borderColor: chartColors.primary,
+                    backgroundColor: 'rgba(0, 118, 212, 0.2)',
+                    fill: true,
+                    tension: 0.3
+                },
+                {
+                    label: 'Confidence Interval',
+                    data: [
+                        {x:'Jul', y: [16, 20]}, {x:'Aug', y: [18, 22]}, {x:'Sep', y: [20, 24]}, {x:'Oct', y: [23, 27]},
+                        {x:'Nov', y: [26, 30]}, {x:'Dec', y: [28, 32]}, {x:'Jan', y: [30, 34]}, {x:'Feb', y: [33, 37]},
+                        {x:'Mar', y: [36, 40]}, {x:'Apr', y: [38, 42]}, {x:'May', y: [40, 44]}, {x:'Jun', y: [43, 47]}
+                    ],
+                    backgroundColor: 'rgba(133, 189, 233, 0.2)',
+                    borderColor: 'transparent',
+                    showLine: false,
+                    fill: '+1',
+                    tension: 0.3
+                }
+                ]
+            },
+            options: {
+                ...defaultChartOptions,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        title: { display: true, text: 'Number of Deals' }
+                    }
+                }
+            }
+        });
+    }
+
+</script>
+</body>
+</html>

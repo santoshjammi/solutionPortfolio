@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Gateway Security: Technical Deep Dive</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f4f8;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 250px; /* Default height for mobile */
+        }
+        @media (min-width: 640px) { /* sm breakpoint */
+            .chart-container {
+                height: 300px;
+            }
+        }
+        @media (min-width: 768px) { /* md breakpoint */
+            .chart-container {
+                height: 350px;
+            }
+        }
+        .technical-flow-arrow {
+            font-size: 1.25rem; /* Adjusted for mobile */
+            line-height: 1;
+            color: #85BDE9;
+        }
+        .technical-box-sm {
+            @apply bg-white p-2 rounded-lg shadow-md text-center font-medium text-xs border border-gray-200;
+        }
+        .technical-box-md {
+             @apply bg-white p-3 sm:p-4 rounded-lg shadow-md text-center font-semibold text-xs sm:text-sm border border-gray-200; /* Adjusted padding and text size */
+        }
+        .colored-box {
+            @apply text-white;
+        }
+        .pci-requirement-box {
+            @apply bg-gray-100 p-3 rounded-lg shadow-sm text-xs sm:text-sm font-semibold text-gray-700; /* Adjusted text size */
+        }
+        /* Adjusted padding and font sizes for mobile optimization */
+        .section-padding {
+            @apply p-6 sm:p-8 md:p-12;
+        }
+        .heading-1 {
+            @apply text-3xl sm:text-4xl md:text-5xl lg:text-6xl;
+        }
+        .heading-2 {
+            @apply text-2xl sm:text-3xl md:text-4xl;
+        }
+        .heading-3 {
+            @apply text-xl sm:text-2xl md:text-3xl;
+        }
+        .heading-4 {
+            @apply text-lg sm:text-xl md:text-2xl;
+        }
+        .text-content {
+            @apply text-sm sm:text-base md:text-lg;
+        }
+        .text-small {
+            @apply text-xs sm:text-sm;
+        }
+        .icon-size {
+            @apply text-3xl sm:text-4xl md:text-5xl;
+        }
+        .numeric-large {
+            @apply text-5xl sm:text-6xl md:text-7xl;
+        }
+
+        /* Styles for mobile navigation overlay */
+        .mobile-nav-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.7); /* Dark overlay */
+            z-index: 50; /* Above content, below header */
+            display: none; /* Hidden by default */
+        }
+        .mobile-nav-menu {
+            position: fixed;
+            top: 48px; /* Height of the header */
+            left: 0;
+            width: 100%;
+            height: calc(100% - 48px); /* Full height minus header */
+            background-color: white;
+            z-index: 60;
+            transform: translateX(-100%); /* Start off-screen to the left */
+            transition: transform 0.3s ease-in-out;
+            padding: 1rem;
+            overflow-y: auto; /* Enable scrolling for long menus */
+        }
+        .mobile-nav-menu.is-open {
+            transform: translateX(0); /* Slide in */
+        }
+    </style>
+</head>
+<body class="text-gray-700">
+
+    <header class="bg-white sticky top-0 z-50 shadow-md">
+        <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-12 relative">
+            <div class="flex items-center justify-between h-full">
+                <div class="flex items-center">
+                    <h1 class="text-lg font-bold text-[#00449E]">Security Technical Deep Dive</h1>
+                </div>
+
+                <!-- Desktop Navigation Links -->
+                <div class="hidden sm:block ml-10">
+                    <div class="flex items-baseline space-x-2">
+                        <a href="#overview" class="text-gray-600 hover:bg-[#85BDE9] hover:text-white px-2 py-1 rounded-md text-sm font-medium">Overview</a>
+                        <a href="#threats" class="text-gray-600 hover:bg-[#85BDE9] hover:text-white px-2 py-1 rounded-md text-sm font-medium">Threats</a>
+                        <a href="#architecture" class="text-gray-600 hover:bg-[#85BDE9] hover:text-white px-2 py-1 rounded-md text-sm font-medium">Arch. Security</a>
+                        <a href="#data-protection" class="text-gray-600 hover:bg-[#85BDE9] hover:text-white px-2 py-1 rounded-md text-sm font-medium">Data Prot.</a>
+                        <a href="#access-control" class="text-gray-600 hover:bg-[#85BDE9] hover:text-white px-2 py-1 rounded-md text-sm font-medium">Access Control</a>
+                        <a href="#pci-dss" class="text-gray-600 hover:bg-[#85BDE9] hover:text-white px-2 py-1 rounded-md text-sm font-medium">PCI DSS</a>
+                        <a href="#vulnerability-mgmt" class="text-gray-600 hover:bg-[#85BDE9] hover:text-white px-2 py-1 rounded-md text-sm font-medium">Vuln. Mgmt</a>
+                        <a href="#metrics" class="text-gray-600 hover:bg-[#85BDE9] hover:text-white px-2 py-1 rounded-md text-sm font-medium">Metrics</a>
+                    </div>
+                </div>
+
+                <!-- Mobile nav toggle button for internal page -->
+                <div class="block sm:hidden">
+                    <button id="mobile-nav-toggle" class="p-2 rounded-md text-gray-600 hover:bg-[#85BDE9] hover:text-white focus:outline-none">
+                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Mobile Navigation Menu -->
+    <div id="mobile-nav-overlay" class="mobile-nav-overlay"></div>
+    <div id="mobile-nav-menu" class="mobile-nav-menu">
+        <div class="flex flex-col space-y-1">
+            <a href="#overview" class="block px-3 py-2 rounded-md text-base font-medium text-gray-800 hover:bg-[#85BDE9] hover:text-white">Overview</a>
+            <a href="#threats" class="block px-3 py-2 rounded-md text-base font-medium text-gray-800 hover:bg-[#85BDE9] hover:text-white">Threats</a>
+            <a href="#architecture" class="block px-3 py-2 rounded-md text-base font-medium text-gray-800 hover:bg-[#85BDE9] hover:text-white">Arch. Security</a>
+            <a href="#data-protection" class="block px-3 py-2 rounded-md text-base font-medium text-gray-800 hover:bg-[#85BDE9] hover:text-white">Data Prot.</a>
+            <a href="#access-control" class="block px-3 py-2 rounded-md text-base font-medium text-gray-800 hover:bg-[#85BDE9] hover:text-white">Access Control</a>
+            <a href="#pci-dss" class="block px-3 py-2 rounded-md text-base font-medium text-gray-800 hover:bg-[#85BDE9] hover:text-white">PCI DSS</a>
+            <a href="#vulnerability-mgmt" class="block px-3 py-2 rounded-md text-base font-medium text-gray-800 hover:bg-[#85BDE9] hover:text-white">Vuln. Mgmt</a>
+            <a href="#metrics" class="block px-3 py-2 rounded-md text-base font-medium text-gray-800 hover:bg-[#85BDE9] hover:text-white">Metrics</a>
+        </div>
+    </div>
+
+    <main class="max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
+
+        <section id="overview" class="text-center mb-16 section-padding">
+            <h2 class="heading-1 font-extrabold text-[#00449E]">Payment Gateway Security: Technical Deep Dive</h2>
+            <p class="mt-4 max-w-3xl mx-auto text-content text-gray-500">This document details the technical controls and architectural considerations for securing our payment gateway. It covers threat mitigation, data protection, access control, and compliance with industry standards like PCI DSS.</p>
+            <div class="mt-12 flex flex-col md:flex-row items-center justify-center space-y-8 md:space-y-0 md:space-x-12">
+                <div class="bg-white rounded-lg shadow-xl p-6 sm:p-8 text-center w-full max-w-xs">
+                    <p class="text-lg font-medium text-gray-500">Core Focus</p>
+                    <p class="numeric-large font-black text-[#0076D4]">🔐</p>
+                    <p class="text-xl sm:text-2xl font-bold text-gray-600">Data Security</p>
+                </div>
+                <div class="text-5xl sm:text-6xl font-thin text-[#005CB9] transform rotate-90 md:rotate-0">➡️</div>
+                <div class="bg-white rounded-lg shadow-xl p-6 sm:p-8 text-center border-4 border-[#0076D4] w-full max-w-xs">
+                    <p class="text-lg font-medium text-gray-500">Mandatory Standard</p>
+                    <p class="numeric-large font-black text-[#005CB9]">📜</p>
+                    <p class="text-xl sm:text-2xl font-bold text-gray-600">PCI DSS 4.0</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="threats" class="mb-16 section-padding bg-white rounded-lg shadow-lg">
+            <h3 class="heading-3 font-bold text-[#00449E] mb-4">Understanding the Payment Gateway Threat Landscape</h3>
+            <p class="text-content text-gray-600 mb-8">Modern payment gateways face sophisticated cyber threats. Proactive defense requires understanding and mitigating common attack vectors.</p>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+                <div class="order-2 lg:order-1">
+                    <h4 class="heading-4 font-semibold text-[#005CB9] mb-2">Prevalent Attack Vectors</h4>
+                    <p class="text-small text-gray-500 mb-4">This chart illustrates the frequency of common attack types observed in payment systems, highlighting areas where defensive measures are most critical.</p>
+                    <div class="chart-container">
+                        <canvas id="threatVectorChart"></canvas>
+                    </div>
+                </div>
+                <div class="order-1 lg:order-2">
+                    <h4 class="heading-4 font-semibold text-[#005CB9] mb-2">Key Threat Categories</h4>
+                    <ul class="list-disc list-inside text-gray-600 text-small space-y-2">
+                        <li>**Web Application Vulnerabilities:** SQL Injection, Cross-Site Scripting (XSS), Broken Access Control.</li>
+                        <li>**Denial of Service (DoS/DDoS):** Overwhelming systems to disrupt service availability.</li>
+                        <li>**Account Takeover (ATO):** Compromising legitimate user accounts.</li>
+                        <li>**Malware & Ransomware:** Deploying malicious software to compromise data or systems.</li>
+                        <li>**Phishing & Social Engineering:** Tricking employees into revealing sensitive information.</li>
+                        <li>**Insider Threats:** Malicious or negligent actions by internal personnel.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section id="architecture" class="mb-16 section-padding bg-white rounded-lg shadow-lg">
+            <h3 class="heading-3 font-bold text-[#00449E] mb-4">Architectural Security Integration: Defense-in-Depth</h3>
+            <p class="text-content text-gray-600 mb-8">Security is baked into every layer of our payment gateway architecture, from the network edge to the application and data layers.</p>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+                <div>
+                    <h4 class="heading-4 font-semibold text-[#005CB9] mb-2">Secure Network Segmentation & Perimeter</h4>
+                    <p class="text-small text-gray-500 mb-4">Implementing a multi-zoned network architecture with strict firewall rules, Demilitarized Zones (DMZs), and micro-segmentation to isolate critical components and limit lateral movement of threats.</p>
+                    <div class="flex flex-col items-center justify-center space-y-2 bg-gray-100 p-4 rounded-lg shadow max-w-md mx-auto">
+                        <div class="technical-box-md bg-[#005CB9] colored-box">Internet</div>
+                        <div class="technical-flow-arrow">⬇️</div>
+                        <div class="technical-box-md">Perimeter Firewall & DDoS Protection</div>
+                        <div class="technical-flow-arrow">⬇️</div>
+                        <div class="technical-box-md bg-[#0076D4] colored-box">DMZ (WAF, Reverse Proxy)</div>
+                        <div class="technical-flow-arrow">⬇️</div>
+                        <div class="technical-box-md">Internal Firewall</div>
+                        <div class="technical-flow-arrow">⬇️</div>
+                        <div class="technical-box-md">Application & DB Zones (Micro-segmentation)</div>
+                    </div>
+                </div>
+                <div>
+                    <h4 class="heading-4 font-semibold text-[#005CB9] mb-2">Application & API Security Best Practices</h4>
+                    <p class="text-small text-gray-500 mb-4">Implementing Web Application Firewalls (WAF) to detect and block common attacks, and designing APIs with robust input validation, authentication, authorization, and rate limiting to prevent abuse.</p>
+                    <div class="flex flex-col items-center justify-center space-y-2 bg-gray-100 p-4 rounded-lg shadow max-w-md mx-auto">
+                        <div class="technical-box-md bg-[#005CB9] colored-box">Client Request</div>
+                        <div class="technical-flow-arrow">⬇️</div>
+                        <div class="technical-box-md">WAF</div>
+                        <div class="technical-flow-arrow">⬇️</div>
+                        <div class="technical-box-md bg-[#0076D4] colored-box">API Gateway (Auth, Rate Limiting, Validation)</div>
+                        <div class="technical-flow-arrow">⬇️</div>
+                        <div class="technical-box-md">Payment Processing Microservices</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="data-protection" class="mb-16 section-padding bg-white rounded-lg shadow-lg">
+            <h3 class="heading-3 font-bold text-[#00449E] mb-4">Sensitive Data Protection: Encryption & Tokenization</h3>
+            <p class="text-content text-gray-600 mb-8">Protecting cardholder data and other sensitive financial information is at the core of our security strategy, utilizing advanced cryptographic techniques.</p>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
+                <div class="order-2 lg:order-1">
+                    <h4 class="heading-4 font-semibold text-[#005CB9] mb-2">End-to-End Encryption Strategy</h4>
+                    <p class="text-small text-gray-500 mb-4">All data, both in transit and at rest, will be encrypted using strong, industry-standard algorithms (TLS 1.2+ for transit, AES-256 for at-rest). Secure key management practices are central to this.</p>
+                    <div class="flex flex-col items-center justify-center space-y-2 bg-gray-100 p-4 rounded-lg shadow max-w-md mx-auto">
+                        <div class="technical-box-md bg-[#005CB9] colored-box">Client Browser / App</div>
+                        <div class="technical-flow-arrow">⬇️ (TLS 1.2+)</div>
+                        <div class="technical-box-md">Payment Gateway Server</div>
+                        <div class="technical-flow-arrow">⬇️</div>
+                        <div class="technical-box-md bg-[#0076D4] colored-box">Application Layer (Data Encryption)</div>
+                        <div class="technical-flow-arrow">⬇️</div>
+                        <div class="technical-box-md">Database Storage (AES-256, Disk Encryption)</div>
+                    </div>
+                </div>
+                <div class="order-1 lg:order-2">
+                    <h4 class="heading-4 font-semibold text-[#005CB9] mb-2">Tokenization for PCI Scope Reduction</h4>
+                    <p class="text-small text-gray-500 mb-4">Tokenization replaces sensitive cardholder data with a non-sensitive token, significantly reducing the scope of PCI DSS compliance and limiting exposure of actual card numbers.</p>
+                    <div class="flex flex-col items-center justify-center space-y-2 bg-gray-100 p-4 rounded-lg shadow max-w-md mx-auto">
+                        <div class="technical-box-md">Card Number</div>
+                        <div class="flow-arrow">⬇️</div>
+                        <div class="technical-box-md bg-[#005CB9] colored-box">Tokenization Service (PCI DSS Validated)</div>
+                        <div class="flow-arrow">⬇️</div>
+                        <div class="technical-box-md">Token</div>
+                        <div class="flow-arrow">⬇️</div>
+                        <div class="technical-box-md bg-[#0076D4] colored-box">Internal Systems (Only See Token)</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="access-control" class="mb-16 section-padding bg-white rounded-lg shadow-lg">
+            <h3 class="heading-3 font-bold text-[#00449E] mb-4">Strict Access Control & Identity Management</h3>
+            <p class="text-content text-gray-600 mb-8">Controlling who can access sensitive systems and data is fundamental. We implement robust identity and access management controls.</p>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+                <div class="order-2 lg:order-1">
+                    <h4 class="heading-4 font-semibold text-[#005CB9] mb-2">Role-Based Access Control (RBAC) & MFA</h4>
+                    <p class="text-small text-gray-500 mb-4">Access is granted based on the principle of least privilege, with roles defining permissions. Multi-Factor Authentication (MFA) is mandatory for all access to sensitive environments.</p>
+                    <div class="flex flex-col items-center justify-center space-y-2 bg-gray-100 p-4 rounded-lg shadow max-w-md mx-auto">
+                        <div class="technical-box-md">User Identity</div>
+                        <div class="flow-arrow">⬇️</div>
+                        <div class="technical-box-md bg-[#005CB9] colored-box">MFA & SSO</div>
+                        <div class="flow-arrow">⬇️</div>
+                        <div class="technical-box-md">Identity Provider</div>
+                        <div class="flow-arrow">⬇️</div>
+                        <div class="technical-box-md bg-[#0076D4] colored-box">RBAC Policy Engine</div>
+                        <div class="flow-arrow">⬇️</div>
+                        <div class="technical-box-md">Resource Access (Granular)</div>
+                    </div>
+                </div>
+                <div class="order-1 lg:order-2">
+                    <h4 class="heading-4 font-semibold text-[#005CB9] mb-2">Privileged Access Management (PAM)</h4>
+                    <p class="text-small text-gray-500 mb-4">For highly sensitive administrative accounts, PAM solutions ensure that privileged credentials are securely stored, rotated, and only accessed with strict oversight and auditing.</p>
+                    <ul class="list-disc list-inside text-gray-600 text-small space-y-2">
+                        <li>**Centralized Vaulting:** Secure storage of privileged credentials.</li>
+                        <li>**Just-in-Time Access:** Granting access only when needed, for a limited duration.</li>
+                        <li>**Session Monitoring & Recording:** Full audit trail of privileged activities.</li>
+                        <li>**Automated Credential Rotation:** Regular changing of passwords and keys.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section id="pci-dss" class="mb-16 section-padding bg-white rounded-lg shadow-lg">
+            <h3 class="heading-3 font-bold text-[#00449E] mb-4">PCI DSS 4.0 Compliance: Technical Implementation</h3>
+            <p class="text-content text-gray-600 mb-8">Adherence to the Payment Card Industry Data Security Standard (PCI DSS) is mandatory. We integrate its 12 core requirements into our technical build and operational processes.</p>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
+                <div>
+                    <h4 class="heading-4 font-semibold text-[#005CB9] mb-2">Key PCI DSS Requirements & Controls</h4>
+                    <p class="text-small text-gray-500 mb-4">A snapshot of how our technical controls map to critical PCI DSS 4.0 requirements, ensuring a compliant payment environment.</p>
+                    <div class="flex flex-wrap gap-2 justify-center bg-gray-100 p-4 rounded-lg shadow">
+                        <div class="pci-requirement-box bg-[#0076D4] colored-box">Req 1: Firewall Install</div>
+                        <div class="pci-requirement-box bg-[#0076D4] colored-box">Req 2: Secure Defaults</div>
+                        <div class="pci-requirement-box bg-[#4195D7] colored-box">Req 3: Protect Stored Data</div>
+                        <div class="pci-requirement-box bg-[#4195D7] colored-box">Req 4: Encrypt Transmissions</div>
+                        <div class="pci-requirement-box bg-[#85BDE9] colored-box">Req 5: Anti-Malware</div>
+                        <div class="pci-requirement-box bg-[#85BDE9] colored-box">Req 6: Secure Systems & Apps</div>
+                        <div class="pci-requirement-box bg-[#BFDFF8] text-gray-800">Req 7: Restrict Access</div>
+                        <div class="pci-requirement-box bg-[#BFDFF8] text-gray-800">Req 8: Identity Access</div>
+                        <div class="pci-requirement-box bg-[#E6F3FC] text-gray-800">Req 9: Physical Access</div>
+                        <div class="pci-requirement-box bg-[#E6F3FC] text-gray-800">Req 10: Log & Monitor</div>
+                        <div class="pci-requirement-box bg-gray-200">Req 11: Test Security</div>
+                        <div class="pci-requirement-box bg-gray-200">Req 12: Maintain Policy</div>
+                    </div>
+                </div>
+                <div>
+                    <h4 class="heading-4 font-semibold text-[#005CB9] mb-2">Audit & Continuous Compliance Monitoring</h4>
+                    <p class="text-small text-gray-500 mb-4">Beyond initial certification, continuous monitoring, robust logging, and integration with a Security Information and Event Management (SIEM) system ensure ongoing compliance and rapid detection of anomalies.</p>
+                    <ul class="list-disc list-inside text-gray-600 text-small space-y-2">
+                        <li>**Centralized Logging:** All system and application logs forwarded to SIEM.</li>
+                        <li>**SIEM Correlation Rules:** Real-time analysis for security events and compliance violations.</li>
+                        <li>**Automated Compliance Scans:** Regular checks against PCI DSS controls.</li>
+                        <li>**Quarterly External ASV Scans:** Approved Scanning Vendor (ASV) scans for external vulnerabilities.</li>
+                        <li>**Annual Penetration Testing:** Comprehensive security assessments.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section id="vulnerability-mgmt" class="mb-16 section-padding bg-white rounded-lg shadow-lg">
+            <h3 class="heading-3 font-bold text-[#00449E] mb-4">Vulnerability Management & Incident Response</h3>
+            <p class="text-content text-gray-600 mb-8">Proactive identification of weaknesses and a rapid, coordinated response to incidents are critical to minimizing impact and recovery time.</p>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+                <div class="order-2 lg:order-1">
+                    <h4 class="heading-4 font-semibold text-[#005CB9] mb-2">Vulnerability Remediation Cycle</h4>
+                    <p class="text-small text-gray-500 mb-4">A defined process for discovering, assessing, prioritizing, and remediating vulnerabilities ensures a continuously improving security posture.</p>
+                    <div class="flex flex-col items-center justify-center space-y-2 py-4 px-2 bg-gray-100 rounded-lg shadow max-w-md mx-auto">
+                        <div class="technical-box-md bg-[#005CB9] colored-box">Identify (Scan/Test)</div>
+                        <div class="flow-arrow">⬇️</div>
+                        <div class="technical-box-md">Analyze & Prioritize</div>
+                        <div class="flow-arrow">⬇️</div>
+                        <div class="technical-box-md bg-[#0076D4] colored-box">Remediate (Patch/Fix)</div>
+                        <div class="flow-arrow">⬇️</div>
+                        <div class="technical-box-md">Verify (Re-test)</div>
+                        <div class="flow-arrow">⬇️</div>
+                        <div class="technical-box-md">Monitor (Continuous)</div>
+                    </div>
+                </div>
+                <div class="order-1 lg:order-2">
+                    <h4 class="heading-4 font-semibold text-[#005CB9] mb-2">Incident Response Life Cycle</h4>
+                    <p class="text-small text-gray-500 mb-4">A structured incident response plan (IRP) minimizes the impact of security incidents by defining clear roles, responsibilities, and procedures for each phase of an event.</p>
+                    <ul class="list-disc list-inside text-gray-600 text-small space-y-2">
+                        <li>**Preparation:** Proactive measures, training, tools.</li>
+                        <li>**Detection & Analysis:** Identifying and understanding the incident.</li>
+                        <li>**Containment:** Limiting the impact and spread.</li>
+                        <li>**Eradication:** Removing the root cause of the incident.</li>
+                        <li>**Recovery:** Restoring affected systems and services.</li>
+                        <li>**Post-Incident Activity:** Lessons learned, process improvements.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section id="metrics" class="section-padding bg-white rounded-lg shadow-lg">
+            <h3 class="heading-3 font-bold text-[#00449E] mb-4">Key Security & Compliance Metrics</h3>
+            <p class="text-content text-gray-600 mb-8">Tracking these technical metrics provides visibility into our security posture and compliance status, enabling data-driven security operations.</p>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+                <div class="p-3 sm:p-4 bg-gray-100 rounded-lg text-center shadow-sm">
+                    <p class="numeric-large text-[#0076D4]">0.001%</p>
+                    <p class="text-small text-gray-600 font-semibold">Fraud Rate</p>
+                    <p class="text-xs text-gray-500">(Target &lt; 0.005%)</p>
+                </div>
+                <div class="p-3 sm:p-4 bg-gray-100 rounded-lg text-center shadow-sm">
+                    <p class="numeric-large text-[#0076D4]">99.9%</p>
+                    <p class="text-small text-gray-600 font-semibold">Tokenization Success</p>
+                    <p class="text-xs text-gray-500">(PCI Compliance)</p>
+                </div>
+                <div class="p-3 sm:p-4 bg-gray-100 rounded-lg text-center shadow-sm">
+                    <p class="numeric-large text-[#0076D4]">90%</p>
+                    <p class="text-small text-gray-600 font-semibold">Vulnerability Patch Rate</p>
+                    <p class="text-xs text-gray-500">(Within 30 Days)</p>
+                </div>
+                <div class="p-3 sm:p-4 bg-gray-100 rounded-lg text-center shadow-sm">
+                    <p class="numeric-large text-[#0076D4]">30 min</p>
+                    <p class="text-small text-gray-600 font-semibold">Avg. MTTR Security Inc.</p>
+                    <p class="text-xs text-gray-500">(Mean Time To Resolve)</p>
+                </div>
+                <div class="p-3 sm:p-4 bg-gray-100 rounded-lg text-center shadow-sm">
+                    <p class="numeric-large text-[#0076D4]">100%</p>
+                    <p class="text-small text-gray-600 font-semibold">MFA Adoption</p>
+                    <p class="text-xs text-gray-500">(Sensitive Access)</p>
+                </div>
+                 <div class="p-3 sm:p-4 bg-gray-100 rounded-lg text-center shadow-sm">
+                    <p class="numeric-large text-[#0076D4]">0</p>
+                    <p class="text-small text-gray-600 font-semibold">Critical Vulnerabilities</p>
+                    <p class="text-xs text-gray-500">(Post-Scan)</p>
+                </div>
+            </div>
+            <div class="mt-8 chart-container">
+                <h4 class="heading-4 font-semibold text-[#005CB9] mb-2 text-center">Security Incidents Trend (Monthly)</h4>
+                <canvas id="securityIncidentsChart"></canvas>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-[#00449E] text-white mt-16">
+        <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8 text-center text-sm">
+            <p>&copy; 2025 Payment Security Initiative. All Rights Reserved.</p>
+            <p class="mt-1 opacity-70">This technical infographic was dynamically generated. All diagrams are rendered using HTML/CSS and all charts are rendered on Canvas via Chart.js. No SVG or Mermaid JS was used.</p>
+        </div>
+    </footer>
+
+
+<script>
+    const chartColors = {
+        primary: '#0076D4',
+        secondary: '#4195D7',
+        light: '#85BDE9',
+        dark: '#005CB9',
+        accent: '#FF6384',
+        gray: '#cbd5e1'
+    };
+
+    const defaultChartOptions = {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+            legend: {
+                position: 'top',
+                labels: {
+                    color: '#4B5563',
+                    font: {
+                        size: 10,
+                        weight: 'bold'
+                    }
+                }
+            },
+            tooltip: {
+                enabled: true,
+                mode: 'index',
+                intersect: false,
+                backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                titleFont: { size: 12, weight: 'bold' },
+                bodyFont: { size: 10 },
+                callbacks: {
+                    title: function(tooltipItems) {
+                        const item = tooltipItems[0];
+                        let label = item.chart.data.labels[item.dataIndex];
+                        if (Array.isArray(label)) {
+                          return label.join(' ');
+                        } else {
+                          return label;
+                        }
+                    }
+                }
+            }
+        },
+        scales: {
+            x: {
+                ticks: { 
+                    color: '#4B5563',
+                    font: {
+                         size: 9
+                    }
+                },
+                grid: {
+                    display: false
+                }
+            },
+            y: {
+                ticks: { color: '#4B5563', font: { size: 9 } },
+                grid: {
+                    color: '#e2e8f0'
+                }
+            }
+        }
+    };
+
+    function wrapLabel(str, maxWidth) {
+        if (str.length <= maxWidth) {
+            return str;
+        }
+        const words = str.split(' ');
+        let lines = [];
+        let currentLine = '';
+        words.forEach(word => {
+            if ((currentLine + word).length > maxWidth) {
+                lines.push(currentLine.trim());
+                currentLine = '';
+            }
+            currentLine += word + ' ';
+        });
+        lines.push(currentLine.trim());
+        return lines;
+    }
+
+    const threatVectorChartCtx = document.getElementById('threatVectorChart');
+    if (threatVectorChartCtx) {
+        new Chart(threatVectorChartCtx, {
+            type: 'bar',
+            data: {
+                labels: ['Web App Vulns', 'DDoS Attacks', 'Account Takeover', 'Malware', 'Phishing', 'Insider Threats'],
+                datasets: [{
+                    label: 'Frequency of Attacks',
+                    data: [30, 20, 15, 12, 10, 8],
+                    backgroundColor: [
+                        chartColors.primary,
+                        chartColors.dark,
+                        chartColors.secondary,
+                        chartColors.light,
+                        chartColors.gray,
+                        chartColors.accent
+                    ],
+                    borderColor: '#fff',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                ...defaultChartOptions,
+                scales: {
+                    x: { grid: { display: false } },
+                    y: { beginAtZero: true, title: { display: true, text: 'Percentage (%)', font: { size: 10 } } }
+                }
+            }
+        });
+    }
+
+    const securityIncidentsChartCtx = document.getElementById('securityIncidentsChart');
+    if (securityIncidentsChartCtx) {
+        new Chart(securityIncidentsChartCtx, {
+            type: 'line',
+            data: {
+                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug'],
+                datasets: [{
+                    label: 'Critical Incidents',
+                    data: [3, 2, 1, 0, 1, 0, 0, 0],
+                    borderColor: chartColors.accent,
+                    backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                    fill: true,
+                    tension: 0.3
+                },
+                {
+                    label: 'Major Incidents',
+                    data: [7, 5, 4, 3, 2, 1, 1, 0],
+                    borderColor: chartColors.dark,
+                    backgroundColor: 'rgba(0, 92, 185, 0.1)',
+                    fill: true,
+                    tension: 0.3
+                }]
+            },
+            options: {
+                ...defaultChartOptions,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        title: { display: true, text: 'Number of Incidents', font: { size: 10 } }
+                    }
+                }
+            }
+        });
+    }
+
+    // Mobile nav toggle for internal pages
+    const mobileNavToggle = document.getElementById('mobile-nav-toggle');
+    const mobileNavMenu = document.getElementById('mobile-nav-menu');
+    const mobileNavOverlay = document.getElementById('mobile-nav-overlay');
+
+    if (mobileNavToggle && mobileNavMenu && mobileNavOverlay) {
+        mobileNavToggle.addEventListener('click', () => {
+            mobileNavMenu.classList.toggle('is-open');
+            mobileNavOverlay.style.display = mobileNavMenu.classList.contains('is-open') ? 'block' : 'none';
+        });
+
+        mobileNavOverlay.addEventListener('click', () => {
+            mobileNavMenu.classList.remove('is-open');
+            mobileNavOverlay.style.display = 'none';
+        });
+
+        // Close mobile menu when a link is clicked
+        mobileNavMenu.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileNavMenu.classList.remove('is-open');
+                mobileNavOverlay.style.display = 'none';
+            });
+        });
+    }
+</script>
+</body>
+</html>
