@@ -85,20 +85,19 @@
             display: none; /* Hidden by default */
         }
         .mobile-nav-menu {
-            /* The mobile menu panel that slides in */
-            position: fixed; /* Changed to fixed for consistent behavior */
-            top: 64px; /* Height of the header */
- left: 0; /* Slide in from the left */
+ position: fixed;
+ top: 48px; /* Adjust based on header height */
+ left: 0; /* Start off-screen to the left */
  width: 75%; /* Make menu not full width */
-            height: calc(100% - 48px); /* Full height minus header */
-            background-color: white;
-            z-index: 60;
-            /* Start position: completely off-screen to the left */
-            transform: translateX(-100%); /* Start off-screen to the left */
-            transition: transform 0.3s ease-in-out;
- box-shadow: 2px 0 5px rgba(0,0,0,0.2); /* Add subtle shadow */
-            padding: 1rem;
+ height: calc(100% - 48px); /* Full height minus header */
+ background-color: white;
+ z-index: 40;
+ transform: translateX(-100%); /* Start off-screen to the left */
+ transition: transform 0.3s ease-in-out;
+ padding: 1.5rem 1rem;
  overflow-y: auto; /* Enable scrolling for long menus */
+ box-shadow: 2px 0 5px rgba(0,0,0,0.2); /* Add subtle shadow */
+
         }
         .mobile-nav-menu.is-open {
             /* End position: fully visible on the screen */
@@ -107,36 +106,35 @@
     </style>
 </head>
 <body class="text-gray-700 pt-16"> <!-- Add padding-top to body to prevent content from being hidden by fixed header -->
-
-    <header class="bg-white sticky top-0 z-50 shadow-md h-16 flex items-center"> <!-- Increased header height for better spacing -->
-        <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full w-full flex items-center justify-between relative">
-            <div class="flex items-center justify-between h-full w-full">
- <div class="flex items-center flex-grow"> <!-- Added flex-grow to push menu button to the right -->
+    <!-- Mobile nav toggle button for internal page -->
+    <header class="bg-white sticky top-0 z-50 shadow-md">
+        <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full flex items-center justify-between">
+            <div class="flex items-center min-w-0">
                     <h1 class="text-lg font-bold text-[#00449E]">Payment Gateway Scaling</h1>
                 </div>
 
                 <!-- Desktop Navigation Links -->
-                <div class="hidden sm:block ml-10">
-                    <div class="flex items-baseline space-x-2">
+                <div class="hidden sm:block">
+                    <div class="ml-10 flex items-baseline space-x-2">
                         <a href="#challenge" class="text-gray-600 hover:bg-[#85BDE9] hover:text-white px-2 py-1 rounded-md text-sm font-medium">Challenge</a>
                         <a href="#pillars" class="text-gray-600 hover:bg-[#85BDE9] hover:text-white px-2 py-1 rounded-md text-sm font-medium">Pillars</a>
                         <a href="#roadmap" class="text-gray-600 hover:bg-[#85BDE9] hover:text-white px-2 py-1 rounded-md text-sm font-medium">Roadmap</a>
                         <a href="#impact" class="text-gray-600 hover:bg-[#85BDE9] hover:text-white px-2 py-1 rounded-md text-sm font-medium">Impact</a>
+ <a href="/index.html" class="text-gray-600 hover:bg-[#85BDE9] hover:text-white px-2 py-1 rounded-md text-sm font-medium">Home</a>
                     </div>
                 </div>
-
-                <!-- Mobile nav toggle button for internal page -->
- <div class="block sm:hidden ml-4 flex-shrink-0"> <!-- Added flex-shrink-0 -->
+                <!-- Mobile menu button -->
+ <div class="sm:hidden flex-shrink-0">
                     <button id="mobile-nav-toggle" class="p-2 rounded-md text-gray-600 hover:bg-[#85BDE9] hover:text-white focus:outline-none">
- <svg id="hamburger-icon" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+ <!-- Hamburger Icon -->
+ <svg id="hamburger-icon" class="h-6 w-6 block" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
  </svg>
  <svg id="close-icon" class="h-6 w-6 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor">\n
- <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+ <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
                         </svg>
                     </button>
                 </div>
-            </div>
         </nav>
     </header>
 
@@ -149,7 +147,8 @@
             <a href="#pillars" class="block px-3 py-2 rounded-md text-base font-medium text-gray-800 hover:bg-[#85BDE9] hover:text-white">Pillars</a>
             <a href="#roadmap" class="block px-3 py-2 rounded-md text-base font-medium text-gray-800 hover:bg-[#85BDE9] hover:text-white">Roadmap</a>
             <a href="#impact" class="block px-3 py-2 rounded-md text-base font-medium text-gray-800 hover:bg-[#85BDE9] hover:text-white">Impact</a>
-        </div>
+ <a href="/index.html" class="block px-3 py-2 rounded-md text-base font-medium text-gray-800 hover:bg-[#85BDE9] hover:text-white">Home</a>
+ </div>
     </div>
 
     <!-- Main content area with responsive padding -->
@@ -160,7 +159,7 @@
             <p class="mt-4 max-w-2xl mx-auto text-content text-gray-500">Our objective is a 10x enhancement of our payment gateway's capacity, critical for accommodating business growth and ensuring competitive advantage.</p>
             <div class="mt-12 flex flex-col md:flex-row items-center justify-center space-y-8 md:space-y-0 md:space-x-12">
                 <div class="bg-white rounded-lg shadow-xl p-6 sm:p-8 text-center w-full max-w-xs">
-                    <p class="text-lg font-medium text-gray-500">Current State</p>
+ <p class="text-lg font-medium text-gray-500">Current State</p>
                     <p class="numeric-large font-black text-[#0076D4]">20</p>
                     <p class="text-xl sm:text-2xl font-bold text-gray-600">TPS</p>
                 </div>
@@ -195,7 +194,7 @@
                     <p class="mt-2 text-small text-gray-600">Ensuring our underlying systems can elastically handle massive load.</p>
                 </div>
                  <div class="bg-white p-5 rounded-lg shadow-md">
-                    <div class="icon-size mb-3">⚙️</div>
+ <div class="icon-size mb-3">⚙️</div>
                     <h3 class="heading-4 font-bold text-[#005CB9]">Application & Code Optimization</h3>
                     <p class="mt-2 text-small text-gray-600">Refining the efficiency of our software and external integrations.</p>
                 </div>
@@ -207,7 +206,7 @@
             <section id="pillar1">
                 <div class="bg-white rounded-lg shadow-lg section-padding">
                     <h3 class="heading-3 font-bold text-[#00449E] mb-4">Pillar 1: Architectural Reimagination</h3>
-                    <p class="text-content text-gray-600 mb-8">We will decompose our system to enable independent scaling and improve fault tolerance. This involves moving from a rigid monolith to a flexible, event-driven architecture.</p>
+ <p class="text-content text-gray-600 mb-8">We will decompose our system to enable independent scaling and improve fault tolerance. This involves moving from a rigid monolith to a flexible, event-driven architecture.</p>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
                         <div>
                             <h4 class="heading-4 font-semibold text-[#005CB9] mb-2">From Monolith to Microservices</h4>
@@ -232,7 +231,7 @@
                             <h4 class="heading-4 font-semibold text-[#005CB9] mb-2">Introducing Asynchronous Processing</h4>
                             <p class="text-small text-gray-500 mb-4">By decoupling request intake from processing using a message queue, we can handle traffic spikes smoothly, improve responsiveness, and build a more resilient system.</p>
                              <div class="bg-gray-100 rounded-lg p-4">
-                                 <div class="flex flex-wrap items-center justify-center sm:justify-between text-center text-small font-semibold gap-2">
+ <div class="flex flex-wrap items-center justify-center sm:justify-between text-center text-small font-semibold gap-2">
                                      <div class="p-2 rounded bg-white shadow">Request</div>
                                      <div class="flow-arrow text-base">→</div>
                                      <div class="p-2 rounded bg-white shadow">API Gateway</div>
@@ -251,11 +250,11 @@
             <section id="pillar2">
                 <div class="bg-white rounded-lg shadow-lg section-padding">
                     <h3 class="heading-3 font-bold text-[#00449E] mb-4">Pillar 2: Data Layer Reinforcement</h3>
-                     <p class="text-content text-gray-600 mb-8">High-throughput systems require a highly optimized data layer. We will distribute the database load and implement aggressive caching to minimize latency and contention.</p>
+ <p class="text-content text-gray-600 mb-8">High-throughput systems require a highly optimized data layer. We will distribute the database load and implement aggressive caching to minimize latency and contention.</p>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
                          <div class="order-2 md:order-1">
                              <h4 class="heading-4 font-semibold text-[#005CB9] mb-2">Database Load Reduction with Caching</h4>
-                            <p class="text-small text-gray-500 mb-4">A distributed cache will handle the majority of read requests for common data like merchant configurations. This chart illustrates the projected reduction in direct database hits.</p>
+ <p class="text-small text-gray-500 mb-4">A distributed cache will handle the majority of read requests for common data like merchant configurations. This chart illustrates the projected reduction in direct database hits.</p>
                             <div class="chart-container">
                                 <canvas id="cachingChart"></canvas>
                             </div>
@@ -265,14 +264,14 @@
                             <p class="text-small text-gray-500 mb-4"><strong>Sharding</strong> splits data across multiple databases to distribute write load. <strong>Replication</strong> creates read-only copies to scale read queries, isolating reporting from transactional workloads.</p>
                             <div class="space-y-4">
                                 <div class="bg-gray-100 p-4 rounded-lg">
-                                    <p class="font-semibold text-center mb-2 text-small">Sharding (Distributes Writes)</p>
+ <p class="font-semibold text-center mb-2 text-small">Sharding (Distributes Writes)</p>
                                     <div class="flex flex-col sm:flex-row items-center justify-around text-center text-small font-semibold gap-2">
                                          <div class="p-3 bg-white rounded shadow">Main DB</div>
                                          <div class="flow-arrow text-base transform sm:rotate-0 rotate-90">→</div>
                                          <div class="p-3 bg-[#85BDE9] rounded text-white">Shard 1</div>
                                          <div class="p-3 bg-[#85BDE9] rounded text-white">Shard 2</div>
                                     </div>
-                                </div>
+ </div>
                                 <div class="bg-gray-100 p-4 rounded-lg">
                                      <p class="font-semibold text-center mb-2 text-small">Replication (Scales Reads)</p>
                                      <div class="flex flex-col sm:flex-row items-center justify-around text-center text-small font-semibold gap-2">
@@ -292,7 +291,7 @@
             <section id="pillar3">
                  <div class="bg-white rounded-lg shadow-lg section-padding">
                     <h3 class="heading-3 font-bold text-[#00449E] mb-4">Pillar 3: Infrastructure & Scalability</h3>
-                    <p class="text-content text-gray-600 mb-8">Modern infrastructure is elastic. By containerizing our applications and automating their management, we can build a system that automatically adapts to real-time demand.</p>
+ <p class="text-content text-gray-600 mb-8">Modern infrastructure is elastic. By containerizing our applications and automating their management, we can build a system that automatically adapts to real-time demand.</p>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
                         <div>
                              <h4 class="heading-4 font-semibold text-[#005CB9] mb-2">Elasticity with Load Balancing & Auto-Scaling</h4>
@@ -303,7 +302,7 @@
                         </div>
                          <div>
                             <h4 class="heading-4 font-semibold text-[#005CB9] mb-2">Containerization & Orchestration</h4>
-                            <p class="text-small text-gray-500 mb-4">We will package applications into portable Docker containers and manage them with Kubernetes. This standardizes deployments and enables powerful, automated scaling and self-healing capabilities.</p>
+ <p class="text-small text-gray-500 mb-4">We will package applications into portable Docker containers and manage them with Kubernetes. This standardizes deployments and enables powerful, automated scaling and self-healing capabilities.</p>
                              <div class="bg-gray-100 rounded-lg p-4 space-y-4 text-center font-semibold">
                                  <div class="p-3 bg-white rounded shadow text-small">Application Code</div>
                                  <div class="text-xl text-[#85BDE9]">↓</div>
@@ -320,7 +319,7 @@
             <section id="pillar4">
                  <div class="bg-white rounded-lg shadow-lg section-padding">
                     <h3 class="heading-3 font-bold text-[#00449E] mb-4">Pillar 4: Application & Code Optimization</h3>
-                    <p class="text-content text-gray-600 mb-8">Performance gains also come from within the application itself. We will refine critical code paths and strengthen how our system interacts with external dependencies.</p>
+ <p class="text-content text-gray-600 mb-8">Performance gains also come from within the application itself. We will refine critical code paths and strengthen how our system interacts with external dependencies.</p>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
                         <div class="order-2 md:order-1">
                              <h4 class="heading-4 font-semibold text-[#005CB9] mb-2">Improving Code Efficiency</h4>
@@ -331,7 +330,7 @@
                         </div>
                         <div class="order-1 md:order-2">
                              <h4 class="heading-4 font-semibold text-[#005CB9] mb-2">Optimizing External Integrations</h4>
-                            <p class="text-small text-gray-500 mb-4">Implementing patterns like circuit breakers and intelligent retries dramatically improves system resilience when interacting with third parties, enhancing overall stability and throughput.</p>
+ <p class="text-small text-gray-500 mb-4">Implementing patterns like circuit breakers and intelligent retries dramatically improves system resilience when interacting with third parties, enhancing overall stability and throughput.</p>
                              <div class="chart-container">
                                 <canvas id="resilienceChart"></canvas>
                             </div>
@@ -345,7 +344,7 @@
         <section id="roadmap" class="mt-16 section-padding">
             <div class="text-center mb-12">
                 <h2 class="heading-2 font-bold text-[#00449E]">The Implementation Roadmap: A Phased Journey</h2>
-                <p class="mt-2 max-w-3xl mx-auto text-content text-gray-500">Scaling is an iterative process. We will follow a structured, five-phase approach to ensure a smooth and successful transition.</p>
+ <p class="mt-2 max-w-3xl mx-auto text-content text-gray-500">Scaling is an iterative process. We will follow a structured, five-phase approach to ensure a smooth and successful transition.</p>
             </div>
             <div class="relative">
                 <div class="border-l-4 border-[#85BDE9] absolute h-full top-0 left-4 md:left-1/2 md:-translate-x-1/2"></div>
@@ -398,7 +397,7 @@
         <section id="impact" class="mt-16 section-padding bg-white rounded-lg shadow-lg">
             <div class="text-center">
                  <h2 class="heading-2 font-bold text-[#00449E]">Conclusion: The Business Impact</h2>
-                <p class="mt-2 max-w-3xl mx-auto text-content text-gray-500">Achieving 200 TPS is a strategic imperative that delivers tangible business value across the organization.</p>
+ <p class="mt-2 max-w-3xl mx-auto text-content text-gray-500">Achieving 200 TPS is a strategic imperative that delivers tangible business value across the organization.</p>
             </div>
             <div class="mt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
                 <div class="text-center p-2">
@@ -417,7 +416,7 @@
                     <p class="mt-1 text-gray-600 text-small">Stay ahead in a fast-paced market.</p>
                 </div>
                  <div class="text-center p-2">
-                    <div class="icon-size mb-4">⚙️</div>
+ <div class="icon-size mb-4">⚙️</div>
                     <h4 class="heading-4 font-bold text-[#005CB9]">Operational Efficiency</h4>
                     <p class="mt-1 text-gray-600 text-small">Optimize resource usage and reduce operational costs at scale.</p>
                 </div>
@@ -559,7 +558,7 @@
                 {
                     type: 'line',
                     label: 'User Load (%)',
-                    data: [10, 5, 15, 60, 90, 85, 40, 20],
+ data: [10, 5, 15, 60, 90, 85, 40, 20],
                     borderColor: chartColors.accent,
                     backgroundColor: 'transparent',
                     yAxisID: 'y1',
@@ -633,13 +632,13 @@
             type: 'radar',
             data: {
                 labels: ['Stability', 'Low Latency', 'Fault Tolerance', 'Retry Success', 'Throughput'],
-                datasets: [{
+ datasets: [{
                     label: 'Before Optimization',
                     data: [4, 5, 3, 3, 4],
                     fill: true,
                     backgroundColor: 'rgba(255, 99, 132, 0.2)',
                     borderColor: 'rgb(255, 99, 132)',
-                    pointBackgroundColor: 'rgb(255, 99, 132)',
+ pointBackgroundColor: 'rgb(255, 99, 132)',
                 }, {
                     label: 'After Optimization',
                     data: [9, 8, 9, 8, 9],
@@ -653,15 +652,15 @@
                 ...defaultChartOptions,
                 scales: {
                    r: {
-                       angleLines: { color: '#e2e8f0' },
-                       grid: { color: '#e2e8f0' },
+ angleLines: { color: '#e2e8f0' },
+ grid: { color: '#e2e8f0' },
                        pointLabels: {
                            color: '#4B5563',
                            font: { size: 10, weight: 'bold' } /* Adjusted for mobile */
                        },
                        ticks: {
                            backdropColor: '#f0f4f8',
-                           color: '#64748b',
+ color: '#64748b',
                            font: { size: 9 } /* Adjusted for mobile */
                        },
                        suggestedMin: 0,
@@ -675,23 +674,24 @@
     // Mobile nav toggle for internal pages
     const mobileNavToggle = document.getElementById('mobile-nav-toggle');
     const mobileNavMenu = document.getElementById('mobile-nav-menu');
- const hamburgerIcon = document.getElementById('hamburger-icon');
- const closeIcon = document.getElementById('close-icon');
- const mobileNavOverlay = document.getElementById('mobile-nav-overlay');\n
-        function toggleMenu() {
+ const mobileNavOverlay = document.getElementById('mobile-nav-overlay');
+ const hamburgerIcon = document.getElementById('hamburger-icon'); // Ensure this exists
+ const closeIcon = document.getElementById('close-icon'); // Ensure this exists
+
+    if (mobileNavToggle && mobileNavMenu && mobileNavOverlay && hamburgerIcon && closeIcon) {
+        function toggleMenu() {\n
  mobileNavMenu.classList.toggle('is-open');
  mobileNavOverlay.style.display = mobileNavMenu.classList.contains('is-open') ? 'block' : 'none';
  hamburgerIcon.classList.toggle('hidden');
  closeIcon.classList.toggle('hidden');
         }
  mobileNavToggle.addEventListener('click', toggleMenu);
-        mobileNavOverlay.addEventListener('click', () => {
- if (mobileNavMenu.classList.contains('is-open')) toggleMenu();
-        });
+ mobileNavOverlay.addEventListener('click', toggleMenu); // Close menu by clicking overlay
+
         // Close mobile menu when a link is clicked
         mobileNavMenu.querySelectorAll('a').forEach(link => {
             link.addEventListener('click', (event) => {
- if (mobileNavMenu.classList.contains('is-open')) toggleMenu();
+                if (mobileNavMenu.classList.contains('is-open')) toggleMenu();
                 mobileNavOverlay.style.display = 'none';
             });
         });

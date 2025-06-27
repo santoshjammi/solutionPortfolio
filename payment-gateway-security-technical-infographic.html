@@ -13,10 +13,11 @@
         body {
             font-family: 'Inter', sans-serif;
             background-color: #f0f4f8;
-            overflow-x: hidden; /* Prevent horizontal scrolling on small screens */
-        }
+            overflow-x: hidden; /* Prevent horizontal scrolling on small screens */ /* Ensure main content is not hidden by fixed header */
+ padding-top: 48px; /* Adjust based on header height */
+ }
         h1, h2, h3, h4 {
-            line-height: 1.2; /* Improve readability on small screens */
+ line-height: 1.2; /* Improve readability on small screens */ /* Tighter line height for large headings */
         }
         p {
             line-height: 1.5; /* Improve readability on small screens */
@@ -26,7 +27,7 @@
             width: 100%;
             max-width: 600px;
             margin-left: auto;
-            margin-right: auto; /* Center align charts */
+ margin-right: auto; /* Center align charts */ /* Default height for mobile */
             height: 250px; /* Default height for mobile */
  }
         @media (min-width: 640px) { /* sm breakpoint */
@@ -40,30 +41,31 @@
             }
         }
         .technical-flow-arrow {
-            font-size: 1.5rem; /* Adjusted for mobile */
+ font-size: 1.5rem; /* Adjusted for mobile */ /* Smaller arrow */
             line-height: 1;
             color: #85BDE9;
         }
         .technical-box-sm {
-            @apply bg-white p-2 rounded-lg shadow-md text-center font-medium text-xs border border-gray-200 flex-shrink-0; /* Ensure it shrinks if needed */
+ @apply bg-white p-2 rounded-lg shadow-md text-center font-medium text-xs border border-gray-200 flex-shrink-0; /* Ensure it shrinks if needed */ /* Adjusted padding */
         }
         .technical-box-md {
-            @apply bg-white p-3 sm:p-4 rounded-lg shadow-md text-center font-semibold text-xs sm:text-sm border border-gray-200 flex-shrink-0; /* Adjusted padding and text size */
+ @apply bg-white p-3 sm:p-4 rounded-lg shadow-md text-center font-semibold text-xs sm:text-sm border border-gray-200 flex-shrink-0; /* Adjusted padding and text size */ /* Minimum width for technical boxes */
             min-width: 120px; /* Minimum width for technical boxes */
         }
         .colored-box {
-            @apply text-white;
+ @apply text-white; /* White text color for colored boxes */
         }
         .pci-requirement-box {
  @apply bg-gray-100 p-2 sm:p-3 rounded-lg shadow-sm text-xs sm:text-sm font-semibold text-gray-700 text-center flex-grow; /* Adjusted text size */
  min-width: 100px; /* Ensure boxes don't get too small */
+ flex-basis: auto; /* Allow items to shrink/grow */
         }
         /* Adjusted padding and font sizes for mobile optimization */
         .section-padding {
-            @apply p-6 sm:p-8 md:p-12;
+ @apply p-6 sm:p-8 md:p-12; /* Responsive padding */
         }
         .section-padding-y {
-            @apply py-6 sm:py-8 md:py-12;
+ @apply py-6 sm:py-8 md:py-12; /* Responsive vertical padding */
         }
         .section-padding-x {
             @apply px-4 sm:px-6 md:px-8;
@@ -71,7 +73,7 @@
         .heading-1 {
             line-height: 1.1; /* Tighter line height for large headings */
             @apply text-3xl sm:text-4xl md:text-5xl lg:text-6xl;
-        }
+ }
         .heading-2 {
             @apply text-2xl sm:text-3xl md:text-4xl;
         }
@@ -94,8 +96,12 @@
             @apply text-5xl sm:text-6xl md:text-7xl;
         }
         .flow-diagram-container {
-            @apply flex flex-col items-center justify-center space-y-2 bg-gray-100 p-4 rounded-lg shadow max-w-xs mx-auto md:max-w-md w-full; /* Added w-full */
-        }
+ @apply flex flex-col items-center justify-center space-y-2 bg-gray-100 p-4 rounded-lg shadow w-full; /* Use w-full, let max-width handle breakpoint */
+ max-width: 320px; /* Max width for small screens */
+ margin-left: auto;
+ margin-right: auto;
+ }
+ @media (min-width: 768px) { .flow-diagram-container { max-width: 400px; } } /* md breakpoint */
 
         /* Styles for mobile navigation overlay */
         .mobile-nav-overlay {
@@ -106,8 +112,10 @@
             bottom: 0;
             background-color: rgba(0, 0, 0, 0.7); /* Dark overlay */
             z-index: 50; /* Above content, below header */
+            backdrop-filter: blur(4px); /* Optional: blur background */
+ -webkit-backdrop-filter: blur(4px); /* Safari support */
             display: none; /* Hidden by default */
-        }
+ }
         .mobile-nav-menu {
             position: fixed;
             top: 48px; /* Height of the header */
@@ -117,13 +125,20 @@
             background-color: white;
             z-index: 60;
             transform: translateX(-100%); /* Start off-screen to the left */
-            transition: transform 0.3s ease-in-out;
+ transition: transform 0.3s ease-in-out; /* Smooth transition */
  padding: 1.5rem 1rem; /* Adjust padding */
  overflow-y: auto; /* Enable scrolling for long menus */
+ box-shadow: 2px 0 5px rgba(0,0,0,0.2); /* Add shadow */
         }
         .mobile-nav-menu.is-open {
             transform: translateX(0); /* Slide in */
         }
+
+        /* Ensure padding for body when header is fixed */
+ @media (min-width: 640px) { /* sm breakpoint */
+ body { padding-top: 48px; } /* Keep padding consistent */
+ }
+
     </style>
 </head>
 <body class="text-gray-700">
@@ -137,7 +152,7 @@
 
                 <!-- Mobile nav toggle button for internal page -->
                 <div class="block sm:hidden flex-shrink-0">
-                    <button id="mobile-nav-toggle" class="p-2 rounded-md text-gray-600 hover:bg-[#85BDE9] hover:text-white focus:outline-none">
+                    <button id="mobile-nav-toggle" class="hamburger-menu p-2 rounded-md text-gray-600 hover:bg-[#85BDE9] hover:text-white focus:outline-none" aria-controls="mobile-nav-menu" aria-expanded="false">
                         <svg id="hamburger-icon" class="h-6 w-6 block" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
                         </svg>
@@ -180,7 +195,7 @@
     </div>
 
     <!-- Mobile Navigation Overlay -->
-    <div id="mobile-nav-overlay" class="mobile-nav-overlay"></div>
+    <div id="mobile-nav-overlay" class="mobile-nav-overlay" aria-hidden="true"></div>
 
     <main class="max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
 
@@ -210,7 +225,7 @@
                     <h4 class="heading-4 font-semibold text-[#005CB9] mb-2">Prevalent Attack Vectors</h4>
                     <p class="text-small text-gray-500 mb-4">This chart illustrates the frequency of common attack types observed in payment systems, highlighting areas where defensive measures are most critical.</p>
                     <div class="chart-container">
-                        <canvas id="threatVectorChart"></canvas>
+                        <canvas id="threatVectorChart" aria-label="Chart showing prevalent attack vectors"></canvas>
                     </div>
                 </div>
                 <div class="order-1 lg:order-2">
@@ -231,7 +246,7 @@
             <h3 class="heading-3 font-bold text-[#00449E] mb-4">Architectural Security Integration: Defense-in-Depth</h3>
             <p class="text-content text-gray-600 mb-8">Security is baked into every layer of our payment gateway architecture, from the network edge to the application and data layers.</p>
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center w-full">
- <div class="flow-diagram-container">
+                <div class="flow-diagram-container">
                     <h4 class="heading-4 font-semibold text-[#005CB9] mb-2">Secure Network Segmentation & Perimeter</h4>
                     <p class="text-small text-gray-500 mb-4">Implementing a multi-zoned network architecture with strict firewall rules, Demilitarized Zones (DMZs), and micro-segmentation to isolate critical components and limit lateral movement of threats.</p>
                     <div class="flex flex-col items-center justify-center space-y-2 bg-gray-100 p-4 rounded-lg shadow max-w-md mx-auto">
@@ -246,7 +261,7 @@
                         <div class="technical-box-md">Application & DB Zones (Micro-segmentation)</div>
                     </div>
                 </div>
- <div class="flow-diagram-container">
+                <div class="flow-diagram-container">
                     <h4 class="heading-4 font-semibold text-[#005CB9] mb-2">Application & API Security Best Practices</h4>
                     <p class="text-small text-gray-500 mb-4">Implementing Web Application Firewalls (WAF) to detect and block common attacks, and designing APIs with robust input validation, authentication, authorization, and rate limiting to prevent abuse.</p>
                     <div class="flex flex-col items-center justify-center space-y-2 bg-gray-100 p-4 rounded-lg shadow max-w-md mx-auto">
@@ -267,7 +282,7 @@
             <p class="text-content text-gray-600 mb-8">Protecting cardholder data and other sensitive financial information is at the core of our security strategy, utilizing advanced cryptographic techniques.</p>
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start w-full">
                 <div class="order-2 lg:order-1">
- <h4 class="heading-4 font-semibold text-[#005CB9] mb-2">End-to-End Encryption</h4>
+                    <h4 class="heading-4 font-semibold text-[#005CB9] mb-2">End-to-End Encryption</h4>
                     <p class="text-small text-gray-500 mb-4">All data, both in transit and at rest, will be encrypted using strong, industry-standard algorithms (TLS 1.2+ for transit, AES-256 for at-rest). Secure key management practices are central to this.</p>
                     <div class="flex flex-col items-center justify-center space-y-2 bg-gray-100 p-4 rounded-lg shadow max-w-md mx-auto">
                         <div class="technical-box-md bg-[#005CB9] colored-box">Client Browser / App</div>
@@ -283,12 +298,12 @@
                     <h4 class="heading-4 font-semibold text-[#005CB9] mb-2">Tokenization for PCI Scope Reduction</h4>
                     <p class="text-small text-gray-500 mb-4">Tokenization replaces sensitive cardholder data with a non-sensitive token, significantly reducing the scope of PCI DSS compliance and limiting exposure of actual card numbers.</p>
                     <div class="flex flex-col items-center justify-center space-y-2 bg-gray-100 p-4 rounded-lg shadow max-w-md mx-auto">
-                        <div class="technical-box-md">Card Number</div>
-                        <div class="flow-arrow">⬇️</div>
+                        <div class="technical-box-md">Sensitive Data (PAN)</div>
+                        <div class="technical-flow-arrow">⬇️</div>
                         <div class="technical-box-md bg-[#005CB9] colored-box">Tokenization Service (PCI DSS Validated)</div>
-                        <div class="flow-arrow">⬇️</div>
-                        <div class="technical-box-md">Token</div>
-                        <div class="flow-arrow">⬇️</div>
+                        <div class="technical-flow-arrow">⬇️</div>
+                        <div class="technical-box-md">Token (Non-Sensitive)</div>
+                        <div class="technical-flow-arrow">⬇️</div>
                         <div class="technical-box-md bg-[#0076D4] colored-box">Internal Systems (Only See Token)</div>
                     </div>
                 </div>
@@ -300,17 +315,17 @@
             <p class="text-content text-gray-600 mb-8">Controlling who can access sensitive systems and data is fundamental. We implement robust identity and access management controls.</p>
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center w-full">
                 <div class="order-2 lg:order-1">
- <h4 class="heading-4 font-semibold text-[#005CB9] mb-2">RBAC & MFA</h4>
+                    <h4 class="heading-4 font-semibold text-[#005CB9] mb-2">RBAC & MFA</h4>
                     <p class="text-small text-gray-500 mb-4">Access is granted based on the principle of least privilege, with roles defining permissions. Multi-Factor Authentication (MFA) is mandatory for all access to sensitive environments.</p>
                     <div class="flex flex-col items-center justify-center space-y-2 bg-gray-100 p-4 rounded-lg shadow max-w-md mx-auto">
                         <div class="technical-box-md">User Identity</div>
-                        <div class="flow-arrow">⬇️</div>
+                        <div class="technical-flow-arrow">⬇️</div>
                         <div class="technical-box-md bg-[#005CB9] colored-box">MFA & SSO</div>
-                        <div class="flow-arrow">⬇️</div>
+                        <div class="technical-flow-arrow">⬇️</div>
                         <div class="technical-box-md">Identity Provider</div>
-                        <div class="flow-arrow">⬇️</div>
+                        <div class="technical-flow-arrow">⬇️</div>
                         <div class="technical-box-md bg-[#0076D4] colored-box">RBAC Policy Engine</div>
-                        <div class="flow-arrow">⬇️</div>
+                        <div class="technical-flow-arrow">⬇️</div>
                         <div class="technical-box-md">Resource Access (Granular)</div>
                     </div>
                 </div>
@@ -332,7 +347,7 @@
             <p class="text-content text-gray-600 mb-8">Adherence to the Payment Card Industry Data Security Standard (PCI DSS) is mandatory. We integrate its 12 core requirements into our technical build and operational processes.</p>
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start w-full">
                 <div>
- <h4 class="heading-4 font-semibold text-[#005CB9] mb-2">PCI DSS 4.0 Requirements</h4>
+                    <h4 class="heading-4 font-semibold text-[#005CB9] mb-2">PCI DSS 4.0 Requirements</h4>
                     <p class="text-small text-gray-500 mb-4">A snapshot of how our technical controls map to critical PCI DSS 4.0 requirements, ensuring a compliant payment environment.</p>
  <div class="grid grid-cols-2 sm:grid-cols-3 gap-2 justify-center bg-gray-100 p-4 rounded-lg shadow">
                         <div class="pci-requirement-box bg-[#0076D4] colored-box">Req 1:<br>Firewall Install</div>
@@ -368,17 +383,17 @@
             <p class="text-content text-gray-600 mb-8">Proactive identification of weaknesses and a rapid, coordinated response to incidents are critical to minimizing impact and recovery time.</p>
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center w-full">
                 <div class="order-2 lg:order-1">
- <h4 class="heading-4 font-semibold text-[#005CB9] mb-2">Vuln. Remediation Cycle</h4>
+                    <h4 class="heading-4 font-semibold text-[#005CB9] mb-2">Vuln. Remediation Cycle</h4>
                     <p class="text-small text-gray-500 mb-4">A defined process for discovering, assessing, prioritizing, and remediating vulnerabilities ensures a continuously improving security posture.</p>
                     <div class="flex flex-col items-center justify-center space-y-2 py-4 px-2 bg-gray-100 rounded-lg shadow max-w-md mx-auto">
                         <div class="technical-box-md bg-[#005CB9] colored-box">Identify (Scan/Test)</div>
-                        <div class="flow-arrow">⬇️</div>
+                        <div class="technical-flow-arrow">⬇️</div>
                         <div class="technical-box-md">Analyze & Prioritize</div>
-                        <div class="flow-arrow">⬇️</div>
+                        <div class="technical-flow-arrow">⬇️</div>
                         <div class="technical-box-md bg-[#0076D4] colored-box">Remediate (Patch/Fix)</div>
-                        <div class="flow-arrow">⬇️</div>
+                        <div class="technical-flow-arrow">⬇️</div>
                         <div class="technical-box-md">Verify (Re-test)</div>
-                        <div class="flow-arrow">⬇️</div>
+                        <div class="technical-flow-arrow">⬇️</div>
                         <div class="technical-box-md">Monitor (Continuous)</div>
                     </div>
                 </div>
@@ -402,27 +417,27 @@
             <p class="text-content text-gray-600 mb-8">Tracking these technical metrics provides visibility into our security posture and compliance status, enabling data-driven security operations.</p>
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 w-full">
                 <div class="p-3 sm:p-4 bg-gray-100 rounded-lg text-center shadow-sm">
- <p class="numeric-large text-[#0076D4] mb-1">0.001%</p>
+ <p class="numeric-large text-[#0076D4] mb-1">0.001%</p> {/* Metric value */}
                     <p class="text-small text-gray-600 font-semibold">Fraud Rate</p>
                     <p class="text-xs text-gray-500">(Target &lt; 0.005%)</p>
                 </div>
                 <div class="p-3 sm:p-4 bg-gray-100 rounded-lg text-center shadow-sm">
- <p class="numeric-large text-[#0076D4] mb-1">99.9%</p>
+ <p class="numeric-large text-[#0076D4] mb-1">99.9%</p> {/* Metric value */}
                     <p class="text-small text-gray-600 font-semibold">Tokenization Success</p>
                     <p class="text-xs text-gray-500">(PCI Compliance)</p>
                 </div>
                 <div class="p-3 sm:p-4 bg-gray-100 rounded-lg text-center shadow-sm">
- <p class="numeric-large text-[#0076D4] mb-1">90%</p>
+ <p class="numeric-large text-[#0076D4] mb-1">90%</p> {/* Metric value */}
                     <p class="text-small text-gray-600 font-semibold">Vulnerability Patch Rate</p>
                     <p class="text-xs text-gray-500">(Within 30 Days)</p>
                 </div>
                 <div class="p-3 sm:p-4 bg-gray-100 rounded-lg text-center shadow-sm">
- <p class="numeric-large text-[#0076D4] mb-1">30 min</p>
+ <p class="numeric-large text-[#0076D4] mb-1">30 min</p> {/* Metric value */}
                     <p class="text-small text-gray-600 font-semibold">Avg. MTTR Security Inc.</p>
                     <p class="text-xs text-gray-500">(Mean Time To Resolve)</p>
                 </div>
                 <div class="p-3 sm:p-4 bg-gray-100 rounded-lg text-center shadow-sm">
- <p class="numeric-large text-[#0076D4] mb-1">100%</p>
+ <p class="numeric-large text-[#0076D4] mb-1">100%</p> {/* Metric value */}
                     <p class="text-small text-gray-600 font-semibold">MFA Adoption</p>
                     <p class="text-xs text-gray-500">(Sensitive Access)</p>
                 </div>
@@ -441,7 +456,7 @@
 
     <footer class="bg-[#00449E] text-white mt-16">
         <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8 text-center text-sm">
- <p>&copy; 2024 Payment Security Initiative. All Rights Reserved.</p>
+            <p>&copy; 2024 Payment Security Initiative. All Rights Reserved.</p> {/* Copyright year */}
             <p class="mt-1 opacity-70">This technical infographic was dynamically generated. All diagrams are rendered using HTML/CSS and all charts are rendered on Canvas via Chart.js. No SVG or Mermaid JS was used.</p>
         </div>
     </footer>
@@ -464,7 +479,7 @@
             legend: {
                 position: 'top',
                 labels: {
-                    color: '#4B5563',
+ color: '#4B5563', /* Label color */
                     font: { /* Adjusted for mobile readability */
  size: 9,
                         weight: 'bold'
@@ -477,7 +492,7 @@
                 intersect: false,
                 backgroundColor: 'rgba(0, 0, 0, 0.8)',
                 titleFont: { size: 12, weight: 'bold' },
-                bodyFont: { size: 10 }, /* Adjusted size */
+ bodyFont: { size: 10 }, /* Adjusted size */ /* Tooltip body font size */
  callbacks: { /* Added callback for wrapping labels if needed */
                     title: function(tooltipItems) {
                         const item = tooltipItems[0];
@@ -493,7 +508,7 @@
         },
         scales: {
             x: {
-                ticks: {
+ ticks: { /* X-axis tick color and font size */
                     color: '#4B5563',
                     font: {
                          size: 9
@@ -504,7 +519,7 @@
                 }
             },
             y: {
-                ticks: { color: '#4B5563', font: { size: 9 } }, /* Adjusted size */
+ ticks: { color: '#4B5563', font: { size: 9 } }, /* Adjusted size */ /* Y-axis tick color and font size */
                 grid: {
                     color: '#e2e8f0'
                 }
@@ -553,7 +568,7 @@
             },
             options: {
                 ...defaultChartOptions,
-                scales: {
+                scales: { /* Specific scale options for this chart */
                     x: { grid: { display: false } },
                     y: { beginAtZero: true, title: { display: true, text: 'Percentage (%)', font: { size: 10 } } }
                 }
@@ -586,7 +601,7 @@
             },
             options: {
                 ...defaultChartOptions,
-                scales: {
+                scales: { /* Specific scale options for this chart */
                     y: {
                         beginAtZero: true,
                         title: { display: true, text: 'Number of Incidents', font: { size: 10 } }
@@ -600,17 +615,24 @@
     const mobileNavToggle = document.getElementById('mobile-nav-toggle');
     const mobileNavMenu = document.getElementById('mobile-nav-menu');
     const mobileNavOverlay = document.getElementById('mobile-nav-overlay');
-    const hamburgerIcon = document.getElementById('hamburger-icon');
-    const closeIcon = document.getElementById('close-icon');
+ const mobileMenuIconOpen = document.getElementById('hamburger-icon'); // Renamed for clarity
+ const mobileMenuIconClose = document.getElementById('close-icon'); // Renamed for clarity
 
     if (mobileNavToggle && mobileNavMenu && mobileNavOverlay) {
         mobileNavToggle.addEventListener('click', () => {
-            mobileNavMenu.classList.toggle('is-open');
+            const isOpen = mobileNavMenu.classList.contains('is-open');
+ if (isOpen) {
+                mobileNavMenu.classList.remove('is-open');
+                mobileNavOverlay.style.display = 'none';
+                mobileMenuIconOpen.classList.remove('hidden');
+                mobileMenuIconClose.classList.add('hidden');
+            } else {
+                mobileNavMenu.classList.add('is-open');
             mobileNavOverlay.style.display = mobileNavMenu.classList.contains('is-open') ? 'block' : 'none';
-
-            // Toggle icons
-            hamburgerIcon.classList.toggle('hidden');
-            closeIcon.classList.toggle('hidden');
+                mobileMenuIconOpen.classList.add('hidden');
+                mobileMenuIconClose.classList.remove('hidden');
+            }
+ mobileNavToggle.setAttribute('aria-expanded', !isOpen); // Update ARIA attribute
         });
 
         mobileNavOverlay.addEventListener('click', () => {
@@ -618,6 +640,7 @@
             hamburgerIcon.classList.remove('hidden');
             closeIcon.classList.add('hidden');
             mobileNavOverlay.style.display = 'none';
+ mobileNavToggle.setAttribute('aria-expanded', 'false'); // Update ARIA attribute
         });
 
         // Close mobile menu when a link is clicked
@@ -627,8 +650,12 @@
                 hamburgerIcon.classList.remove('hidden');
                 closeIcon.classList.add('hidden');
                 mobileNavOverlay.style.display = 'none';
+ mobileNavToggle.setAttribute('aria-expanded', 'false'); // Update ARIA attribute
             });
         });
+
+ // Initially hide the close icon
+ mobileMenuIconClose.classList.add('hidden');
     }
 </script>
 </body>

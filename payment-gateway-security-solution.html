@@ -37,7 +37,6 @@
             @apply bg-white p-4 rounded-lg shadow-md text-center flex flex-col items-center justify-center;
         }
         .risk-box {
-            @apply bg-red-100 border border-red-300 text-red-800 p-3 rounded-lg shadow-sm text-sm font-semibold;
         }
         @media (max-width: 640px) {
             .security-pillar-box {
@@ -57,11 +56,9 @@
             top: 0;
             left: 0;
  bottom: 0;
-            right: 0;
-            bottom: 0;
             background-color: rgba(0, 0, 0, 0.7);
             z-index: 30; /* Below the menu */
-            display: none;
+            transition: opacity 0.3s ease-in-out;
         }
         .mobile-nav-menu {
             position: fixed;
@@ -76,13 +73,15 @@
             padding: 1.5rem 1rem;
  overflow-y: auto;
  box-shadow: 2px 0 5px rgba(0,0,0,0.2);
+ display: flex; /* Use flex for column layout */
+ flex-direction: column;
         }
         .mobile-nav-menu.is-open {
             transform: translateX(0); /* Slide in */
         }
     </style>
 </head>
-<body class="text-gray-700">
+<body class="text-gray-700 bg-gray-50">
 
     <!-- Mobile nav toggle button for internal page -->
     <header class="bg-white sticky top-0 z-50 shadow-md">
@@ -115,11 +114,11 @@
     <!-- Mobile Navigation Menu -->
     <div id="mobile-nav-overlay" class="mobile-nav-overlay"></div>
     <div id="mobile-nav-menu" class="mobile-nav-menu">
-        <div class="flex flex-col space-y-1">
+ <div class="flex flex-col space-y-2 py-4 px-2">
             <a href="#imperative" class="block px-3 py-2 rounded-md text-base font-medium text-gray-800 hover:bg-[#85BDE9] hover:text-white">Imperative</a>
             <a href="#risks" class="block px-3 py-2 rounded-md text-base font-medium text-gray-800 hover:bg-[#85BDE9] hover:text-white">Key Risks</a>
             <a href="#pillars" class="block px-3 py-2 rounded-md text-base font-medium text-gray-800 hover:bg-[#85BDE9] hover:text-white">Pillars</a>
-            <a href="#roi" class="block px-3 py-2 rounded-md text-base font-medium text-gray-800 hover:bg-[#85BDE9] hover:text-white">ROI</a>
+ <a href="#roi" class="block px-3 py-2 rounded-md text-base font-medium text-gray-800 hover:bg-[#85BDE9] hover:text-white">ROI</a>
         </div>
     </div>
 
@@ -155,13 +154,13 @@
                 </div>
                 <div>
                     <h4 class="font-semibold text-lg text-[#005CB9] mb-2">Major Risk Categories</h4>
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                        <div class="risk-box">Data Theft & Compromise</div>
-                        <div class="risk-box">Fraudulent Transactions</div>
-                        <div class="risk-box">Regulatory Penalties (PCI DSS, GDPR)</div>
-                        <div class="risk-box">Reputational Damage</div>
-                        <div class="risk-box">Service Disruption (DDoS)</div>
-                        <div class="risk-box">Operational Inefficiencies</div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="bg-red-100 border border-red-300 text-red-800 p-3 rounded-lg shadow-sm text-sm font-semibold">Data Theft & Compromise</div>
+                        <div class="bg-red-100 border border-red-300 text-red-800 p-3 rounded-lg shadow-sm text-sm font-semibold">Fraudulent Transactions</div>
+                        <div class="bg-red-100 border border-red-300 text-red-800 p-3 rounded-lg shadow-sm text-sm font-semibold">Regulatory Penalties (PCI DSS, GDPR)</div>
+                        <div class="bg-red-100 border border-red-300 text-red-800 p-3 rounded-lg shadow-sm text-sm font-semibold">Reputational Damage</div>
+                        <div class="bg-red-100 border border-red-300 text-red-800 p-3 rounded-lg shadow-sm text-sm font-semibold">Service Disruption (DDoS)</div>
+                        <div class="bg-red-100 border border-red-300 text-red-800 p-3 rounded-lg shadow-sm text-sm font-semibold">Operational Inefficiencies</div>
                     </div>
                 </div>
             </div>
@@ -351,18 +350,20 @@
     if (mobileNavToggle && mobileNavMenu && mobileNavOverlay) {
         mobileNavToggle.addEventListener('click', () => {
             mobileNavMenu.classList.toggle('is-open');
-            mobileNavOverlay.style.display = mobileNavMenu.classList.contains('is-open') ? 'block' : 'none';
+            mobileNavOverlay.classList.toggle('hidden');
  mobileMenuIconOpen.classList.toggle('hidden');
  mobileMenuIconClose.classList.toggle('hidden');
         });
 
         mobileNavOverlay.addEventListener('click', () => {
             mobileNavMenu.classList.remove('is-open');
-            mobileNavOverlay.style.display = 'none';
+            mobileNavOverlay.classList.add('hidden');
  mobileMenuIconOpen.classList.remove('hidden');
             mobileMenuIconClose.classList.add('hidden');
         });
- // Initially hide the close icon
+
+        // Initially hide the overlay and close icon
+        mobileNavOverlay.classList.add('hidden');
         mobileMenuIconClose.classList.add('hidden');
 
         // Close mobile menu when a link is clicked
@@ -373,6 +374,8 @@
             });
         });
     }
+ // Ensure overlay is hidden on larger screens
+    window.addEventListener('resize', () => { if (window.innerWidth >= 640) { mobileNavOverlay.classList.add('hidden'); mobileNavMenu.classList.remove('is-open'); mobileMenuIconOpen.classList.remove('hidden'); mobileMenuIconClose.classList.add('hidden'); } });
 
 </script>
 </body>

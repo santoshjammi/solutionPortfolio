@@ -21,7 +21,7 @@
             position: relative;
             width: 100%;
             max-width: 600px;
-            margin-left: auto;
+ margin-left: auto; /* Center on small screens */
             margin-right: auto;
  height: 300px; /* Default height for mobile */
  max-height: 400px; /* Max height */
@@ -39,8 +39,8 @@
             }
         }
         .flow-arrow {
-            font-size: 1.5rem;
-            line-height: 1;
+            font-size: 1.5rem; /* Base size */
+            line-height: 1; /* Ensure vertical alignment */
             color: #85BDE9;
         }
         .crm-pillar-box {
@@ -61,47 +61,70 @@
  @apply p-2 border rounded-md text-sm;
  min-width: 100px; /* Ensure minimum width */
         }
-
         /* Adjust layout for smaller screens */
-        @media (max-width: 640px) {
-            .grid-cols-1 .technical-box, .grid-cols-2 .technical-box {
- text-align: center;
-            }
+/* Already handled by Tailwind's default stacking on small screens */
+
+        /* Styles for mobile navigation overlay */
+        .mobile-nav-overlay {
+ /* Overlay to close menu when clicking outside */
+ @apply fixed inset-0 bg-black bg-opacity-70 z-40 hidden; /* Use apply directive */
+            position: fixed;
+            top: 0;
+            left: 0;
+ right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 50;
+            display: none;
         }
-        /* Mobile menu styles */
-        .mobile-menu {
- display: none; /* Hidden by default */
-            position: absolute;
-            top: 48px; /* Adjust based on header height */
-            right: 0;
-            width: 100%;
+        .mobile-nav-menu {
+ /* The off-canvas menu panel */
+            position: fixed;
+            top: 64px; /* Height of the header */
+ left: 0;
+ width: 75%;
+            height: calc(100% - 64px); /* Full height minus header */
             background-color: white;
-            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-            z-index: 1000;
-            flex-direction: column; /* Stack links vertically */
+            z-index: 60;
+            transform: translateX(-100%);
+            transition: transform 0.3s ease-in-out;
+ box-shadow: 2px 0 5px rgba(0,0,0,0.2);
+            padding: 1rem;
+            overflow-y: auto; /* Enable scrolling for long menus */
+ @apply z-50 bg-white; /* Use apply directive */
+        }
+        .mobile-nav-menu.is-open {
+            transform: translateX(0);
         }
         .mobile-menu a {
             padding: 10px 20px;
-            border-bottom: 1px solid #e2e8f0; /* Add separators */
-            text-align: center;
+ border-bottom: 1px solid #e2e8f0; /* Separator */
+            text-align: left; /* Align text to the left */
         }
         .mobile-menu a:last-child { border-bottom: none; }
 
     </style>
 </head>
-<body class="text-gray-700">
+<body class="text-gray-700 pt-16"> <!-- Add padding-top to body -->
 
-    <header class="bg-white sticky top-0 z-50 shadow-md">
-        <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex items-center justify-between h-12">
-                <div class="flex items-center">
-                    <h1 class="text-lg font-bold text-[#00449E]">Investment Banking CRM</h1>
+    <header class="bg-white sticky top-0 z-50 shadow-md h-16 flex items-center"> <!-- Increased header height -->
+        <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full w-full flex items-center justify-between relative">
+            <div class="flex items-center justify-between h-full w-full">
+                <div class="flex items-center flex-grow"> <!-- Added flex-grow -->
+ <h1 class="text-lg font-bold text-[#00449E]">Investment Banking CRM</h1>
                 </div>
                 <!-- Mobile menu button -->
-                <button id="mobile-menu-button" class="sm:hidden focus:outline-none">
-                    <svg class="h-6 w-6 text-gray-600 hover:text-[#005CB9]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <button id="mobile-menu-button" class="sm:hidden focus:outline-none p-2 rounded-md text-gray-600 hover:bg-[#85BDE9] hover:text-white" aria-label="Toggle mobile menu">
+                    <svg id="hamburger-icon" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
                     </svg>
+ <svg id="close-icon" class="h-6 w-6 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+ <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+ </svg>
+
+                </button>
+
+                <!-- Desktop Navigation Links -->
                 </button>
                 <div class="hidden sm:block">
                     <div class="ml-10 flex items-baseline space-x-2">
@@ -113,22 +136,26 @@
                         <a href="#insights" class="text-gray-600 hover:bg-[#85BDE9] hover:text-white px-2 py-1 rounded-md text-sm font-medium">Insights</a>
                         <a href="#security" class="text-gray-600 hover:bg-[#85BDE9] hover:text-white px-2 py-1 rounded-md text-sm font-medium">Security</a>
                         <a href="#roi" class="text-gray-600 hover:bg-[#85BDE9] hover:text-white px-2 py-1 rounded-md text-sm font-medium">ROI</a>
+ <a href="/index.html" class="text-gray-600 hover:bg-[#85BDE9] hover:text-white px-2 py-1 rounded-md text-sm font-medium">Home</a>
                     </div>
                 </div>
             </div>
         </nav>
-        <!-- Mobile Menu Content -->
-        <nav id="mobile-menu" class="mobile-menu">
+    </header>
+
+    <!-- Mobile Navigation Menu -->
+    <div id="mobile-nav-overlay" class="mobile-nav-overlay"></div>
+    <div id="mobile-nav-menu" class="mobile-nav-menu">
+        <div class="flex flex-col space-y-1 mobile-menu-content"> <!-- Added mobile-menu-content class -->
  <a href="#imperative" class="text-gray-600 hover:bg-[#85BDE9] hover:text-white mobile-menu-link">Imperative</a>
- <a href="#pillars" class="text-gray-600 hover:bg-[#85BDE9] hover:text-white mobile-menu-link">Pillars</a>
+ <a href="#pillars" class="text-gray-600 hover:bg-[#85BDE9] hover:text-white mobile-menu-link">Pillars</a> <!-- Fix duplicated nav -->
  <a href="#client-mgmt" class="text-gray-600 hover:bg-[#85BDE9] hover:text-white mobile-menu-link">Client Mgmt</a>
  <a href="#deal-pipeline" class="text-gray-600 hover:bg-[#85BDE9] hover:text-white mobile-menu-link">Deal Pipeline</a>
  <a href="#collaboration" class="text-gray-600 hover:bg-[#85BDE9] hover:text-white mobile-menu-link">Collaboration</a>
- <a href="#insights" class="text-gray-600 hover:bg-[#85BDE9] hover:text-white mobile-menu-link">Insights</a>
- <a href="#security" class="text-gray-600 hover:bg-[#85BDE9] hover:text-white mobile-menu-link">Security</a>
- <a href="#roi" class="text-gray-600 hover:bg-[#85BDE9] hover:text-white mobile-menu-link">ROI</a>
-        </nav>
-    </header>
+ <a href="#insights" class="text-gray-600 hover:bg-[#85BDE9] hover:text-white mobile-menu-link">Insights</a>                        <a href="#security" class="text-gray-600 hover:bg-[#85BDE9] hover:text-white mobile-menu-link">Security</a>                        <a href="#roi" class="text-gray-600 hover:bg-[#85BDE9] hover:text-white mobile-menu-link">ROI</a>
+ <a href="/index.html" class="text-gray-600 hover:bg-[#85BDE9] hover:text-white mobile-menu-link">Home</a>
+        </div>
+    </div>
 
     <main class="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
 
@@ -140,18 +167,18 @@
                 <p class="text-gray-600 mb-6">Traditional CRMs often lead to siloed information, manual updates, and a lack of real-time visibility across client interactions and deal stages. This significantly impedes efficiency and deal conversion rates.</p>
                 <div class="flex flex-col items-center justify-center space-y-4">
                     <div class="flex space-x-6">
-                        <div class="technical-box border-dashed border-red-400 text-red-700">Client Data</div>
- <div class="technical-box border-dashed border-red-400 text-red-700">Deal Records</div>
+                        <div class="technical-box border-dashed border-red-400 text-red-700 w-32">Client Data</div>
+ <div class="technical-box border-dashed border-red-400 text-red-700 w-32">Deal Records</div>
                     </div>
-                    <div class="technical-flow-arrow text-red-500 rotate-90">⤫</div>
+                    <div class="flow-arrow text-red-500 rotate-90">⤫</div>
  <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 space-x-0 sm:space-x-6">
-                        <div class="technical-box border-dashed border-red-400 text-red-700">Communication Logs</div>
-                        <div class="technical-box border-dashed border-red-400 text-red-700">Team Notes</div>
+                        <div class="technical-box border-dashed border-red-400 text-red-700 w-32">Communication Logs</div>
+                        <div class="technical-box border-dashed border-red-400 text-red-700 w-32">Team Notes</div>
                     </div>
                     <p class="text-red-500 font-semibold mt-4">DISCONNECTED SILOS</p>
  <p class="text-xs text-gray-500 mt-2">(Diagram illustrates data silos, not a functional flow)</p>
  <style>
- .technical-box { @apply p-3 border rounded-md text-sm text-center; }
+ .technical-box { @apply p-3 border rounded-md text-sm text-center min-w-[120px]; } /* Apply min-width here */
  </style>
                 </div>
             </div>
@@ -167,25 +194,25 @@
                     <span class="text-5xl mb-3">🤝</span>
                     <h3 class="text-xl font-bold text-[#005CB9]">Client 360 View</h3>
                     <p class="mt-2 text-gray-600 text-sm">Centralized, comprehensive client profiles with all historical interactions and relationships.</p>
-                </div>
+ </div>
                 <div class="crm-pillar-box">
                     <span class="text-5xl mb-3">💲</span>
                     <h3 class="text-xl font-bold text-[#005CB9]">Dynamic Deal Flow</h3>
                     <p class="mt-2 text-gray-600 text-sm">Intuitive pipeline management from origination to successful closure.</p>
-                </div>
+ </div>
                 <div class="crm-pillar-box">
                     <span class="text-5xl mb-3">👥</span>
                     <h3 class="text-xl font-bold text-[#005CB9]">Seamless Collaboration</h3>
                     <p class="mt-2 text-gray-600 text-sm">Tools for efficient internal team and external contact coordination on projects.</p>
-                </div>
+ </div>
                 <div class="crm-pillar-box">
                     <span class="text-5xl mb-3">📊</span>
                     <h3 class="text-xl font-bold text-[#005CB9]">Actionable Analytics</h3>
                     <p class="mt-2 text-gray-600 text-sm">Real-time insights and predictive forecasting for better strategic decisions.</p>
                 </div>
             </div>
-        </section>
-        
+ </section>
+
         <div class="space-y-20">
             <section id="client-mgmt">
                 <div class="bg-white rounded-lg shadow-lg p-6 md:p-8">
@@ -196,7 +223,7 @@
                             <h4 class="font-semibold text-lg text-[#005CB9] mb-2">Client Portfolio by Industry Segment</h4>
                             <p class="text-sm text-gray-500 mb-4">A clear view of our client distribution across key industries allows for strategic resource allocation and specialized outreach.</p>
                             <div class="chart-container h-64 md:h-80">
-                                <canvas id="industryDistributionChart"></canvas>
+ <canvas id="industryDistributionChart"></canvas> <!-- Ensure canvas has height for chart.js -->
                             </div>
                         </div>
                         <div>
@@ -204,7 +231,7 @@
                             <p class="text-sm text-gray-500 mb-4">Tracking client meetings and significant interactions over time helps us assess relationship health and identify periods of heightened activity.</p>
                             <div class="chart-container h-64 md:h-80">
                                 <canvas id="engagementTrendChart"></canvas>
-                            </div>
+ </div> <!-- Ensure canvas has height for chart.js -->
                         </div>
                     </div>
                 </div>
@@ -242,8 +269,8 @@
  <div class="flex flex-col items-center">
                             <p class="text-sm text-gray-500 mb-4">Understanding the distribution of active deals across different transaction types helps in resource allocation and specialization within the banking team.</p>
                             <div class="chart-container h-64 md:h-80">
-                                <canvas id="dealTypeChart"></canvas>
-                            </div>
+                                <canvas id="dealTypeChart"></canvas> <!-- Ensure canvas has height for chart.js -->
+ </div>
                         </div>
                     </div>
                 </div>
@@ -258,7 +285,7 @@
                             <h4 class="font-semibold text-lg text-[#005CB9] mb-2">Interaction Breakdown: Internal vs. External</h4>
                             <p class="text-sm text-gray-500 mb-4">This chart shows the proportion of interactions with internal colleagues versus external clients and partners, highlighting the balance of collaborative effort.</p>
                             <div class="chart-container h-64 md:h-80">
-                                <canvas id="interactionTypeChart"></canvas>
+ <canvas id="interactionTypeChart"></canvas> <!-- Ensure canvas has height for chart.js -->
                             </div>
                         </div>
                         <div>
@@ -266,13 +293,13 @@
                             <p class="text-sm text-gray-500 mb-4">The CRM provides structured workflows for key processes like deal team formation, document review, and internal approvals, ensuring efficiency and compliance.</p>
                              <div class="flex flex-col items-center justify-center space-y-2 py-4 px-2 bg-gray-100 rounded-lg shadow max-w-md mx-auto">
                                  <div class="technical-box bg-[#005CB9] text-white">Deal Origination</div>
-                                 <div class="flow-arrow">⬇️</div>
+                                 <div class="flow-arrow text-2xl">⬇️</div>
                                  <div class="technical-box">Team Formation (CRM auto-assign)</div>
-                                 <div class="flow-arrow">⬇️</div>
+                                 <div class="flow-arrow text-2xl">⬇️</div>
                                  <div class="technical-box">Document Sharing & Co-editing</div>
-                                 <div class="flow-arrow">⬇️</div>
+                                 <div class="flow-arrow text-2xl">⬇️</div>
                                  <div class="technical-box bg-[#0076D4] text-white">Internal Approval Workflow</div>
-                                 <div class="flow-arrow">⬇️</div>
+                                 <div class="flow-arrow text-2xl">⬇️</div>
                                  <div class="technical-box">Client Pitch Preparation</div>
                              </div>
                         </div>
@@ -289,7 +316,7 @@
                             <h4 class="font-semibold text-lg text-[#005CB9] mb-2">Deal Closure Time vs. Value</h4>
                             <p class="text-sm text-gray-500 mb-4">This scatter plot helps identify potential correlations between the time taken to close a deal and its overall value, revealing efficiencies or bottlenecks in high-value deals.</p>
                             <div class="chart-container h-64 md:h-80">
-                                <canvas id="dealTimeValueScatter"></canvas>
+ <canvas id="dealTimeValueScatter"></canvas> <!-- Ensure canvas has height for chart.js -->
                             </div>
                         </div>
                         <div>
@@ -297,7 +324,7 @@
                             <p class="text-sm text-gray-500 mb-4">Forecasting future deal volume helps in strategic planning, resource allocation, and setting realistic revenue targets. The shaded area indicates the confidence interval.</p>
                             <div class="chart-container h-64 md:h-80">
                                 <canvas id="projectedVolumeChart"></canvas>
-                            </div>
+ </div> <!-- Ensure canvas has height for chart.js -->
                         </div>
                     </div>
                 </div>
@@ -310,39 +337,39 @@
                     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 text-center">
                         <div class="p-4 bg-gray-100 rounded-lg shadow-sm">
  <span class="text-4xl sm:text-5xl block mb-2">🔒</span>
-                            <h4 class="font-bold text-[#005CB9]">Data Encryption</h4>
+                            <h4 class="font-bold text-[#005CB9] text-lg">Data Encryption</h4>
                             <p class="text-sm text-gray-600">At-rest and in-transit encryption (AES-256, TLS 1.2+) for all sensitive data.</p>
                         </div>
                         <div class="p-4 bg-gray-100 rounded-lg shadow-sm">
  <span class="text-4xl sm:text-5xl block mb-2">🏛️</span>
-                            <h4 class="font-bold text-[#005CB9]">Regulatory Compliance</h4>
+                            <h4 class="font-bold text-[#005CB9] text-lg">Regulatory Compliance</h4>
                             <p class="text-sm text-gray-600">Adherence to GDPR, FINRA, AML, and other relevant financial regulations.</p>
                         </div>
                         <div class="p-4 bg-gray-100 rounded-lg shadow-sm">
  <span class="text-4xl sm:text-5xl block mb-2">🛡️</span>
-                            <h4 class="font-bold text-[#005CB9]">Access Controls</h4>
+                            <h4 class="font-bold text-[#005CB9] text-lg">Access Controls</h4>
                             <p class="text-sm text-gray-600">Role-based access control (RBAC) and multi-factor authentication (MFA).</p>
                         </div>
                         <div class="p-4 bg-gray-100 rounded-lg shadow-sm">
  <span class="text-4xl sm:text-5xl block mb-2">✍️</span>
-                            <h4 class="font-bold text-[#005CB9]">Audit Trails</h4>
+                            <h4 class="font-bold text-[#005CB9] text-lg">Audit Trails</h4>
                             <p class="text-sm text-gray-600">Comprehensive logging for all data access and modifications.</p>
                         </div>
                         <div class="p-4 bg-gray-100 rounded-lg shadow-sm">
  <span class="text-4xl sm:text-5xl block mb-2">🚨</span>
-                            <h4 class="font-bold text-[#005CB9]">Threat Detection</h4>
+                            <h4 class="font-bold text-[#005CB9] text-lg">Threat Detection</h4>
                             <p class="text-sm text-gray-600">Proactive monitoring and alerting for suspicious activities.</p>
                         </div>
                         <div class="p-4 bg-gray-100 rounded-lg shadow-sm">
  <span class="text-4xl sm:text-5xl block mb-2">🔄</span>
-                            <h4 class="font-bold text-[#005CB9]">Disaster Recovery</h4>
+                            <h4 class="font-bold text-[#005CB9] text-lg">Disaster Recovery</h4>
                             <p class="text-sm text-gray-600">Robust backup and recovery protocols to ensure business continuity.</p>
                         </div>
                     </div>
                 </div>
             </section>
             <section id="roi" class="bg-white rounded-lg shadow-lg p-8 md:p-12 text-center">
-                <h3 class="text-2xl font-bold text-[#00449E] mb-4">The ROI of an Integrated Investment Banking CRM</h3>
+ <h3 class="text-2xl font-bold text-[#00449E] mb-4">The ROI of an Integrated Investment Banking CRM</h3>
                 <p class="mt-2 max-w-3xl mx-auto text-lg text-gray-500">Implementing this advanced CRM translates directly into significant business advantages and measurable returns on investment.</p>
                 <div class="mt-10 grid grid-cols-1 md:grid-cols-2 gap-8">
                     <div class="bg-gray-100 p-6 rounded-lg shadow-sm">
@@ -368,7 +395,7 @@
                 </div>
             </section>
         </div>
-    </main>
+ </main>
 
     <footer class="bg-[#00449E] text-white mt-16">
         <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8 text-center text-sm">
@@ -378,17 +405,34 @@
     </footer>
 
 <script>
+    // Mobile nav toggle for internal pages
+    // Added explicit hamburger and close icons for clarity
     const mobileMenuButton = document.getElementById('mobile-menu-button');
-    const mobileMenu = document.getElementById('mobile-menu');
+    const mobileNavMenu = document.getElementById('mobile-nav-menu');
+    const mobileNavOverlay = document.getElementById('mobile-nav-overlay');
+    const hamburgerIcon = document.getElementById('hamburger-icon');
+    const closeIcon = document.getElementById('close-icon');
 
-    mobileMenuButton.addEventListener('click', () => {
-        mobileMenu.style.display = mobileMenu.style.display === 'flex' ? 'none' : 'flex';
+    function toggleMenu() {
+ mobileNavMenu.classList.toggle('is-open');
+ if (mobileNavMenu.classList.contains('is-open')) {
+ mobileNavOverlay.classList.remove('hidden');
+        } else {
+ mobileNavOverlay.classList.add('hidden');
+        }
+ hamburgerIcon.classList.toggle('hidden'); // Toggle visibility
+ closeIcon.classList.toggle('hidden'); // Toggle visibility
+    }
+
+ mobileMenuButton.addEventListener('click', toggleMenu);
+ mobileNavOverlay.addEventListener('click', () => {
+ if (mobileNavMenu.classList.contains('is-open')) toggleMenu();
     });
-
     // Close the menu when a link is clicked
-    mobileMenu.querySelectorAll('.mobile-menu-link').forEach(link => {
-        link.addEventListener('click', () => {
-            mobileMenu.style.display = 'none';
+    mobileNavMenu.querySelectorAll('.mobile-menu-link').forEach(link => { // Updated menu reference
+        link.addEventListener('click', () => { // Removed unused event parameter
+            // Add a small delay to allow the browser to navigate before closing the menu
+ if (mobileNavMenu.classList.contains('is-open')) toggleMenu();
         });
     });
 </script>

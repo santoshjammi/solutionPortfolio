@@ -16,20 +16,6 @@
             color: #4B5563; /* Default text color */
         }
 
-        /* Standardized Mobile Nav Overlay */
-        .mobile-nav-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-color: rgba(0, 0, 0, 0.7);
-            z-index: 50;
-            display: none; /* Hidden by default */
-            backdrop-filter: blur(4px); /* Optional: blur background */
-            -webkit-backdrop-filter: blur(4px); /* Safari support */
-        }
-
         /* Ensure main content is not hidden by fixed header */
         body { padding-top: 48px; /* Adjust based on header height */ }
 
@@ -63,6 +49,18 @@
             @apply text-white;
         }
         .colored-box:active { /* Tap feedback */
+            @apply opacity-75;
+        }
+
+         /* Standardized Mobile Nav Overlay */
+        .mobile-nav-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 50;
             @apply opacity-75;
         }
 
@@ -129,7 +127,7 @@
     <header class="bg-white sticky top-0 z-50 shadow-md">
         <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-12 relative">
             <div class="flex items-center justify-between h-full">
-                <div class="flex items-center min-w-0">
+                <div class="flex items-center flex-shrink-0">
                     <h1 class="text-lg font-bold text-[#00449E]">CRM Technical Deep Dive</h1>
                 </div>
 
@@ -145,10 +143,10 @@
                         <a href="#analytics-tech" class="text-gray-600 hover:bg-[#85BDE9] hover:text-white px-2 py-1 rounded-md text-sm font-medium">Analytics Tech</a>
                     </div>
                 </div>
-
                 <!-- Mobile nav toggle button for internal page -->
                 <div class="sm:hidden flex-shrink-0">
-                    <button id="mobile-nav-toggle" class="p-2 rounded-md text-gray-600 hover:bg-[#85BDE9] hover:text-white focus:outline-none">
+                    <button id="mobile-nav-toggle" class="p-2 rounded-md text-gray-600 hover:text-[#00449E] focus:outline-none focus:ring-2 focus:ring-inset focus:ring-[#85BDE9]" aria-controls="mobile-nav-menu" aria-expanded="false">
+                        <span class="sr-only">Open main menu</span>
                         <!-- Hamburger Icon -->
                         <svg id="mobile-menu-icon-open" class="h-6 w-6 block" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
@@ -167,13 +165,13 @@
     <div id="mobile-nav-overlay" class="mobile-nav-overlay"></div>
     <div id="mobile-nav-menu" class="mobile-nav-menu">
         <div class="flex flex-col space-y-3">
-            <a href="#overview" class="block px-3 py-2 rounded-md text-gray-800 hover:bg-[#85BDE9] hover:text-white font-semibold text-base">Overview</a>
-            <a href="#architecture" class="block px-3 py-2 rounded-md text-gray-800 hover:bg-[#85BDE9] hover:text-white font-semibold text-base">Architecture</a>
-            <a href="#data-model" class="block px-3 py-2 rounded-md text-gray-800 hover:bg-[#85BDE9] hover:text-white font-semibold text-base">Data Model</a>
-            <a href="#integrations" class="block px-3 py-2 rounded-md text-gray-800 hover:bg-[#85BDE9] hover:text-white font-semibold text-base">Integrations</a>
-            <a href="#performance" class="block px-3 py-2 rounded-md text-gray-800 hover:bg-[#85BDE9] hover:text-white font-semibold text-base">Performance</a>
-            <a href="#security" class="block px-3 py-2 rounded-md text-gray-800 hover:bg-[#85BDE9] hover:text-white font-semibold text-base">Security</a>
-            <a href="#analytics-tech" class="block px-3 py-2 rounded-md text-gray-800 hover:bg-[#85BDE9] hover:text-white font-semibold text-base">Analytics Tech</a>
+            <a href="#overview" class="block px-3 py-2 rounded-md text-gray-800 hover:bg-[#85BDE9] hover:text-white font-semibold text-base" onclick="closeMobileMenu()">Overview</a>
+            <a href="#architecture" class="block px-3 py-2 rounded-md text-gray-800 hover:bg-[#85BDE9] hover:text-white font-semibold text-base" onclick="closeMobileMenu()">Architecture</a>
+            <a href="#data-model" class="block px-3 py-2 rounded-md text-gray-800 hover:bg-[#85BDE9] hover:text-white font-semibold text-base" onclick="closeMobileMenu()">Data Model</a>
+            <a href="#integrations" class="block px-3 py-2 rounded-md text-gray-800 hover:bg-[#85BDE9] hover:text-white font-semibold text-base" onclick="closeMobileMenu()">Integrations</a>
+            <a href="#performance" class="block px-3 py-2 rounded-md text-gray-800 hover:bg-[#85BDE9] hover:text-white font-semibold text-base" onclick="closeMobileMenu()">Performance</a>
+            <a href="#security" class="block px-3 py-2 rounded-md text-gray-800 hover:bg-[#85BDE9] hover:text-white font-semibold text-base" onclick="closeMobileMenu()">Security</a>
+            <a href="#analytics-tech" class="block px-3 py-2 rounded-md text-gray-800 hover:bg-[#85BDE9] hover:text-white font-semibold text-base" onclick="closeMobileMenu()">Analytics Tech</a>
         </div>
     </div>
 
@@ -561,19 +559,27 @@
     const mobileMenuIconClose = document.getElementById('mobile-menu-icon-close');
 
     if (mobileNavToggle && mobileNavMenu && mobileNavOverlay) {
+        function closeMobileMenu() {
+             mobileNavMenu.classList.remove('is-open');
+             mobileNavOverlay.style.display = 'none';
+             mobileMenuIconOpen.classList.remove('hidden');
+             mobileMenuIconClose.classList.add('hidden');
+             mobileNavToggle.setAttribute('aria-expanded', 'false');
+        }
+
         mobileNavToggle.addEventListener('click', () => {
             mobileNavMenu.classList.toggle('is-open');
             mobileNavOverlay.style.display = mobileNavMenu.classList.contains('is-open') ? 'block' : 'none';
             mobileMenuIconOpen.classList.toggle('hidden');
             mobileMenuIconClose.classList.toggle('hidden');
+            mobileNavToggle.setAttribute('aria-expanded', mobileNavMenu.classList.contains('is-open'));
         });
 
         mobileNavOverlay.addEventListener('click', () => {
             mobileNavMenu.classList.remove('is-open');
             mobileNavOverlay.style.display = 'none';
             mobileMenuIconOpen.classList.remove('hidden');
-            // Ensure the close icon is hidden when menu closes
-
+             // Ensure the close icon is hidden when menu closes
             mobileMenuIconClose.classList.add('hidden');
         });
         // Close mobile menu when a link is clicked
