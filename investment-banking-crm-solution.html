@@ -70,7 +70,7 @@
         }
         /* Mobile menu styles */
         .mobile-menu {
-            display: none; /* Hidden by default */
+ display: none; /* Hidden by default */
             position: absolute;
             top: 48px; /* Adjust based on header height */
             right: 0;
@@ -119,15 +119,14 @@
         </nav>
         <!-- Mobile Menu Content -->
         <nav id="mobile-menu" class="mobile-menu">
-            <a href="#imperative" class="text-gray-600 hover:bg-[#85BDE9] hover:text-white">Imperative</a>
-            <a href="#pillars" class="text-gray-600 hover:bg-[#85BDE9] hover:text-white">Pillars</a>
-            <a href="#client-mgmt" class="text-gray-600 hover:bg-[#85BDE9] hover:text-white">Client Mgmt</a>
-            <a href="#deal-pipeline" class="text-gray-600 hover:bg-[#85BDE9] hover:text-white">Deal Pipeline</a>
-            <a href="#collaboration" class="text-gray-600 hover:bg-[#85BDE9] hover:text-white">Collaboration</a>
-            <a href="#insights" class="text-gray-600 hover:bg-[#85BDE9] hover:text-white">Insights</a>
-            <a href="#security" class="text-gray-600 hover:bg-[#85BDE9] hover:text-white">Security</a>
-            <a href="#roi" class="text-gray-600 hover:bg-[#85BDE9] hover:text-white">ROI</a>
-
+ <a href="#imperative" class="text-gray-600 hover:bg-[#85BDE9] hover:text-white mobile-menu-link">Imperative</a>
+ <a href="#pillars" class="text-gray-600 hover:bg-[#85BDE9] hover:text-white mobile-menu-link">Pillars</a>
+ <a href="#client-mgmt" class="text-gray-600 hover:bg-[#85BDE9] hover:text-white mobile-menu-link">Client Mgmt</a>
+ <a href="#deal-pipeline" class="text-gray-600 hover:bg-[#85BDE9] hover:text-white mobile-menu-link">Deal Pipeline</a>
+ <a href="#collaboration" class="text-gray-600 hover:bg-[#85BDE9] hover:text-white mobile-menu-link">Collaboration</a>
+ <a href="#insights" class="text-gray-600 hover:bg-[#85BDE9] hover:text-white mobile-menu-link">Insights</a>
+ <a href="#security" class="text-gray-600 hover:bg-[#85BDE9] hover:text-white mobile-menu-link">Security</a>
+ <a href="#roi" class="text-gray-600 hover:bg-[#85BDE9] hover:text-white mobile-menu-link">ROI</a>
         </nav>
     </header>
 
@@ -387,7 +386,7 @@
     });
 
     // Close the menu when a link is clicked
-    mobileMenu.querySelectorAll('a').forEach(link => {
+    mobileMenu.querySelectorAll('.mobile-menu-link').forEach(link => {
         link.addEventListener('click', () => {
             mobileMenu.style.display = 'none';
         });
