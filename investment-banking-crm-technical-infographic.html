@@ -15,6 +15,24 @@
             background-color: #f0f4f8;
             color: #4B5563; /* Default text color */
         }
+
+        /* Standardized Mobile Nav Overlay */
+        .mobile-nav-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 50;
+            display: none; /* Hidden by default */
+            backdrop-filter: blur(4px); /* Optional: blur background */
+            -webkit-backdrop-filter: blur(4px); /* Safari support */
+        }
+
+        /* Ensure main content is not hidden by fixed header */
+        body { padding-top: 48px; /* Adjust based on header height */ }
+
         .chart-container {
             position: relative;
             width: 100%;
@@ -83,33 +101,27 @@
             cursor: pointer;
         }
 
-        /* Styles for mobile navigation overlay */
-        .mobile-nav-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-color: rgba(0, 0, 0, 0.7); /* Dark overlay */
-            z-index: 50; /* Above content, below header */
-            display: none; /* Hidden by default */
-        }
         .mobile-nav-menu {
             position: fixed;
             top: 48px; /* Height of the header */
-            right: 0; /* Start off-screen to the right */
-            width: 100%;
+            left: 0; /* Start off-screen to the left */
+            width: 80%; /* Take up 80% of the screen width */
+            max-width: 300px; /* Maximum width */
             height: calc(100% - 48px); /* Full height minus header */
             background-color: white;
             z-index: 60;
-            transform: translateX(-100%); /* Start off-screen to the left */
+            transform: translateX(-100%); /* Initially off-screen */
             transition: transform 0.3s ease-in-out;
-            padding: 1rem;
+            padding: 1.5rem 1rem; /* More padding */
             overflow-y: auto; /* Enable scrolling for long menus */
+            box-shadow: 2px 0 5px rgba(0,0,0,0.2); /* Add shadow */
         }
         .mobile-nav-menu.is-open {
             transform: translateX(0); /* Slide in */
         }
+         @media (min-width: 640px) { /* sm breakpoint */
+            body { padding-top: 48px; } /* Keep padding consistent */
+         }
     </style>
 </head>
 <body class="text-gray-700">
@@ -121,7 +133,7 @@
                     <h1 class="text-lg font-bold text-[#00449E]">CRM Technical Deep Dive</h1>
                 </div>
 
-                <!-- Desktop Navigation Links -->
+                <!-- Desktop Navigation Links (Hidden on mobile) -->
                 <div class="hidden sm:block ml-10">
                     <div class="flex items-baseline space-x-2">
                         <a href="#overview" class="text-gray-600 hover:bg-[#85BDE9] hover:text-white px-2 py-1 rounded-md text-sm font-medium">Overview</a>
@@ -135,9 +147,14 @@
                 </div>
 
                 <!-- Mobile nav toggle button for internal page -->
-                <div class="block sm:hidden flex-shrink-0">
+                <div class="sm:hidden flex-shrink-0">
                     <button id="mobile-nav-toggle" class="p-2 rounded-md text-gray-600 hover:bg-[#85BDE9] hover:text-white focus:outline-none">
-                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <!-- Hamburger Icon -->
+                        <svg id="mobile-menu-icon-open" class="h-6 w-6 block" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                        <!-- Close Icon -->
+                        <svg id="mobile-menu-icon-close" class="h-6 w-6 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
                         </svg>
                     </button>
@@ -148,15 +165,15 @@
 
     <!-- Mobile Navigation Menu -->
     <div id="mobile-nav-overlay" class="mobile-nav-overlay"></div>
-    <div id="mobile-nav-menu" class="mobile-nav-menu hidden sm:hidden">
-        <div class="flex flex-col space-y-2">
-            <a href="#overview" class="block px-4 py-2 rounded-md text-base font-medium text-gray-800 hover:bg-[#85BDE9] hover:text-white active:opacity-75">Overview</a>
-            <a href="#architecture" class="block px-4 py-2 rounded-md text-base font-medium text-gray-800 hover:bg-[#85BDE9] hover:text-white active:opacity-75">Architecture</a>
-            <a href="#data-model" class="block px-4 py-2 rounded-md text-base font-medium text-gray-800 hover:bg-[#85BDE9] hover:text-white active:opacity-75">Data Model</a>
-            <a href="#integrations" class="block px-4 py-2 rounded-md text-base font-medium text-gray-800 hover:bg-[#85BDE9] hover:text-white active:opacity-75">Integrations</a>
-            <a href="#performance" class="block px-4 py-2 rounded-md text-base font-medium text-gray-800 hover:bg-[#85BDE9] hover:text-white active:opacity-75">Performance</a>
-            <a href="#security" class="block px-4 py-2 rounded-md text-base font-medium text-gray-800 hover:bg-[#85BDE9] hover:text-white active:opacity-75">Security</a>
-            <a href="#analytics-tech" class="block px-4 py-2 rounded-md text-base font-medium text-gray-800 hover:bg-[#85BDE9] hover:text-white active:opacity-75">Analytics Tech</a>
+    <div id="mobile-nav-menu" class="mobile-nav-menu">
+        <div class="flex flex-col space-y-3">
+            <a href="#overview" class="block px-3 py-2 rounded-md text-gray-800 hover:bg-[#85BDE9] hover:text-white font-semibold text-base">Overview</a>
+            <a href="#architecture" class="block px-3 py-2 rounded-md text-gray-800 hover:bg-[#85BDE9] hover:text-white font-semibold text-base">Architecture</a>
+            <a href="#data-model" class="block px-3 py-2 rounded-md text-gray-800 hover:bg-[#85BDE9] hover:text-white font-semibold text-base">Data Model</a>
+            <a href="#integrations" class="block px-3 py-2 rounded-md text-gray-800 hover:bg-[#85BDE9] hover:text-white font-semibold text-base">Integrations</a>
+            <a href="#performance" class="block px-3 py-2 rounded-md text-gray-800 hover:bg-[#85BDE9] hover:text-white font-semibold text-base">Performance</a>
+            <a href="#security" class="block px-3 py-2 rounded-md text-gray-800 hover:bg-[#85BDE9] hover:text-white font-semibold text-base">Security</a>
+            <a href="#analytics-tech" class="block px-3 py-2 rounded-md text-gray-800 hover:bg-[#85BDE9] hover:text-white font-semibold text-base">Analytics Tech</a>
         </div>
     </div>
 
@@ -540,18 +557,23 @@
     const mobileNavToggle = document.getElementById('mobile-nav-toggle');
     const mobileNavMenu = document.getElementById('mobile-nav-menu');
     const mobileNavOverlay = document.getElementById('mobile-nav-overlay');
+    const mobileMenuIconOpen = document.getElementById('mobile-menu-icon-open');
+    const mobileMenuIconClose = document.getElementById('mobile-menu-icon-close');
 
     if (mobileNavToggle && mobileNavMenu && mobileNavOverlay) {
         mobileNavToggle.addEventListener('click', () => {
             mobileNavMenu.classList.toggle('is-open');
             mobileNavOverlay.style.display = mobileNavMenu.classList.contains('is-open') ? 'block' : 'none';
+            mobileMenuIconOpen.classList.toggle('hidden');
+            mobileMenuIconClose.classList.toggle('hidden');
         });
 
         mobileNavOverlay.addEventListener('click', () => {
             mobileNavMenu.classList.remove('is-open');
             mobileNavOverlay.style.display = 'none';
+            mobileMenuIconOpen.classList.remove('hidden');
+            mobileMenuIconClose.classList.add('hidden');
         });
-
         // Close mobile menu when a link is clicked
         mobileNavMenu.querySelectorAll('a').forEach(link => {
             link.addEventListener('click', () => {
@@ -559,6 +581,9 @@
                 mobileNavOverlay.style.display = 'none';
             });
         });
+
+         // Initially hide the close icon
+         mobileMenuIconClose.classList.add('hidden');
     }
 </script>
 </body>

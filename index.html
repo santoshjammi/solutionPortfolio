@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Strategic Solutions Hub | Your Partner for Business Growth & Security</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
+ <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌐</text></svg>">
@@ -82,10 +82,13 @@
                 <a href="payment-gateway-security-solution.html" target="solutionIframe" class="text-white hover:text-[#85BDE9] px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200">Security & Compliance</a>
             </div>
             <!-- Mobile menu button -->
-            <button id="mobile-menu-button" class="md:hidden p-2 rounded-md text-white hover:bg-[#0076D4] focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
-                <svg id="mobile-menu-icon-open" class="h-6 w-6 block" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+ <button id="mobile-menu-button" class="md:hidden p-2 rounded-md text-white hover:bg-[#0076D4] focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
+ <svg id="mobile-menu-icon-open" class="h-6 w-6 block" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
                 </svg>
+                <svg id="mobile-menu-icon-close" class="h-6 w-6 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+ <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+ </svg>
             </button>
         </div>
     </header>
@@ -125,7 +128,7 @@
     <script>
         const mobileMenuButton = document.getElementById('mobile-menu-button');
         const sidebar = document.getElementById('sidebar');
-        const sidebarOverlay = document.getElementById('sidebar-overlay');
+ const sidebarOverlay = document.getElementById('sidebar-overlay');
         const mobileMenuIconOpen = document.getElementById('mobile-menu-icon-open');
         const solutionIframe = document.getElementById('solutionIframe');
 
@@ -136,10 +139,12 @@
             // Toggle the display and visibility of the overlay
             if (sidebar.classList.contains('hidden-mobile')) { // Sidebar is hidden
                 sidebarOverlay.style.display = 'none';
-                mobileMenuIconOpen.classList.remove('hidden');
+ mobileMenuIconOpen.classList.remove('hidden');
+ document.getElementById('mobile-menu-icon-close').classList.add('hidden');
                 // Restore body scroll if previously hidden for overlay
                 document.body.style.overflow = ''; 
             } else {
+ document.getElementById('mobile-menu-icon-close').classList.remove('hidden');
                 sidebarOverlay.style.display = 'block';
                 mobileMenuIconOpen.classList.add('hidden');
                 // Hide body scroll when overlay is active

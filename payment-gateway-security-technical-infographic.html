@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Payment Gateway Security: Technical Deep Dive</title>
- <script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio"></script>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -13,7 +13,7 @@
         body {
             font-family: 'Inter', sans-serif;
             background-color: #f0f4f8;
- overflow-x: hidden; /* Prevent horizontal scrolling on small screens */
+            overflow-x: hidden; /* Prevent horizontal scrolling on small screens */
         }
         h1, h2, h3, h4 {
             line-height: 1.2; /* Improve readability on small screens */
@@ -26,7 +26,7 @@
             width: 100%;
             max-width: 600px;
             margin-left: auto;
-            margin-right: auto;
+            margin-right: auto; /* Center align charts */
             height: 250px; /* Default height for mobile */
  }
         @media (min-width: 640px) { /* sm breakpoint */
@@ -40,16 +40,16 @@
             }
         }
         .technical-flow-arrow {
- font-size: 1.5rem; /* Adjusted for mobile */
+            font-size: 1.5rem; /* Adjusted for mobile */
             line-height: 1;
             color: #85BDE9;
         }
         .technical-box-sm {
-            @apply bg-white p-2 rounded-lg shadow-md text-center font-medium text-xs border border-gray-200;
+            @apply bg-white p-2 rounded-lg shadow-md text-center font-medium text-xs border border-gray-200 flex-shrink-0; /* Ensure it shrinks if needed */
         }
         .technical-box-md {
- @apply bg-white p-3 sm:p-4 rounded-lg shadow-md text-center font-semibold text-xs sm:text-sm border border-gray-200 flex-shrink-0; /* Adjusted padding and text size */
- min-width: 120px; /* Minimum width for technical boxes */
+            @apply bg-white p-3 sm:p-4 rounded-lg shadow-md text-center font-semibold text-xs sm:text-sm border border-gray-200 flex-shrink-0; /* Adjusted padding and text size */
+            min-width: 120px; /* Minimum width for technical boxes */
         }
         .colored-box {
             @apply text-white;
@@ -69,7 +69,7 @@
             @apply px-4 sm:px-6 md:px-8;
         }
         .heading-1 {
- line-height: 1.1; /* Tighter line height for large headings */
+            line-height: 1.1; /* Tighter line height for large headings */
             @apply text-3xl sm:text-4xl md:text-5xl lg:text-6xl;
         }
         .heading-2 {
@@ -94,7 +94,7 @@
             @apply text-5xl sm:text-6xl md:text-7xl;
         }
         .flow-diagram-container {
-            @apply flex flex-col items-center justify-center space-y-2 bg-gray-100 p-4 rounded-lg shadow max-w-xs mx-auto md:max-w-md; /* Adjusted max-width for responsiveness */
+            @apply flex flex-col items-center justify-center space-y-2 bg-gray-100 p-4 rounded-lg shadow max-w-xs mx-auto md:max-w-md w-full; /* Added w-full */
         }
 
         /* Styles for mobile navigation overlay */
@@ -111,8 +111,8 @@
         .mobile-nav-menu {
             position: fixed;
             top: 48px; /* Height of the header */
-            left: 0;
- width: 75%; /* Make menu not full width */
+            left: 0; /* Start from the left edge */
+            width: 75%; /* Make menu not full width */
  height: calc(100vh - 48px); /* Full height minus header */
             background-color: white;
             z-index: 60;
@@ -130,10 +130,23 @@
 
     <header class="bg-white sticky top-0 z-50 shadow-md">
         <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-12 relative">
- <div class="flex items-center justify-between h-full w-full">
+            <div class="flex items-center justify-between h-full w-full">
                 <div class="flex items-center">
                     <h1 class="text-lg font-bold text-[#00449E]">Security Technical Deep Dive</h1>
                 </div>
+
+                <!-- Mobile nav toggle button for internal page -->
+                <div class="block sm:hidden flex-shrink-0">
+                    <button id="mobile-nav-toggle" class="p-2 rounded-md text-gray-600 hover:bg-[#85BDE9] hover:text-white focus:outline-none">
+                        <svg id="hamburger-icon" class="h-6 w-6 block" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                        <svg id="close-icon" class="h-6 w-6 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
+                </div>
+
 
                 <!-- Desktop Navigation Links -->
                 <div class="hidden sm:block ml-10">
@@ -149,20 +162,10 @@
                     </div>
                 </div>
 
-                <!-- Mobile nav toggle button for internal page -->
-                <div class="block sm:hidden">
-                    <button id="mobile-nav-toggle" class="p-2 rounded-md text-gray-600 hover:bg-[#85BDE9] hover:text-white focus:outline-none">
-                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-                        </svg>
-                    </button>
-                </div>
             </div>
         </nav>
     </header>
 
-    <!-- Mobile Navigation Menu -->
-    <div id="mobile-nav-overlay" class="mobile-nav-overlay"></div>
     <div id="mobile-nav-menu" class="mobile-nav-menu">
         <div class="flex flex-col space-y-1">
             <a href="#overview" class="block px-3 py-2 rounded-md text-base font-medium text-gray-800 hover:bg-[#85BDE9] hover:text-white">Overview</a>
@@ -176,12 +179,15 @@
         </div>
     </div>
 
+    <!-- Mobile Navigation Overlay -->
+    <div id="mobile-nav-overlay" class="mobile-nav-overlay"></div>
+
     <main class="max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
 
         <section id="overview" class="text-center mb-16 section-padding">
- <h2 class="heading-1 font-extrabold text-[#00449E]">Payment Gateway Security<br class="sm:hidden">Technical Deep Dive</h2>
+            <h2 class="heading-1 font-extrabold text-[#00449E]">Payment Gateway Security<br class="sm:hidden">Technical Deep Dive</h2>
             <p class="mt-4 max-w-3xl mx-auto text-content text-gray-500">This document details the technical controls and architectural considerations for securing our payment gateway. It covers threat mitigation, data protection, access control, and compliance with industry standards like PCI DSS.</p>
-            <div class="mt-12 flex flex-col md:flex-row items-center justify-center space-y-8 md:space-y-0 md:space-x-12">
+            <div class="mt-12 flex flex-col md:flex-row items-center justify-center space-y-8 md:space-y-0 md:space-x-12 w-full">
                 <div class="bg-white rounded-lg shadow-xl p-6 sm:p-8 text-center w-full max-w-xs">
                     <p class="text-lg font-medium text-gray-500">Core Focus</p>
  <p class="numeric-large font-black text-[#0076D4] mb-2">🔐</p>
@@ -224,7 +230,7 @@
         <section id="architecture" class="mb-16 section-padding bg-white rounded-lg shadow-lg">
             <h3 class="heading-3 font-bold text-[#00449E] mb-4">Architectural Security Integration: Defense-in-Depth</h3>
             <p class="text-content text-gray-600 mb-8">Security is baked into every layer of our payment gateway architecture, from the network edge to the application and data layers.</p>
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center w-full">
  <div class="flow-diagram-container">
                     <h4 class="heading-4 font-semibold text-[#005CB9] mb-2">Secure Network Segmentation & Perimeter</h4>
                     <p class="text-small text-gray-500 mb-4">Implementing a multi-zoned network architecture with strict firewall rules, Demilitarized Zones (DMZs), and micro-segmentation to isolate critical components and limit lateral movement of threats.</p>
@@ -259,7 +265,7 @@
         <section id="data-protection" class="mb-16 section-padding bg-white rounded-lg shadow-lg">
             <h3 class="heading-3 font-bold text-[#00449E] mb-4">Sensitive Data Protection: Encryption & Tokenization</h3>
             <p class="text-content text-gray-600 mb-8">Protecting cardholder data and other sensitive financial information is at the core of our security strategy, utilizing advanced cryptographic techniques.</p>
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start w-full">
                 <div class="order-2 lg:order-1">
  <h4 class="heading-4 font-semibold text-[#005CB9] mb-2">End-to-End Encryption</h4>
                     <p class="text-small text-gray-500 mb-4">All data, both in transit and at rest, will be encrypted using strong, industry-standard algorithms (TLS 1.2+ for transit, AES-256 for at-rest). Secure key management practices are central to this.</p>
@@ -292,7 +298,7 @@
         <section id="access-control" class="mb-16 section-padding bg-white rounded-lg shadow-lg">
             <h3 class="heading-3 font-bold text-[#00449E] mb-4">Strict Access Control & Identity Management</h3>
             <p class="text-content text-gray-600 mb-8">Controlling who can access sensitive systems and data is fundamental. We implement robust identity and access management controls.</p>
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center w-full">
                 <div class="order-2 lg:order-1">
  <h4 class="heading-4 font-semibold text-[#005CB9] mb-2">RBAC & MFA</h4>
                     <p class="text-small text-gray-500 mb-4">Access is granted based on the principle of least privilege, with roles defining permissions. Multi-Factor Authentication (MFA) is mandatory for all access to sensitive environments.</p>
@@ -324,7 +330,7 @@
         <section id="pci-dss" class="mb-16 section-padding bg-white rounded-lg shadow-lg">
             <h3 class="heading-3 font-bold text-[#00449E] mb-4">PCI DSS 4.0 Compliance: Technical Implementation</h3>
             <p class="text-content text-gray-600 mb-8">Adherence to the Payment Card Industry Data Security Standard (PCI DSS) is mandatory. We integrate its 12 core requirements into our technical build and operational processes.</p>
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start w-full">
                 <div>
  <h4 class="heading-4 font-semibold text-[#005CB9] mb-2">PCI DSS 4.0 Requirements</h4>
                     <p class="text-small text-gray-500 mb-4">A snapshot of how our technical controls map to critical PCI DSS 4.0 requirements, ensuring a compliant payment environment.</p>
@@ -360,7 +366,7 @@
         <section id="vulnerability-mgmt" class="mb-16 section-padding bg-white rounded-lg shadow-lg">
             <h3 class="heading-3 font-bold text-[#00449E] mb-4">Vulnerability Management & Incident Response</h3>
             <p class="text-content text-gray-600 mb-8">Proactive identification of weaknesses and a rapid, coordinated response to incidents are critical to minimizing impact and recovery time.</p>
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center w-full">
                 <div class="order-2 lg:order-1">
  <h4 class="heading-4 font-semibold text-[#005CB9] mb-2">Vuln. Remediation Cycle</h4>
                     <p class="text-small text-gray-500 mb-4">A defined process for discovering, assessing, prioritizing, and remediating vulnerabilities ensures a continuously improving security posture.</p>
@@ -394,7 +400,7 @@
         <section id="metrics" class="section-padding bg-white rounded-lg shadow-lg">
             <h3 class="heading-3 font-bold text-[#00449E] mb-4">Key Security & Compliance Metrics</h3>
             <p class="text-content text-gray-600 mb-8">Tracking these technical metrics provides visibility into our security posture and compliance status, enabling data-driven security operations.</p>
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 w-full">
                 <div class="p-3 sm:p-4 bg-gray-100 rounded-lg text-center shadow-sm">
  <p class="numeric-large text-[#0076D4] mb-1">0.001%</p>
                     <p class="text-small text-gray-600 font-semibold">Fraud Rate</p>
@@ -459,8 +465,8 @@
                 position: 'top',
                 labels: {
                     color: '#4B5563',
-                    font: {
-                        size: 10,
+                    font: { /* Adjusted for mobile readability */
+ size: 9,
                         weight: 'bold'
                     }
                 }
@@ -471,8 +477,8 @@
                 intersect: false,
                 backgroundColor: 'rgba(0, 0, 0, 0.8)',
                 titleFont: { size: 12, weight: 'bold' },
-                bodyFont: { size: 10 },
-                callbacks: {
+                bodyFont: { size: 10 }, /* Adjusted size */
+ callbacks: { /* Added callback for wrapping labels if needed */
                     title: function(tooltipItems) {
                         const item = tooltipItems[0];
                         let label = item.chart.data.labels[item.dataIndex];
@@ -487,7 +493,7 @@
         },
         scales: {
             x: {
-                ticks: { 
+                ticks: {
                     color: '#4B5563',
                     font: {
                          size: 9
@@ -498,7 +504,7 @@
                 }
             },
             y: {
-                ticks: { color: '#4B5563', font: { size: 9 } },
+                ticks: { color: '#4B5563', font: { size: 9 } }, /* Adjusted size */
                 grid: {
                     color: '#e2e8f0'
                 }
@@ -594,15 +600,23 @@
     const mobileNavToggle = document.getElementById('mobile-nav-toggle');
     const mobileNavMenu = document.getElementById('mobile-nav-menu');
     const mobileNavOverlay = document.getElementById('mobile-nav-overlay');
+    const hamburgerIcon = document.getElementById('hamburger-icon');
+    const closeIcon = document.getElementById('close-icon');
 
     if (mobileNavToggle && mobileNavMenu && mobileNavOverlay) {
         mobileNavToggle.addEventListener('click', () => {
             mobileNavMenu.classList.toggle('is-open');
             mobileNavOverlay.style.display = mobileNavMenu.classList.contains('is-open') ? 'block' : 'none';
+
+            // Toggle icons
+            hamburgerIcon.classList.toggle('hidden');
+            closeIcon.classList.toggle('hidden');
         });
 
         mobileNavOverlay.addEventListener('click', () => {
             mobileNavMenu.classList.remove('is-open');
+            hamburgerIcon.classList.remove('hidden');
+            closeIcon.classList.add('hidden');
             mobileNavOverlay.style.display = 'none';
         });
 
@@ -610,6 +624,8 @@
         mobileNavMenu.querySelectorAll('a').forEach(link => {
             link.addEventListener('click', () => {
                 mobileNavMenu.classList.remove('is-open');
+                hamburgerIcon.classList.remove('hidden');
+                closeIcon.classList.add('hidden');
                 mobileNavOverlay.style.display = 'none';
             });
         });
