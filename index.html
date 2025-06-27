@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Strategic Solutions Hub</title>
+    <title>Strategic Solutions Hub | Your Partner for Business Growth & Security</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -14,11 +14,19 @@
             font-family: 'Inter', sans-serif;
             background-color: #f0f4f8;
         }
+
+        /* Basic responsive adjustments */
+        body {
+            padding-top: 64px; /* Space for fixed header */
+        }
+
         .main-content-iframe {
             width: 100%;
-            height: calc(100vh - 64px); /* Full height minus header */
+            /* Adjust height to fill remaining space */
+            height: calc(100vh - 64px);
             border: none;
             background-color: #ffffff; /* Ensure iframe has a solid background */
+            flex-grow: 1; /* Allow iframe to take up available space */
         }
         /* Mobile menu specific styles */
         .sidebar {
@@ -39,6 +47,7 @@
         /* Desktop styles for sidebar */
         @media (min-width: 768px) { /* md breakpoint */
             .sidebar {
+                min-width: 256px; /* Ensure sidebar has a fixed width on desktop */
                 position: relative; /* Take up space in layout */
                 transform: translateX(0%); /* Always visible */
                 flex-shrink: 0; /* Don't shrink */
@@ -53,11 +62,13 @@
             bottom: 0;
             background-color: rgba(0, 0, 0, 0.5);
             z-index: 30; /* Below sidebar, above content */
-            display: none;
+            display: none; /* Hidden by default */
+            /* Ensure overlay is full screen */
+            width: 100%;
+            height: 100%;
         }
     </style>
 </head>
-<body class="text-gray-700 flex flex-col min-h-screen">
 
     <header class="bg-[#00449E] sticky top-0 z-50 shadow-md">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
@@ -73,7 +84,7 @@
         </div>
     </header>
 
-    <div class="flex flex-1 relative">
+    <div class="flex flex-1 relative overflow-hidden"> <!-- overflow-hidden to prevent sidebar peek -->
         <!-- Sidebar Overlay -->
         <div id="sidebar-overlay" class="sidebar-overlay"></div>
 
@@ -104,6 +115,7 @@
         </main>
     </div>
 
+    <!-- Footer if needed, add here -->
     <script>
         const mobileMenuButton = document.getElementById('mobile-menu-button');
         const sidebar = document.getElementById('sidebar');
@@ -114,8 +126,8 @@
             // Toggle the 'hidden-mobile' class for the sidebar
             sidebar.classList.toggle('hidden-mobile');
             
-            // Toggle the display of the overlay
-            if (sidebar.classList.contains('hidden-mobile')) {
+            // Toggle the display and visibility of the overlay
+            if (sidebar.classList.contains('hidden-mobile')) { // Sidebar is hidden
                 sidebarOverlay.style.display = 'none';
                 // Restore body scroll if previously hidden for overlay
                 document.body.style.overflow = ''; 
@@ -123,6 +135,7 @@
                 sidebarOverlay.style.display = 'block';
                 // Hide body scroll when overlay is active
                 document.body.style.overflow = 'hidden';
+                // Ensure overlay is clickable
             }
         }
 
@@ -138,16 +151,19 @@
             });
         });
 
-        // Add responsiveness to iframe's loaded content if it's an infographic
+        // Add responsiveness to iframe's loaded content
+        // Note: This attempts to add a viewport meta tag to the iframe content.
+        // This is subject to cross-origin restrictions if not served from the same origin.
+        // Ideally, the content loaded within the iframe should already be responsive.
         solutionIframe.onload = function() {
             try {
                 const iframeDoc = solutionIframe.contentWindow.document;
                 let viewportMeta = iframeDoc.querySelector('meta[name="viewport"]');
                 if (!viewportMeta) {
                     viewportMeta = iframeDoc.createElement('meta');
-                    viewportMeta.setAttribute('name', 'viewport');
-                    viewportMeta.setAttribute('content', 'width=device-width, initial-scale=1.0');
-                    iframeDoc.head.appendChild(viewportMeta);
+                    viewportMeta.setAttribute('name', 'viewport'); // Corrected attribute name
+                    viewportMeta.setAttribute('content', 'width=device-width, initial-scale=1.0, shrink-to-fit=no'); // Added shrink-to-fit
+                    iframeDoc.head.appendChild(viewportMeta); // Append to head
                 }
             } catch (e) {
                 console.warn("Could not access iframe content (might be due to cross-origin policies if serving locally without web server):", e);
@@ -186,9 +202,13 @@
             });
         });
 
-        // Ensure sidebar is hidden by default on mobile on initial load
-        // This is handled by the 'hidden-mobile' class applied directly in HTML
-        // and its toggling logic.
+        // Close sidebar on desktop if it was left open on mobile before resizing
+        window.addEventListener('resize', () => {
+            if (window.innerWidth >= 768 && !sidebar.classList.contains('hidden-mobile')) {
+                 // If desktop size and sidebar is open (i.e., no hidden-mobile class), close it
+                toggleSidebar(); // Use toggle function to correctly manage overlay and body scroll
+            }
+        });
     </script>
 </body>
 </html>

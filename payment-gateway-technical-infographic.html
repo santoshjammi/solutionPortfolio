@@ -2,7 +2,7 @@
 <html lang="en" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
     <title>Payment Gateway Scaling: A Technical Deep Dive</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -35,6 +35,16 @@
         }
         .technical-box {
             @apply bg-white p-4 rounded-lg shadow-md text-center font-medium text-sm border border-gray-200;
+        }
+        /* Responsive adjustments for technical boxes */
+        @media (max-width: 640px) {
+            .technical-box {
+                padding: 0.75rem; /* Smaller padding on small screens */
+                font-size: 0.875rem; /* Slightly smaller font */
+            }
+             .technical-flow-arrow {
+                font-size: 1.2rem; /* Smaller arrow */
+            }
         }
     </style>
 </head>
@@ -114,7 +124,7 @@
                     <p class="text-sm text-gray-500 mb-4">Breaking the monolith into independent, smaller services (Payment Core, Fraud, Notification, Ledger) allows for dedicated teams, independent deployment, and granular scaling of each function.</p>
                     <div class="flex flex-col items-center justify-center space-y-4 bg-gray-100 p-6 rounded-lg shadow">
                         <div class="technical-box text-[#00449E] w-48">Monolithic Gateway</div>
-                        <div class="technical-flow-arrow rotate-90">➡️</div>
+                        <div class="technical-flow-arrow rotate-90 md:rotate-90">➡️</div>
                         <div class="grid grid-cols-2 gap-4 w-full max-w-md">
                             <div class="technical-box bg-[#0076D4] text-white">Payment Core Service</div>
                             <div class="technical-box bg-[#0076D4] text-white">Fraud Service</div>
@@ -128,11 +138,11 @@
                     <p class="text-sm text-gray-500 mb-4">Leveraging message queues (e.g., Kafka, RabbitMQ) decouples the API ingestion from backend processing, enabling rapid request acceptance and resilient, parallel execution by worker pools.</p>
                     <div class="flex flex-col items-center justify-center space-y-2 bg-gray-100 p-6 rounded-lg shadow">
                         <div class="technical-box bg-[#005CB9] text-white">Client Request</div>
-                        <div class="technical-flow-arrow">⬇️</div>
+                        <div class="technical-flow-arrow md:rotate-0">⬇️</div>
                         <div class="technical-box">API Gateway</div>
-                        <div class="technical-flow-arrow">⬇️</div>
+                        <div class="technical-flow-arrow md:rotate-0">⬇️</div>
                         <div class="technical-box bg-[#0076D4] text-white">Message Queue (e.g., Kafka)</div>
-                        <div class="technical-flow-arrow">⬇️</div>
+                        <div class="technical-flow-arrow md:rotate-0">⬇️</div>
                         <div class="flex justify-around w-full">
                             <div class="technical-box">Worker 1</div>
                             <div class="technical-box">Worker 2</div>
@@ -152,7 +162,7 @@
                     <p class="text-sm text-gray-500 mb-4">Horizontal partitioning of data across multiple database instances distributes write load. Common strategies include Hash Sharding (even distribution) and Range Sharding (data locality). Read replicas further offload read queries.</p>
                     <div class="flex flex-col items-center justify-center space-y-4 bg-gray-100 p-6 rounded-lg shadow">
                         <div class="technical-box bg-[#005CB9] text-white w-48">Main Database</div>
-                        <div class="technical-flow-arrow rotate-90">⬇️</div>
+                        <div class="technical-flow-arrow rotate-90 md:rotate-90">⬇️</div>
                         <div class="flex space-x-4">
                             <div class="technical-box">Shard A (e.g., User ID Range 0-999)</div>
                             <div class="technical-box">Shard B (e.g., User ID Range 1000-1999)</div>
@@ -165,11 +175,11 @@
                     <p class="text-sm text-gray-500 mb-4">Introducing distributed caching (e.g., Redis Cluster) for hot data and localized in-memory caches reduces database hits and improves response times for frequently accessed merchant configurations, fraud rules, or transaction statuses.</p>
                     <div class="flex flex-col items-center justify-center space-y-2 bg-gray-100 p-6 rounded-lg shadow">
                         <div class="technical-box">Application Service</div>
-                        <div class="technical-flow-arrow">⬇️</div>
+                        <div class="technical-flow-arrow md:rotate-0">⬇️</div>
                         <div class="technical-box">In-Memory Cache (L1)</div>
-                        <div class="technical-flow-arrow">⬇️</div>
+                        <div class="technical-flow-arrow md:rotate-0">⬇️</div>
                         <div class="technical-box bg-[#0076D4] text-white">Distributed Cache (L2 - Redis)</div>
-                        <div class="technical-flow-arrow">⬇️</div>
+                        <div class="technical-flow-arrow md:rotate-0">⬇️</div>
                         <div class="technical-box">Database Cluster</div>
                     </div>
                 </div>
@@ -178,9 +188,9 @@
                     <p class="text-sm text-gray-500 mb-4">Leveraging Kubernetes for container orchestration (Docker) on a cloud platform (AWS, Azure, GCP) enables automated horizontal scaling, self-healing, and efficient resource utilization, ensuring our infrastructure matches demand precisely.</p>
                     <div class="flex flex-col items-center justify-center space-y-4 bg-gray-100 p-6 rounded-lg shadow">
                         <div class="technical-box bg-[#005CB9] text-white w-48">Cloud Load Balancer</div>
-                        <div class="technical-flow-arrow rotate-90">➡️</div>
+                        <div class="technical-flow-arrow rotate-90 md:rotate-90">➡️</div>
                         <div class="technical-box w-64">Kubernetes Cluster (Auto-Scaling Groups)</div>
-                        <div class="technical-flow-arrow rotate-90">➡️</div>
+                        <div class="technical-flow-arrow rotate-90 md:rotate-90">➡️</div>
                         <div class="grid grid-cols-3 gap-2 w-full max-w-lg">
                             <div class="technical-box bg-[#0076D4] text-white">Pod 1</div>
                             <div class="technical-box bg-[#0076D4] text-white">Pod 2</div>
@@ -210,11 +220,11 @@
                     <p class="text-sm text-gray-500 mb-4">Implementing an API Gateway for request validation, rate limiting, and centralized authentication. Employing Circuit Breakers and Idempotency for robust handling of external payment processor integrations.</p>
                     <div class="flex flex-col items-center justify-center space-y-2 bg-gray-100 p-6 rounded-lg shadow">
                         <div class="technical-box bg-[#005CB9] text-white">Client Request</div>
-                        <div class="technical-flow-arrow">⬇️</div>
+                        <div class="technical-flow-arrow md:rotate-0">⬇️</div>
                         <div class="technical-box">API Gateway (Auth, Rate Limit, Validate)</div>
-                        <div class="technical-flow-arrow">⬇️</div>
+                        <div class="technical-flow-arrow md:rotate-0">⬇️</div>
                         <div class="technical-box bg-[#0076D4] text-white">Payment Core Service</div>
-                        <div class="technical-flow-arrow">⬇️</div>
+                        <div class="technical-flow-arrow md:rotate-0">⬇️</div>
                         <div class="technical-box">External Processor API (Circuit Breaker, Idempotent)</div>
                     </div>
                 </div>

@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Payment Gateway Security & Compliance: Fortifying Trust</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -38,6 +39,16 @@
         }
         .risk-box {
             @apply bg-red-100 border border-red-300 text-red-800 p-3 rounded-lg shadow-sm text-sm font-semibold;
+        }
+        @media (max-width: 640px) {
+            .security-pillar-box {
+                padding: 1rem;
+            }
+            .risk-box {
+                padding: 0.75rem;
+            }
+            .chart-container {
+ margin: 0 auto;            }
         }
     </style>
 </head>

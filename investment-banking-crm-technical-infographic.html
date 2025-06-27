@@ -2,7 +2,7 @@
 <html lang="en" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <title>Investment Banking CRM: Technical Deep Dive</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -35,7 +35,7 @@
         }
         .technical-flow-arrow {
             font-size: 1.25rem; /* Adjusted for mobile */
-            line-height: 1;
+            line-height: 1.5; /* Increased for better tapping */
             color: #85BDE9;
         }
         .key-component-box {
@@ -44,6 +44,10 @@
         .colored-box {
             @apply text-white;
         }
+        .colored-box:active { /* Tap feedback */
+            @apply opacity-75;
+        }
+
 
         /* Responsive padding and font sizes */
         .section-padding {
@@ -72,6 +76,11 @@
         }
         .numeric-large {
             @apply text-5xl sm:text-6xl md:text-7xl;
+        }
+
+        /* Improve tap targets */
+        a, button {
+            cursor: pointer;
         }
 
         /* Styles for mobile navigation overlay */
@@ -108,7 +117,7 @@
     <header class="bg-white sticky top-0 z-50 shadow-md">
         <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-12 relative">
             <div class="flex items-center justify-between h-full">
-                <div class="flex items-center">
+                <div class="flex items-center min-w-0">
                     <h1 class="text-lg font-bold text-[#00449E]">CRM Technical Deep Dive</h1>
                 </div>
 
@@ -126,7 +135,7 @@
                 </div>
 
                 <!-- Mobile nav toggle button for internal page -->
-                <div class="block sm:hidden">
+                <div class="block sm:hidden flex-shrink-0">
                     <button id="mobile-nav-toggle" class="p-2 rounded-md text-gray-600 hover:bg-[#85BDE9] hover:text-white focus:outline-none">
                         <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
@@ -140,14 +149,14 @@
     <!-- Mobile Navigation Menu -->
     <div id="mobile-nav-overlay" class="mobile-nav-overlay"></div>
     <div id="mobile-nav-menu" class="mobile-nav-menu">
-        <div class="flex flex-col space-y-1">
-            <a href="#overview" class="block px-3 py-2 rounded-md text-base font-medium text-gray-800 hover:bg-[#85BDE9] hover:text-white">Overview</a>
-            <a href="#architecture" class="block px-3 py-2 rounded-md text-base font-medium text-gray-800 hover:bg-[#85BDE9] hover:text-white">Architecture</a>
-            <a href="#data-model" class="block px-3 py-2 rounded-md text-base font-medium text-gray-800 hover:bg-[#85BDE9] hover:text-white">Data Model</a>
-            <a href="#integrations" class="block px-3 py-2 rounded-md text-base font-medium text-gray-800 hover:bg-[#85BDE9] hover:text-white">Integrations</a>
-            <a href="#performance" class="block px-3 py-2 rounded-md text-base font-medium text-gray-800 hover:bg-[#85BDE9] hover:text-white">Performance</a>
-            <a href="#security" class="block px-3 py-2 rounded-md text-base font-medium text-gray-800 hover:bg-[#85BDE9] hover:text-white">Security</a>
-            <a href="#analytics-tech" class="block px-3 py-2 rounded-md text-base font-medium text-gray-800 hover:bg-[#85BDE9] hover:text-white">Analytics Tech</a>
+        <div class="flex flex-col space-y-2">
+            <a href="#overview" class="block px-4 py-2 rounded-md text-base font-medium text-gray-800 hover:bg-[#85BDE9] hover:text-white active:opacity-75">Overview</a>
+            <a href="#architecture" class="block px-4 py-2 rounded-md text-base font-medium text-gray-800 hover:bg-[#85BDE9] hover:text-white active:opacity-75">Architecture</a>
+            <a href="#data-model" class="block px-4 py-2 rounded-md text-base font-medium text-gray-800 hover:bg-[#85BDE9] hover:text-white active:opacity-75">Data Model</a>
+            <a href="#integrations" class="block px-4 py-2 rounded-md text-base font-medium text-gray-800 hover:bg-[#85BDE9] hover:text-white active:opacity-75">Integrations</a>
+            <a href="#performance" class="block px-4 py-2 rounded-md text-base font-medium text-gray-800 hover:bg-[#85BDE9] hover:text-white active:opacity-75">Performance</a>
+            <a href="#security" class="block px-4 py-2 rounded-md text-base font-medium text-gray-800 hover:bg-[#85BDE9] hover:text-white active:opacity-75">Security</a>
+            <a href="#analytics-tech" class="block px-4 py-2 rounded-md text-base font-medium text-gray-800 hover:bg-[#85BDE9] hover:text-white active:opacity-75">Analytics Tech</a>
         </div>
     </div>
 
@@ -158,12 +167,12 @@
             <p class="mt-4 max-w-3xl mx-auto text-content text-gray-500">This document provides a technical overview of our Investment Banking CRM solution, detailing its architecture, data model, integration capabilities, performance characteristics, and security measures.</p>
             <div class="mt-12 flex flex-col md:flex-row items-center justify-center space-y-8 md:space-y-0 md:space-x-12">
                 <div class="bg-white rounded-lg shadow-xl p-6 sm:p-8 text-center w-full max-w-xs">
-                    <p class="text-lg font-medium text-gray-500">Core Approach</p>
+                    <p class="text-base sm:text-lg font-medium text-gray-500">Core Approach</p>
                     <p class="numeric-large font-black text-[#0076D4]">⚙️</p>
                     <p class="text-xl sm:text-2xl font-bold text-gray-600">Microservices-Driven</p>
                 </div>
                 <div class="text-5xl sm:text-6xl font-thin text-[#005CB9] transform rotate-90 md:rotate-0">➡️</div>
-                <div class="bg-white rounded-lg shadow-xl p-6 sm:p-8 text-center border-4 border-[#0076D4] w-full max-w-xs">
+                <div class="bg-white rounded-lg shadow-xl p-6 sm:p-8 text-center border-4 border-[#0076D4] w-full max-w-xs active:opacity-75">
                     <p class="text-lg font-medium text-gray-500">Key Technology</p>
                     <p class="numeric-large font-black text-[#005CB9]">☁️</p>
                     <p class="text-xl sm:text-2xl font-bold text-gray-600">Cloud-Native</p>

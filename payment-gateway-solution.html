@@ -4,8 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Scaling Payment Gateway Throughput: 20 to 200 TPS</title>
+    <!-- Tailwind CSS CDN for utility classes -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Chart.js CDN for rendering charts -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Google Fonts for consistent typography -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -15,10 +18,12 @@
             background-color: #f0f4f8;
         }
         .chart-container {
+            /* Ensures the chart container is responsive and fits within its parent */
             position: relative;
             width: 100%;
             max-width: 600px;
             margin-left: auto;
+            /* Centers the chart container horizontally */
             margin-right: auto;
             height: 250px; /* Default height for mobile */
         }
@@ -33,6 +38,7 @@
             }
         }
         .flow-arrow {
+            /* Adjust font size for arrows to be visible on smaller screens */
             font-size: 1.25rem; /* Adjusted for mobile view */
             line-height: 1;
             color: #85BDE9;
@@ -68,6 +74,7 @@
 
         /* Styles for mobile navigation overlay */
         .mobile-nav-overlay {
+            /* Covers the screen to dim background when mobile menu is open */
             position: fixed;
             top: 0;
             left: 0;
@@ -78,6 +85,7 @@
             display: none; /* Hidden by default */
         }
         .mobile-nav-menu {
+            /* The mobile menu panel that slides in */
             position: fixed;
             top: 48px; /* Height of the header */
             left: 0;
@@ -85,12 +93,14 @@
             height: calc(100% - 48px); /* Full height minus header */
             background-color: white;
             z-index: 60;
+            /* Start position: completely off-screen to the left */
             transform: translateX(-100%); /* Start off-screen to the left */
             transition: transform 0.3s ease-in-out;
             padding: 1rem;
             overflow-y: auto; /* Enable scrolling for long menus */
         }
         .mobile-nav-menu.is-open {
+            /* End position: fully visible on the screen */
             transform: translateX(0); /* Slide in */
         }
     </style>
@@ -127,6 +137,7 @@
     </header>
 
     <!-- Mobile Navigation Menu -->
+    <!-- Overlay and menu for small screens -->
     <div id="mobile-nav-overlay" class="mobile-nav-overlay"></div>
     <div id="mobile-nav-menu" class="mobile-nav-menu">
         <div class="flex flex-col space-y-1">
@@ -137,6 +148,7 @@
         </div>
     </div>
 
+    <!-- Main content area with responsive padding -->
     <main class="max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
 
         <section id="challenge" class="text-center mb-16 section-padding">
@@ -187,6 +199,7 @@
         </section>
         
         <div class="space-y-16 sm:space-y-20">
+            <!-- Pillar 1 Section: Architectural Reimagination -->
             <section id="pillar1">
                 <div class="bg-white rounded-lg shadow-lg section-padding">
                     <h3 class="heading-3 font-bold text-[#00449E] mb-4">Pillar 1: Architectural Reimagination</h3>
@@ -230,6 +243,7 @@
                 </div>
             </section>
 
+            <!-- Pillar 2 Section: Data Layer Reinforcement -->
             <section id="pillar2">
                 <div class="bg-white rounded-lg shadow-lg section-padding">
                     <h3 class="heading-3 font-bold text-[#00449E] mb-4">Pillar 2: Data Layer Reinforcement</h3>
@@ -270,6 +284,7 @@
                 </div>
             </section>
             
+            <!-- Pillar 3 Section: Infrastructure & Scalability -->
             <section id="pillar3">
                  <div class="bg-white rounded-lg shadow-lg section-padding">
                     <h3 class="heading-3 font-bold text-[#00449E] mb-4">Pillar 3: Infrastructure & Scalability</h3>
@@ -297,6 +312,7 @@
                 </div>
             </section>
 
+            <!-- Pillar 4 Section: Application & Code Optimization -->
             <section id="pillar4">
                  <div class="bg-white rounded-lg shadow-lg section-padding">
                     <h3 class="heading-3 font-bold text-[#00449E] mb-4">Pillar 4: Application & Code Optimization</h3>
@@ -321,6 +337,7 @@
             </section>
         </div>
 
+        <!-- Roadmap Section: Implementation Phases -->
         <section id="roadmap" class="mt-16 section-padding">
             <div class="text-center mb-12">
                 <h2 class="heading-2 font-bold text-[#00449E]">The Implementation Roadmap: A Phased Journey</h2>
@@ -373,6 +390,7 @@
             </div>
         </section>
 
+        <!-- Impact Section: Business Value -->
         <section id="impact" class="mt-16 section-padding bg-white rounded-lg shadow-lg">
             <div class="text-center">
                  <h2 class="heading-2 font-bold text-[#00449E]">Conclusion: The Business Impact</h2>
@@ -413,6 +431,7 @@
         </section>
     </main>
     
+    <!-- Footer with copyright information -->
     <footer class="bg-[#00449E] text-white mt-16">
         <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8 text-center text-sm">
             <p>&copy; 2025 Gateway Scaling Initiative. All Rights Reserved.</p>
