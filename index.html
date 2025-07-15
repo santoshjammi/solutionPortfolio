@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Strategic Solutions Hub | Your Partner for Business Growth & Security</title>
+    <title>Strategic Solutions Hub</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -14,31 +14,50 @@
         body {
             font-family: 'Inter', sans-serif;
             background-color: #f0f4f8;
-            padding-top: 64px; /* Space for fixed header */
+            /* Added padding-top to body to account for fixed header, ensuring content isn't hidden */
+            padding-top: 64px;
         }
+
         .main-content-iframe {
             width: 100%;
-            height: calc(100vh - 64px);
+            height: calc(100vh - 64px); /* Full height minus header */
             border: none;
-            background-color: #ffffff;
+            background-color: #ffffff; /* Ensure iframe has a solid background */
             flex-grow: 1;
         }
+
+        /* Mobile menu specific styles */
         .sidebar {
             transition: transform 0.3s ease-in-out;
-            position: fixed;
-            z-index: 40;
-            height: calc(100vh - 64px);
+            position: fixed; /* Use fixed for mobile to overlay content */
+            z-index: 40; /* Above main content, below overlay */
+            height: calc(100vh - 64px); /* Full height minus header */
             top: 64px;
             left: 0;
-            transform: translateX(-100%);
+            width: 256px; /* Fixed width for the sidebar */
+            transform: translateX(-100%); /* Hidden by default */
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            width: 256px;
             background-color: #ffffff;
-            overflow-y: auto;
+            overflow-y: auto; /* Enable scrolling for long menus */
+            display: flex; /* Always use flex for sidebar content layout */
+            flex-direction: column;
         }
+
         .sidebar.is-open {
-            transform: translateX(0);
+            transform: translateX(0%); /* Slide in when open */
         }
+
+        /* Desktop styles for sidebar */
+        @media (min-width: 768px) { /* md breakpoint */
+            .sidebar {
+                position: relative; /* Take up space in layout */
+                transform: translateX(0%); /* Always visible on desktop */
+                flex-shrink: 0;
+                box-shadow: none;
+                height: calc(100vh - 64px); /* Revert height for desktop */
+            }
+        }
+        
         .sidebar-overlay {
             position: fixed;
             top: 0;
@@ -46,35 +65,25 @@
             right: 0;
             bottom: 0;
             background-color: rgba(0, 0, 0, 0.5);
-            z-index: 30;
-            display: none;
-        }
-        .sidebar-overlay.is-open {
-            display: block;
-        }
-        @media (min-width: 768px) {
-            .sidebar {
-                transform: translateX(0);
-                position: relative;
-                flex-shrink: 0;
-                box-shadow: none;
-            }
+            z-index: 30; /* Below sidebar, above content */
+            display: none; /* Hidden by default */
         }
     </style>
 </head>
-<body class="overflow-x-hidden">
-    <header class="bg-[#00449E] fixed top-0 left-0 right-0 z-50 shadow-md h-16">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full flex items-center justify-between">
+<body class="text-gray-700 flex flex-col min-h-screen">
+
+    <header class="bg-[#00449E] fixed top-0 left-0 right-0 z-50 shadow-md">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
             <h1 class="text-xl sm:text-2xl font-bold text-white flex items-center">
-                <a href="index.html" target="_top" class="flex items-center text-white hover:text-[#85BDE9] transition-colors duration-200">
-                    <span class="text-2xl sm:text-3xl mr-2 sm:mr-3">🌐</span> Strategic Solutions Hub
-                </a>
+                <a href="index.html" target="_top" class="flex items-center text-white hover:text-[#85BDE9] transition-colors duration-200"><span class="text-2xl sm:text-3xl mr-2 sm:mr-3">🌐</span> Strategic Solutions Hub</a>
             </h1>
+            <!-- Desktop Navigation Links (Hidden on mobile) -->
             <div class="hidden md:flex space-x-4">
-                <a href="payment-gateway-solution.html" target="solutionIframe" class="text-white hover:text-[#85BDE9] px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200">Payment Gateway</a>
-                <a href="investment-banking-crm-solution.html" target="solutionIframe" class="text-white hover:text-[#85BDE9] px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200">Investment Banking CRM</a>
-                <a href="payment-gateway-security-solution.html" target="solutionIframe" class="text-white hover:text-[#85BDE9] px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200">Security & Compliance</a>
+                <a href="payment-gateway-solution.html" class="text-white hover:text-[#85BDE9] px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200" aria-label="Open Business Growth Solutions">Business Growth Solutions</a>
+                <a href="payment-gateway-security-solution.html" class="text-white hover:text-[#85BDE9] px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200" aria-label="Open Security & Compliance solutions">Security & Compliance</a>
+                <a href="question-bank-prd.html" class="text-white hover:text-[#85BDE9] px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200" aria-label="Open Product & Requirements solutions">Product & Requirements</a>
             </div>
+            <!-- Mobile menu button -->
             <button id="mobile-menu-button" class="md:hidden p-2 rounded-md text-white hover:bg-[#0076D4] focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white" aria-label="Toggle mobile menu" aria-expanded="false" aria-controls="sidebar">
                 <svg id="mobile-menu-icon-open" class="h-6 w-6 block" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
@@ -87,24 +96,33 @@
     </header>
 
     <div class="flex flex-1 relative">
+        <!-- Sidebar Overlay -->
         <div id="sidebar-overlay" class="sidebar-overlay"></div>
-        <aside id="sidebar" class="sidebar flex flex-col p-6 border-r border-gray-200">
+
+        <aside id="sidebar" class="w-64 bg-white p-6 flex flex-col border-r border-gray-200">
             <h2 class="text-lg font-bold text-[#00449E] mb-4">Solution Portfolio</h2>
             <nav>
                 <div class="mb-4">
                     <h3 class="text-md font-semibold text-gray-700 mb-2">🚀 Business Growth Solutions</h3>
                     <ul class="space-y-1 pl-4">
                         <li><a href="payment-gateway-solution.html" target="solutionIframe" class="block py-2 px-3 rounded-md text-gray-600 hover:bg-[#85BDE9] hover:text-white transition-colors duration-200 text-sm">💰 Payment Gateway Scaling (For C-Level/Execs)</a></li>
-                        <li><a href="payment-gateway-technical-infographic.html" target="solutionIframe" class="block py-2 px-3 rounded-md text-gray-600 hover:bg-[#85BDE9] hover:text-white transition-colors duration-200 text-sm">🔧 Payment Gateway Scaling (Technical Deep Dive)</a></li>
+                        <li><a href="payment-gateway-technical-infographic.html" target="solutionIframe" class="block py-2 px-3 rounded-md text-gray-600 hover:bg-[#85BDE9] hover:text-white transition-colors duration-200 text-sm" aria-label="Payment Gateway Scaling Technical Deep Dive">🔧 Payment Gateway Scaling (Technical Deep Dive)</a></li>
                         <li><a href="investment-banking-crm-solution.html" target="solutionIframe" class="block py-2 px-3 rounded-md text-gray-600 hover:bg-[#85BDE9] hover:text-white transition-colors duration-200 text-sm">💼 Investment Banking CRM (For C-Level/Execs)</a></li>
-                        <li><a href="investment-banking-crm-technical-infographic.html" target="solutionIframe" class="block py-2 px-3 rounded-md text-gray-600 hover:bg-[#85BDE9] hover:text-white transition-colors duration-200 text-sm">🔬 Investment Banking CRM (Technical Deep Dive)</a></li>
+                        <li><a href="investment-banking-crm-technical-infographic.html" target="solutionIframe" class="block py-2 px-3 rounded-md text-gray-600 hover:bg-[#85BDE9] hover:text-white transition-colors duration-200 text-sm" aria-label="Investment Banking CRM Technical Deep Dive">🔬 Investment Banking CRM (Technical Deep Dive)</a></li>
                     </ul>
                 </div>
-                <div>
+                <div class="mb-4">
                     <h3 class="text-md font-semibold text-gray-700 mb-2">🔒 Security & Compliance</h3>
                     <ul class="space-y-1 pl-4">
-                        <li><a href="payment-gateway-security-solution.html" target="solutionIframe" class="block py-2 px-3 rounded-md text-gray-600 hover:bg-[#85BDE9] hover:text-white transition-colors duration-200 text-sm">🛡️ Payment Gateway Security (For C-Level/Execs)</a></li>
+                        <li><a href="payment-gateway-security-solution.html" target="solutionIframe" class="block py-2 px-3 rounded-md text-gray-600 hover:bg-[#85BDE9] hover:text-white transition-colors duration-200 text-sm" aria-label="Payment Gateway Security For C-Level/Execs">🛡️ Payment Gateway Security (For C-Level/Execs)</a></li>
                         <li><a href="payment-gateway-security-technical-infographic.html" target="solutionIframe" class="block py-2 px-3 rounded-md text-gray-600 hover:bg-[#85BDE9] hover:text-white transition-colors duration-200 text-sm">💻 Payment Gateway Security (Technical Deep Dive)</a></li>
+                    </ul>
+                </div>
+                <div class="mb-4">
+                    <h3 class="text-md font-semibold text-gray-700 mb-2">📚 Product & Requirements</h3>
+                    <ul class="space-y-1 pl-4">
+                        <li><a href="question-bank-prd.html" target="solutionIframe" class="block py-2 px-3 rounded-md text-gray-600 hover:bg-[#85BDE9] hover:text-white transition-colors duration-200 text-sm">📝 Question Bank Management System PRD</a></li>
+                        <li><a href="payment-gateway-questions.html" target="solutionIframe" class="block py-2 px-3 rounded-md text-gray-600 hover:bg-[#85BDE9] hover:text-white transition-colors duration-200 text-sm">❓ Payment Gateway Integration Requirements</a></li>
                     </ul>
                 </div>
             </nav>

@@ -1,0 +1,859 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Question Bank Management System PRD</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" xintegrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f4f8; /* Consistent background */
+            color: #4B5563; /* Default text color */
+            padding-top: 48px; /* Space for fixed header */
+        }
+        /* Mobile navigation overlay and menu styles */
+        .mobile-nav-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.7); /* Dark overlay */
+            z-index: 50; /* Above content, below header */
+            display: none; /* Hidden by default */
+        }
+        .mobile-nav-menu {
+            position: fixed;
+            top: 48px; /* Height of the header */
+            left: 0;
+            width: 100%;
+            height: calc(100% - 48px); /* Full height minus header */
+            background-color: white;
+            z-index: 60;
+            transform: translateX(-100%); /* Start off-screen to the left */
+            transition: transform 0.3s ease-in-out;
+            padding: 1rem;
+            overflow-y: auto; /* Enable scrolling for long menus */
+        }
+        .mobile-nav-menu.is-open {
+            transform: translateX(0); /* Slide in */
+        }
+
+        /* Custom styles for infographic elements - adjusted for new palette */
+        .infographic-box {
+            @apply flex flex-col items-center justify-center p-4 rounded-lg shadow-sm text-center bg-white border border-gray-100;
+            min-width: 120px;
+        }
+        .infographic-arrow {
+            @apply text-3xl text-gray-400 mx-4;
+        }
+        .infographic-icon {
+            @apply text-[#0076D4] text-4xl mb-3; /* Primary blue for icons */
+        }
+        /* Specific social icons */
+        .fa-google { color: #db4437; } /* Google Red */
+        .fa-facebook { color: #4267B2; } /* Facebook Blue */
+        .fa-twitter { color: #1DA1F2; } /* Twitter Blue */
+
+        /* Responsive padding and font sizes */
+        .section-padding {
+            @apply p-6 sm:p-8 md:p-12;
+        }
+        .heading-1 {
+            @apply text-3xl sm:text-4xl md:text-5xl lg:text-6xl;
+        }
+        .heading-2 {
+            @apply text-2xl sm:text-3xl md:text-4xl;
+        }
+        .heading-3 {
+            @apply text-xl sm:text-2xl md:text-3xl;
+        }
+        .heading-4 {
+            @apply text-lg sm:text-xl md:text-2xl;
+        }
+        .text-content {
+            @apply text-sm sm:text-base md:text-lg;
+        }
+        .text-small {
+            @apply text-xs sm:text-sm;
+        }
+    </style>
+</head>
+<body class="text-gray-700">
+
+    <header class="bg-white sticky top-0 z-50 shadow-md">
+        <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-12 relative">
+            <div class="flex items-center justify-between h-full">
+                <div class="flex items-center">
+                    <h1 class="text-lg font-bold text-[#00449E]">Question Bank PRD</h1>
+                </div>
+
+                <!-- Desktop Navigation Links -->
+                <div class="hidden sm:block ml-10">
+                    <div class="flex items-baseline space-x-2">
+                        <a href="#introduction" class="text-gray-600 hover:bg-[#85BDE9] hover:text-white px-2 py-1 rounded-md text-sm font-medium">Intro</a>
+                        <a href="#personas" class="text-gray-600 hover:bg-[#85BDE9] hover:text-white px-2 py-1 rounded-md text-sm font-medium">Personas</a>
+                        <a href="#core-functionalities" class="text-gray-600 hover:bg-[#85BDE9] hover:text-white px-2 py-1 rounded-md text-sm font-medium">Core Func.</a>
+                        <a href="#screen-flows" class="text-gray-600 hover:bg-[#85BDE9] hover:text-white px-2 py-1 rounded-md text-sm font-medium">Screen Flows</a>
+                        <a href="#technical-considerations" class="text-gray-600 hover:bg-[#85BDE9] hover:text-white px-2 py-1 rounded-md text-sm font-medium">Tech. Cons.</a>
+                        <a href="#non-functional-requirements" class="text-gray-600 hover:bg-[#85BDE9] hover:text-white px-2 py-1 rounded-md text-sm font-medium">Non-Func.</a>
+                        <a href="#future-enhancements" class="text-gray-600 hover:bg-[#85BDE9] hover:text-white px-2 py-1 rounded-md text-sm font-medium">Future Enh.</a>
+                    </div>
+                </div>
+
+                <!-- Mobile nav toggle button for internal page -->
+                <div class="block sm:hidden">
+                    <button id="mobile-nav-toggle" class="p-2 rounded-md text-gray-600 hover:bg-[#85BDE9] hover:text-white focus:outline-none">
+                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Mobile Navigation Menu -->
+    <div id="mobile-nav-overlay" class="mobile-nav-overlay"></div>
+    <div id="mobile-nav-menu" class="mobile-nav-menu">
+        <div class="flex flex-col space-y-1">
+            <a href="#introduction" class="block px-3 py-2 rounded-md text-base font-medium text-gray-800 hover:bg-[#85BDE9] hover:text-white">Introduction</a>
+            <a href="#personas" class="block px-3 py-2 rounded-md text-base font-medium text-gray-800 hover:bg-[#85BDE9] hover:text-white">Personas</a>
+            <a href="#core-functionalities" class="block px-3 py-2 rounded-md text-base font-medium text-gray-800 hover:bg-[#85BDE9] hover:text-white">Core Functionalities</a>
+            <a href="#screen-flows" class="block px-3 py-2 rounded-md text-base font-medium text-gray-800 hover:bg-[#85BDE9] hover:text-white">Screen Flows</a>
+            <a href="#technical-considerations" class="block px-3 py-2 rounded-md text-base font-medium text-gray-800 hover:bg-[#85BDE9] hover:text-white">Technical Considerations</a>
+            <a href="#non-functional-requirements" class="block px-3 py-2 rounded-md text-base font-medium text-gray-800 hover:bg-[#85BDE9] hover:text-white">Non-Functional Requirements</a>
+            <a href="#future-enhancements" class="block px-3 py-2 rounded-md text-base font-medium text-gray-800 hover:bg-[#85BDE9] hover:text-white">Future Enhancements</a>
+        </div>
+    </div>
+
+    <main class="max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
+        <article class="max-w-4xl mx-auto bg-white rounded-xl shadow-lg p-8 lg:p-12">
+            <header class="mb-10 text-center">
+                <h1 class="heading-1 font-extrabold text-gray-900 leading-tight mb-4">
+                    Product Requirements Document: Question Bank Management System
+                </h1>
+                <p class="text-content text-gray-600">A comprehensive overview of the system's features, personas, and technical considerations.</p>
+            </header>
+
+            <section id="introduction" class="mb-12 section-padding">
+                <h2 class="heading-2 font-bold text-[#00449E] mb-6 border-b-2 border-[#0076D4] pb-2">1. Introduction</h2>
+                <p class="mb-6 text-content text-gray-700 leading-relaxed">
+                    This section sets the stage for the Question Bank Management System, defining its core purpose, overarching goals, and the scope of this initial document. It provides a foundational understanding of what the system aims to achieve and the boundaries of this specification.
+                </p>
+                <details class="mb-4 p-5 bg-[#E6F3FC] rounded-lg shadow-sm border border-[#BFDFF8]">
+                    <summary class="text-xl font-semibold text-[#005CB9] cursor-pointer">1.1. Purpose</summary>
+                    <p class="mt-3 text-content text-gray-700 leading-relaxed">
+                        This Product Requirements Document (PRD) outlines the features and functionalities of a Question Bank Management System. The system aims to provide a robust platform for managing a vast repository of questions, facilitating customized test creation, enabling efficient assessment delivery, and supporting personalized learning experiences for users across various subjects.
+                    </p>
+                </details>
+                <details class="mb-4 p-5 bg-[#E6F3FC] rounded-lg shadow-sm border border-[#BFDFF8]">
+                    <summary class="text-xl font-semibold text-[#005CB9] cursor-pointer">1.2. Goals</summary>
+                    <ul class="list-disc list-inside mt-3 space-y-2 text-content text-gray-700 leading-relaxed">
+                        <li>To establish a centralized, categorized question bank accessible to multiple user roles.</li>
+                        <li>To enable efficient creation and management of questions, topics, and subjects.</li>
+                        <li>To provide tools for generating custom tests based on specific criteria, ensuring question uniqueness for individual users over time.</li>
+                        <li>To offer an intuitive assessment experience for students and comprehensive tracking for tutors.</li>
+                        <li>To streamline the process of importing existing question data from JSON formats into the system's database.</li>
+                        <li>To support various user personas with tailored functionalities and workflows.</li>
+                    </ul>
+                </details>
+                <details class="mb-4 p-5 bg-[#E6F3FC] rounded-lg shadow-sm border border-[#BFDFF8]">
+                    <summary class="text-xl font-semibold text-[#005CB9] cursor-pointer">1.3. Scope</summary>
+                    <p class="mt-3 text-content text-gray-700 leading-relaxed">
+                        This document covers the core functionalities, user personas, screen-by-screen navigation, and high-level technical considerations for the initial release of the Question Bank Management System. Future enhancements will be addressed in subsequent iterations.
+                    </p>
+                </details>
+            </section>
+
+            <section id="personas" class="mb-12 section-padding">
+                <h2 class="heading-2 font-bold text-[#00449E] mb-6 border-b-2 border-[#0076D4] pb-2">2. Personas</h2>
+                <p class="mb-6 text-content text-gray-700 leading-relaxed">
+                    Understanding the diverse needs of our users is crucial. This section details the four primary personas who will interact with the Question Bank Management System, outlining their descriptions, specific needs, and overarching goals. Each persona represents a distinct role with tailored functionalities.
+                </p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <details class="p-5 bg-[#E6F3FC] rounded-lg shadow-sm border border-[#BFDFF8]">
+                        <summary class="text-xl font-semibold text-[#005CB9] cursor-pointer flex items-center"><i class="fas fa-user-graduate infographic-icon text-[#0076D4] mr-3"></i> 2.1. Student (Learner)</summary>
+                        <div class="mt-3 text-content text-gray-700 leading-relaxed">
+                            <p class="font-medium">Description:</p>
+                            <p>Individuals who use the system to take tests, practice questions, and track their learning progress.</p>
+                            <p class="font-medium mt-2">Needs:</p>
+                            <ul class="list-disc list-inside ml-4">
+                                <li>Easy access to assigned tests.</li>
+                                <li>Ability to create practice tests.</li>
+                                <li>Clear performance feedback.</li>
+                                <li>Seamless test-taking experience.</li>
+                            </ul>
+                            <p class="font-medium mt-2">Goals:</p>
+                            <ul class="list-disc list-inside ml-4">
+                                <li>Improve knowledge.</li>
+                                <li>Prepare for exams.</li>
+                                <li>Identify areas for improvement.</li>
+                            </ul>
+                        </div>
+                    </details>
+                    <details class="p-5 bg-[#E6F3FC] rounded-lg shadow-sm border border-[#BFDFF8]">
+                        <summary class="text-xl font-semibold text-[#005CB9] cursor-pointer flex items-center"><i class="fas fa-chalkboard-teacher infographic-icon text-[#0076D4] mr-3"></i> 2.2. Tutor (Educator)</summary>
+                        <div class="mt-3 text-content text-gray-700 leading-relaxed">
+                            <p class="font-medium">Description:</p>
+                            <p>Educators or instructors who assign tests to students, monitor their progress, and create custom practice sets.</p>
+                            <p class="font-medium mt-2">Needs:</p>
+                            <ul class="list-disc list-inside ml-4">
+                                <li>Tools to manage student groups.</li>
+                                <li>Assign specific tests.</li>
+                                <li>View detailed performance analytics for individuals and groups.</li>
+                                <li>Create curated practice materials.</li>
+                            </ul>
+                            <p class="font-medium mt-2">Goals:</p>
+                            <ul class="list-disc list-inside ml-4">
+                                <li>Facilitate student learning.</li>
+                                <li>Assess understanding.</li>
+                                <li>Provide targeted support.</li>
+                            </ul>
+                        </div>
+                    </details>
+                    <details class="p-5 bg-[#E6F3FC] rounded-lg shadow-sm border border-[#BFDFF8]">
+                        <summary class="text-xl font-semibold text-[#005CB9] cursor-pointer flex items-center"><i class="fas fa-cogs infographic-icon text-[#0076D4] mr-3"></i> 2.3. Curator (Content Manager)</summary>
+                        <div class="mt-3 text-content text-gray-700 leading-relaxed">
+                            <p class="font-medium">Description:</p>
+                            <p>Subject matter experts or content administrators responsible for designing and maintaining the question bank, creating test templates, and ensuring the quality and uniqueness of questions.</p>
+                            <p class="font-medium mt-2">Needs:</p>
+                            <ul class="list-disc list-inside ml-4">
+                                <li>Robust tools for question categorization.</li>
+                                <li>Metadata tagging.</li>
+                                <li>Test template creation with intelligent question selection logic (non-repeating questions).</li>
+                                <li>Efficient data import/export.</li>
+                            </ul>
+                            <p class="font-medium mt-2">Goals:</p>
+                            <ul class="list-disc list-inside ml-4">
+                                <li>Build a high-quality, diverse, and non-repetitive question bank.</li>
+                                <li>Streamline test generation.</li>
+                            </ul>
+                        </div>
+                    </details>
+                    <details class="p-5 bg-[#E6F3FC] rounded-lg shadow-sm border border-[#BFDFF8]">
+                        <summary class="text-xl font-semibold text-[#005CB9] cursor-pointer flex items-center"><i class="fas fa-shield-alt infographic-icon text-[#0076D4] mr-3"></i> 2.4. Admin (System Administrator)</summary>
+                        <div class="mt-3 text-content text-gray-700 leading-relaxed">
+                            <p class="font-medium">Description:</p>
+                            <p>Oversees the entire system, managing user accounts, roles, system settings, and data integrity.</p>
+                            <p class="font-medium mt-2">Needs:</p>
+                            <ul class="list-disc list-inside ml-4">
+                                <li>Comprehensive control over user permissions.</li>
+                                <li>Ability to import/export large datasets.</li>
+                                <li>System monitoring.</li>
+                                <li>Troubleshooting capabilities.</li>
+                            </ul>
+                            <p class="font-medium mt-2">Goals:</p>
+                            <ul class="list-disc list-inside ml-4">
+                                <li>Ensure system stability.</li>
+                                <li>Security.</li>
+                                <li>Efficient operation.</li>
+                            </ul>
+                        </div>
+                    </details>
+                </div>
+            </section>
+
+            <section id="core-functionalities" class="mb-12 section-padding">
+                <h2 class="heading-2 font-bold text-[#00449E] mb-6 border-b-2 border-[#0076D4] pb-2">3. Core Functionalities</h2>
+                <p class="mb-6 text-content text-gray-700 leading-relaxed">
+                    This section details the essential features that form the backbone of the Question Bank Management System. It covers how questions are organized and managed, the various ways tests can be created, and the core assessment and learning capabilities.
+                </p>
+                <details class="mb-6 p-5 bg-[#E6F3FC] rounded-lg shadow-sm border border-[#BFDFF8]">
+                    <summary class="text-xl font-semibold text-[#005CB9] cursor-pointer">3.1. Question Bank Management</summary>
+                    <div class="mt-3 space-y-4 text-content text-gray-700 leading-relaxed">
+                        <details class="ml-4 p-4 bg-[#BFDFF8] rounded-lg">
+                            <summary class="font-semibold text-[#0076D4] cursor-pointer">3.1.1. Categorization</summary>
+                            <p class="mt-2">Ability to organize questions hierarchically:</p>
+                            <div class="flex flex-col md:flex-row items-center justify-center my-6 space-y-4 md:space-y-0 md:space-x-6">
+                                <div class="infographic-box">
+                                    <i class="fas fa-book-open infographic-icon"></i>
+                                    <p class="font-medium text-lg">Subject</p>
+                                </div>
+                                <span class="infographic-arrow">&#10140;</span>
+                                <div class="infographic-box">
+                                    <i class="fas fa-folder infographic-icon"></i>
+                                    <p class="font-medium text-lg">Topic</p>
+                                </div>
+                                <span class="infographic-arrow">&#10140;</span>
+                                <div class="infographic-box">
+                                    <i class="fas fa-file-alt infographic-icon"></i>
+                                    <p class="font-medium text-lg">Sub-topic</p>
+                                </div>
+                            </div>
+                            <p class="mt-2">Curator can define and manage subjects, topics, and sub-topics.</p>
+                        </details>
+                        <details class="ml-4 p-4 bg-[#BFDFF8] rounded-lg">
+                            <summary class="font-semibold text-[#0076D4] cursor-pointer">3.1.2. Question Types</summary>
+                            <p class="mt-2">Support for various question formats (e.g., Multiple Choice Questions (MCQ), True/False, Fill-in-the-Blanks).</p>
+                        </details>
+                        <details class="ml-4 p-4 bg-[#BFDFF8] rounded-lg">
+                            <summary class="font-semibold text-[#0076D4] cursor-pointer">3.1.3. Metadata & Tagging</summary>
+                            <p class="mt-2">Each question can have associated metadata such as difficulty level (Easy, Medium, Hard), tags (e.g., "History-Ancient", "Physics-Mechanics"), and source information.</p>
+                        </details>
+                        <details class="ml-4 p-4 bg-[#BFDFF8] rounded-lg">
+                            <summary class="font-semibold text-[#0076D4] cursor-pointer">3.1.4. Question Lifecycle</summary>
+                            <p class="mt-2">Questions can be created, edited, approved, disabled, and archived by Curators.</p>
+                            <div class="flex flex-col md:flex-row items-center justify-center my-6 space-y-4 md:space-y-0 md:space-x-6">
+                                <div class="infographic-box">
+                                    <i class="fas fa-plus-circle infographic-icon"></i>
+                                    <p class="font-medium text-lg">Created</p>
+                                </div>
+                                <span class="infographic-arrow">&#10140;</span>
+                                <div class="infographic-box">
+                                    <i class="fas fa-edit infographic-icon"></i>
+                                    <p class="font-medium text-lg">Edited</p>
+                                </div>
+                                <span class="infographic-arrow">&#10140;</span>
+                                <div class="infographic-box">
+                                    <i class="fas fa-check-circle infographic-icon"></i>
+                                    <p class="font-medium text-lg">Approved</p>
+                                </div>
+                                <span class="infographic-arrow">&#10140;</span>
+                                <div class="infographic-box">
+                                    <i class="fas fa-archive infographic-icon"></i>
+                                    <p class="font-medium text-lg">Archived</p>
+                                </div>
+                            </div>
+                        </details>
+                        <details class="ml-4 p-4 bg-[#BFDFF8] rounded-lg">
+                            <summary class="font-semibold text-[#0076D4] cursor-pointer">3.1.5. JSON Import (Data Ingestion)</summary>
+                            <p class="mt-2">The system must provide a mechanism for Curators/Admins to import questions from existing JSON files into the database.</p>
+                            <div class="flex flex-col md:flex-row items-center justify-center my-6 space-y-4 md:space-y-0 md:space-x-6">
+                                <div class="infographic-box">
+                                    <i class="fas fa-file-code infographic-icon"></i>
+                                    <p class="font-medium text-lg">JSON File</p>
+                                </div>
+                                <span class="infographic-arrow">&#10140;</span>
+                                <div class="infographic-box">
+                                    <i class="fas fa-check-double infographic-icon"></i>
+                                    <p class="font-medium text-lg">Validation</p>
+                                </div>
+                                <span class="infographic-arrow">&#10140;</span>
+                                <div class="infographic-box">
+                                    <i class="fas fa-database infographic-icon"></i>
+                                    <p class="font-medium text-lg">Firestore DB</p>
+                                </div>
+                            </div>
+                            <ul class="list-disc list-inside ml-4 mt-2">
+                                <li>The import process should validate the JSON structure against a predefined schema.</li>
+                                <li>Questions will be mapped to existing subjects, topics, and sub-topics or new ones created as needed.</li>
+                                <li>Error logging for failed imports.</li>
+                                <li><strong>Data Persistence:</strong> All question data will be persisted using <strong>Firestore</strong>.</li>
+                            </ul>
+                        </details>
+                    </div>
+                </details>
+
+                <details class="mb-6 p-5 bg-[#E6F3FC] rounded-lg shadow-sm border border-[#BFDFF8]">
+                    <summary class="text-xl font-semibold text-[#005CB9] cursor-pointer">3.2. Test Creation & Management</summary>
+                    <div class="mt-3 space-y-4 text-content text-gray-700 leading-relaxed">
+                        <details class="ml-4 p-4 bg-[#BFDFF8] rounded-lg">
+                            <summary class="font-semibold text-[#0076D4] cursor-pointer">3.2.1. Curator-Driven Test Generation</summary>
+                            <ul class="list-disc list-inside ml-4 mt-2">
+                                <li>Curators can define test templates with minimal inputs (e.g., specify "Biological Sciences" subject, "Biology" topic, "AnimalKingdom" sub-topic, desired number of questions, difficulty distribution).</li>
+                                <li><strong>Non-Repetition Logic:</strong> The system will ensure that for a given Student, questions presented in a test are unique across their lifetime with the application. This requires tracking which questions a specific user has already encountered.</li>
+                                <li>The system will intelligently select questions based on the template criteria and the non-repetition constraint.</li>
+                                <li>Ability to generate multiple tests from a single template.</li>
+                            </ul>
+                        </details>
+                        <details class="ml-4 p-4 bg-[#BFDFF8] rounded-lg">
+                            <summary class="font-semibold text-[#0076D4] cursor-pointer">3.2.2. Custom Test Creation (by Tutor/Student)</summary>
+                            <ul class="list-disc list-inside ml-4 mt-2">
+                                <li><strong>Tutor:</strong> Can create tests by manually selecting questions or by applying filters (subject, topic, sub-topic, difficulty, tags) from the available question bank.</li>
+                                <li><strong>Student:</strong> Can create practice tests for self-study using similar filtering options, also adhering to the non-repetition constraint.</li>
+                            </ul>
+                        </details>
+                        <details class="ml-4 p-4 bg-[#BFDFF8] rounded-lg">
+                            <summary class="font-semibold text-[#0076D4] cursor-pointer">3.2.3. Test Settings</summary>
+                            <p class="mt-2">Configure test parameters such as:</p>
+                            <ul class="list-disc list-inside ml-4">
+                                <li>Time limits (overall test, per question)</li>
+                                <li>Scoring methodology (e.g., positive/negative marking)</li>
+                                <li>Feedback options (e.g., show correct answer immediately, show explanation)</li>
+                                <li>Pass/fail criteria.</li>
+                            </ul>
+                        </details>
+                        <details class="ml-4 p-4 bg-[#BFDFF8] rounded-lg">
+                            <summary class="font-semibold text-[#0076D4] cursor-pointer">3.2.4. Random Test Generation</summary>
+                            <p class="mt-2">The system will have the capability to generate random tests by default. These tests will draw questions randomly from the entire question bank, ensuring a diverse selection while still adhering to the non-repetition logic for individual users.</p>
+                        </details>
+                    </div>
+                </details>
+
+                <details class="mb-6 p-5 bg-[#E6F3FC] rounded-lg shadow-sm border border-[#BFDFF8]">
+                    <summary class="text-xl font-semibold text-[#005CB9] cursor-pointer">3.3. Assessment & Learning</summary>
+                    <div class="mt-3 space-y-4 text-content text-gray-700 leading-relaxed">
+                        <details class="ml-4 p-4 bg-[#BFDFF8] rounded-lg">
+                            <summary class="font-semibold text-[#0076D4] cursor-pointer">3.3.1. Taking Assessments</summary>
+                            <p class="mt-2">Students can start assigned tests or self-created practice tests.</p>
+                        </details>
+                        <details class="ml-4 p-4 bg-[#BFDFF8] rounded-lg">
+                            <summary class="font-semibold text-[#0076D4] cursor-pointer">3.3.2. Interactive Test Interface</summary>
+                            <p class="mt-2">A clean and responsive interface for answering questions, navigating between questions, and submitting tests.</p>
+                        </details>
+                        <details class="ml-4 p-4 bg-[#BFDFF8] rounded-lg">
+                            <summary class="font-semibold text-[#0076D4] cursor-pointer">3.3.3. Instant Feedback</summary>
+                            <p class="mt-2">Option for immediate feedback on question submission, including correct answer and explanation.</p>
+                        </details>
+                        <details class="ml-4 p-4 bg-[#BFDFF8] rounded-lg">
+                            <summary class="font-semibold text-[#0076D4] cursor-pointer">3.3.4. Performance Tracking</summary>
+                            <ul class="list-disc list-inside ml-4 mt-2">
+                                <li>Students can view their test scores, time taken, and accuracy rates.</li>
+                                <li>Detailed breakdown by subject, topic, and sub-topic to identify strengths and weaknesses.</li>
+                            </ul>
+                        </details>
+                        <details class="ml-4 p-4 bg-[#BFDFF8] rounded-lg">
+                            <summary class="font-semibold text-[#0076D4] cursor-pointer">3.3.5. Practice Modes</summary>
+                            <p class="mt-2">Dedicated practice sessions without time pressure, focusing on specific areas.</p>
+                        </details>
+                    </div>
+                </details>
+
+                <details class="mb-6 p-5 bg-[#E6F3FC] rounded-lg shadow-sm border border-[#BFDFF8]">
+                    <summary class="text-xl font-semibold text-[#005CB9] cursor-pointer">3.4. User & Role Management (Admin)</summary>
+                    <div class="mt-3 space-y-4 text-content text-gray-700 leading-relaxed">
+                        <details class="ml-4 p-4 bg-[#BFDFF8] rounded-lg">
+                            <summary class="font-semibold text-[#0076D4] cursor-pointer">3.4.1. User Registration & Social Login</summary>
+                            <p class="mt-2">Users can register online directly through the application. Support for third-party authentication providers:</p>
+                            <div class="flex items-center justify-center my-6 space-x-8">
+                                <i class="fab fa-google text-5xl text-red-500 hover:text-red-600 cursor-pointer transition-colors duration-200"></i>
+                                <i class="fab fa-facebook text-5xl text-blue-700 hover:text-blue-800 cursor-pointer transition-colors duration-200"></i>
+                                <i class="fab fa-twitter text-5xl text-blue-400 hover:text-blue-500 cursor-pointer transition-colors duration-200"></i>
+                            </div>
+                            <ul class="list-disc list-inside ml-4 mt-2">
+                                <li>Users can register online directly through the application.</li>
+                                <li>Support for third-party authentication providers such as Google, Facebook, and other social media platforms for seamless registration and login.</li>
+                            </ul>
+                        </details>
+                        <p class="ml-4 mt-2">Ability to create, edit, and delete user accounts.</p>
+                        <p class="ml-4">Assign and modify user roles (Student, Tutor, Curator, Admin).</p>
+                        <p class="ml-4">View user activity logs.</p>
+                    </div>
+                </details>
+
+                <details class="mb-6 p-5 bg-[#E6F3FC] rounded-lg shadow-sm border border-[#BFDFF8]">
+                    <summary class="text-xl font-semibold text-[#005CB9] cursor-pointer">3.5. Reporting & Analytics (Admin/Tutor)</summary>
+                    <div class="mt-3 space-y-4 text-content text-gray-700 leading-relaxed">
+                        <p class="ml-4"><strong>Admin:</strong> System-wide reports on question bank usage, test completion rates, and overall performance trends.</p>
+                        <p class="ml-4"><strong>Tutor:</strong> Reports on individual student performance, class performance, and progress over time.</p>
+                    </div>
+                </details>
+            </section>
+
+            <section id="screen-flows" class="mb-12 section-padding">
+                <h2 class="heading-2 font-bold text-[#00449E] mb-6 border-b-2 border-[#0076D4] pb-2">4. Screen Flows</h2>
+                <p class="mb-6 text-content text-gray-700 leading-relaxed">
+                    This section provides a screen-by-screen navigation guide for each primary persona, illustrating their typical interactions and workflows within the system. This helps visualize the user experience from login to task completion.
+                </p>
+                <details class="mb-6 p-5 bg-[#E6F3FC] rounded-lg shadow-sm border border-[#BFDFF8]">
+                    <summary class="text-xl font-semibold text-[#005CB9] cursor-pointer">4.1. Student Persona Flow</summary>
+                    <div class="mt-3 space-y-4 text-content text-gray-700 leading-relaxed">
+                        <h3 class="text-lg font-bold text-[#0076D4]">Scenario: Taking an Assigned Test</h3>
+                        <ol class="list-decimal list-inside ml-4 space-y-2">
+                            <li>
+                                <details class="p-3 bg-[#BFDFF8] rounded-lg">
+                                    <summary class="font-semibold text-[#0076D4] cursor-pointer">Login Screen</summary>
+                                    <ul class="list-disc list-inside ml-4 mt-2">
+                                        <li>Input fields for Username/Email and Password.</li>
+                                        <li>"Forgot Password" link.</li>
+                                        <li>"Login" button.</li>
+                                        <li>"Login with Google", "Login with Facebook" (and other social media) buttons.</li>
+                                        <li>"Register Now" link.</li>
+                                    </ul>
+                                </details>
+                            </li>
+                            <li>
+                                <details class="p-3 bg-[#BFDFF8] rounded-lg">
+                                    <summary class="font-semibold text-[#0076D4] cursor-pointer">Student Dashboard</summary>
+                                    <ul class="list-disc list-inside ml-4 mt-2">
+                                        <li>Welcome message.</li>
+                                        <li>List of "Assigned Tests" (with status: Pending, In Progress, Completed).</li>
+                                        <li>"Create Practice Test" button.</li>
+                                        <li>"View Performance" button.</li>
+                                        <li>Navigation to "Profile".</li>
+                                    </ul>
+                                </details>
+                            </li>
+                            <li>
+                                <details class="p-3 bg-[#BFDFF8] rounded-lg">
+                                    <summary class="font-semibold text-[#0076D4] cursor-pointer">Test Details Screen (for Assigned Test)</summary>
+                                    <ul class="list-disc list-inside ml-4 mt-2">
+                                        <li>Test Name, Subject, Duration, Number of Questions.</li>
+                                        <li>Instructions/Rules.</li>
+                                        <li>"Start Test" button.</li>
+                                    </ul>
+                                </details>
+                            </li>
+                            <li>
+                                <details class="p-3 bg-[#BFDFF8] rounded-lg">
+                                    <summary class="font-semibold text-[#0076D4] cursor-pointer">Test Taking Screen</summary>
+                                    <ul class="list-disc list-inside ml-4 mt-2">
+                                        <li>Question display area (MCQ options, True/False, etc.).</li>
+                                        <li>Navigation buttons (Previous, Next, Mark for Review).</li>
+                                        <li>Timer display.</li>
+                                        <li>"Submit Test" button.</li>
+                                        <li>(Optional: Instant feedback display if configured).</li>
+                                    </ul>
+                                </details>
+                            </li>
+                            <li>
+                                <details class="p-3 bg-[#BFDFF8] rounded-lg">
+                                    <summary class="font-semibold text-[#0076D4] cursor-pointer">Test Results Screen</summary>
+                                    <ul class="list-disc list-inside ml-4 mt-2">
+                                        <li>Overall Score, Percentage, Time Taken.</li>
+                                        <li>Pass/Fail status.</li>
+                                        <li>Breakdown by Subject/Topic/Sub-topic (e.g., "Biology: 80%", "Physics: 60%").</li>
+                                        <li>"Review Answers" button (to see correct answers and explanations).</li>
+                                        <li>"Go to Dashboard" button.</li>
+                                    </ul>
+                                </details>
+                            </li>
+                            <li>
+                                <details class="p-3 bg-[#BFDFF8] rounded-lg">
+                                    <summary class="font-semibold text-[#0076D4] cursor-pointer">Performance History Screen</summary>
+                                    <ul class="list-disc list-inside ml-4 mt-2">
+                                        <li>List of all completed tests with scores.</li>
+                                        <li>Graphs/charts showing progress over time.</li>
+                                        <li>Drill-down into specific test results.</li>
+                                    </ul>
+                                </details>
+                            </li>
+                        </ol>
+                    </div>
+                </details>
+
+                <details class="mb-6 p-5 bg-[#E6F3FC] rounded-lg shadow-sm border border-[#BFDFF8]">
+                    <summary class="text-xl font-semibold text-[#005CB9] cursor-pointer">4.2. Tutor Persona Flow</summary>
+                    <div class="mt-3 space-y-4 text-content text-gray-700 leading-relaxed">
+                        <h3 class="text-lg font-bold text-[#0076D4]">Scenario: Assigning a Test to a Student Group</h3>
+                        <ol class="list-decimal list-inside ml-4 space-y-2">
+                            <li>
+                                <details class="p-3 bg-[#BFDFF8] rounded-lg">
+                                    <summary class="font-semibold text-[#0076D4] cursor-pointer">Login Screen</summary>
+                                    <p class="mt-2">(Same as Student, including social login options)</p>
+                                </details>
+                            </li>
+                            <li>
+                                <details class="p-3 bg-[#BFDFF8] rounded-lg">
+                                    <summary class="font-semibold text-[#0076D4] cursor-pointer">Tutor Dashboard</summary>
+                                    <ul class="list-disc list-inside ml-4 mt-2">
+                                        <li>Welcome message.</li>
+                                        <li>"Manage Students" link.</li>
+                                        <li>"Create Custom Test" button.</li>
+                                        <li>"Assign Test" button.</li>
+                                        <li>"View Student Progress" link.</li>
+                                    </ul>
+                                </details>
+                            </li>
+                            <li>
+                                <details class="p-3 bg-[#BFDFF8] rounded-lg">
+                                    <summary class="font-semibold text-[#0076D4] cursor-pointer">Assign Test Screen</summary>
+                                    <ul class="list-disc list-inside ml-4 mt-2">
+                                        <li>Dropdown to select "Test Template" (from Curator-created templates).</li>
+                                        <li>Dropdown/checkboxes to select "Student(s)" or "Student Group(s)".</li>
+                                        <li>Start Date/Time, End Date/Time.</li>
+                                        <li>"Assign" button.</li>
+                                    </ul>
+                                </details>
+                            </li>
+                            <li>
+                                <details class="p-3 bg-[#BFDFF8] rounded-lg">
+                                    <summary class="font-semibold text-[#0076D4] cursor-pointer">View Student Progress Screen</summary>
+                                    <ul class="list-disc list-inside ml-4 mt-2">
+                                        <li>List of students with overall performance summary.</li>
+                                        <li>Click on a student to view detailed performance history (similar to Student's Performance History).</li>
+                                        <li>Filter options (by Test, Date Range, Subject).</li>
+                                    </ul>
+                                </details>
+                            </li>
+                        </ol>
+                    </div>
+                </details>
+
+                <details class="mb-6 p-5 bg-[#E6F3FC] rounded-lg shadow-sm border border-[#BFDFF8]">
+                    <summary class="text-xl font-semibold text-[#005CB9] cursor-pointer">4.3. Curator Persona Flow</summary>
+                    <div class="mt-3 space-y-4 text-content text-gray-700 leading-relaxed">
+                        <h3 class="text-lg font-bold text-[#0076D4]">Scenario: Creating a New Test Template</h3>
+                        <ol class="list-decimal list-inside ml-4 space-y-2">
+                            <li>
+                                <details class="p-3 bg-[#BFDFF8] rounded-lg">
+                                    <summary class="font-semibold text-[#0076D4] cursor-pointer">Login Screen</summary>
+                                    <p class="mt-2">(Same as Student, including social login options)</p>
+                                </details>
+                            </li>
+                            <li>
+                                <details class="p-3 bg-[#BFDFF8] rounded-lg">
+                                    <summary class="font-semibold text-[#0076D4] cursor-pointer">Curator Dashboard</summary>
+                                    <ul class="list-disc list-inside ml-4 mt-2">
+                                        <li>Welcome message.</li>
+                                        <li>"Manage Question Bank" link.</li>
+                                        <li>"Create Test Template" button.</li>
+                                        <li>"Generate Tests" button.</li>
+                                        <li>"Import Questions (JSON)" link.</li>
+                                    </ul>
+                                </details>
+                            </li>
+                            <li>
+                                <details class="p-3 bg-[#BFDFF8] rounded-lg">
+                                    <summary class="font-semibold text-[#0076D4] cursor-pointer">Manage Question Bank Screen</summary>
+                                    <ul class="list-disc list-inside ml-4 mt-2">
+                                        <li>Tree view of Subjects $\rightarrow$ Topics $\rightarrow$ Sub-topics.</li>
+                                        <li>"Add Subject", "Add Topic", "Add Sub-topic" buttons.</li>
+                                        <li>"Add Question" button (for manual entry).</li>
+                                        <li>Search/Filter questions.</li>
+                                        <li>Edit/Delete question options.</li>
+                                    </ul>
+                                </details>
+                            </li>
+                            <li>
+                                <details class="p-3 bg-[#BFDFF8] rounded-lg">
+                                    <summary class="font-semibold text-[#0076D4] cursor-pointer">Create Test Template Screen</summary>
+                                    <ul class="list-disc list-inside ml-4 mt-2">
+                                        <li>Test Template Name.</li>
+                                        <li><strong>Question Selection Criteria:</strong>
+                                            <ul class="list-circle list-inside ml-4 mt-1">
+                                                <li>Dropdowns for Subject, Topic, Sub-topic (multi-select allowed).</li>
+                                                <li>Input for "Number of Questions" (total).</li>
+                                                <li>Sliders/inputs for "Difficulty Distribution" (e.g., 20% Easy, 50% Medium, 30% Hard).</li>
+                                                <li>Checkbox: "Ensure No Repetition per User (Lifetime)" (This will be the default and primary mechanism).</li>
+                                                <li>(Optional) "Include questions with specific tags".</li>
+                                                <li>Option to select "Random Test" (minimal inputs, system curates based on availability and non-repetition).</li>
+                                            </ul>
+                                        </li>
+                                        <li><strong>Test Configuration:</strong>
+                                            <ul class="list-circle list-inside ml-4 mt-1">
+                                                <li>"Time Limit" (minutes).</li>
+                                                <li>"Scoring Rules" (e.g., +1 for correct, -0.25 for incorrect).</li>
+                                                <li>"Feedback Options" (e.g., Immediate, After Test, None).</li>
+                                            </ul>
+                                        </li>
+                                        <li>"Save Template" button.</li>
+                                    </ul>
+                                </details>
+                            </li>
+                            <li>
+                                <details class="p-3 bg-[#BFDFF8] rounded-lg">
+                                    <summary class="font-semibold text-[#0076D4] cursor-pointer">Generate Tests Screen</summary>
+                                    <ul class="list-disc list-inside ml-4 mt-2">
+                                        <li>Dropdown to select "Test Template".</li>
+                                        <li>Input for "Number of Tests to Generate" (e.g., 5 unique tests).</li>
+                                        <li>"Generate" button.</li>
+                                        <li>Confirmation/Success message with links to generated test IDs.</li>
+                                    </ul>
+                                </details>
+                            </li>
+                        </ol>
+                    </div>
+                </details>
+
+                <details class="mb-6 p-5 bg-[#E6F3FC] rounded-lg shadow-sm border border-[#BFDFF8]">
+                    <summary class="text-xl font-semibold text-[#005CB9] cursor-pointer">4.4. Admin Persona Flow</summary>
+                    <div class="mt-3 space-y-4 text-content text-gray-700 leading-relaxed">
+                        <h3 class="text-lg font-bold text-[#0076D4]">Scenario: Importing Questions from JSON</h3>
+                        <ol class="list-decimal list-inside ml-4 space-y-2">
+                            <li>
+                                <details class="p-3 bg-[#BFDFF8] rounded-lg">
+                                    <summary class="font-semibold text-[#0076D4] cursor-pointer">Login Screen</summary>
+                                    <p class="mt-2">(Same as Student, including social login options)</p>
+                                </details>
+                            </li>
+                            <li>
+                                <details class="p-3 bg-[#BFDFF8] rounded-lg">
+                                    <summary class="font-semibold text-[#0076D4] cursor-pointer">Admin Dashboard</summary>
+                                    <ul class="list-disc list-inside ml-4 mt-2">
+                                        <li>Welcome message.</li>
+                                        <li>"User Management" link.</li>
+                                        <li>"Data Import/Export" link.</li>
+                                        <li>"System Settings" link.</li>
+                                        <li>"View Audit Logs" link.</li>
+                                    </ul>
+                                </details>
+                            </li>
+                            <li>
+                                <details class="p-3 bg-[#BFDFF8] rounded-lg">
+                                    <summary class="font-semibold text-[#0076D4] cursor-pointer">Data Import/Export Screen</summary>
+                                    <ul class="list-disc list-inside ml-4 mt-2">
+                                        <li>"Import Questions (JSON)" section.</li>
+                                        <li>File upload input (`<input type="file" accept=".json">`).</li>
+                                        <li>"Upload and Process" button.</li>
+                                        <li>Status display (e.g., "Processing...", "Import Successful: 150 questions added, 2 errors.").</li>
+                                        <li>Link to download error log if applicable.</li>
+                                        <li>"Export Data" section (e.g., "Export All Questions", "Export User Data").</li>
+                                    </ul>
+                                </details>
+                            </li>
+                            <li>
+                                <details class="p-3 bg-[#BFDFF8] rounded-lg">
+                                    <summary class="font-semibold text-[#0076D4] cursor-pointer">User Management Screen</summary>
+                                    <ul class="list-disc list-inside ml-4 mt-2">
+                                        <li>List of all users with their roles.</li>
+                                        <li>"Add New User" button.</li>
+                                        <li>Edit/Delete user actions.</li>
+                                        <li>Filter/Search users.</li>
+                                    </ul>
+                                </details>
+                            </li>
+                        </ol>
+                    </div>
+                </details>
+            </section>
+
+            <section id="technical-considerations" class="mb-12 section-padding">
+                <h2 class="heading-2 font-bold text-[#00449E] mb-6 border-b-2 border-[#0076D4] pb-2">5. Technical Considerations</h2>
+                <p class="mb-6 text-content text-gray-700 leading-relaxed">
+                    This section outlines the high-level technical architecture and key implementation details for the Question Bank Management System. It covers the chosen technologies, database structure, and specific logic for managing questions and user interactions.
+                </p>
+                <details class="mb-4 p-5 bg-[#E6F3FC] rounded-lg shadow-sm border border-[#BFDFF8]">
+                    <summary class="text-xl font-semibold text-[#005CB9] cursor-pointer">Frontend</summary>
+                    <p class="mt-3 text-content text-gray-700 leading-relaxed">HTML, Tailwind CSS, JavaScript (for dynamic interactions, API calls, and client-side logic).</p>
+                </details>
+                <details class="mb-4 p-5 bg-[#E6F3FC] rounded-lg shadow-sm border border-[#BFDFF8]">
+                    <summary class="text-xl font-semibold text-[#005CB9] cursor-pointer">Backend/Database</summary>
+                    <div class="mt-3 text-content text-gray-700 leading-relaxed">
+                        <p class="font-medium"><strong>Firestore:</strong> Will be used for all data persistence, including:</p>
+                        <ul class="list-disc list-inside ml-4 mt-2">
+                            <li>`users` collection: Stores user details, roles, and `questions_served` (a sub-collection or array within user document to track question IDs seen by each user).</li>
+                            <li>`categories` collection: Stores Subject, Topic, Sub-topic hierarchy.</li>
+                            <li>`questions` collection: Stores individual question data, linked to subjects/topics/sub-topics.</li>
+                            <li>`test_templates` collection: Stores Curator-defined test configurations.</li>
+                            <li>`tests` collection: Stores instances of generated/assigned tests.</li>
+                            <li>`test_results` collection: Stores student attempts and scores.</li>
+                        </ul>
+                        <p class="font-medium mt-4"><strong>Question Repetition Logic (Firestore Implementation Suggestion):</strong></p>
+                        <ul class="list-disc list-inside ml-4 mt-2">
+                            <li>Each `user` document will have a sub-collection or a large array field (if within Firestore limits) named `questions_seen`.</li>
+                            <li>When a test is generated for a user, the system queries for questions that are *not* in that user's `questions_seen` list.</li>
+                            <li>After a test is completed, the IDs of all questions presented in that test are added to the user's `questions_seen` list. This ensures questions are not repeated.</li>
+                            <li>For very large question banks or very active users, consider using a separate collection for `user_question_history` to avoid document size limits.</li>
+                        </ul>
+                    </div>
+                </details>
+                <details class="mb-4 p-5 bg-[#E6F3FC] rounded-lg shadow-sm border border-[#BFDFF8]">
+                    <summary class="text-xl font-semibold text-[#005CB9] cursor-pointer">API Endpoints</summary>
+                    <div class="mt-3 text-content text-gray-700 leading-relaxed">
+                        <p class="font-medium">RESTful APIs (or similar) for:</p>
+                        <ul class="list-disc list-inside ml-4 mt-2">
+                            <li>Authentication (Login, Logout)</li>
+                            <li>User Management (CRUD)</li>
+                            <li>Question Bank (CRUD, search, filter)</li>
+                            <li>Test Template Management (CRUD)</li>
+                            <li>Test Generation (complex logic for non-repetition)</li>
+                            <li>Assessment Submission</li>
+                            <li>Reporting Data Retrieval</li>
+                            <li><strong>JSON Data Ingestion:</strong> A dedicated endpoint/functionality to parse and import JSON question files into Firestore, mapping to the defined schema.</li>
+                        </ul>
+                    </div>
+                </details>
+                <details class="mb-4 p-5 bg-[#E6F3FC] rounded-lg shadow-sm border border-[#BFDFF8]">
+                    <summary class="text-xl font-semibold text-[#005CB9] cursor-pointer">Scalability</summary>
+                    <p class="mt-3 text-content text-gray-700 leading-relaxed">The architecture should consider scalability for a growing number of users, questions, and concurrent assessments. Firestore's auto-scaling capabilities are beneficial here.</p>
+                </details>
+                <details class="mb-4 p-5 bg-[#E6F3FC] rounded-lg shadow-sm border border-[#BFDFF8]">
+                    <summary class="text-xl font-semibold text-[#005CB9] cursor-pointer">Security</summary>
+                    <p class="mt-3 text-content text-gray-700 leading-relaxed">Implement robust authentication (Firebase Authentication with custom tokens as per Canvas environment, <strong>including support for social login providers like Google, Facebook, etc.</strong>), authorization (role-based access control), and data validation to prevent unauthorized access and data corruption.</p>
+                </details>
+            </section>
+
+            <section id="non-functional-requirements" class="mb-12 section-padding">
+                <h2 class="heading-2 font-bold text-[#00449E] mb-6 border-b-2 border-[#0076D4] pb-2">6. Non-Functional Requirements</h2>
+                <p class="mb-6 text-content text-gray-700 leading-relaxed">
+                    Beyond core features, non-functional requirements define the quality attributes of the system, ensuring it meets performance, usability, reliability, security, and maintainability standards.
+                </p>
+                <details class="mb-4 p-5 bg-[#E6F3FC] rounded-lg shadow-sm border border-[#BFDFF8]">
+                    <summary class="text-xl font-semibold text-[#005CB9] cursor-pointer">Performance</summary>
+                    <ul class="list-disc list-inside ml-4 mt-2 text-content text-gray-700 leading-relaxed">
+                        <li><strong>Fast Page Load:</strong> Initial page load should be quick, with lazy loading of question data.</li>
+                        <li><strong>Responsive UI:</strong> Smooth interactions and quick response times for all user actions.</li>
+                        <li><strong>Efficient Search:</strong> Search operations should return results rapidly.</li>
+                    </ul>
+                </details>
+                <details class="mb-4 p-5 bg-[#E6F3FC] rounded-lg shadow-sm border border-[#BFDFF8]">
+                    <summary class="text-xl font-semibold text-[#005CB9] cursor-pointer">Usability</summary>
+                    <ul class="list-disc list-inside ml-4 mt-2 text-content text-gray-700 leading-relaxed">
+                        <li>Intuitive and easy-to-navigate interface for all personas.</li>
+                        <li>Clear instructions and feedback messages.</li>
+                        <li>Responsive design for various devices (desktop, tablet, mobile).</li>
+                    </ul>
+                </details>
+                <details class="mb-4 p-5 bg-[#E6F3FC] rounded-lg shadow-sm border border-[#BFDFF8]">
+                    <summary class="text-xl font-semibold text-[#005CB9] cursor-pointer">Reliability</summary>
+                    <ul class="list-disc list-inside ml-4 mt-2 text-content text-gray-700 leading-relaxed">
+                        <li>High availability of the system.</li>
+                        <li>Robust error handling and graceful degradation.</li>
+                        <li>Data integrity and consistency.</li>
+                    </ul>
+                </details>
+                <details class="mb-4 p-5 bg-[#E6F3FC] rounded-lg shadow-sm border border-[#BFDFF8]">
+                    <summary class="text-xl font-semibold text-[#005CB9] cursor-pointer">Security</summary>
+                    <ul class="list-disc list-inside ml-4 mt-2 text-content text-gray-700 leading-relaxed">
+                        <li>Secure user authentication and session management.</li>
+                        <li>Role-based access control (RBAC) to ensure users only access authorized features and data.</li>
+                        <li>Protection against common web vulnerabilities (e.g., XSS, CSRF).</li>
+                    </ul>
+                </details>
+                <details class="mb-4 p-5 bg-[#E6F3FC] rounded-lg shadow-sm border border-[#BFDFF8]">
+                    <summary class="text-xl font-semibold text-[#005CB9] cursor-pointer">Maintainability</summary>
+                    <ul class="list-disc list-inside ml-4 mt-2 text-content text-gray-700 leading-relaxed">
+                        <li>Modular and well-commented code.</li>
+                        <li>Clear documentation for development and deployment.</li>
+                        <li>Easy to update and extend functionalities.</li>
+                    </ul>
+                </details>
+            </section>
+
+            <section id="future-enhancements" class="mb-12 section-padding">
+                <h2 class="heading-2 font-bold text-[#00449E] mb-6 border-b-2 border-[#0076D4] pb-2">7. Future Enhancements</h2>
+                <p class="mb-6 text-content text-gray-700 leading-relaxed">
+                    This section outlines potential future features that can be considered for subsequent phases of the Question Bank Management System, aiming to further enrich the user experience and expand system capabilities.
+                </p>
+                <ul class="list-disc list-inside ml-4 space-y-2 text-content text-gray-700 leading-relaxed">
+                    <li><strong>Advanced Analytics:</strong> More sophisticated dashboards and predictive analytics for student performance.</li>
+                    <li><strong>Adaptive Learning Paths:</strong> System suggests personalized learning paths based on student performance.</li>
+                    <li><strong>Gamification:</strong> Introduce points, badges, and leaderboards to enhance engagement.</li>
+                    <li><strong>Collaborative Test Creation:</strong> Allow multiple Tutors/Curators to collaborate on test design.</li>
+                    <li><strong>Question Review Workflow:</strong> Implement a formal review and approval process for new questions.</li>
+                    <li><strong>Multimedia Questions:</strong> Support for images, audio, and video in questions.</li>
+                    <li><strong>Offline Mode:</strong> Allow students to take tests offline and sync results later.</li>
+                </ul>
+            </section>
+
+            <footer class="text-center text-gray-500 text-sm mt-12 pt-8 border-t border-gray-200">
+                <p>&copy; 2024 Question Bank Management System. All rights reserved.</p>
+            </footer>
+        </article>
+    </main>
+
+    <script>
+        // Mobile nav toggle for internal pages
+        const mobileNavToggle = document.getElementById('mobile-nav-toggle');
+        const mobileNavMenu = document.getElementById('mobile-nav-menu');
+        const mobileNavOverlay = document.getElementById('mobile-nav-overlay');
+
+        if (mobileNavToggle && mobileNavMenu && mobileNavOverlay) {
+            mobileNavToggle.addEventListener('click', () => {
+                mobileNavMenu.classList.toggle('is-open');
+                mobileNavOverlay.style.display = mobileNavMenu.classList.contains('is-open') ? 'block' : 'none';
+            });
+
+            mobileNavOverlay.addEventListener('click', () => {
+                mobileNavMenu.classList.remove('is-open');
+                mobileNavOverlay.style.display = 'none';
+            });
+
+            // Close mobile menu when a link is clicked
+            mobileNavMenu.querySelectorAll('a').forEach(link => {
+                link.addEventListener('click', () => {
+                    mobileNavMenu.classList.remove('is-open');
+                    mobileNavOverlay.style.display = 'none';
+                });
+            });
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Gateway Integration Requirements</title>
+    <!-- Tailwind CSS CDN for utility classes -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts for consistent typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        /* Base font and background color */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f4f8; /* Light background matching the theme */
+            color: #4B5563; /* Default text color (gray-700) */
+            padding-top: 48px; /* Space for fixed header */
+        }
+
+        /* Mobile navigation overlay and menu styles */
+        .mobile-nav-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.7); /* Dark overlay */
+            z-index: 50; /* Above content, below header */
+            display: none; /* Hidden by default */
+        }
+        .mobile-nav-menu {
+            position: fixed;
+            top: 48px; /* Height of the header */
+            left: 0;
+            width: 100%;
+            height: calc(100% - 48px); /* Full height minus header */
+            background-color: white;
+            z-index: 60;
+            transform: translateX(-100%); /* Start off-screen to the left */
+            transition: transform 0.3s ease-in-out;
+            padding: 1rem;
+            overflow-y: auto; /* Enable scrolling for long menus */
+        }
+        .mobile-nav-menu.is-open {
+            transform: translateX(0); /* Slide in */
+        }
+
+        /* Card Styling for Sections */
+        .section-card {
+            background-color: #ffffff;
+            border-radius: 12px; /* More rounded corners */
+            box-shadow: 0 6px 15px rgba(0,0,0,0.1); /* Stronger shadow for "card" effect */
+            padding: 24px; /* Adjusted padding */
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.2s ease-in-out; /* Hover effect */
+        }
+
+        .section-card:hover {
+            transform: translateY(-5px); /* Lift effect on hover */
+        }
+
+        .section-card h2 {
+            color: #00449E; /* Dark blue for main section headings */
+            font-weight: 700;
+            text-align: center;
+            border-bottom: 1px solid #E6F3FC; /* Lighter border for internal sections */
+            padding-bottom: 10px;
+            margin-top: 0;
+            margin-bottom: 20px;
+        }
+
+        .section-card h3 {
+             color: #005CB9; /* Slightly lighter blue for subheadings */
+             font-weight: 600;
+             border-bottom: none; /* Remove border from subheadings */
+             text-align: left;
+             margin-top: 20px;
+             margin-bottom: 10px;
+        }
+
+        /* List Styling */
+        .section-card ul {
+            list-style: none; /* Remove default bullet points */
+            padding-left: 0;
+            flex-grow: 1; /* Allow lists to fill space */
+        }
+
+        .section-card ul li {
+            position: relative;
+            padding-left: 28px; /* More space for custom bullet */
+            margin-bottom: 12px; /* More space between list items */
+            font-size: 0.95em;
+        }
+
+        .section-card ul li::before {
+            content: '✓'; /* Checkmark bullet */
+            color: #28a745; /* Green checkmark */
+            position: absolute;
+            left: 0;
+            font-size: 1.3em;
+            line-height: 1;
+            font-weight: bold;
+        }
+
+        /* Infographic Placeholder Styling */
+        .infographic-placeholder {
+            width: 100%;
+            height: 180px; /* Default height for mobile */
+            background-color: #e0e0e0; /* Light gray background for placeholders */
+            border-radius: 8px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-style: italic;
+            color: #666;
+            text-align: center;
+            margin-bottom: 20px;
+            overflow: hidden; /* Ensure image fits */
+        }
+
+        .infographic-placeholder img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain; /* Ensure the image scales down to fit */
+            display: block;
+        }
+
+        /* Responsive text sizes and padding */
+        h1 { @apply text-2xl sm:text-3xl md:text-4xl; }
+        h2 { @apply text-xl sm:text-2xl; }
+        h3 { @apply text-lg sm:text-xl; }
+        p { @apply text-sm sm:text-base; }
+
+        /* Responsive grid for main content */
+        .grid-container {
+            display: grid;
+            grid-template-columns: 1fr; /* Single column on small screens */
+            gap: 25px; /* Space between sections */
+            padding: 20px;
+            max-width: 1200px; /* Max width for content */
+            margin: 0 auto; /* Center the grid */
+            flex-grow: 1; /* Allow content to grow and push footer down */
+        }
+
+        @media (min-width: 768px) {
+            .grid-container {
+                grid-template-columns: 1fr 1fr; /* Two columns on medium screens */
+            }
+            .infographic-placeholder {
+                height: 250px; /* Taller on medium screens */
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .grid-container {
+                grid-template-columns: repeat(2, 1fr); /* Two columns on large screens */
+            }
+            .infographic-placeholder {
+                height: 300px; /* Even taller on large screens */
+            }
+        }
+    </style>
+</head>
+<body class="text-gray-700">
+
+    <header class="bg-white sticky top-0 z-50 shadow-md">
+        <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-12 relative">
+            <div class="flex items-center justify-between h-full">
+                <div class="flex items-center">
+                    <h1 class="text-lg font-bold text-[#00449E]">Payment Gateway Requirements</h1>
+                </div>
+
+                <!-- Desktop Navigation Links -->
+                <div class="hidden sm:block ml-10">
+                    <div class="flex items-baseline space-x-2">
+                        <a href="#functional" class="text-gray-600 hover:bg-[#85BDE9] hover:text-white px-2 py-1 rounded-md text-sm font-medium">Functional</a>
+                        <a href="#non-functional" class="text-gray-600 hover:bg-[#85BDE9] hover:text-white px-2 py-1 rounded-md text-sm font-medium">Non-Functional</a>
+                    </div>
+                </div>
+
+                <!-- Mobile nav toggle button -->
+                <div class="block sm:hidden">
+                    <button id="mobile-nav-toggle" class="p-2 rounded-md text-gray-600 hover:bg-[#85BDE9] hover:text-white focus:outline-none">
+                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Mobile Navigation Menu -->
+    <div id="mobile-nav-overlay" class="mobile-nav-overlay"></div>
+    <div id="mobile-nav-menu" class="mobile-nav-menu">
+        <div class="flex flex-col space-y-1">
+            <a href="#functional" class="block px-3 py-2 rounded-md text-base font-medium text-gray-800 hover:bg-[#85BDE9] hover:text-white">Functional Requirements</a>
+            <a href="#non-functional" class="block px-3 py-2 rounded-md text-base font-medium text-gray-800 hover:bg-[#85BDE9] hover:text-white">Non-Functional Requirements</a>
+        </div>
+    </div>
+
+    <main class="max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
+        <div class="grid-container">
+
+            <div id="functional" class="section-card">
+                <h2>Functional Requirements</h2>
+                <p class="text-sm sm:text-base text-gray-600 mb-4">These define the core operations and specific features the system *must* perform. Understanding every financial operation and data flow is key.</p>
+                <div class="infographic-placeholder">
+                    <img src="images/payment-gatewat-integration-fr.png" alt="Functional Requirements Infographic Placeholder">
+                </div>
+                <h3>Transaction Processing:</h3>
+                <ul>
+                    <li>What are all the possible supported transaction types (e.g., Sale/Auth & Capture, Pure Authorization, Capture, Refund, Partial Refund, Void/Cancellation, Pre-Auth Completion, Recurring Payment Initiation)? For each type, what are the mandatory and optional parameters required in the request?</li>
+                    <li>How do we handle different payment methods (Credit/Debit Cards - Visa, Mastercard, RuPay, Amex; Net Banking - which specific banks?; UPI; Wallets - which ones?; EMI options - which banks/partners?)? Are there separate APIs or integration flows for each?</li>
+                    <li>What is the maximum allowed transaction amount per transaction type/payment method? Are there daily/monthly limits?</li>
+                    <li>How are transaction IDs generated and managed? Is there a unique transaction ID provided by the bank that we can use for reconciliation?</li>
+                    <li>What is the timeout period for a transaction request? What is the expected behaviour if a timeout occurs on either side?</li>
+                </ul>
+
+                <h3>Payment Flow & User Experience:</h3>
+                <ul>
+                    <li>What are the available integration models for payment initiation (e.g., Redirect to gateway page, Iframe integration, Direct API submission/Server-to-Server)? What are the pros/cons and security implications of each from the bank's perspective?</li>
+                    <li>How will 3D Secure 2.0 (or similar authentication) be implemented? Is it a mandatory step for all card transactions? What is the exact user flow for this?</li>
+                    <li>How are failed transactions communicated to our system and to the end-user? What are the specific error codes and their meanings?</li>
+                    <li>Is there a way to customize the payment page (if redirected/iframe) with our branding? To what extent?</li>
+                    <li>How are retries handled for failed transactions? Is there an automatic retry mechanism, or do we need to implement it?</li>
+                </ul>
+
+                <h3>Settlement & Reconciliation:</h3>
+                <ul>
+                    <li>What is the settlement cycle (e.g., T+0, T+1, T+2 business days)? When does the money typically hit our bank account?</li>
+                    <li>In what format (e.g., CSV, XML, API) are settlement reports provided? What data points are included in these reports (e.g., Gross amount, Net amount, Transaction ID, Bank Ref No., Fees, Taxes)? How often are these reports available?</li>
+                    <li>How do we access daily transaction logs/reports for reconciliation? Can we pull them via an API or are they available for download from a portal?</li>
+                    <li>Are there specific reconciliation codes/statuses that we need to map in our system?</li>
+                    <li>How are chargebacks and disputes reflected in reconciliation reports? What is the process for receiving notifications about chargebacks?</li>
+                </ul>
+
+                <h3>Refunds & Voids:</h3>
+                <ul>
+                    <li>What is the API/process for initiating a refund? Can partial refunds be initiated?</li>
+                    <li>What is the time limit for initiating a refund after a successful transaction?</li>
+                    <li>What is the API/process for voiding an authorized but not captured transaction? What is the time limit for a void?</li>
+                    <li>How are refund statuses communicated back to our system?</li>
+                    <li>Are there any fees associated with refunds or voids?</li>
+                </ul>
+
+                <h3>Reporting & Analytics (On Gateway):</h3>
+                <ul>
+                    <li>What kind of dashboard or portal is available for us to view transactions, settlements, and other metrics?</li>
+                    <li>Can we generate custom reports based on specific criteria (e.g., date range, transaction status, payment method)?</li>
+                    <li>Are there any real-time reporting APIs available?</li>
+                </ul>
+            </div>
+
+            <div id="non-functional" class="section-card">
+                <h2>Non-Functional Requirements</h2>
+                <p class="text-sm sm:text-base text-gray-600 mb-4">These define how well the system performs its functions. They are crucial for user satisfaction, system reliability, and business continuity.</p>
+                <div class="infographic-placeholder">
+                    <img src="images/payment-gatewat-integration-nfr.png" alt="Non-Functional Requirements Infographic Placeholder">
+                </div>
+                <h3>Performance & Scalability:</h3>
+                <ul>
+                    <li>What is the expected latency for transaction processing (response time for a successful transaction)?</li>
+                    <li>What is the maximum number of transactions per second (TPS) that the payment gateway can handle for our account/setup? Are there any rate limits we should be aware of?</li>
+                    <li>How does the gateway handle peak loads and traffic spikes? What assurances are there for maintaining performance during high volume periods (e.g., sale events)?</li>
+                    <li>What is the typical uptime (SLA for availability) of the payment gateway?</li>
+                    <li>How quickly can the system recover from a failure (Recovery Time Objective - RTO)?</li>
+                </ul>
+
+                <h3>Security:</h3>
+                <ul>
+                    <li>What are the specific PCI DSS compliance levels the bank/gateway adheres to, and what are our responsibilities as the merchant (e.g., SAQ A, SAQ A-EP, SAQ D)?</li>
+                    <li>How is sensitive card data transmitted and stored? What encryption standards (e.g., TLS 1.2+, AES-256) are used for data in transit and at rest?</li>
+                    <li>Is tokenization of card data supported/mandatory? How does it work, and what are the benefits/implications for our system?</li>
+                    <li>What are the authentication mechanisms for API access (e.g., API keys, OAuth 2.0, mutual TLS)? How often do these credentials need to be rotated?</li>
+                    <li>What fraud detection and prevention tools are natively supported/offered? (e.g., AVS, CVV checks, device fingerprinting, velocity checks, custom rules engines). How can we integrate with these?</li>
+                    <li>What is the process for security audits or penetration testing from our side, if required?</li>
+                </ul>
+
+                <h3>Reliability & Availability:</h3>
+                <ul>
+                    <li>What is the disaster recovery plan for the payment gateway? How quickly can operations can be restored in case of a major outage?</li>
+                    <li>Are there redundant systems or failover mechanisms in place for the gateway?</li>
+                    <li>How will we be notified of scheduled maintenance or unscheduled outages? What is the typical notice period?</li>
+                    <li>What is the expected success rate for transactions (e.g., 99.9% success rate for valid transactions)?</li>
+                </ul>
+
+                <h3>Maintainability & Supportability:</h3>
+                <ul>
+                    <li>How frequently are API versions updated? What is the deprecation policy for older API versions?</li>
+                    <li>Is there comprehensive API documentation available, including error codes, sample requests/responses, and best practices?</li>
+                    <li>What are the support channels (email, phone, dedicated account-manager)? What are the support hours?</li>
+                    <li>What is the Service Level Agreement (SLA) for issue resolution, especially for critical production issues?</li>
+                    <li>Are there sandbox/testing environments that accurately mirror production? How can we get access and test extensively?</li>
+                    <li>How is monitoring and logging provided by the gateway? Can we access detailed transaction logs for troubleshooting our end?</li>
+                </ul>
+
+                <h3>Compliance & Legal:</h3>
+                <ul>
+                    <li>Beyond PCI DSS, what other local regulatory requirements (e.g., RBI guidelines for tokenization, data localization, recurring payments, e-mandates) must be adhered to?</li>
+                    <li>Are there specific data retention policies that we need to be aware of for transaction logs or customer data?</li>
+                    <li>What is the process for dispute resolution/chargeback handling from a legal and operational standpoint? What documentation is required from our end for chargeback defense?</li>
+                </ul>
+            </div>
+
+        </div>
+    </main>
+
+    <footer class="bg-[#00449E] text-white mt-12 sm:mt-16">
+        <div class="max-w-7xl mx-auto py-4 sm:py-6 px-4 sm:px-6 lg:px-8 text-center text-xs sm:text-sm">
+            <p>&copy; 2025 Your Company/Project Name. All rights reserved.</p>
+            <p class="mt-1 opacity-70">Created on July 13, 2025 in Hyderabad, India.</p>
+        </div>
+    </footer>
+
+<script>
+    // Mobile nav toggle for internal pages
+    const mobileNavToggle = document.getElementById('mobile-nav-toggle');
+    const mobileNavMenu = document.getElementById('mobile-nav-menu');
+    const mobileNavOverlay = document.getElementById('mobile-nav-overlay');
+
+    if (mobileNavToggle && mobileNavMenu && mobileNavOverlay) {
+        mobileNavToggle.addEventListener('click', () => {
+            mobileNavMenu.classList.toggle('is-open');
+            mobileNavOverlay.style.display = mobileNavMenu.classList.contains('is-open') ? 'block' : 'none';
+        });
+
+        mobileNavOverlay.addEventListener('click', () => {
+            mobileNavMenu.classList.remove('is-open');
+            mobileNavOverlay.style.display = 'none';
+        });
+
+        // Close mobile menu when a link is clicked
+        mobileNavMenu.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileNavMenu.classList.remove('is-open');
+                mobileNavOverlay.style.display = 'none';
+            });
+        });
+    }
+
+    // Ensure overlay is hidden on larger screens if it was open on mobile
+    window.addEventListener('resize', () => {
+        if (window.innerWidth >= 640) {
+            mobileNavOverlay.style.display = 'none';
+            mobileNavMenu.classList.remove('is-open');
+        }
+    });
+</script>
+</body>
+</html>
