@@ -1,0 +1,1057 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Apartment Management System - PRD</title>
+    <!-- Chosen Palette: Modern Tech Blue & Grey -->
+    <!-- Application Structure Plan: The application is designed as a single-page interactive document. A sticky top navigation bar provides quick access to all major sections of the PRD. The main content area dynamically displays the selected section. This structure enhances readability and navigation by allowing engineers to quickly locate specific requirements or architectural details without endless scrolling. Sub-sections within Functional Requirements are made collapsible to manage information density. For mobile and tablet devices, the top navigation collapses into an intuitive hamburger menu, which reveals an off-canvas navigation overlay, ensuring optimal usability on smaller screens. -->
+    <!-- Visualization & Content Choices: Summary: Report Info -> Goal -> Viz/Presentation Method -> Interaction -> Justification -> Library/Method - Confirming NO SVG/Mermaid, supporting the DESIGNED structure.
+        - Top Navigation Bar (HTML/Tailwind/JS): Goal: Organize/Navigate. To provide quick access to all sections. Interaction: Clicking a link scrolls smoothly to the corresponding section; active section highlights. Justification: Essential for long documents to improve navigation and accessibility across devices.
+        - Mobile Hamburger Menu (HTML/Tailwind/JS): Goal: Organize/Navigate. To provide intuitive navigation on small screens. Interaction: Clicking toggles an off-canvas menu. Justification: Ensures mobile-friendliness and clean UI on limited screen real estate.
+        - Collapsible Sections (HTML/Tailwind/JS): Goal: Organize/Inform. To hide/show detailed functional requirements. Interaction: Clicking a header toggles visibility. Justification: Reduces visual clutter and allows engineers to focus on relevant details.
+        - Textual Content (HTML/Tailwind): Goal: Inform. All PRD content is presented directly as text. Justification: The primary goal is to present the PRD content itself.
+        - No Chart.js/Plotly.js: The source PRD is a textual document and does not contain quantitative data suitable for charting within this interactive document. The "Reports & Analytics" sections describe future reports, not data to be visualized in this PRD.
+        - Library/Method: Vanilla JavaScript for navigation and collapsible sections.
+    -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #fcfcfc;
+            line-height: 1.6;
+        }
+        .top-nav {
+            position: sticky;
+            top: 0;
+            z-index: 50;
+        }
+        .mobile-nav-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 50;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out;
+        }
+        .mobile-nav-overlay.open {
+            display: flex;
+            opacity: 1;
+        }
+        .mobile-nav-content {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 0.5rem;
+            width: 90%;
+            max-width: 400px;
+            transform: translateY(-20px);
+            opacity: 0;
+            transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+            position: relative; /* For close button positioning */
+        }
+        .mobile-nav-overlay.open .mobile-nav-content {
+            transform: translateY(0);
+            opacity: 1;
+        }
+        .toc-link {
+            transition: all 0.2s ease-in-out;
+            color: #475569;
+            font-weight: 500;
+        }
+        .toc-link.active {
+            background-color: #e0f2fe;
+            color: #0ea5e9;
+            font-weight: 600;
+            border-radius: 0.5rem; /* Apply rounded corners to active state */
+        }
+        .toc-link:hover:not(.active) {
+            background-color: #f1f5f9;
+            color: #1e293b;
+            border-radius: 0.5rem; /* Apply rounded corners to hover state */
+        }
+        .collapsible-header {
+            cursor: pointer;
+            transition: background-color 0.2s ease-in-out;
+            background-color: #f8fafc;
+            border-bottom: 1px solid #e2e8f0;
+            border-radius: 0.5rem; /* Rounded corners for collapsible headers */
+        }
+        .collapsible-header:hover {
+            background-color: #eff6ff;
+        }
+        .collapsible-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+        }
+        .collapsible-content.expanded {
+            max-height: 4000px; /* Sufficiently large value */
+            transition: max-height 0.7s ease-in;
+        }
+        .arrow-icon {
+            transition: transform 0.3s ease-in-out;
+        }
+        .arrow-icon.rotate-90 {
+            transform: rotate(90deg);
+        }
+        section h2 {
+            border-bottom: 2px solid #e2e8f0;
+            padding-bottom: 0.5rem;
+        }
+        section h3 {
+            color: #1e293b;
+        }
+        .shadow-md {
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+        }
+        /* Custom list style for nested lists in categories */
+        ul.list-circle {
+            list-style-type: circle;
+        }
+    </style>
+</head>
+<body class="bg-fcfcfc text-slate-800 min-h-screen flex flex-col">
+    <header class="top-nav bg-white shadow-md p-4 flex items-center justify-between w-full">
+        <h1 class="text-xl md:text-2xl font-bold text-slate-900">Apartment Management System PRD</h1>
+        <nav class="hidden md:flex space-x-2 lg:space-x-4"> <!-- Reduced space-x for more items -->
+            <a href="#introduction" class="toc-link px-2 py-2 rounded-lg text-slate-700 hover:bg-slate-100 text-sm lg:text-base">Intro</a>
+            <a href="#user-roles-permissions" class="toc-link px-2 py-2 rounded-lg text-slate-700 hover:bg-slate-100 text-sm lg:text-base">User Roles</a>
+            <a href="#product-overview" class="toc-link px-2 py-2 rounded-lg text-slate-700 hover:bg-slate-100 text-sm lg:text-base">Prod. Overview</a>
+            <a href="#functional-requirements" class="toc-link px-2 py-2 rounded-lg text-slate-700 hover:bg-slate-100 text-sm lg:text-base">Functional Req.</a>
+            <a href="#non-functional-requirements" class="toc-link px-2 py-2 rounded-lg text-slate-700 hover:bg-slate-100 text-sm lg:text-base">Non-Functional Req.</a>
+            <a href="#technical-architecture" class="toc-link px-2 py-2 rounded-lg text-slate-700 hover:bg-slate-100 text-sm lg:text-base">Tech Arch.</a>
+            <a href="#future-enhancements" class="toc-link px-2 py-2 rounded-lg text-slate-700 hover:bg-slate-100 text-sm lg:text-base">Future Enh.</a>
+            <a href="#assumptions-constraints" class="toc-link px-2 py-2 rounded-lg text-slate-700 hover:bg-slate-100 text-sm lg:text-base">Assumptions</a>
+            <a href="#release-plan" class="toc-link px-2 py-2 rounded-lg text-slate-700 hover:bg-slate-100 text-sm lg:text-base">Release Plan</a>
+            <a href="#success-metrics" class="toc-link px-2 py-2 rounded-lg text-slate-700 hover:bg-slate-100 text-sm lg:text-base">Success Metrics</a>
+        </nav>
+        <button id="mobile-menu-button" class="md:hidden text-slate-600 focus:outline-none p-2 rounded-md hover:bg-slate-100">
+            <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+        </button>
+    </header>
+
+    <div id="mobile-nav-overlay" class="mobile-nav-overlay">
+        <div class="mobile-nav-content shadow-xl rounded-lg">
+            <button id="close-mobile-menu-button" class="absolute top-3 right-3 text-slate-600 focus:outline-none p-2 rounded-md hover:bg-slate-100">
+                <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+            </button>
+            <h2 class="text-2xl font-bold text-slate-900 mb-6 pb-4 border-b">PRD Sections</h2>
+            <nav class="flex flex-col space-y-3">
+                <a href="#introduction" class="toc-link block px-4 py-2 rounded-lg text-slate-700">Introduction</a>
+                <a href="#user-roles-permissions" class="toc-link block px-4 py-2 rounded-lg text-slate-700">User Roles & Permissions</a>
+                <a href="#product-overview" class="toc-link block px-4 py-2 rounded-lg text-slate-700">Product Overview</a>
+                <a href="#functional-requirements" class="toc-link block px-4 py-2 rounded-lg text-slate-700">Functional Requirements</a>
+                <a href="#non-functional-requirements" class="toc-link block px-4 py-2 rounded-lg text-slate-700">Non-Functional Requirements</a>
+                <a href="#technical-architecture" class="toc-link block px-4 py-2 rounded-lg text-slate-700">Technical Architecture</a>
+                <a href="#future-enhancements" class="toc-link block px-4 py-2 rounded-lg text-slate-700">Future Enhancements</a>
+                <a href="#assumptions-constraints" class="toc-link block px-4 py-2 rounded-lg text-slate-700">Assumptions & Constraints</a>
+                <a href="#release-plan" class="toc-link block px-4 py-2 rounded-lg text-slate-700">Release Plan</a>
+                <a href="#success-metrics" class="toc-link block px-4 py-2 rounded-lg text-slate-700">Success Metrics</a>
+            </nav>
+        </div>
+    </div>
+
+    <main class="flex-1 p-8 md:p-12 overflow-y-auto">
+        <h1 class="text-4xl font-extrabold text-slate-900 mb-4">Product Requirements Document: Apartment Management System</h1>
+        <p class="text-slate-500 mb-8">Version: 1.3 | Date: July 29, 2025</p>
+
+        <section id="introduction" class="mb-12">
+            <h2 class="text-3xl font-bold text-slate-900 mb-4">Introduction</h2>
+            <p class="text-lg text-slate-700 leading-relaxed">This section provides a high-level overview of the Apartment Management System PRD. It sets the stage by outlining the application's purpose, its core goals, and the technological foundation (MERN stack). Users will find a concise summary of what the system aims to achieve, its target audience, and the strategic choices behind its development, helping them quickly grasp the project's vision before diving into specifics.</p>
+            <p class="text-lg text-slate-700 leading-relaxed">This Product Requirements Document (PRD) outlines the scope, features, and requirements for a comprehensive Apartment Management SaaS application. The goal is to create a secure, scalable, and user-friendly platform that streamlines apartment complex operations, enhances community living, and ensures robust data and physical security. This document will serve as a foundational guide for the development team, ensuring alignment on product vision and execution, with a strong emphasis on the MERN (MongoDB, Express.js, React.js, Node.js) stack.</p>
+        </section>
+
+        <section id="user-roles-permissions" class="mb-12">
+            <h2 class="text-3xl font-bold text-slate-900 mb-6">User Roles & Permissions</h2>
+            <p class="text-lg text-slate-700 leading-relaxed mb-6">This section details the various user roles within the Apartment Management System and their corresponding permissions. Understanding these roles is crucial for grasping the system's security model and operational workflows. Each role is described with a "Why" explaining its purpose and a list of "Permissions" outlining its access rights, contributing to a secure and efficient application by ensuring appropriate access control for every user type.</p>
+
+            <div class="space-y-8">
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h3 class="text-2xl font-semibold text-slate-900 mb-3">1.1 Administrator</h3>
+                    <p class="text-slate-600 mb-2"><span class="font-medium text-slate-700">Why:</span> This is the central management role responsible for the overall operation and configuration of the apartment management system. They oversee all modules, manage users, finances, and ensure the smooth functioning of the entire complex. This role typically belongs to the society manager or a designated management committee head.</p>
+                    <p class="text-slate-600 mb-2"><span class="font-medium text-slate-700">Permissions:</span></p>
+                    <ul class="list-disc list-inside text-slate-600 ml-4 space-y-1">
+                        <li>**Full Access:** To all modules and data within the system.</li>
+                        <li>**User & Role Management:** Register/edit/delete all user types (Owners, Tenants, Staff, Builders), assign roles and permissions, generate credentials, manage password resets.</li>
+                        <li>**Apartment/Flat Management:** Add/edit/delete flat details, assign parking slots, update occupancy status.</li>
+                        <li>**Resident/Tenant Management:** View/edit all resident/tenant data (including sensitive medical info with appropriate controls), manage vehicle details.</li>
+                        <li>**Maintenance Management:** View all requests, assign tasks to staff/vendors, update status, close requests, view feedback, generate reports.</li>
+                        <li>**Billing & Payments:** Define maintenance rates, generate/send invoices, track payment status, manage expenses, view all financial reports, integrate with payment gateways.</li>
+                        <li>**Security Management:** Oversee visitor logs, manage security staff profiles, manage security incidents, blacklist visitors.</li>
+                        <li>**Staff Management (All Types):** Add/edit/delete profiles for Security, Maintenance, Parking, Sanitation, Technical, Amenities staff; manage shifts, attendance, performance, and disciplinary logs.</li>
+                        <li>**Communications:** Create/publish all types of announcements, schedule meetings, manage MoMs.</li>
+                        <li>**Document Management:** Upload, manage, and control access to all society documents (legal, financial, operational, staff records).</li>
+                        <li>**Reports & Analytics:** Access all system-generated reports and dashboards.</li>
+                        <li>**System Configuration:** Configure various system settings, rules (e.g., parking, billing), and templates.</li>
+                    </ul>
+                </div>
+
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h3 class="text-2xl font-semibold text-slate-900 mb-3">1.2 Owner</h3>
+                    <p class="text-slate-600 mb-2"><span class="font-medium text-slate-700">Why:</span> Represents the flat owner, who has primary responsibility for the unit and a vested interest in the society's management. They need access to their personal flat details, financial information, and society communications.</p>
+                    <p class="text-slate-600 mb-2"><span class="font-medium text-slate-700">Permissions:</span></p>
+                    <ul class="list-disc list-inside text-slate-600 ml-4 space-y-1">
+                        <li>**Dashboard:** View personal outstanding bills, status of their maintenance requests, recent announcements.</li>
+                        <li>**Flat & Family Information:** View/edit their own flat details (non-admin fields), manage family member profiles (with privacy controls for others).</li>
+                        <li>**Maintenance Requests:** Submit new requests for their flat or common areas, track status, provide feedback on resolved requests, reopen if unresolved.</li>
+                        <li>**Billing & Payments:** View their own maintenance charges, utility bills, download receipts, make online payments.</li>
+                        <li>**Visitor Management:** Pre-approve guests, view their own visitor log, receive visitor notifications.</li>
+                        <li>**Communications:** View all society announcements, meeting schedules, and Minutes of Meeting (MoM).</li>
+                        <li>**Emergency Contacts:** Access society emergency contacts.</li>
+                        <li>**Limited Document Access:** View society rules, general circulars, and documents designated for owners.</li>
+                    </ul>
+                </div>
+
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h3 class="text-2xl font-semibold text-slate-900 mb-3">1.3 Tenant</h3>
+                    <p class="text-slate-600 mb-2"><span class="font-medium text-slate-700">Why:</span> Resides in a flat but does not own it. They need access to daily operational features relevant to their occupancy, such as maintenance, visitor management, and communications, but with limited financial and administrative oversight.</p>
+                    <p class="text-slate-600 mb-2"><span class="font-medium text-slate-700">Permissions:</span></p>
+                    <ul class="list-disc list-inside text-slate-600 ml-4 space-y-1">
+                        <li>**Dashboard:** View their own outstanding bills (if applicable), status of their maintenance requests, recent announcements.</li>
+                        <li>**Flat Information:** View basic details of the flat they reside in.</li>
+                        <li>**Maintenance Requests:** Submit new requests for their flat or common areas, track status, provide feedback.</li>
+                        <li>**Billing & Payments:** View their own rent and applicable charges, make online payments (if configured for tenants).</li>
+                        <li>**Visitor Management:** Pre-approve guests, view their own visitor log, receive visitor notifications.</li>
+                        <li>**Communications:** View all society announcements, meeting schedules (if allowed), and MoMs (if allowed).</li>
+                        <li>**Emergency Contacts:** Access society emergency contacts.</li>
+                    </ul>
+                </div>
+
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h3 class="text-2xl font-semibold text-slate-900 mb-3">1.4 Security Staff</h3>
+                    <p class="text-slate-600 mb-2"><span class="font-medium text-slate-700">Why:</span> Responsible for managing physical access to the premises, monitoring visitors, and responding to immediate security concerns. Their interface needs to be streamlined for quick actions.</p>
+                    <p class="text-slate-600 mb-2"><span class="font-medium text-slate-700">Permissions:</span></p>
+                    <ul class="list-disc list-inside text-slate-600 ml-4 space-y-1">
+                        <li>**Visitor Management:** Check-in/check-out visitors (manual entry, QR scan), capture visitor photo/ID, assign temporary parking, view real-time list of visitors inside, view blacklisted visitors (with alerts).</li>
+                        <li>**Gate Pass & Logs:** Log entry/exit of vehicles, staff, and emergency vehicles.</li>
+                        <li>**Parking Monitoring:** View parking slot availability, log parking violations.</li>
+                        <li>**Security Incident Reporting:** Log suspicious activities, trespass alerts, and staff intervention reports.</li>
+                        <li>**Emergency Alerts:** Receive and acknowledge emergency alerts (e.g., from residents' panic buttons).</li>
+                        <li>**Staff ID Verification:** Verify digital ID cards of other staff.</li>
+                        <li>**View Announcements:** Access relevant security-related announcements.</li>
+                    </ul>
+                </div>
+
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h3 class="text-2xl font-semibold text-slate-900 mb-3">1.5 Maintenance Staff (General)</h3>
+                    <p class="text-slate-600 mb-2"><span class="font-medium text-slate-700">Why:</span> This role covers general maintenance personnel who perform a variety of repair and upkeep tasks across the complex. Specific sub-roles (Plumber, Electrician, Carpenter, etc.) can be configured under this umbrella, each with tailored permissions.</p>
+                    <p class="text-slate-600 mb-2"><span class="font-medium text-slate-700">Permissions:</span></p>
+                    <ul class="list-disc list-inside text-slate-600 ml-4 space-y-1">
+                        <li>**Task Management:** View assigned maintenance requests, update task status (In Progress, Resolved), add notes/photos of work done, mark tasks as complete.</li>
+                        <li>**Access Flat/Area Info:** View relevant details of the flat/common area for the assigned job.</li>
+                        <li>**Attendance & Shift Log:** Check-in/check-out for shifts and individual jobs.</li>
+                        <li>**Equipment Usage Log:** Log tools and equipment used for tasks.</li>
+                        <li>**View Knowledge Base:** Access FAQs or troubleshooting guides relevant to their work.</li>
+                        <li>**Receive Notifications:** For new task assignments and urgent requests.</li>
+                    </ul>
+                </div>
+
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h3 class="text-2xl font-semibold text-slate-900 mb-3">1.6 Parking Staff</h3>
+                    <p class="text-slate-600 mb-2"><span class="font-medium text-slate-700">Why:</span> Dedicated personnel for managing parking facilities, including slot assignments, visitor parking, and enforcing parking rules.</p>
+                    <p class="text-slate-600 mb-2"><span class="font-medium text-slate-700">Permissions:</span></p>
+                    <ul class="list-disc list-inside text-slate-600 ml-4 space-y-1">
+                        <li>**Parking Slot Management:** View real-time parking availability, assign/unassign slots, manage guest parking reservations.</li>
+                        <li>**Vehicle Tracking:** Log vehicle entry/exit, track vehicle details.</li>
+                        <li>**Parking Violation Tracker:** Log wrong parking, issue digital warning tickets, notify residents (if configured).</li>
+                        <li>**EV Charging Station Support:** Manage charging point availability and usage.</li>
+                        <li>**Shift & Work Logs:** Track attendance and specific duties performed.</li>
+                    </ul>
+                </div>
+
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h3 class="text-2xl font-semibold text-slate-900 mb-3">1.7 Sanitation Staff</h3>
+                    <p class="text-slate-600 mb-2"><span class="font-medium text-slate-700">Why:</span> Responsible for the cleanliness and hygiene of the common areas, waste management, and specific sanitation tasks.</p>
+                    <p class="text-slate-600 mb-2"><span class="font-medium text-slate-700">Permissions:</span></p>
+                    <ul class="list-disc list-inside text-slate-600 ml-4 space-y-1">
+                        <li>**Task Management:** View assigned cleaning schedules and tasks (daily, weekly, monthly), mark tasks as complete.</li>
+                        <li>**Waste Management:** Log waste collection status, report segregation issues.</li>
+                        <li>**Drainage & Sewage:** Log cleaning activities for drains and septic tanks.</li>
+                        <li>**Attendance & Shift Log:** Check-in/check-out for shifts.</li>
+                        <li>**Report Issues:** Log issues like overflowing bins, blockages, or damaged cleaning equipment.</li>
+                        <li>**View Announcements:** Access relevant sanitation schedules or alerts.</li>
+                    </ul>
+                </div>
+
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h3 class="text-2xl font-semibold text-slate-900 mb-3">1.8 Technical Support Staff</h3>
+                    <p class="text-slate-600 mb-2"><span class="font-medium text-slate-700">Why:</span> Handles IT and technical infrastructure issues within the complex, such as Wi-Fi, intercom, CCTV system malfunctions, or smart device support.</p>
+                    <p class="text-slate-600 mb-2"><span class="font-medium text-slate-700">Permissions:</span></p>
+                    <ul class="list-disc list-inside text-slate-600 ml-4 space-y-1">
+                        <li>**Support Request Management:** View assigned technical support tickets, update status, add resolution notes.</li>
+                        <li>**Troubleshooting Access:** Access relevant network configurations or device status (within system limits).</li>
+                        <li>**Knowledge Base:** Update or add new articles to the technical knowledge base.</li>
+                        <li>**Inventory Tracking:** Log usage of technical parts or equipment.</li>
+                        <li>**Attendance & Shift Log:** Check-in/check-out for shifts and jobs.</li>
+                        <li>**Smart Infra Monitoring:** View dashboard of Wi-Fi access points, CCTV connectivity, POS machine status (if integrated).</li>
+                    </ul>
+                </div>
+
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h3 class="text-2xl font-semibold text-slate-900 mb-3">1.9 Builder Representative</h3>
+                    <p class="text-slate-600 mb-2"><span class="font-medium text-slate-700">Why:</span> An external party representing the builder, responsible for addressing post-construction complaints, providing project updates, and interacting with the society management during the handover and defect liability period.</p>
+                    <p class="text-slate-600 mb-2"><span class="font-medium text-slate-700">Permissions:</span></p>
+                    <ul class="list-disc list-inside text-slate-600 ml-4 space-y-1">
+                        <li>**Builder Complaint Tracker:** View complaints specifically tagged as "builder-related," update status, add resolution comments, upload proof (photos, reports).</li>
+                        <li>**Meeting Management:** View scheduled meetings with society, access meeting agendas, upload responses/commitments, view MoMs.</li>
+                        <li>**Document Uploads:** Upload legal documents, project updates, and work progress reports relevant to builder responsibilities.</li>
+                        <li>**Communication:** Send notices to residents (with Admin approval), respond to specific queries.</li>
+                        <li>**Builder Staff Directory:** Manage contact information for their own team members involved.</li>
+                    </ul>
+                </div>
+
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h3 class="text-2xl font-semibold text-slate-900 mb-3">1.10 Management Committee (MC) Member / Resident Welfare Association (RWA) Member</h3>
+                    <p class="text-slate-600 mb-2"><span class="font-medium text-slate-700">Why:</span> These are elected residents who form the governing body. They need oversight and decision-making capabilities without the full operational burden of an Administrator. This role fosters transparency and resident participation in governance.</p>
+                    <p class="text-slate-600 mb-2"><span class="font-medium text-slate-700">Permissions:</span></p>
+                    <ul class="list-disc list-inside text-slate-600 ml-4 space-y-1">
+                        <li>**Dashboard Overview:** View key operational summaries (maintenance, financial, security).</li>
+                        <li>**Financial Oversight:** View comprehensive financial reports, approve major expenditures (workflow-based), review budget proposals.</li>
+                        <li>**Meeting Management:** Create/edit meeting agendas, manage MoMs, track action items, view attendance.</li>
+                        <li>**Complaint Oversight:** View all complaints, escalate unresolved issues, review feedback ratings.</li>
+                        <li>**Announcement Approval:** Review and approve general announcements before publication (if Admin approval is not sufficient).</li>
+                        <li>**Policy Review:** Access and propose changes to society rules and policies.</li>
+                        <li>**Limited User Data Access:** View aggregated resident data for reporting (e.g., total residents, occupancy rates), but not sensitive individual details.</li>
+                    </ul>
+                </div>
+
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h3 class="text-2xl font-semibold text-slate-900 mb-3">1.11 External Vendor / Service Provider</h3>
+                    <p class="text-slate-600 mb-2"><span class="font-medium text-slate-700">Why:</span> For third-party companies or individuals contracted for specialized services (e.g., specialized plumbing, deep cleaning, security agency, IT contractors). This role allows them to interact with the system only for their assigned tasks.</p>
+                    <p class="text-slate-600 mb-2"><span class="font-medium text-slate-700">Permissions:</span></p>
+                    <ul class="list-disc list-inside text-slate-600 ml-4 space-y-1">
+                        <li>**Assigned Task View:** View only the maintenance requests or service tickets specifically assigned to their company/individual.</li>
+                        <li>**Task Status Update:** Update the status of their assigned tasks (e.g., "Accepted," "In Progress," "Completed").</li>
+                        <li>**Notes & Attachments:** Add notes, upload photos or documents related to their specific job completion.</li>
+                        <li>**Invoice Submission:** Submit invoices directly linked to completed tasks (for Administrator review/approval).</li>
+                        <li>**Limited Communication:** Communicate with the Administrator or relevant staff member regarding their specific tasks.</li>
+                        <li>**No Access:** To resident personal data, financial reports, other vendors' tasks, or general society announcements unless directly relevant to their work.</li>
+                    </ul>
+                </div>
+
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h3 class="text-2xl font-semibold text-slate-900 mb-3">1.12 Amenities / Recreation Staff</h3>
+                    <p class="text-slate-600 mb-2"><span class="font-medium text-slate-700">Why:</span> For larger complexes with dedicated staff managing recreational facilities like gyms, clubhouses, or swimming pools. They need specific tools for managing bookings, equipment, and cleanliness within their domain.</p>
+                    <p class="text-slate-600 mb-2"><span class="font-medium text-slate-700">Permissions:</span></p>
+                    <ul class="list-disc list-inside text-slate-600 ml-4 space-y-1">
+                        <li>**Amenity Booking Management:** View and manage bookings for specific amenities (gym slots, clubhouse reservations, court bookings).</li>
+                        <li>**Equipment Status:** Update the operational status of equipment within their assigned amenity area (e.g., "Gym Machine 3 out of order").</li>
+                        <li>**Cleaning Logs:** Log cleaning schedules and completion for amenities.</li>
+                        <li>**Amenity-Specific Complaints:** View and address complaints related to their managed amenities.</li>
+                        <li>**Attendance & Shift Log:** Check-in/check-out for shifts.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section id="product-overview" class="mb-12">
+            <h2 class="text-3xl font-bold text-slate-900 mb-6">Product Overview</h2>
+            <p class="text-lg text-slate-700 leading-relaxed mb-4">This section provides a comprehensive overview of the Apartment Management System, detailing the problem it aims to solve, its proposed solution, and the key goals it seeks to achieve. It also explains the rationale behind choosing the MERN stack and clearly defines the scope of the initial release, helping users understand the foundational vision and boundaries of the project.</p>
+            <p class="text-lg text-slate-700 leading-relaxed mb-4"><span class="font-medium text-slate-700">2.1 Problem Statement:</span> Managing modern apartment complexes is complex, involving diverse stakeholders (owners, tenants, staff, builders), numerous operational tasks (maintenance, billing, security, visitor management), and critical needs for communication, transparency, and security. Existing solutions are often fragmented, manual, or lack the integrated features and robust security required for efficient and secure community living. This leads to inefficiencies, communication gaps, security vulnerabilities, and resident dissatisfaction.</p>
+            <p class="text-lg text-slate-700 leading-relaxed mb-4"><span class="font-medium text-slate-700">2.2 Solution Overview:</span> The Apartment Management System application will be a cloud-based, comprehensive platform designed to centralize and automate all aspects of apartment complex management. It will provide intuitive interfaces for residents, staff, and administrators, fostering a connected, secure, and well-managed community. Built on the MERN stack, it will offer real-time updates, scalability, and a rich user experience.</p>
+            <p class="text-lg text-slate-700 leading-relaxed mb-4"><span class="font-medium text-slate-700">2.3 Goals:</span></p>
+            <ul class="list-disc list-inside text-slate-600 ml-4 space-y-1 mb-4">
+                <li>Enhance Operational Efficiency: Automate routine tasks, streamline workflows, and reduce manual effort for administrators and staff.</li>
+                <li>Improve Resident Experience: Provide transparency, easy access to services, and effective communication channels for residents.</li>
+                <li>Strengthen Security: Implement robust application-level security measures and facilitate enhanced physical community security.</li>
+                <li>Foster Community Engagement: Improve communication and participation among residents and management.</li>
+                <li>Provide Actionable Insights: Generate comprehensive reports and analytics for informed decision-making.</li>
+                <li>Ensure Scalability: Support a growing number of users and apartment complexes without compromising performance.</li>
+            </ul>
+            <p class="text-lg text-slate-700 leading-relaxed mb-4"><span class="font-medium text-slate-700">2.4 Target Audience:</span></p>
+            <ul class="list-disc list-inside text-slate-600 ml-4 space-y-1 mb-4">
+                <li>Apartment Complex Management Committees</li>
+                <li>Residential Welfare Associations (RWAs)</li>
+                <li>Property Management Companies</li>
+                <li>Builders (for post-handover support)</li>
+                <li>Individual Flat Owners and Tenants</li>
+            </ul>
+            <p class="text-lg text-slate-700 leading-relaxed mb-4"><span class="font-medium text-slate-700">2.5 MERN Stack Rationale:</span> The MERN stack (MongoDB, Express.js, React.js, Node.js) is chosen for its:</p>
+            <ul class="list-disc list-inside text-slate-600 ml-4 space-y-1 mb-4">
+                <li>JavaScript Everywhere: A single language across frontend and backend simplifies development and maintenance.</li>
+                <li>Scalability: Node.js's non-blocking I/O and MongoDB's NoSQL nature are well-suited for handling a large number of concurrent users and flexible data structures.</li>
+                <li>Performance: React.js provides a fast and responsive user interface, while Node.js ensures efficient backend processing.</li>
+                <li>Rich Ecosystem: Access to a vast array of libraries and tools within the JavaScript community.</li>
+                <li>Real-time Capabilities: Node.js is excellent for building real-time features like notifications and live status updates, which are crucial for a management application.</li>
+                <li>Cost-Effectiveness: Open-source components reduce licensing costs.</li>
+            </ul>
+            <p class="text-lg text-slate-700 leading-relaxed mb-4"><span class="font-medium text-slate-700">2.6 Scope (In/Out):</span> This section clearly defines what is included in the initial release of the Apartment Management System application and what is explicitly excluded. This helps manage expectations and prevent scope creep during development.</p>
+            <h3 class="text-xl font-semibold text-slate-900 mb-3">2.6.1 In Scope (Initial Release)</h3>
+            <p class="text-slate-600 leading-relaxed mb-4">All functional requirements detailed in Section 3 (Phase 1, Phase 2, and Phase 3) are considered in scope for the initial release, including:</p>
+            <ul class="list-disc list-inside text-slate-600 ml-4 space-y-1 mb-4">
+                <li>User & Role Management with robust security features.</li>
+                <li>Apartment / Flat Management.</li>
+                <li>Resident / Tenant Management with privacy controls.</li>
+                <li>Parking Management (assignment, availability, guest parking).</li>
+                <li>Maintenance Charges (billing, payments, reminders).</li>
+                <li>Maintenance Requests (submission, tracking, feedback).</li>
+                <li>Security Staff Management.</li>
+                <li>Core Dashboards for Admin and Residents.</li>
+                <li>Initial Reports & Analytics.</li>
+                <li>Visitor Management (entry/exit, smart features, blacklisting).</li>
+                <li>Medical & Emergency Services.</li>
+                <li>Parking Staff Management.</li>
+                <li>Lease & Rent Management.</li>
+                <li>Expanded Billing & Payments.</li>
+                <li>Expense Management.</li>
+                <li>Notice Board / Announcements.</li>
+                <li>Detailed Complaint & Feedback system.</li>
+                <li>Expanded Document Management.</li>
+                <li>Enhanced Reports & Analytics.</li>
+                <li>Security Incident Management (Optional Advanced Feature).</li>
+                <li>Digital Gate Pass for Staff (Optional Advanced Feature).</li>
+                <li>Parking Violation Tracker (Optional Advanced Feature).</li>
+                <li>Utility Management (Electricity, Drinking Water).</li>
+                <li>Recreation & Common Areas Management.</li>
+                <li>Meeting Scheduling & Notifications.</li>
+                <li>Technical Assistance & IT Support Module.</li>
+                <li>Flat Owner & Family Information Module.</li>
+                <li>Builder Information & Interaction Module.</li>
+                <li>Sanitation Worker Management.</li>
+                <li>Plumber & Electrician Facilities Module.</li>
+                <li>Comprehensive Staff Information Management.</li>
+                <li>Advanced Reports & Analytics.</li>
+                <li>All non-functional requirements specified in Section 4.</li>
+            </ul>
+            <h3 class="text-xl font-semibold text-slate-900 mb-3">2.6.2 Out of Scope (Initial Release)</h3>
+            <p class="text-slate-600 leading-relaxed mb-4">The following functionalities are explicitly out of scope for the initial release but may be considered for future enhancements:</p>
+            <ul class="list-disc list-inside text-slate-600 ml-4 space-y-1">
+                <li>Direct IoT Device Integration: While the system can consume data from IoT, direct integration and control of smart home devices (e.g., smart locks, smart lights within individual flats) are out of scope.</li>
+                <li>Advanced AI/ML Model Training: While the architecture supports AI integration, the development of complex, custom AI/ML model training pipelines from scratch is out of scope for the initial release. Integration with existing AI services (e.g., for chatbots, basic image recognition) is in scope.</li>
+                <li>Integrated Accounting Software: Full-fledged accounting features beyond basic billing and expense tracking (e.g., general ledger, complex payroll for staff, tax filing) are out of scope.</li>
+                <li>Community Social Networking: Features like private messaging between residents, social feeds, or dedicated interest groups are out of scope.</li>
+                <li>E-commerce/Marketplace: Direct buying/selling of goods or services within the app (e.g., a society-run store) is out of scope.</li>
+                <li>Complex Biometric Integrations: Beyond QR code-based gate passes, advanced biometric access control systems (e.g., fingerprint scanners, retinal scans) are out of scope.</li>
+                <li>Deep Hardware Integrations: Direct control or complex integrations with physical hardware beyond basic data input (e.g., direct control of gate barriers, complex CCTV system control) are out of scope.</li>
+            </ul>
+        </section>
+
+        <section id="functional-requirements" class="mb-12">
+            <h2 class="text-3xl font-bold text-slate-900 mb-6">Functional Requirements (Phase-wise)</h2>
+            <p class="text-lg text-slate-700 leading-relaxed mb-6">This section provides a detailed breakdown of the functional requirements, organized into development phases. Each sub-section describes specific features and their integrated security considerations. This structured presentation allows engineers to understand the scope of work for each phase and the critical security aspects to be addressed during implementation. Collapsible sections are used to manage the density of information, allowing users to focus on relevant details.</p>
+
+            <div class="space-y-6">
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <div class="collapsible-header flex justify-between items-center py-2 px-4">
+                        <h3 class="text-2xl font-semibold text-slate-900">Phase 1: Foundational Modules & Core Security</h3>
+                        <svg class="arrow-icon w-6 h-6 text-slate-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                    </div>
+                    <div class="collapsible-content">
+                        <p class="text-slate-600 leading-relaxed mt-4 mb-4">This phase establishes the essential building blocks and critical security measures.</p>
+                        <h4 class="text-xl font-semibold text-slate-900 mb-2">3.1.1 User & Role Management</h4>
+                        <ul class="list-disc list-inside text-slate-600 ml-4 space-y-1 mb-4">
+                            <li>Admin Setup: Register flat/unit details, generate login credentials (username & password or OTP-based access), implement strong password policies, assign role/permissions, send credentials securely, enable password reset/recovery with MFA, allocate unique IDs.</li>
+                            <li>Role-Based Access Control (RBAC): Granular permissions for each role, strict enforcement at API level.</li>
+                            <li>User Profile Management: Users can view and update their own profile details, self-service password change with current password verification.</li>
+                        </ul>
+                        <h4 class="text-xl font-semibold text-slate-900 mb-2">3.1.2 Apartment / Flat Management</h4>
+                        <ul class="list-disc list-inside text-slate-600 ml-4 space-y-1 mb-4">
+                            <li>Manage Unit Details: Flat Number / Apartment ID, Type (1BHK, 2BHK, 3BHK), Bedrooms, bathrooms, balconies, Built-up area, Floor number, Facing, Resident occupancy status, Electricity meter number, Access to drinking water tap/RO points, Near children’s play area (Y/N).</li>
+                            <li>Parking Facility: Parking slot assigned, Type (2-wheeler / 4-wheeler / both), Covered / open, Electric charging point (yes/no), Link each flat’s assigned parking slot to staff responsible for monitoring.</li>
+                        </ul>
+                        <h4 class="text-xl font-semibold text-slate-900 mb-2">3.1.3 Resident / Tenant Management</h4>
+                        <ul class="list-disc list-inside text-slate-600 ml-4 space-y-1 mb-4">
+                            <li>Track Resident Data: Resident details, Lease information, Medical Information (optional, privacy-controlled), Vehicle Details, Apartment ID, parking access, Water usage info, Notifications for bills, maintenance.</li>
+                            <li>Privacy Controls: Robust privacy controls for medical information (encryption, restricted access), family information visible only to admin and respective flat owner, options for flat owners to hide member details from security/other flats, contact info protected under apartment data policy.</li>
+                        </ul>
+                        <h4 class="text-xl font-semibold text-slate-900 mb-2">3.1.4 Parking Management (New Module)</h4>
+                        <ul class="list-disc list-inside text-slate-600 ml-4 space-y-1 mb-4">
+                            <li>Dedicated Sub-module, Slot Assignment, Real-time Availability, Rules & Charges, Guest Parking.</li>
+                        </ul>
+                        <h4 class="text-xl font-semibold text-slate-900 mb-2">3.1.5 Maintenance Charges</h4>
+                        <ul class="list-disc list-inside text-slate-600 ml-4 space-y-1 mb-4">
+                            <li>Admin Setup: Define maintenance rate, set due dates, generate monthly/yearly invoices.</li>
+                            <li>Charge Assignment: Link each flat with monthly/annual charge amount and payment status.</li>
+                            <li>Flat Owner Dashboard: See breakdown of charges, pay online or mark as paid, download receipts, secure payment gateway integration.</li>
+                            <li>Auto Reminders: System sends monthly/annual reminders via email/SMS.</li>
+                        </ul>
+                        <h4 class="text-xl font-semibold text-slate-900 mb-2">3.1.6 Maintenance Requests</h4>
+                        <ul class="list-disc list-inside text-slate-600 ml-4 space-y-1 mb-4">
+                            <li>Request Submission: Residents can raise requests for common areas and flat-specific issues, Complaint Form Includes: Complaint Type, Description, Attach image/video, Priority, Flat number.</li>
+                            <li>**Categories & Detailed Descriptions:**
+                                <ul class="list-disc list-inside text-slate-600 ml-4 space-y-1 mb-4">
+                                    <li>**Plumbing:** For general leaks, blockages, tap repairs, toilet issues *within flats or common areas*.
+                                        <ul class="list-circle list-inside ml-4">
+                                            <li>**Description:** Issues related to water supply, drainage, fixtures (faucets, showers, toilets), and pipes. Includes leaks, clogs, low water pressure, and fixture repairs.</li>
+                                            <li>**Impact:** Water damage, hygiene issues, inconvenience.</li>
+                                            <li>**Priority:** High for major leaks/blockages, Medium for minor repairs.</li>
+                                        </ul>
+                                    </li>
+                                    <li>**Electrician:** For power outages, faulty switches/sockets, wiring issues, fan/light repairs *within flats or common areas*.
+                                        <ul class="list-circle list-inside ml-4">
+                                            <li>**Description:** Problems with electrical circuits, outlets, switches, lighting fixtures, and appliances connected to the building's electrical system. Includes power trips, short circuits, and non-functional electrical points.</li>
+                                            <li>**Impact:** Safety hazards (shocks, fire), loss of essential services.</li>
+                                            <li>**Priority:** High for power outages/safety hazards, Medium for minor repairs.</li>
+                                        </ul>
+                                    </li>
+                                    <li>**Drinking Water System:** For issues with common RO plants, water dispensers, water quality, supply interruptions affecting drinking water.
+                                        <ul class="list-circle list-inside ml-4">
+                                            <li>**Description:** Malfunctions or quality concerns related to the society's centralized drinking water purification systems (RO plants), water coolers/dispensers in common areas, or general drinking water supply.</li>
+                                            <li>**Impact:** Health risks, inconvenience.</li>
+                                            <li>**Priority:** High for supply interruption/quality issues, Medium for dispenser repairs.</li>
+                                        </ul>
+                                    </li>
+                                    <li>**Carpenter:** For door repairs, furniture fixes in common areas, minor woodwork.
+                                        <ul class="list-circle list-inside ml-4">
+                                            <li>**Description:** Repairs or maintenance for wooden structures, doors, windows, cabinets, and furniture in common areas or within flats (if society-provided fixtures). Includes hinge repairs, lock adjustments, and minor structural wood damage.</li>
+                                            <li>**Impact:** Security concerns (doors), aesthetic damage, functional impairment.</li>
+                                            <li>**Priority:** Medium.</li>
+                                        </ul>
+                                    </li>
+                                    <li>**Sanitation & Housekeeping:** For general cleanliness, garbage disposal, common area cleaning, and waste management issues.
+                                        <ul class="list-circle list-inside ml-4">
+                                            <li>**Description:** Requests related to the cleanliness of common areas (corridors, stairwells, lobbies), garbage collection, waste segregation issues, and general hygiene.</li>
+                                            <li>**Impact:** Health concerns, unpleasant environment.</li>
+                                            <li>**Priority:** Medium.</li>
+                                        </ul>
+                                    </li>
+                                    <li>**Lift/Elevator:** For any malfunctions, breakdowns, or safety concerns related to the building's elevators.
+                                        <ul class="list-circle list-inside ml-4">
+                                            <li>**Description:** Issues with elevator operation, including breakdowns, stuck lifts, unusual noises, door malfunctions, or concerns about safety and smooth operation.</li>
+                                            <li>**Impact:** Inconvenience, safety risk.</li>
+                                            <li>**Priority:** High for breakdowns/safety, Medium for minor issues.</li>
+                                        </ul>
+                                    </li>
+                                    <li>**Pest Control:** For addressing pest infestations in common areas or requiring society-wide intervention.
+                                        <ul class="list-circle list-inside ml-4">
+                                            <li>**Description:** Requests for pest control services to address infestations of insects (cockroaches, ants, mosquitoes) or rodents in common areas or when a society-wide treatment is required.</li>
+                                            <li>**Impact:** Health risks, discomfort.</li>
+                                            <li>**Priority:** Medium.</li>
+                                        </ul>
+                                    </li>
+                                    <li>**Gardening & Landscaping:** For issues related to the maintenance of gardens, lawns, trees, or other outdoor common areas.
+                                        <ul class="list-circle list-inside ml-4">
+                                            <li>**Description:** Maintenance tasks for green spaces, including lawn mowing, plant care, tree trimming, irrigation system repairs, and upkeep of decorative landscaping.</li>
+                                            <li>**Impact:** Aesthetic appeal, environmental health.</li>
+                                            <li>**Priority:** Low to Medium.</li>
+                                        </ul>
+                                    </li>
+                                    <li>**Intercom & Connectivity:** For problems with the intercom system, common area Wi-Fi, internet connectivity, or other communication infrastructure.
+                                        <ul class="list-circle list-inside ml-4">
+                                            <li>**Description:** Issues affecting communication systems like non-functional intercom units, poor signal strength for common area Wi-Fi, or general network connectivity problems within the society's infrastructure.</li>
+                                            <li>**Impact:** Communication breakdown, inconvenience.</li>
+                                            <li>**Priority:** Medium.</li>
+                                        </ul>
+                                    </li>
+                                    <li>**Fire Safety & Alarms:** For issues concerning fire extinguishers, smoke detectors, fire alarm systems, or emergency exits.
+                                        <ul class="list-circle list-inside ml-4">
+                                            <li>**Description:** Requests for inspection, refilling, repair, or replacement of fire safety equipment (extinguishers, hoses), smoke detectors, fire alarm systems, or ensuring emergency exits are clear and functional.</li>
+                                            <li>**Impact:** Major safety risk.</li>
+                                            <li>**Priority:** High (non-emergency maintenance).</li>
+                                        </ul>
+                                    </li>
+                                    <li>**Civil Works & Masonry:** For structural issues, cracks in walls, plastering, tiling, dampness, or minor construction repairs in common areas.
+                                        <ul class="list-circle list-inside ml-4">
+                                            <li>**Description:** Repairs related to the structural integrity and finishing of common areas, including cracks in walls, damaged plaster, loose tiles, dampness, and minor repairs to concrete or brickwork.</li>
+                                            <li>**Impact:** Structural integrity, aesthetic damage.</li>
+                                            <li>**Priority:** Medium.</li>
+                                        </ul>
+                                    </li>
+                                    <li>**Common Area Appliances:** For breakdowns or maintenance needed for shared appliances like water purifiers in common areas, washing machines (if provided), or other communal equipment.
+                                        <ul class="list-circle list-inside ml-4">
+                                            <li>**Description:** Malfunctions or repair needs for any electrical or mechanical appliances provided for common use within the apartment complex (e.g., gym equipment, community hall kitchen appliances).</li>
+                                            <li>**Impact:** Inconvenience, amenity disruption.</li>
+                                            <li>**Priority:** Medium.</li>
+                                        </ul>
+                                    </li>
+                                    <li>**Gym & Amenity Equipment:** For issues with exercise machines, sports equipment, or other facilities within the gym, clubhouse, or recreational areas.
+                                        <ul class="list-circle list-inside ml-4">
+                                            <li>**Description:** Specific repair or maintenance requests for exercise machines (treadmills, cycles), sports equipment (nets, rackets), or other fixed installations within the society's recreational facilities.</li>
+                                            <li>**Impact:** Amenity disruption, safety risk.</li>
+                                            <li>**Priority:** Medium.</li>
+                                        </ul>
+                                    </li>
+                                    <li>**Parking Area Infrastructure:** For problems specific to the parking facility's physical structure, lighting, signage, or drainage within the parking lots (distinct from general security).
+                                        <ul class="list-circle list-inside ml-4">
+                                            <li>**Description:** Issues related to the physical condition of parking areas, such as damaged barriers, faded floor markings, non-functional lighting within parking lots, or drainage problems causing water accumulation.</li>
+                                            <li>**Impact:** Inconvenience, safety risk, property damage.</li>
+                                            <li>**Priority:** Medium.</li>
+                                        </ul>
+                                    </li>
+                                    <li>**HVAC (Common Area):** For heating, ventilation, and air conditioning issues in common areas like lobbies, clubhouses, or community halls.
+                                        <ul class="list-circle list-inside ml-4">
+                                            <li>**Description:** Malfunctions, poor performance, or maintenance needs for heating, ventilation, and air conditioning systems serving common areas of the building.</li>
+                                            <li>**Impact:** Discomfort, energy inefficiency.</li>
+                                            <li>**Priority:** Medium.</li>
+                                        </ul>
+                                    </li>
+                                    <li>**Swimming Pool:** For maintenance, cleanliness, or equipment issues related to the swimming pool.
+                                        <ul class="list-circle list-inside ml-4">
+                                            <li>**Description:** Concerns regarding water quality, filtration system malfunctions, pump repairs, structural damage to the pool, or issues with pool-side amenities.</li>
+                                            <li>**Impact:** Health risks, amenity disruption.</li>
+                                            <li>**Priority:** High for water quality, Medium for equipment repair.</li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li>**Note on "First Aid" and "Security" Categories:** These are considered *incident reports* or *emergency services* rather than routine maintenance requests. They will be handled in dedicated modules (Medical & Emergency Services, Security Incident Management) to ensure appropriate and immediate response protocols are triggered, separate from the maintenance workflow.</li>
+                            <li>Assignment & Tracking: Admin assigns maintenance staff, Status: Pending → In Progress → Resolved, Resident sees live updates.</li>
+                            <li>Feedback: Option for residents to provide feedback post-resolution.</li>
+                        </ul>
+                        <h4 class="text-xl font-semibold text-slate-900 mb-2">3.1.7 Security Staff Management</h4>
+                        <ul class="list-disc list-inside text-slate-600 ml-4 space-y-1 mb-4">
+                            <li>Staff Profiles: Add / Edit Security Staff (Full Name, Staff ID / Badge Number, Photo, Mobile Number, Aadhaar/ID proof upload, Emergency contact), Assigned Duty Location, Shifts, ID Card Generator, Training Record.</li>
+                        </ul>
+                        <h4 class="text-xl font-semibold text-slate-900 mb-2">3.1.8 Dashboard (Core)</h4>
+                        <ul class="list-disc list-inside text-slate-600 ml-4 space-y-1 mb-4">
+                            <li>Admin Dashboard: Summary of total parking slots & availability, Overview of open/resolved maintenance requests, Quick links to key management functions.</li>
+                            <li>Resident Dashboard: Summary of outstanding bills, Status of their active maintenance requests, Recent announcements.</li>
+                        </ul>
+                        <h4 class="text-xl font-semibold text-slate-900 mb-2">3.1.9 Initial Reports & Analytics</h4>
+                        <ul class="list-disc list-inside text-slate-600 ml-4 space-y-1">
+                            <li>Parking Reports: Occupied vs. available slots.</li>
+                            <li>Maintenance Reports: Number of open/resolved requests.</li>
+                            <li>Security: Simple logs of gate pass entries/exits.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <div class="collapsible-header flex justify-between items-center py-2 px-4">
+                        <h3 class="text-2xl font-semibold text-slate-900">Phase 2: Enhanced Functionality & Deeper Security Integrations</h3>
+                        <svg class="arrow-icon w-6 h-6 text-slate-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                    </div>
+                    <div class="collapsible-content">
+                        <p class="text-slate-600 leading-relaxed mt-4 mb-4">This phase expands on core features, integrating security more deeply into various operational aspects.</p>
+                        <h4 class="text-xl font-semibold text-slate-900 mb-2">3.2.1 Visitor Management</h4>
+                        <ul class="list-disc list-inside text-slate-600 ml-4 space-y-1 mb-4">
+                            <li>Visitor Entry & Tracking: Visitor Information Fields, ID Proof, Photo and ID capture.</li>
+                            <li>Check-In / Check-Out System: Modes of Check-In, Check-Out Features, OTP verification.</li>
+                            <li>Smart Features: Visitor History, Flag suspicious repeat visitors, Blacklisted Visitors.</li>
+                            <li>Visitor Parking Management: Assign time-limited slots, Auto-release after checkout, Display available slots to parking staff.</li>
+                            <li>Integration with Security & Staff Modules: Real-time list of visitors, Overstayed visitors alert, Emergency entry log, Security Staff Features.</li>
+                            <li>Integration with Residents: View current & past visitor logs, Approve/deny requests, Receive notifications, Raise complaints.</li>
+                        </ul>
+                        <h4 class="text-xl font-semibold text-slate-900 mb-2">3.2.2 Medical & Emergency Services</h4>
+                        <ul class="list-disc list-inside text-slate-600 ml-4 space-y-1 mb-4">
+                            <li>Centralized Support: Local hospital/clinic contacts, Onsite medical room management, First aid kit inventory, Track incidents, Emergency alert button, Emergency medical contacts/incidents on Dashboard, Log medical emergency vehicles.</li>
+                        </ul>
+                        <h4 class="text-xl font-semibold text-slate-900 mb-2">3.2.3 Parking Staff Management</h4>
+                        <ul class="list-disc list-inside text-slate-600 ml-4 space-y-1 mb-4">
+                            <li>Staff Profiles: Add / Edit Parking Attendant, Facilities Managed, Shift Scheduling, Maintain work logs, Uniform & ID Management, Complaint Tracking.</li>
+                        </ul>
+                        <h4 class="text-xl font-semibold text-slate-900 mb-2">3.2.4 Lease & Rent Management</h4>
+                        <ul class="list-disc list-inside text-slate-600 ml-4 space-y-1 mb-4">
+                            <li>Parking charges (if applicable) added to rent/billing, Charging station usage (optional tracking).</li>
+                        </ul>
+                        <h4 class="text-xl font-semibold text-slate-900 mb-2">3.2.5 Billing & Payments (Expanded)</h4>
+                        <ul class="list-disc list-inside text-slate-600 ml-4 space-y-1 mb-4">
+                            <li>Include: Parking rental, Charging station usage, Medical room usage cost.</li>
+                            <li>Now includes: Rent, Parking fees, Electricity bill, Water facilities charges, Maintenance charges, Play area/gym equipment damage fees.</li>
+                            <li>Security: All payment transactions must be encrypted and processed via secure, PCI DSS compliant gateways.</li>
+                        </ul>
+                        <h4 class="text-xl font-semibold text-slate-900 mb-2">3.2.6 Expense Management</h4>
+                        <ul class="list-disc list-inside text-slate-600 ml-4 space-y-1 mb-4">
+                            <li>Parking area maintenance, Medical facility expenses.</li>
+                        </ul>
+                        <h4 class="text-xl font-semibold text-slate-900 mb-2">3.2.7 Notice Board / Announcements</h4>
+                        <ul class="list-disc list-inside text-slate-600 ml-4 space-y-1 mb-4">
+                            <li>Alerts for: Parking policy updates, Emergency medical alerts, Health camps, RO system servicing, Water shortages, Power outages, Maintenance shutdowns, Play area closures.</li>
+                            <li>Optional SMS/email push notifications.</li>
+                            <li>Security: Only authorized roles (Admin) can post announcements.</li>
+                        </ul>
+                        <h4 class="text-xl font-semibold text-slate-900 mb-2">3.2.8 Complaint & Feedback (Detailed)</h4>
+                        <ul class="list-disc list-inside text-slate-600 ml-4 space-y-1 mb-4">
+                            <li>Complaint Submission: Residents can log various complaints, Complaint Form.</li>
+                            <li>Processing Workflow: Status Tracking, Auto Assignment, Notifications.</li>
+                            <li>Admin & Staff Interface: View complaints, Assign staff/contractor, Add internal notes, Attach resolution proof, Escalate, Bulk close, Export history.</li>
+                            <li>Feedback System (Post Resolution): Rate, Comment, Reopen if not fixed.</li>
+                            <li>Feedback Categories: Sanitation service, Security behavior, Maintenance quality, Technical support, Builder’s responsiveness, Overall apartment management.</li>
+                            <li>Reopen or Escalate Complaints: Residents can reopen unresolved complaints, Add follow-up message/new photo, Escalate to Tower representative, Builder, Management Committee (MC).</li>
+                            <li>Complaint & Feedback Dashboard: For Admin/Builder/MC.</li>
+                            <li>Security: Privacy & Audit Trail, Anonymity support, Residents can only view their own complaint history.</li>
+                        </ul>
+                        <h4 class="text-xl font-semibold text-slate-900 mb-2">3.2.9 Document Management (Expanded)</h4>
+                        <ul class="list-disc list-inside text-slate-600 ml-4 space-y-1 mb-4">
+                            <li>Vehicle ownership proof, Medical certificates, Insurance documents, Staff member documents.</li>
+                            <li>Security: Secure storage for sensitive documents.</li>
+                        </ul>
+                        <h4 class="text-xl font-semibold text-slate-900 mb-2">3.2.10 Enhanced Reports & Analytics</h4>
+                        <ul class="list-disc list-inside text-slate-600 ml-4 space-y-1 mb-4">
+                            <li>Parking Reports, Medical Reports, New staff-related reports, Visitor Reports.</li>
+                        </ul>
+                        <h4 class="text-xl font-semibold text-slate-900 mb-2">3.2.11 Security Incident Management (Optional Advanced Feature)</h4>
+                        <ul class="list-disc list-inside text-slate-600 ml-4 space-y-1 mb-4">
+                            <li>Track logs of: Suspicious activity, Trespass alerts, Staff intervention reports.</li>
+                            <li>Link incidents to: CCTV footage, Flat number, Date/time.</li>
+                            <li>Security: Secure logging and restricted access to incident reports.</li>
+                        </ul>
+                        <h4 class="text-xl font-semibold text-slate-900 mb-2">3.2.12 Digital Gate Pass (for Staff) (Optional Advanced Feature)</h4>
+                        <ul class="list-disc list-inside text-slate-600 ml-4 space-y-1 mb-4">
+                            <li>QR-code based gate entry for all staff, Logs entry/exit time, Emergency override for medical incidents.</li>
+                            <li>Security: Secure QR code generation and validation.</li>
+                        </ul>
+                        <h4 class="text-xl font-semibold text-slate-900 mb-2">3.2.13 Parking Violation Tracker (Optional Advanced Feature)</h4>
+                        <ul class="list-disc list-inside text-slate-600 ml-4 space-y-1">
+                            <li>Log wrong parking, Issue digital warning tickets, Notify residents.</li>
+                            <li>Security: Audit trail for violation issuance and resolution.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <div class="collapsible-header flex justify-between items-center py-2 px-4">
+                        <h3 class="text-2xl font-semibold text-slate-900">Phase 3: Advanced Utility & Community Management</h3>
+                        <svg class="arrow-icon w-6 h-6 text-slate-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                    </div>
+                    <div class="collapsible-content">
+                        <p class="text-slate-600 leading-relaxed mt-4 mb-4">This phase introduces sophisticated utility management, recreation facilities, and robust builder interaction.</p>
+                        <h4 class="text-xl font-semibold text-slate-900 mb-2">3.3.1 Utility Management (New Submodule)</h4>
+                        <ul class="list-disc list-inside text-slate-600 ml-4 space-y-1 mb-4">
+                            <li>Electricity Billing: Meter readings, Generate monthly bill, Upload/download bill receipts, Online payment support.</li>
+                            <li>Drinking Water Facilities: Facility Types, Refill/reminder system, Fault reporting.</li>
+                        </ul>
+                        <h4 class="text-xl font-semibold text-slate-900 mb-2">3.3.2 Recreation & Common Areas (New)</h4>
+                        <ul class="list-disc list-inside text-slate-600 ml-4 space-y-1 mb-4">
+                            <li>Children’s Play Area Management: Map locations, Equipment list, Safety inspection logs, Maintenance tracking, Timing rules, Resident feedback.</li>
+                            <li>Other Amenities (Optional): Tennis court, gym, clubhouse booking, Resident app for slot booking.</li>
+                        </ul>
+                        <h4 class="text-xl font-semibold text-slate-900 mb-2">3.3.3 Meeting Scheduling & Notifications</h4>
+                        <ul class="list-disc list-inside text-slate-600 ml-4 space-y-1 mb-4">
+                            <li>Meeting Setup, Meeting Type, Notifications, Agenda Management, Resident Participation Tracking.</li>
+                            <li>Minutes of Meeting (MoM) Documentation: Record and publish minutes, Download MoM, View past meetings, Track issues by flat.</li>
+                            <li>Issue Tracking & Follow-up: Issue Status Tracker, Filters, Deadline reminders, Resident Feedback.</li>
+                            <li>Builder Interface: View all past meetings and issues raised, Upload response/commitment, Comment on specific agenda items, Upload work progress reports / photos.</li>
+                            <li>Analytics & Reporting: Attendance statistics, % of agenda items resolved, Most frequent issue categories, Builder responsiveness rating, PDF export of all meeting data.</li>
+                            <li>Security: Only authorized roles can create/edit meetings and MoMs.</li>
+                        </ul>
+                        <h4 class="text-xl font-semibold text-slate-900 mb-2">3.3.4 Technical Assistance & IT Support Module</h4>
+                        <ul class="list-disc list-inside text-slate-600 ml-4 space-y-1 mb-4">
+                            <li>Support Request Management, Request Details, Technical Staff Management, Knowledge Base & FAQs, Issue Assignment & Tracking, Maintenance Logs & Billing, Smart Infra Monitoring (Optional), Reports & Analytics.</li>
+                        </ul>
+                        <h4 class="text-xl font-semibold text-slate-900 mb-2">3.3.5 Flat Owner & Family Information Module</h4>
+                        <ul class="list-disc list-inside text-slate-600 ml-4 space-y-1 mb-4">
+                            <li>Flat Owner Profile Management, Family Member Records, Resident Classification, Digital ID Cards, Flat History Log, Family Overview Dashboard (Admin Panel).</li>
+                            <li>Security: Privacy & Access Control.</li>
+                        </ul>
+                        <h4 class="text-xl font-semibold text-slate-900 mb-2">3.3.6 Builder Information & Interaction Module</h4>
+                        <ul class="list-disc list-inside text-slate-600 ml-4 space-y-1 mb-4">
+                            <li>Builder Profile Management, Project Details, Builder-Resident Interaction, Builder Complaint Tracker, Complaint Workflow, Builder Staff Directory, Builder Performance Dashboard, Notification & Messaging.</li>
+                            <li>Security: Data Security & Legal Logging.</li>
+                        </ul>
+                        <h4 class="text-xl font-semibold text-slate-900 mb-2">3.3.7 Sanitation Worker Management</h4>
+                        <ul class="list-disc list-inside text-slate-600 ml-4 space-y-1 mb-4">
+                            <li>Staff Information, ID Card, Scheduled Cleaning Tasks, Drainage & Sewage Cleaning, Waste Segregation & Management, Communication & Alerts, Admin Panel Additions, Billing & Vendor Integration, Reports & Analytics.</li>
+                        </ul>
+                        <h4 class="text-xl font-semibold text-slate-900 mb-2">3.3.8 Plumber & Electrician Facilities Module</h4>
+                        <ul class="list-disc list-inside text-slate-600 ml-4 space-y-1 mb-4">
+                            <li>Service Staff Profiles, Service Request System (Flat Owners), Admin Assignment Panel, Live Task Tracking, Feedback After Service, Parts and Inventory Tracker (Optional), Service History Per Flat, Technician Shift & Task Log.</li>
+                        </ul>
+                        <h4 class="text-xl font-semibold text-slate-900 mb-2">3.3.9 Comprehensive Staff Information Management</h4>
+                        <ul class="list-disc list-inside text-slate-600 ml-4 space-y-1 mb-4">
+                            <li>Staff Master Records, Shift & Attendance Management, Staff ID Card Generator, Roles & Responsibility Tracker, Equipment / Tool Tracking, Performance & Feedback System, Training & Certification Logs, Salary & Payment Records (optional), Incident & Disciplinary Logs.</li>
+                            <li>Security: Access to sensitive staff data must be highly restricted.</li>
+                        </ul>
+                        <h4 class="text-xl font-semibold text-slate-900 mb-2">3.3.10 Advanced Reports & Analytics</h4>
+                        <ul class="list-disc list-inside text-slate-600 ml-4 space-y-1">
+                            <li>Utility Reports, Maintenance Reports, Staff Performance, Visitor Reports, Sanitation Reports, Drainage Reports, Waste Reports.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="non-functional-requirements" class="mb-12">
+            <h2 class="text-3xl font-bold text-slate-900 mb-6">Non-Functional Requirements</h2>
+            <p class="text-lg text-slate-700 leading-relaxed mb-6">This section outlines the non-functional requirements that dictate the quality attributes of the Apartment Management System, such as its performance, security, usability, and reliability. These requirements are crucial for ensuring the system is robust, scalable, and provides an excellent user experience, going beyond just what the system does to how well it does it.</p>
+            <h3 class="text-2xl font-semibold text-slate-900 mb-3">4.1 Security (Paramount Importance)</h3>
+            <h4 class="text-xl font-semibold text-slate-900 mb-2">4.1.1 Authentication & Authorization:</h4>
+            <ul class="list-disc list-inside text-slate-600 ml-4 space-y-1 mb-4">
+                <li>Robust User Authentication, Secure Password Management, Session Management, Role-Based Access Control (RBAC), OAuth/OpenID Connect (future).</li>
+            </ul>
+            <h4 class="text-xl font-semibold text-slate-900 mb-2">4.1.2 Data Protection:</h4>
+            <ul class="list-disc list-inside text-slate-600 ml-4 space-y-1 mb-4">
+                <li>Encryption at Rest, Encryption in Transit, Input Validation & Sanitization, Data Minimization, Data Anonymization/Pseudonymization.</li>
+            </ul>
+            <h4 class="text-xl font-semibold text-slate-900 mb-2">4.1.3 API Security:</h4>
+            <ul class="list-disc list-inside text-slate-600 ml-4 space-y-1 mb-4">
+                <li>Rate Limiting, CORS Configuration, Secure Headers, API Gateway (future).</li>
+            </ul>
+            <h4 class="text-xl font-semibold text-slate-900 mb-2">4.1.4 Privacy & Compliance:</h4>
+            <ul class="list-disc list-inside text-slate-600 ml-4 space-y-1 mb-4">
+                <li>GDPR / Local Data Protection Laws, Privacy by Design, Data Retention Policies.</li>
+            </ul>
+            <h4 class="text-xl font-semibold text-slate-900 mb-2">4.1.5 Security Audits & Incident Response:</h4>
+            <ul class="list-disc list-inside text-slate-600 ml-4 space-y-1 mb-4">
+                <li>Regular Security Audits, Logging & Monitoring, Incident Response Plan, Secure Coding Practices.</li>
+            </ul>
+
+            <h3 class="text-2xl font-semibold text-slate-900 mb-3">4.2 Performance & Scalability</h3>
+            <ul class="list-disc list-inside text-slate-600 ml-4 space-y-1 mb-4">
+                <li>Response Time, Concurrency, Scalability (MERN Stack, Cloud Infrastructure), Throughput.</li>
+            </ul>
+            <h3 class="text-2xl font-semibold text-slate-900 mb-3">4.3 Reliability & Availability</h3>
+            <ul class="list-disc list-inside text-slate-600 ml-4 space-y-1 mb-4">
+                <li>Uptime, Error Handling, Fault Tolerance, Monitoring & Alerting.</li>
+            </ul>
+            <h3 class="text-2xl font-semibold text-slate-900 mb-3">4.4 Usability & User Experience (UI/UX)</h3>
+            <ul class="list-disc list-inside text-slate-600 ml-4 space-y-1 mb-4">
+                <li>Intuitive Interface, Mobile-First Design, Consistency, Accessibility, Feedback & Guidance.</li>
+            </ul>
+            <h3 class="text-2xl font-semibold text-slate-900 mb-3">4.5 Maintainability</h3>
+            <ul class="list-disc list-inside text-slate-600 ml-4 space-y-1 mb-4">
+                <li>Code Quality, Modularity, Testability, Logging.</li>
+            </ul>
+            <h3 class="text-2xl font-semibold text-slate-900 mb-3">4.6 Compatibility</h3>
+            <ul class="list-disc list-inside text-slate-600 ml-4 space-y-1 mb-4">
+                <li>Browser Compatibility, Device Compatibility.</li>
+            </ul>
+            <h3 class="text-2xl font-semibold text-slate-900 mb-3">4.7 Data Backup & Disaster Recovery</h3>
+            <ul class="list-disc list-inside text-slate-600 ml-4 space-y-1">
+                <li>Automated Backups, Disaster Recovery Plan.</li>
+            </ul>
+        </section>
+
+        <section id="technical-architecture" class="mb-12">
+            <h2 class="text-3xl font-bold text-slate-900 mb-6">High-Level Technical Architecture (MERN Stack)</h2>
+            <p class="text-lg text-slate-700 leading-relaxed mb-4">This section outlines the high-level technical architecture of the Apartment Management System, focusing on the MERN stack components. It provides engineers with a foundational understanding of how the different parts of the system (frontend, backend, database, and messaging) will interact, ensuring alignment on the technical approach and facilitating scalable and reliable development.</p>
+            <p class="text-lg text-slate-700 leading-relaxed mb-4">The application will follow a typical client-server architecture, leveraging the strengths of the MERN stack.</p>
+            <h3 class="text-2xl font-semibold text-slate-900 mb-3">5.1 Frontend (React.js)</h3>
+            <ul class="list-disc list-inside text-slate-600 ml-4 space-y-1 mb-4">
+                <li>Developed using React.js for a dynamic and responsive Single Page Application (SPA).</li>
+                <li>State Management: React Context API or a library like Zustand/Redux for managing application state.</li>
+                <li>UI Components: Utilize a component library (e.g., Material-UI, Ant Design, or Tailwind CSS with custom components) for consistent and fast UI development.</li>
+                <li>Routing: React Router for client-side navigation.</li>
+                <li>API Communication: `fetch` API or Axios for making HTTP requests to the backend.</li>
+                <li>Responsiveness: Extensive use of CSS media queries and responsive design principles (e.g., Tailwind CSS utility classes) to ensure optimal display on all devices.</li>
+            </ul>
+            <h3 class="text-2xl font-semibold text-slate-900 mb-3">5.2 Backend (Node.js & Express.js)</h3>
+            <ul class="list-disc list-inside text-slate-600 ml-4 space-y-1 mb-4">
+                <li>Developed using Node.js runtime and the Express.js framework.</li>
+                <li>RESTful API: Exposing a comprehensive set of RESTful APIs for all frontend interactions.</li>
+                <li>Authentication & Authorization: Implement JWT (JSON Web Tokens) for stateless authentication. Middleware will handle token validation and role-based authorization for all protected routes.</li>
+                <li>Business Logic: Contains all core business logic, data validation, and integration with the database.</li>
+                <li>Error Handling: Centralized error handling middleware.</li>
+                <li>Security: Helmet.js for setting secure HTTP headers, `express-rate-limit` for API rate limiting, `cors` for CORS configuration.</li>
+                <li>File Uploads: Libraries like `multer` for handling secure file uploads (ID proofs, photos, documents).</li>
+                <li>Notifications: Integration with third-party services for email (e.g., Nodemailer) and SMS (e.g., Twilio, local SMS gateways).</li>
+            </ul>
+            <h3 class="text-2xl font-semibold text-slate-900 mb-3">5.3 Database (MongoDB)</h3>
+            <ul class="list-disc list-inside text-slate-600 ml-4 space-y-1 mb-4">
+                <li>NoSQL document database, ideal for flexible schema and scalability.</li>
+                <li>Data Modeling: Collections will be designed to store flat details, resident profiles, staff information, maintenance requests, payment records, visitor logs, etc.</li>
+                <li>Data Security: Encryption at rest will be configured at the database level or application level (using Mongoose encryption plugins).</li>
+                <li>Scalability: MongoDB Atlas (managed service) or self-managed sharded clusters for high availability and horizontal scaling.</li>
+                <li>Indexing: Proper indexing for frequently queried fields to ensure optimal read performance.</li>
+            </ul>
+            <h3 class="text-2xl font-semibold text-slate-900 mb-3">5.4 Message Queuing</h3>
+            <p class="text-slate-600 leading-relaxed mb-2">A message queuing mechanism will be implemented to handle asynchronous tasks, improve scalability, enhance reliability, and provide a better user experience.</p>
+            <ul class="list-disc list-inside text-slate-600 ml-4 space-y-1 mb-4">
+                <li>Necessity: Crucial for tasks that are time-consuming, high-volume, critical but not immediate, or require decoupling between services.</li>
+                <li>Key Use Cases: Notifications (Email & SMS), Report Generation, Image and Document Processing, Audit Logging and Analytics Data Ingestion, Integration with External Systems.</li>
+                <li>Proposed Technologies (Examples): RabbitMQ, Apache Kafka, Redis (with BullMQ/Agenda.js), or cloud-native queues like AWS SQS / Google Cloud Pub/Sub.</li>
+            </ul>
+            <h3 class="text-2xl font-semibold text-slate-900 mb-3">5.5 API Design</h3>
+            <ul class="list-disc list-inside text-slate-600 ml-4 space-y-1 mb-4">
+                <li>RESTful Principles, Versioning, Documentation.</li>
+            </ul>
+            <h3 class="text-2xl font-semibold text-slate-900 mb-3">5.6 Deployment</h3>
+            <ul class="list-disc list-inside text-slate-600 ml-4 space-y-1">
+                <li>Cloud-Native, Containerization, CI/CD.</li>
+            </ul>
+        </section>
+
+        <section id="future-enhancements" class="mb-12">
+            <h2 class="text-3xl font-bold text-slate-900 mb-6">Future Enhancements</h2>
+            <p class="text-lg text-slate-700 leading-relaxed mb-6">This section outlines potential future enhancements for the Apartment Management System, providing a roadmap for continued growth and innovation beyond the initial release. It gives a glimpse into advanced functionalities like IoT integration and AI/ML, demonstrating the long-term vision and scalability of the platform.</p>
+            <ul class="list-disc list-inside text-slate-600 ml-4 space-y-1">
+                <li>IoT Integration, Community Forum/Social Features, Vendor Management, Asset Management, Biometric Integration, AI/ML for Predictive Maintenance.</li>
+            </ul>
+        </section>
+
+        <section id="assumptions-constraints" class="mb-12">
+            <h2 class="text-3xl font-bold text-slate-900 mb-6">Assumptions & Constraints</h2>
+            <p class="text-lg text-slate-700 leading-relaxed mb-6">This section details the key assumptions and constraints that will guide the development of the Apartment Management System. Understanding these factors is essential for realistic planning and risk management, ensuring that the project proceeds with a clear understanding of its operational environment and limitations.</p>
+            <ul class="list-disc list-inside text-slate-600 ml-4 space-y-1">
+                <li>Internet Connectivity, Mobile Device Access, Data Accuracy, Third-Party Services, Budget & Timeline, Regulatory Compliance.</li>
+            </ul>
+        </section>
+
+        <section id="release-plan" class="mb-12">
+            <h2 class="text-3xl font-bold text-slate-900 mb-6">High-Level Release Plan/Roadmap</h2>
+            <p class="text-lg text-slate-700 leading-relaxed mb-4">This section provides a strategic overview of the planned development phases and their approximate timelines for the Apartment Management System. It outlines the key deliverables and security emphasis for each phase, offering a clear roadmap for project execution and helping stakeholders understand the progression of features and security integrations over time.</p>
+            <p class="text-lg text-slate-700 leading-relaxed mb-4">This roadmap provides a strategic overview of the planned development phases and their approximate timelines. Specific dates and iterations will be defined in more detailed project plans.</p>
+            <h3 class="text-2xl font-semibold text-slate-900 mb-3">Phase 1: Core Foundation & Security (Months 1-4)</h3>
+            <ul class="list-disc list-inside text-slate-600 ml-4 space-y-1 mb-4">
+                <li>Focus: Establish user authentication, role management, apartment/resident data management, core parking features, basic maintenance requests, initial billing setup, and foundational security staff management.</li>
+                <li>Key Deliverables: Secure user login, flat/resident profiles, parking slot assignment, basic maintenance request submission, monthly maintenance invoicing, security staff profiles.</li>
+                <li>Security Emphasis: Implement strong authentication, RBAC, data encryption in transit and at rest for core data.</li>
+            </ul>
+            <h3 class="text-2xl font-semibold text-slate-900 mb-3">Phase 2: Enhanced Operations & Community Security (Months 5-9)</h3>
+            <ul class="list-disc list-inside text-slate-600 ml-4 space-y-1 mb-4">
+                <li>Focus: Introduce comprehensive visitor management, detailed complaint/feedback system, expanded billing, and initial medical/emergency services.</li>
+                <li>Key Deliverables: Visitor check-in/out with smart features, detailed complaint tracking, expanded payment options, emergency contacts, parking staff management.</li>
+                <li>Security Emphasis: Enhance visitor security (blacklisting, photo capture), audit trails for complaints, secure payment processing.</li>
+            </ul>
+            <h3 class="text-2xl font-semibold text-slate-900 mb-3">Phase 3: Advanced Utility & Community Management (Months 10-15)</h3>
+            <ul class="list-disc list-inside text-slate-600 ml-4 space-y-1 mb-4">
+                <li>Focus: Implement utility billing, recreation area management, meeting scheduling, technical support, and the builder interaction module. Complete comprehensive staff management.</li>
+                <li>Key Deliverables: Electricity/water billing, amenity booking, meeting scheduling/MoM, IT support requests, full staff information system, builder complaint tracking.</li>
+                <li>Security Emphasis: Secure document uploads for builder module, robust access control for all new modules, detailed logging for staff actions.</li>
+            </ul>
+            <h3 class="text-2xl font-semibold text-slate-900 mb-3">Post-Launch / Future Enhancements (Ongoing)</h3>
+            <ul class="list-disc list-inside text-slate-600 ml-4 space-y-1">
+                <li>Focus: Continuous improvement, performance optimization, and introduction of advanced features like IoT integration, AI/ML for predictive maintenance, and community social features as per market demand and strategic goals.</li>
+            </ul>
+        </section>
+
+        <section id="success-metrics" class="mb-12">
+            <h2 class="text-3xl font-bold text-slate-900 mb-6">Success Metrics</h2>
+            <p class="text-lg text-slate-700 leading-relaxed mb-6">This section defines the key metrics that will be used to measure the success of the Apartment Management System. These metrics provide clear, quantifiable targets for evaluating the application's performance, user adoption, and overall impact on operational efficiency and resident satisfaction, guiding future improvements and strategic decisions.</p>
+            <ul class="list-disc list-inside text-slate-600 ml-4 space-y-1">
+                <li>User Adoption Rate, Maintenance Request Resolution Time, Payment Collection Efficiency, Resident Satisfaction, Security Incident Rate, System Uptime, Staff Efficiency Gains.</li>
+            </ul>
+        </section>
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const header = document.querySelector('header');
+            let headerHeight = header.offsetHeight; // Get the initial height of the fixed header
+
+            // Function to update header height and main content padding
+            const updateLayout = () => {
+                headerHeight = header.offsetHeight;
+                // Dynamically set padding-top for main content to account for sticky header
+                // Add a small buffer (e.g., 10px) for visual spacing below the header
+                document.querySelector('main').style.paddingTop = `${headerHeight + 10}px`;
+            };
+
+            // Call on load and resize
+            updateLayout();
+            window.addEventListener('resize', updateLayout);
+
+            const allTocLinks = document.querySelectorAll('.toc-link');
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileNavOverlay = document.getElementById('mobile-nav-overlay');
+            const closeMobileMenuButton = document.getElementById('close-mobile-menu-button');
+            const mainContent = document.querySelector('main');
+            const collapsibleHeaders = document.querySelectorAll('.collapsible-header');
+
+            mobileMenuButton.addEventListener('click', () => {
+                mobileNavOverlay.classList.add('open');
+            });
+
+            closeMobileMenuButton.addEventListener('click', () => {
+                mobileNavOverlay.classList.remove('open');
+            });
+
+            mobileNavOverlay.addEventListener('click', (e) => {
+                if (e.target === mobileNavOverlay) {
+                    mobileNavOverlay.classList.remove('open');
+                }
+            });
+
+            allTocLinks.forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const targetId = link.getAttribute('href').substring(1);
+                    const targetElement = document.getElementById(targetId);
+                    if (targetElement) {
+                        // Calculate scroll position relative to the document, then subtract header height
+                        const offset = targetElement.getBoundingClientRect().top + window.scrollY - headerHeight - 10; // 10px buffer
+                        window.scrollTo({
+                            top: offset,
+                            behavior: 'smooth'
+                        });
+                    }
+                    if (mobileNavOverlay.classList.contains('open')) {
+                        mobileNavOverlay.classList.remove('open');
+                    }
+                });
+            });
+
+            const observerOptions = {
+                root: null, // Use the viewport as the root
+                // rootMargin defines a "box" around the root. Intersection occurs when target enters/exits this box.
+                // top: -headerHeight means the intersection line is pushed down by headerHeight from the top of the viewport.
+                // So, the observer triggers when the element's top edge crosses the bottom edge of the fixed header.
+                rootMargin: `-${headerHeight}px 0px 0px 0px`,
+                threshold: 0 // Trigger as soon as any part of the target enters the rootMargin
+            };
+
+            // Re-initialize observer on layout changes (e.g., resize) to update rootMargin
+            let observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    const id = entry.target.id;
+                    const correspondingLinks = document.querySelectorAll(`.toc-link[href="#${id}"]`);
+                    if (correspondingLinks.length > 0) {
+                        if (entry.isIntersecting) {
+                            allTocLinks.forEach(l => l.classList.remove('active'));
+                            correspondingLinks.forEach(l => l.classList.add('active'));
+                        }
+                    }
+                });
+            }, observerOptions);
+
+            // Observe all sections
+            document.querySelectorAll('section[id]').forEach(section => {
+                observer.observe(section);
+            });
+
+            // Re-create observer on resize to ensure rootMargin is accurate
+            window.addEventListener('resize', () => {
+                // Disconnect old observer
+                observer.disconnect();
+                // Update header height
+                headerHeight = header.offsetHeight;
+                // Create new observer with updated rootMargin
+                observerOptions.rootMargin = `-${headerHeight}px 0px 0px 0px`;
+                observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        const id = entry.target.id;
+                        const correspondingLinks = document.querySelectorAll(`.toc-link[href="#${id}"]`);
+                        if (correspondingLinks.length > 0) {
+                            if (entry.isIntersecting) {
+                                allTocLinks.forEach(l => l.classList.remove('active'));
+                                correspondingLinks.forEach(l => l.classList.add('active'));
+                            }
+                        }
+                    });
+                }, observerOptions);
+                // Re-observe all sections
+                document.querySelectorAll('section[id]').forEach(section => {
+                    observer.observe(section);
+                });
+            });
+
+            collapsibleHeaders.forEach(header => {
+                header.addEventListener('click', () => {
+                    const content = header.nextElementSibling;
+                    const arrow = header.querySelector('.arrow-icon');
+                    if (content.classList.contains('expanded')) {
+                        content.classList.remove('expanded');
+                        arrow.classList.remove('rotate-90');
+                    } else {
+                        content.classList.add('expanded');
+                        arrow.classList.add('rotate-90');
+                    }
+                });
+            });
+
+            // Automatically expand the first phase section on load for better initial visibility
+            const firstPhaseHeader = document.querySelector('#functional-requirements .collapsible-header');
+            if (firstPhaseHeader) {
+                firstPhaseHeader.click();
+            }
+
+            // Set initial active link based on current scroll position
+            // This needs to be done after the initial layout update
+            const initialActiveSection = document.querySelector('section[id]');
+            if (initialActiveSection) {
+                const initialLinkId = initialActiveSection.id;
+                document.querySelector(`header nav .toc-link[href="#${initialLinkId}"]`).classList.add('active');
+                document.querySelector(`#mobile-nav-overlay .toc-link[href="#${initialLinkId}"]`).classList.add('active');
+            }
+        });
+    </script>
+</body>
+</html>

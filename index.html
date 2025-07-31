@@ -68,6 +68,9 @@
             z-index: 30; /* Below sidebar, above content */
             display: none; /* Hidden by default */
         }
+        .sidebar-overlay.is-open {
+            display: block; /* Show when sidebar is open */
+        }
     </style>
 </head>
 <body class="text-gray-700 flex flex-col min-h-screen">
@@ -81,7 +84,7 @@
             <div class="hidden md:flex space-x-4">
                 <a href="payment-gateway-solution.html" class="text-white hover:text-[#85BDE9] px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200" aria-label="Open Business Growth Solutions">Business Growth Solutions</a>
                 <a href="payment-gateway-security-solution.html" class="text-white hover:text-[#85BDE9] px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200" aria-label="Open Security & Compliance solutions">Security & Compliance</a>
-                <a href="question-bank-prd.html" class="text-white hover:text-[#85BDE9] px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200" aria-label="Open Product & Requirements solutions">Product & Requirements</a>
+                <a href="apartment-management-system-prd.html" class="text-white hover:text-[#85BDE9] px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200" aria-label="Open Product & Requirements solutions">Product & Requirements</a>
             </div>
             <!-- Mobile menu button -->
             <button id="mobile-menu-button" class="md:hidden p-2 rounded-md text-white hover:bg-[#0076D4] focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white" aria-label="Toggle mobile menu" aria-expanded="false" aria-controls="sidebar">
@@ -123,13 +126,15 @@
                     <ul class="space-y-1 pl-4">
                         <li><a href="question-bank-prd.html" target="solutionIframe" class="block py-2 px-3 rounded-md text-gray-600 hover:bg-[#85BDE9] hover:text-white transition-colors duration-200 text-sm">📝 Question Bank Management System PRD</a></li>
                         <li><a href="payment-gateway-questions.html" target="solutionIframe" class="block py-2 px-3 rounded-md text-gray-600 hover:bg-[#85BDE9] hover:text-white transition-colors duration-200 text-sm">❓ Payment Gateway Integration Requirements</a></li>
+                        <li><a href="apartment-management-system-prd.html" target="solutionIframe" class="block py-2 px-3 rounded-md text-gray-600 hover:bg-[#85BDE9] hover:text-white transition-colors duration-200 text-sm">🏠 Apartment Mgmt. PRD</a></li> <!-- Added new link -->
                     </ul>
                 </div>
             </nav>
         </aside>
 
         <main class="flex-1 overflow-auto">
-            <iframe id="solutionIframe" name="solutionIframe" class="main-content-iframe" src="payment-gateway-solution.html"></iframe>
+            <!-- Initial iframe src set to the new PRD for immediate visibility -->
+            <iframe id="solutionIframe" name="solutionIframe" class="main-content-iframe" src="apartment-management-system-prd.html"></iframe>
         </main>
     </div>
 
@@ -147,7 +152,7 @@
             mobileMenuIconOpen.classList.toggle('hidden', isOpen);
             mobileMenuIconClose.classList.toggle('hidden', !isOpen);
             mobileMenuButton.setAttribute('aria-expanded', isOpen);
-            document.body.style.overflow = isOpen ? 'hidden' : '';
+            document.body.style.overflow = isOpen ? 'hidden' : ''; // Prevent scrolling body when sidebar is open
         }
 
         mobileMenuButton.addEventListener('click', toggleSidebar);
@@ -155,18 +160,20 @@
 
         sidebar.querySelectorAll('a').forEach(link => {
             link.addEventListener('click', () => {
-                if (window.innerWidth < 768) {
+                if (window.innerWidth < 768) { // Only close sidebar on click if on mobile
                     toggleSidebar();
                 }
             });
         });
 
+        // Close sidebar if resized to desktop while open
         window.addEventListener('resize', () => {
             if (window.innerWidth >= 768 && sidebar.classList.contains('is-open')) {
                 toggleSidebar();
             }
         });
 
+        // Ensure iframe content has viewport meta tag for responsiveness
         solutionIframe.onload = function() {
             try {
                 const iframeDoc = solutionIframe.contentWindow.document;
@@ -179,9 +186,11 @@
                 }
             } catch (e) {
                 console.warn("Could not access iframe content:", e);
+                // This warning is expected if the iframe content is from a different origin (not applicable here as it's local)
             }
         };
 
+        // Handle initial load and popstate for URL hash
         window.addEventListener('load', () => {
             const initialHash = window.location.hash.substring(1);
             if (initialHash) {
@@ -189,6 +198,9 @@
                 if (link) {
                     solutionIframe.src = link.href;
                 }
+            } else {
+                // If no hash, load the default PRD
+                solutionIframe.src = "apartment-management-system-prd.html";
             }
         });
 
@@ -197,14 +209,15 @@
                 solutionIframe.src = event.state.iframeSrc;
             } else if (window.location.hash) {
                 const initialHash = window.location.hash.substring(1);
-                 const link = document.querySelector(`a[href$="${initialHash}.html"]`);
+                const link = document.querySelector(`a[href$="${initialHash}.html"]`);
                 if (link) {
                     solutionIframe.src = link.href;
                 }
             }
         });
 
-        document.querySelectorAll('aside a, .hidden.md\\:flex a').forEach(link => {
+        // Handle clicks on sidebar links and top navigation links
+        document.querySelectorAll('aside a, header nav a').forEach(link => {
             link.addEventListener('click', (e) => {
                 e.preventDefault();
                 const newSrc = link.href;
@@ -212,6 +225,7 @@
                     solutionIframe.src = newSrc;
                     const state = { iframeSrc: newSrc };
                     const title = link.textContent.trim();
+                    // Extract filename from URL to use as hash
                     const url = '#' + newSrc.split('/').pop().replace('.html', '');
                     history.pushState(state, title, url);
                 }
