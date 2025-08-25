@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Presentation: The 'Learning by Doing' Methodology</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.min.js"></script>
+    <!-- Chosen Palette: Calm Harmony -->
+    <!-- Application Structure Plan: The SPA is structured as a narrative journey to persuade a university audience. It begins by establishing a relatable problem (The Theory vs. Practice Gap), introduces the core philosophy ('Learning by Doing'), demonstrates the methodology's iterative loop, presents the customized 'Learner's Journey' from guided paths to analytics, details the application of the methodology to both theoretical and practical topics, looks to the future with new learning formats and skills for the AI age, visualizes the positive impact on skill mastery, and concludes with a call to action. This new structure was chosen because it provides a more comprehensive, feature-rich overview of the platform, addressing the user's request to explain guided paths, analytics, adaptability, and future-forward topics. -->
+    <!-- Visualization & Content Choices: 
+        - The Disconnect: Report Info -> Gap between theory and practice. Goal -> Demonstrate this gap. Viz/Method -> Side-by-side HTML/CSS layout comparing static 'textbook' theory with an interactive 'application' challenge. Interaction -> User can see the challenge is active, not passive. Justification -> Immediately makes the problem tangible.
+        - The Iterative Loop: Report Info -> 4-step process (Challenge, Attempt, Feedback, Refine). Goal -> Explain and demonstrate the process. Viz/Method -> An interactive diagram built with HTML/CSS and JS. Interaction -> Clicking each step updates a central display with details for that step and dynamically changes a companion chart. Justification -> This is the core of the presentation; making it interactive is crucial for demonstrating the 'learning by doing' principle directly.
+        - The Learner's Journey: Report Info -> Guided paths, analytics, adaptability. Goal -> Explain core features. Viz/Method -> A three-panel HTML/CSS grid with icons and text. Interaction -> Simple presentation, the value is in the clear, digestible content. Justification -> Presents key features clearly and reinforces the platform's ability to serve diverse learners.
+        - From Theory to Practice: Report Info -> The system handles general/theoretical topics. Goal -> Convince audience of methodology's versatility. Viz/Method -> A two-panel layout with specific examples for theoretical (History) and practical (IT) domains. Interaction -> Textual explanation and example-based learning to illustrate the concept. Justification -> Directly addresses the user's query and broadens the scope of the platform's potential, making it more appealing to a wider academic audience.
+        - The Future of Learning (New Section): Report Info -> Introduce podcasting-style discussions and skills for the AI/data age. Goal -> Show the platform's forward-thinking nature. Viz/Method -> A two-panel layout with specific examples for new learning formats (podcasts) and essential skills (critical thinking). Interaction -> Textual explanation and example-based learning to illustrate the concept. Justification -> Directly addresses the user's new query, providing a comprehensive conclusion to the presentation.
+        - Skill Mastery Growth: Report Info -> The methodology leads to mastery. Goal -> Visualize this growth. Viz/Method -> A bar chart powered by Chart.js. Interaction -> The chart updates automatically as the user interacts with the iterative loop diagram, showing progress. Justification -> Provides immediate visual feedback and reinforces the benefit of the iterative process.
+    -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8f9fa;
+            color: #343a40;
+        }
+        /* Add smooth scrolling offset for sticky header */
+        html {
+            scroll-padding-top: 80px;
+        }
+        .nav-link.active {
+            color: #4338ca;
+            font-weight: 600;
+            border-bottom: 2px solid #4338ca;
+        }
+        .nav-link {
+            padding-bottom: 4px;
+            border-bottom: 2px solid transparent;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 300px;
+            max-height: 400px;
+        }
+        .step-button.active {
+            background-color: #4338ca;
+            color: white;
+            transform: scale(1.05);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+        /* Mobile menu styling */
+        .mobile-nav {
+            transform: translateX(100%);
+            transition: transform 0.3s ease-in-out;
+        }
+        .mobile-nav.open {
+            transform: translateX(0);
+        }
+        /* Add mobile menu overlay */
+        .mobile-menu-overlay {
+            position: fixed;
+            inset: 0;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 30;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
+        }
+        .mobile-menu-overlay.open {
+            opacity: 1;
+            visibility: visible;
+        }
+        /* Ensure mobile menu appears above everything */
+        #mobile-menu {
+            z-index: 50;
+        }
+        /* Better mobile button styling */
+        #mobile-menu-button {
+            min-width: 44px;
+            min-height: 44px;
+        }
+        /* Hide only the internal navigation when in iframe, keep header structure */
+        body.iframe-mode header {
+            display: none !important;
+        }
+        body.iframe-mode {
+            padding-top: 0;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Add mobile menu overlay -->
+    <div id="mobile-menu-overlay" class="mobile-menu-overlay md:hidden"></div>
+
+    <header class="sticky top-0 z-50 bg-white/80 backdrop-blur-lg shadow-sm">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <!-- Brand/Logo for mobile alignment -->
+            <div class="flex items-left">
+                <h1 class="text-xl font-bold text-gray-900 md:hidden">LbD Platform</h1>
+            </div>
+            
+            <!-- Desktop Navigation -->
+            <div class="hidden md:flex items-center space-x-10 text-sm font-medium text-gray-500">
+                <a href="#problem" class="nav-link hover:text-indigo-700 transition-colors duration-300">The Problem</a>
+                <a href="#philosophy" class="nav-link hover:text-indigo-700 transition-colors duration-300">Philosophy</a>
+                <a href="#methodology" class="nav-link hover:text-indigo-700 transition-colors duration-300">Methodology</a>
+                <a href="#journey" class="nav-link hover:text-indigo-700 transition-colors duration-300">The Journey</a>
+                <a href="#versatility" class="nav-link hover:text-indigo-700 transition-colors duration-300">Approach</a>
+                <a href="#future" class="nav-link hover:text-indigo-700 transition-colors duration-300">The Future</a>
+                <a href="#impact" class="nav-link hover:text-indigo-700 transition-colors duration-300">Impact</a>
+            </div>
+
+            <!-- Mobile Menu Button -->
+            <div class="md:hidden flex items-center">
+                <button id="mobile-menu-button" class="text-gray-500 hover:text-gray-700 focus:outline-none focus:text-gray-700 transition-colors duration-300 p-2" aria-label="Open mobile menu">
+                    <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+                    </svg>
+                </button>
+            </div>
+        </nav>
+        <!-- Mobile Navigation Menu -->
+        <div id="mobile-menu" class="mobile-nav fixed inset-y-0 right-0 w-64 bg-white shadow-xl z-50 p-6 md:hidden overflow-y-auto">
+            <div class="flex justify-end mb-8">
+                <button id="close-menu-button" class="text-gray-500 hover:text-gray-700 focus:outline-none focus:text-gray-700 p-2" aria-label="Close mobile menu">
+                    <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                    </svg>
+                </button>
+            </div>
+            <div class="flex flex-col space-y-4 font-medium text-gray-700">
+                <a href="#problem" class="nav-link hover:text-indigo-700 transition-colors duration-300 py-3 px-2 rounded-lg hover:bg-gray-50">The Problem</a>
+                <a href="#philosophy" class="nav-link hover:text-indigo-700 transition-colors duration-300 py-3 px-2 rounded-lg hover:bg-gray-50">Philosophy</a>
+                <a href="#methodology" class="nav-link hover:text-indigo-700 transition-colors duration-300 py-3 px-2 rounded-lg hover:bg-gray-50">Methodology</a>
+                <a href="#journey" class="nav-link hover:text-indigo-700 transition-colors duration-300 py-3 px-2 rounded-lg hover:bg-gray-50">The Journey</a>
+                <a href="#versatility" class="nav-link hover:text-indigo-700 transition-colors duration-300 py-3 px-2 rounded-lg hover:bg-gray-50">Approach</a>
+                <a href="#future" class="nav-link hover:text-indigo-700 transition-colors duration-300 py-3 px-2 rounded-lg hover:bg-gray-50">The Future</a>
+                <a href="#impact" class="nav-link hover:text-indigo-700 transition-colors duration-300 py-3 px-2 rounded-lg hover:bg-gray-50">Impact</a>
+            </div>
+        </div>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section id="hero" class="py-24 md:py-32 text-center">
+            <div class="container mx-auto px-6">
+                <h2 class="text-4xl md:text-6xl font-extrabold text-gray-900 leading-tight">Bridging the Gap Between Knowing and Doing.</h2>
+                <p class="mt-4 max-w-3xl mx-auto text-lg text-gray-600">Traditional education excels at delivering knowledge, but true mastery is forged through application. We're pioneering a new methodology to transform passive learning into active problem-solving.</p>
+            </div>
+        </section>
+
+        <section id="problem" class="py-20 md:py-28 bg-white">
+            <div class="container mx-auto px-6">
+                <div class="text-center max-w-3xl mx-auto">
+                    <h3 class="text-3xl md:text-4xl font-bold text-gray-900">The Disconnect in Modern Education</h3>
+                    <p class="mt-4 text-gray-600">Students absorb vast amounts of theory, but often lack a structured environment to apply it. This creates a critical gap, leaving them unprepared for the complex, real-world challenges that await them after graduation.</p>
+                </div>
+
+                <div class="mt-16 grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
+                    <div class="bg-gray-50 p-8 rounded-xl border border-gray-200">
+                        <h4 class="text-xl font-semibold text-gray-800 flex items-center"><span class="text-2xl mr-3">📖</span> Traditional Approach: Theory First</h4>
+                        <p class="mt-2 text-gray-600">Learners consume information through lectures and textbooks.</p>
+                        <div class="mt-4 bg-gray-800 text-white p-4 rounded-lg font-mono text-sm">
+                            <p><span class="text-purple-400">function</span> <span class="text-yellow-300">calculateFibonacci</span>(<span class="text-blue-400">n</span>) {</p>
+                            <p class="pl-4"><span class="text-purple-400">if</span> (n <= 1) <span class="text-purple-400">return</span> n;</p>
+                            <p class="pl-4"><span class="text-purple-400">return</span> <span class="text-yellow-300">calculateFibonacci</span>(n - 1) + <span class="text-yellow-300">calculateFibonacci</span>(n - 2);</p>
+                            <p>}</p>
+                        </div>
+                        <p class="mt-4 text-xs text-gray-500">The concept is presented, but practical application is a separate, often disconnected, step.</p>
+                    </div>
+                    <div class="bg-indigo-50 p-8 rounded-xl border border-indigo-200 ring-2 ring-indigo-500">
+                        <h4 class="text-xl font-semibold text-indigo-800 flex items-center"><span class="text-2xl mr-3">💡</span> Our Approach: Applied Challenge</h4>
+                        <p class="mt-2 text-gray-700">Learners are immediately faced with a practical task.</p>
+                        <div class="mt-4 bg-white p-4 rounded-lg border border-gray-300">
+                            <p class="font-semibold text-gray-800">Your Task:</p>
+                            <p class="text-sm text-gray-600">Optimize the Fibonacci function to handle large inputs without crashing. You'll need to use memoization.</p>
+                            <button class="mt-4 w-full bg-indigo-600 text-white py-2 rounded-lg text-sm font-semibold hover:bg-indigo-700 transition-colors">Begin Challenge</button>
+                        </div>
+                        <p class="mt-4 text-xs text-gray-500">Learning is contextualized within a real problem from the very beginning.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="philosophy" class="py-20 md:py-28">
+            <div class="container mx-auto px-6 text-center max-w-3xl">
+                <h3 class="text-3xl md:text-4xl font-bold text-gray-900">Our Guiding Philosophy: Learning by Doing</h3>
+                <p class="mt-4 text-lg text-gray-600">We believe the most profound learning occurs not from passive consumption, but from active engagement. It's an age-old principle: we master skills by practicing them. Our methodology structures this practice into a powerful, guided, and adaptive experience.</p>
+            </div>
+        </section>
+
+        <section id="methodology" class="py-20 md:py-28 bg-white">
+            <div class="container mx-auto px-6">
+                <div class="text-center max-w-3xl mx-auto">
+                    <h3 class="text-3xl md:text-4xl font-bold text-gray-900">An Evolving, Iterative Process</h3>
+                    <p class="mt-4 text-gray-600">Our application guides learners through a continuous cycle of action and reflection. This isn't a linear path; it's a dynamic loop that adapts to the user, strengthening skills with each iteration. Click through the steps below to see how it works.</p>
+                </div>
+
+                <div class="mt-16 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                    <div class="flex flex-col space-y-4">
+                        <button data-step="1" class="step-button w-full text-left p-4 rounded-lg border border-gray-200 shadow-sm hover:bg-gray-50 transition-all duration-300 active">
+                            <h4 class="font-semibold text-lg">1. Present the Challenge</h4>
+                            <p class="text-sm text-gray-500">A practical, real-world problem is presented.</p>
+                        </button>
+                        <button data-step="2" class="step-button w-full text-left p-4 rounded-lg border border-gray-200 shadow-sm hover:bg-gray-50 transition-all duration-300">
+                            <h4 class="font-semibold text-lg">2. The "Doing" Phase</h4>
+                            <p class="text-sm text-gray-500">The learner attempts to solve it in an interactive environment.</p>
+                        </button>
+                        <button data-step="3" class="step-button w-full text-left p-4 rounded-lg border border-gray-200 shadow-sm hover:bg-gray-50 transition-all duration-300">
+                            <h4 class="font-semibold text-lg">3. Real-Time Feedback</h4>
+                            <p class="text-sm text-gray-500">The system provides immediate, constructive analysis.</p>
+                        </button>
+                        <button data-step="4" class="step-button w-full text-left p-4 rounded-lg border border-gray-200 shadow-sm hover:bg-gray-50 transition-all duration-300">
+                            <h4 class="font-semibold text-lg">4. Evolve and Refine</h4>
+                            <p class="text-sm text-gray-500">The learner refines their approach and tries again.</p>
+                        </button>
+                    </div>
+
+                    <div id="step-display" class="bg-gray-50 p-8 rounded-xl border border-gray-200 min-h-[300px]">
+                        <!-- Content will be injected by JS -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="journey" class="py-20 md:py-28">
+            <div class="container mx-auto px-6">
+                <div class="text-center max-w-3xl mx-auto">
+                    <h3 class="text-3xl md:text-4xl font-bold text-gray-900">The Learner's Journey: Personalized and Adaptive</h3>
+                    <p class="mt-4 text-gray-600">The application's methodology is built to serve a diverse range of learners, from a **5th grader learning to code** to a **seasoned professional** mastering a new framework. The system intelligently guides each user along a personalized career path.</p>
+                </div>
+
+                <div class="mt-16 grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+                    <div class="bg-white p-8 rounded-xl border border-gray-200">
+                        <span class="text-4xl">🗺️</span>
+                        <h4 class="mt-4 text-xl font-semibold text-gray-800">Guided Career Paths</h4>
+                        <p class="mt-2 text-sm text-gray-600">The platform maps skills to specific IT roles (e.g., Web Developer, Data Scientist). It recommends relevant challenges, ensuring learners build a coherent and marketable skill set for their desired career path.</p>
+                    </div>
+                    <div class="bg-white p-8 rounded-xl border border-gray-200">
+                        <span class="text-4xl">📈</span>
+                        <h4 class="mt-4 text-xl font-semibold text-gray-800">In-Depth Analytics</h4>
+                        <p class="mt-2 text-sm text-gray-600">Learners receive detailed analytics on their performance. The system tracks progress over time, identifying specific areas of strength and weakness, and recommending targeted challenges for improvement.</p>
+                    </div>
+                    <div class="bg-white p-8 rounded-xl border border-gray-200">
+                        <span class="text-4xl">🧠</span>
+                        <h4 class="mt-4 text-xl font-semibold text-gray-800">Adaptive Improvement</h4>
+                        <p class="mt-2 text-sm text-gray-600">Based on performance data, the system dynamically adjusts the difficulty of tasks and the type of feedback provided. This ensures the learning experience remains challenging and relevant, preventing frustration for beginners and boredom for experts.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="versatility" class="py-20 md:py-28 bg-white">
+            <div class="container mx-auto px-6">
+                <div class="text-center max-w-3xl mx-auto">
+                    <h3 class="text-3xl md:text-4xl font-bold text-gray-900">The Versatility of the Methodology</h3>
+                    <p class="mt-4 text-gray-600">Our approach is not limited to practical IT skills. We can apply the **"Learning by Doing"** philosophy to a wide range of academic and theoretical disciplines, making even abstract concepts tangible.</p>
+                </div>
+                <div class="mt-16 grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
+                    <div class="bg-gray-50 p-8 rounded-xl border border-gray-200">
+                        <h4 class="text-xl font-semibold text-gray-800 flex items-center"><span class="text-2xl mr-3">🏛️</span> Theoretical: History</h4>
+                        <p class="mt-2 text-gray-600">Instead of memorizing dates, a learner could be tasked with analyzing primary sources to "build" an argument about a historical event. The system provides feedback on the strength of their reasoning and the relevance of their evidence. The "doing" is the act of historical analysis and synthesis.</p>
+                    </div>
+                    <div class="bg-indigo-50 p-8 rounded-xl border border-indigo-200 ring-2 ring-indigo-500">
+                        <h4 class="text-xl font-semibold text-indigo-800 flex items-center"><span class="text-2xl mr-3">💻</span> Practical: IT</h4>
+                        <p class="mt-2 text-gray-700">A learner is given a virtual machine and a specific IT security vulnerability. Their task is to identify and exploit the vulnerability in a safe, controlled environment. The system's feedback analyzes their method and suggests more effective or efficient techniques.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="future" class="py-20 md:py-28">
+            <div class="container mx-auto px-6">
+                <div class="text-center max-w-3xl mx-auto">
+                    <h3 class="text-3xl md:text-4xl font-bold text-gray-900">Learning to Thrive in the Age of AI</h3>
+                    <p class="mt-4 text-gray-600">The future of work will not be about memorizing facts, but about creative problem-solving and collaboration. Our platform prepares learners for this world by teaching them how to **think**, not just what to know.</p>
+                </div>
+                <div class="mt-16 grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
+                    <div class="bg-white p-8 rounded-xl border border-gray-200">
+                        <h4 class="text-xl font-semibold text-gray-800 flex items-center"><span class="text-2xl mr-3">🎙️</span> The New "Doing": Podcasting Discussions</h4>
+                        <p class="mt-2 text-gray-600">We can move beyond traditional text-based challenges by integrating **podcast-style discussions** into the learning environment. This new feature would let learners engage in simulated, or even live, conversations with subject matter experts. They'd learn to articulate complex ideas, formulate incisive questions, and absorb knowledge through a dynamic, auditory medium. The "doing" is learning to synthesize information in a collaborative setting, a skill essential for modern teams.</p>
+                    </div>
+                    <div class="bg-white p-8 rounded-xl border border-gray-200">
+                        <h4 class="text-xl font-semibold text-gray-800 flex items-center"><span class="text-2xl mr-3">🤖</span> The Skills That Matter: Data and AI</h4>
+                        <p class="mt-2 text-gray-700">In a world run by data and AI, the most valuable skills will be the ones that machines can't replicate. Our methodology is built to foster them: **critical thinking**, **problem-solving**, and **data literacy**. Instead of just running a query, a learner will be challenged to interpret the results, find the hidden insights, and propose a data-driven solution. This prepares them for a future where their role isn't to be a human calculator, but a strategic partner to intelligent systems.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="impact" class="py-20 md:py-28 bg-white">
+            <div class="container mx-auto px-6">
+                <div class="text-center max-w-3xl mx-auto">
+                    <h3 class="text-3xl md:text-4xl font-bold text-gray-900">The Impact: Measurable Growth</h3>
+                    <p class="mt-4 text-gray-600">This iterative process does more than teach a concept; it builds mastery and confidence. As learners cycle through the methodology, their skill level demonstrably increases, preparing them for complex, unscripted challenges.</p>
+                </div>
+                <div class="mt-16">
+                    <div class="chart-container">
+                        <canvas id="masteryChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <footer class="bg-gray-800 text-white py-12">
+            <div class="container mx-auto px-6 text-center">
+                <p class="font-bold text-lg">Ready to transform learning at your institution?</p>
+                <p class="mt-2 text-sm text-gray-400">Let's connect and discuss how the 'Learning by Doing' methodology can empower your students.</p>
+            </div>
+        </footer>
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const stepButtons = document.querySelectorAll('.step-button');
+            const stepDisplay = document.getElementById('step-display');
+            let masteryChart;
+
+            const stepContent = {
+                1: {
+                    title: 'Challenge: Optimize a Database Query',
+                    description: 'A slow-running SQL query is causing performance issues in a critical application. The learner is tasked with analyzing and rewriting the query for efficiency. The environment provides the schema and the problematic query.',
+                    icon: '🎯'
+                },
+                2: {
+                    title: 'Attempt: First Iteration',
+                    description: 'The learner modifies the SQL query, perhaps by adding an index or restructuring a JOIN. They execute their new query in a sandboxed environment to see the performance impact directly.',
+                    icon: '✍️'
+                },
+                3: {
+                    title: 'Feedback: Automated Analysis',
+                    description: 'The system provides instant feedback. "Your query is now 35% faster, but using a LEFT JOIN created a Cartesian product, returning incorrect data. Consider using an INNER JOIN with a more specific ON clause."',
+                    icon: '📊'
+                },
+                4: {
+                    title: 'Refinement: Second Iteration',
+                    description: 'Armed with specific feedback, the learner corrects the JOIN logic and re-runs the query. The system confirms the data is now correct and performance has improved by 50%. The cycle can now repeat with a new, more complex challenge.',
+                    icon: '🔄'
+                }
+            };
+
+            const chartData = {
+                labels: ['Initial Attempt', 'After Feedback 1', 'After Feedback 2', 'After Feedback 3'],
+                datasets: [{
+                    label: 'Skill Mastery',
+                    data: [25, 0, 0, 0],
+                    backgroundColor: 'rgba(67, 56, 202, 0.6)',
+                    borderColor: 'rgba(67, 56, 202, 1)',
+                    borderWidth: 2,
+                    borderRadius: 5,
+                }]
+            };
+            
+            const chartConfig = {
+                type: 'bar',
+                data: chartData,
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            max: 100,
+                            title: { display: true, text: 'Mastery Level (%)' }
+                        }
+                    },
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return `Mastery: ${context.raw}%`;
+                                }
+                            }
+                        }
+                    }
+                }
+            };
+            
+            const ctx = document.getElementById('masteryChart').getContext('2d');
+            masteryChart = new Chart(ctx, chartConfig);
+
+            function updateStepDisplay(step) {
+                const content = stepContent[step];
+                stepDisplay.innerHTML = `
+                    <div class="flex items-center mb-4">
+                        <span class="text-4xl mr-4">${content.icon}</span>
+                        <h4 class="text-2xl font-bold text-gray-800">${content.title}</h4>
+                    </div>
+                    <p class="text-gray-600">${content.description}</p>
+                `;
+            }
+
+            function updateChart(step) {
+                const newData = [25, 0, 0, 0];
+                if (step >= 2) newData[1] = 45;
+                if (step >= 3) newData[2] = 75;
+                if (step >= 4) newData[3] = 95;
+                
+                masteryChart.data.datasets[0].data = newData;
+                masteryChart.update();
+            }
+
+            stepButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const step = button.dataset.step;
+                    stepButtons.forEach(btn => btn.classList.remove('active'));
+                    button.classList.add('active');
+                    updateStepDisplay(step);
+                    updateChart(step);
+                });
+            });
+
+            updateStepDisplay(1);
+            
+            const navLinks = document.querySelectorAll('.nav-link');
+            const sections = document.querySelectorAll('section[id]');
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const closeMenuButton = document.getElementById('close-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const mobileMenuOverlay = document.getElementById('mobile-menu-overlay');
+
+            // Debug: Check if elements exist
+            console.log('Mobile menu elements:', {
+                button: mobileMenuButton,
+                closeButton: closeMenuButton,
+                menu: mobileMenu,
+                overlay: mobileMenuOverlay
+            });
+
+            // Toggle mobile menu visibility
+            if (mobileMenuButton) {
+                mobileMenuButton.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    console.log('Mobile menu button clicked');
+                    mobileMenu.classList.add('open');
+                    mobileMenuOverlay.classList.add('open');
+                    document.body.style.overflow = 'hidden'; // Prevent scrolling
+                });
+            }
+
+            if (closeMenuButton) {
+                closeMenuButton.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    console.log('Close menu button clicked');
+                    mobileMenu.classList.remove('open');
+                    mobileMenuOverlay.classList.remove('open');
+                    document.body.style.overflow = 'auto'; // Restore scrolling
+                });
+            }
+
+            // Close menu when overlay is clicked
+            if (mobileMenuOverlay) {
+                mobileMenuOverlay.addEventListener('click', () => {
+                    console.log('Overlay clicked');
+                    mobileMenu.classList.remove('open');
+                    mobileMenuOverlay.classList.remove('open');
+                    document.body.style.overflow = 'auto';
+                });
+            }
+
+            // Close menu when a link is clicked
+            if (mobileMenu) {
+                mobileMenu.querySelectorAll('a').forEach(link => {
+                    link.addEventListener('click', () => {
+                        console.log('Menu link clicked');
+                        mobileMenu.classList.remove('open');
+                        mobileMenuOverlay.classList.remove('open');
+                        document.body.style.overflow = 'auto';
+                    });
+                });
+            }
+
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const id = entry.target.getAttribute('id');
+                        navLinks.forEach(link => {
+                            link.classList.toggle('active', link.getAttribute('href') === `#${id}`);
+                        });
+                    }
+                });
+            }, { rootMargin: '-30% 0px -30% 0px' });
+
+            sections.forEach(section => {
+                if(section.id) observer.observe(section);
+            });
+        });
+    </script>
+
+</body>
+</html>

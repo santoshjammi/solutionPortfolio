@@ -85,6 +85,7 @@
                 <a href="payment-gateway-solution.html" class="text-white hover:text-[#85BDE9] px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200" aria-label="Open Business Growth Solutions">Business Growth Solutions</a>
                 <a href="payment-gateway-security-solution.html" class="text-white hover:text-[#85BDE9] px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200" aria-label="Open Security & Compliance solutions">Security & Compliance</a>
                 <a href="apartment-management-system-prd.html" class="text-white hover:text-[#85BDE9] px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200" aria-label="Open Product & Requirements solutions">Product & Requirements</a>
+                <a href="lms-presentation.html" class="text-white hover:text-[#85BDE9] px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200" aria-label="Open Education & Learning solutions">Education & Learning</a>
             </div>
             <!-- Mobile menu button -->
             <button id="mobile-menu-button" class="md:hidden p-2 rounded-md text-white hover:bg-[#0076D4] focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white" aria-label="Toggle mobile menu" aria-expanded="false" aria-controls="sidebar">
@@ -129,12 +130,18 @@
                         <li><a href="apartment-management-system-prd.html" target="solutionIframe" class="block py-2 px-3 rounded-md text-gray-600 hover:bg-[#85BDE9] hover:text-white transition-colors duration-200 text-sm">🏠 Apartment Mgmt. PRD</a></li> <!-- Added new link -->
                     </ul>
                 </div>
+                <div class="mb-4">
+                    <h3 class="text-md font-semibold text-gray-700 mb-2">🎓 Education & Learning</h3>
+                    <ul class="space-y-1 pl-4">
+                        <li><a href="lms-presentation.html" target="solutionIframe" class="block py-2 px-3 rounded-md text-gray-600 hover:bg-[#85BDE9] hover:text-white transition-colors duration-200 text-sm">💡 Learning by Doing Methodology</a></li>
+                    </ul>
+                </div>
             </nav>
         </aside>
 
         <main class="flex-1 overflow-auto">
             <!-- Initial iframe src set to the new PRD for immediate visibility -->
-            <iframe id="solutionIframe" name="solutionIframe" class="main-content-iframe" src="apartment-management-system-prd.html"></iframe>
+            <iframe id="solutionIframe" name="solutionIframe" class="main-content-iframe" src="apartment-management-system-prd.html" title="Solution content viewer"></iframe>
         </main>
     </div>
 
@@ -184,6 +191,31 @@
                     viewportMeta.setAttribute('content', 'width=device-width, initial-scale=1.0');
                     iframeDoc.head.appendChild(viewportMeta);
                 }
+                
+                // Hide main header for pages that have their own navigation, but keep sidebar
+                const currentSrc = solutionIframe.src;
+                const pagesWithOwnNavigation = ['lms-presentation.html'];
+                const shouldHideMainHeader = pagesWithOwnNavigation.some(page => currentSrc.includes(page));
+                
+                const mainHeader = document.querySelector('header');
+                const sidebar = document.querySelector('aside');
+                const mainContent = document.querySelector('main');
+                
+                if (shouldHideMainHeader) {
+                    // Hide only the main header, keep sidebar for navigation
+                    mainHeader.style.display = 'none';
+                    document.body.style.paddingTop = '0';
+                    solutionIframe.style.height = '100vh';
+                    // Keep sidebar visible for page navigation
+                    sidebar.style.display = 'flex';
+                } else {
+                    // Show main header and sidebar for other pages
+                    mainHeader.style.display = 'block';
+                    sidebar.style.display = 'flex';
+                    document.body.style.paddingTop = '64px';
+                    solutionIframe.style.height = 'calc(100vh - 64px)';
+                }
+                
             } catch (e) {
                 console.warn("Could not access iframe content:", e);
                 // This warning is expected if the iframe content is from a different origin (not applicable here as it's local)
