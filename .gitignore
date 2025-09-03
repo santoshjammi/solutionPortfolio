@@ -1,0 +1,4 @@
+hostinger-deploy/
+vendor/
+*.zip
+*.tar.gz

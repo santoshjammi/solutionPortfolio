@@ -39,47 +39,14 @@ if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
     exit;
 }
 
-// Load SMTP configuration
-$config = require 'smtp-config.php';
-
-// Check if SMTP password is configured
-if (empty($config['smtp_password'])) {
-    // Fallback to basic PHP mail() function
-    $to = $config['to_email'];
-    $subject = 'New Contact Form Submission from ' . $name;
-    
-    $email_content = "New contact form submission from Ameya Labs website:\n\n";
-    $email_content .= "Name: $name\n";
-    $email_content .= "Email: $email\n";
-    $email_content .= "Submitted: $timestamp\n\n";
-    $email_content .= "Message:\n$message\n\n";
-    $email_content .= "---\nSent via Ameya Labs contact form";
-    
-    $headers = [
-        'From: ' . $config['from_email'],
-        'Reply-To: ' . $email,
-        'X-Mailer: PHP/' . phpversion(),
-        'Content-Type: text/plain; charset=UTF-8'
-    ];
-    
-    $success = mail($to, $subject, $email_content, implode("\r\n", $headers));
-    
-    if ($success) {
-        $log_entry = date('Y-m-d H:i:s') . " - Contact form submission from: $name ($email) - PHP MAIL\n";
-        file_put_contents('contact_log.txt', $log_entry, FILE_APPEND | LOCK_EX);
-        
-        echo json_encode([
-            'success' => true,
-            'message' => 'Message sent successfully! (Note: Configure SMTP for better delivery)'
-        ]);
-    } else {
-        http_response_code(500);
-        echo json_encode([
-            'error' => 'Failed to send message. Please configure SMTP settings.'
-        ]);
-    }
-    exit;
-}
+// Gmail SMTP Configuration
+$smtp_host = 'smtp.gmail.com';
+$smtp_port = 587;
+$smtp_username = 'ameyalabs09@gmail.com'; // Your Gmail address
+$smtp_password = 'your-app-password-here'; // You need to generate an App Password from Gmail
+$from_email = 'ameyalabs09@gmail.com';
+$from_name = 'Ameya Labs Website';
+$to_email = 'ameyalabs09@gmail.com';
 
 try {
     // Create PHPMailer instance
@@ -87,20 +54,17 @@ try {
 
     // Server settings
     $mail->isSMTP();
-    $mail->Host       = $config['smtp_host'];
+    $mail->Host       = $smtp_host;
     $mail->SMTPAuth   = true;
-    $mail->Username   = $config['smtp_username'];
-    $mail->Password   = $config['smtp_password'];
+    $mail->Username   = $smtp_username;
+    $mail->Password   = $smtp_password;
     $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
-    $mail->Port       = $config['smtp_port'];
+    $mail->Port       = $smtp_port;
 
     // Recipients
-    $mail->setFrom($config['from_email'], $config['from_name']);
-    $mail->addAddress($config['to_email'], 'Ameya Labs');
-    
-    if ($config['reply_to_original_sender']) {
-        $mail->addReplyTo($email, $name);
-    }
+    $mail->setFrom($from_email, $from_name);
+    $mail->addAddress($to_email, 'Ameya Labs');
+    $mail->addReplyTo($email, $name);
 
     // Content
     $mail->isHTML(false);
@@ -112,7 +76,7 @@ try {
     $email_content .= "Submitted: $timestamp\n\n";
     $email_content .= "Message:\n$message\n\n";
     $email_content .= "---\n";
-    $email_content .= "Sent via Ameya Labs contact form (SMTP)";
+    $email_content .= "Sent via Ameya Labs contact form";
     
     $mail->Body = $email_content;
 
@@ -125,7 +89,7 @@ try {
     
     echo json_encode([
         'success' => true,
-        'message' => 'Message sent successfully via Gmail SMTP!'
+        'message' => 'Message sent successfully via SMTP!'
     ]);
 
 } catch (Exception $e) {
@@ -135,7 +99,7 @@ try {
     
     http_response_code(500);
     echo json_encode([
-        'error' => 'Failed to send message via SMTP: ' . $mail->ErrorInfo
+        'error' => 'Failed to send message: ' . $mail->ErrorInfo
     ]);
 }
 ?>
