@@ -1,0 +1,1713 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Text Tools | Text Utilities & Manipulators | Ameya Labs</title>
+    <meta name="description" content="Free online text tools. Convert case, count words/characters, find & replace, remove duplicates, format text, and more. Essential text manipulation utilities for writers and developers.">
+    <meta name="keywords" content="text tools, case converter, word counter, character counter, find replace, remove duplicates, text formatter, text utilities, text manipulator, online text tools">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        :root {
+            --am-navy: #071226;
+            --am-electric: #6C4BFF;
+            --am-accent: #4F46E5;
+            --am-light: #f8fafc;
+            --am-gray: #64748b;
+        }
+        .ameya-navy { color: var(--am-navy); }
+        .ameya-electric { color: var(--am-electric); }
+        .ameya-accent { color: var(--am-accent); }
+        .ameya-light { background-color: var(--am-light); }
+        .ameya-gray { color: var(--am-gray); }
+        .bg-ameya-navy { background-color: var(--am-navy); }
+        .bg-ameya-electric { background-color: var(--am-electric); }
+        .bg-ameya-accent { background-color: var(--am-accent); }
+        .border-ameya-electric { border-color: var(--am-electric); }
+        .text-ameya-navy { color: var(--am-navy); }
+        .text-ameya-electric { color: var(--am-electric); }
+        .text-ameya-accent { color: var(--am-accent); }
+        .text-ameya-gray { color: var(--am-gray); }
+        .text-editor {
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+        .stats-highlight {
+            background-color: #dbeafe;
+            padding: 2px 4px;
+            border-radius: 3px;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body class="bg-ameya-light min-h-screen">
+
+    <!-- Header -->
+    <header class="bg-white shadow-sm border-b border-gray-200">
+        <div class="max-w-6xl mx-auto px-6 sm:px-8 lg:px-10 py-4">
+            <div class="flex items-center justify-between">
+                <a href="../index.html" class="flex items-center space-x-3">
+                    <img src="../AmeyaLogo12.png" alt="Ameya Labs Logo" class="h-8 w-auto">
+                    <span class="text-xl font-bold text-ameya-navy">Ameya Labs</span>
+                </a>
+                <a href="../index.html#tools" class="text-ameya-electric hover:text-ameya-accent font-medium transition-colors flex items-center">
+                    <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+                    </svg>
+                    Back to Tools
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="max-w-6xl mx-auto px-6 sm:px-8 lg:px-10 py-12">
+
+        <!-- Hero Section -->
+        <div class="text-center mb-12">
+            <h1 class="text-4xl font-bold text-ameya-navy mb-4">Text Tools</h1>
+            <p class="text-xl text-ameya-gray max-w-2xl mx-auto">Powerful text manipulation utilities for writers, developers, and content creators.</p>
+        </div>
+
+        <!-- Text Tools Interface -->
+        <div class="bg-white rounded-xl shadow-lg p-8 mb-8">
+
+            <!-- Tool Selection -->
+            <div class="mb-8">
+                <label class="block text-sm font-medium text-ameya-gray mb-3">Select Tool</label>
+                <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
+                    <button class="tool-btn active bg-ameya-electric text-white px-4 py-3 rounded-lg font-medium transition-colors text-sm" data-tool="case-converter">
+                        <svg class="w-4 h-4 mx-auto mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
+                        </svg>
+                        Case Converter
+                    </button>
+                    <button class="tool-btn bg-gray-100 text-ameya-gray hover:bg-gray-200 px-4 py-3 rounded-lg font-medium transition-colors text-sm" data-tool="word-counter">
+                        <svg class="w-4 h-4 mx-auto mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+                        </svg>
+                        Word Counter
+                    </button>
+                    <button class="tool-btn bg-gray-100 text-ameya-gray hover:bg-gray-200 px-4 py-3 rounded-lg font-medium transition-colors text-sm" data-tool="find-replace">
+                        <svg class="w-4 h-4 mx-auto mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                        </svg>
+                        Find & Replace
+                    </button>
+                    <button class="tool-btn bg-gray-100 text-ameya-gray hover:bg-gray-200 px-4 py-3 rounded-lg font-medium transition-colors text-sm" data-tool="remove-duplicates">
+                        <svg class="w-4 h-4 mx-auto mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path>
+                        </svg>
+                        Remove Duplicates
+                    </button>
+                    <button class="tool-btn bg-gray-100 text-ameya-gray hover:bg-gray-200 px-4 py-3 rounded-lg font-medium transition-colors text-sm" data-tool="text-formatter">
+                        <svg class="w-4 h-4 mx-auto mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h7"></path>
+                        </svg>
+                        Text Formatter
+                    </button>
+                    <button class="tool-btn bg-gray-100 text-ameya-gray hover:bg-gray-200 px-4 py-3 rounded-lg font-medium transition-colors text-sm" data-tool="slug-generator">
+                        <svg class="w-4 h-4 mx-auto mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"></path>
+                        </svg>
+                        Slug Generator
+                    </button>
+                    <button class="tool-btn bg-gray-100 text-ameya-gray hover:bg-gray-200 px-4 py-3 rounded-lg font-medium transition-colors text-sm" data-tool="programming-cases">
+                        <svg class="w-4 h-4 mx-auto mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path>
+                        </svg>
+                        Programming Cases
+                    </button>
+                    <button class="tool-btn bg-gray-100 text-ameya-gray hover:bg-gray-200 px-4 py-3 rounded-lg font-medium transition-colors text-sm" data-tool="morse-code">
+                        <svg class="w-4 h-4 mx-auto mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"></path>
+                        </svg>
+                        Morse Code
+                    </button>
+                </div>
+            </div>
+
+            <!-- Dynamic Tool Interface -->
+            <div id="tool-interface">
+                <!-- Case Converter -->
+                <div id="case-converter" class="tool-interface">
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-sm font-medium text-ameya-gray mb-2">Input Text</label>
+                            <textarea id="case-input" class="text-editor w-full h-64 px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-ameya-electric focus:border-transparent resize-none" placeholder="Enter text to convert..." aria-label="Text input for case conversion"></textarea>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-ameya-gray mb-2">Converted Text</label>
+                            <textarea id="case-output" class="text-editor w-full h-64 px-4 py-3 border border-gray-300 rounded-lg bg-gray-50 focus:ring-2 focus:ring-ameya-electric focus:border-transparent resize-none" readonly aria-label="Case converted output"></textarea>
+                        </div>
+                    </div>
+                    <div class="flex flex-wrap gap-3 mt-4">
+                        <button id="uppercase-btn" class="bg-ameya-electric hover:bg-ameya-accent text-white font-semibold px-4 py-2 rounded-lg transition-colors">UPPERCASE</button>
+                        <button id="lowercase-btn" class="bg-ameya-electric hover:bg-ameya-accent text-white font-semibold px-4 py-2 rounded-lg transition-colors">lowercase</button>
+                        <button id="titlecase-btn" class="bg-ameya-electric hover:bg-ameya-accent text-white font-semibold px-4 py-2 rounded-lg transition-colors">Title Case</button>
+                        <button id="sentencecase-btn" class="bg-ameya-electric hover:bg-ameya-accent text-white font-semibold px-4 py-2 rounded-lg transition-colors">Sentence case</button>
+                        <button id="camelcase-btn" class="bg-ameya-electric hover:bg-ameya-accent text-white font-semibold px-4 py-2 rounded-lg transition-colors">camelCase</button>
+                        <button id="snakecase-btn" class="bg-ameya-electric hover:bg-ameya-accent text-white font-semibold px-4 py-2 rounded-lg transition-colors">snake_case</button>
+                        <button id="kebabcase-btn" class="bg-ameya-electric hover:bg-ameya-accent text-white font-semibold px-4 py-2 rounded-lg transition-colors">kebab-case</button>
+                    </div>
+                </div>
+
+                <!-- Word Counter -->
+                <div id="word-counter" class="tool-interface hidden">
+                    <div class="mb-6">
+                        <label class="block text-sm font-medium text-ameya-gray mb-2">Text to Analyze</label>
+                        <textarea id="counter-input" class="text-editor w-full h-48 px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-ameya-electric focus:border-transparent resize-none" placeholder="Enter text to analyze..." aria-label="Text input for word counting"></textarea>
+                    </div>
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                        <div class="bg-gray-50 p-4 rounded-lg text-center">
+                            <div class="text-2xl font-bold text-ameya-electric" id="word-count">0</div>
+                            <div class="text-sm text-ameya-gray">Words</div>
+                        </div>
+                        <div class="bg-gray-50 p-4 rounded-lg text-center">
+                            <div class="text-2xl font-bold text-ameya-electric" id="char-count">0</div>
+                            <div class="text-sm text-ameya-gray">Characters</div>
+                        </div>
+                        <div class="bg-gray-50 p-4 rounded-lg text-center">
+                            <div class="text-2xl font-bold text-ameya-electric" id="char-no-space-count">0</div>
+                            <div class="text-sm text-ameya-gray">Characters (no spaces)</div>
+                        </div>
+                        <div class="bg-gray-50 p-4 rounded-lg text-center">
+                            <div class="text-2xl font-bold text-ameya-electric" id="sentence-count">0</div>
+                            <div class="text-sm text-ameya-gray">Sentences</div>
+                        </div>
+                    </div>
+                    <div class="mt-4 text-sm text-ameya-gray">
+                        <p id="reading-time">Estimated reading time: <span class="stats-highlight">0 minutes</span></p>
+                    </div>
+                </div>
+
+                <!-- Find & Replace -->
+                <div id="find-replace" class="tool-interface hidden">
+                    <div class="mb-6">
+                        <label class="block text-sm font-medium text-ameya-gray mb-2">Input Text</label>
+                        <textarea id="find-input" class="text-editor w-full h-48 px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-ameya-electric focus:border-transparent resize-none" placeholder="Enter text to search and replace..." aria-label="Text input for find and replace"></textarea>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                        <div>
+                            <label class="block text-sm font-medium text-ameya-gray mb-2">Find</label>
+                            <input type="text" id="find-text" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-ameya-electric focus:border-transparent" placeholder="Text to find" aria-label="Text to find">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-ameya-gray mb-2">Replace with</label>
+                            <input type="text" id="replace-text" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-ameya-electric focus:border-transparent" placeholder="Replacement text" aria-label="Replacement text">
+                        </div>
+                    </div>
+                    <div class="flex gap-3 mb-4">
+                        <label class="flex items-center">
+                            <input type="checkbox" id="case-sensitive" class="mr-2">
+                            <span class="text-sm text-ameya-gray">Case sensitive</span>
+                        </label>
+                        <label class="flex items-center">
+                            <input type="checkbox" id="whole-words" class="mr-2">
+                            <span class="text-sm text-ameya-gray">Whole words only</span>
+                        </label>
+                        <label class="flex items-center">
+                            <input type="checkbox" id="regex-mode" class="mr-2">
+                            <span class="text-sm text-ameya-gray">Regular expression</span>
+                        </label>
+                    </div>
+                    <div class="flex gap-3">
+                        <button id="find-btn" class="bg-ameya-electric hover:bg-ameya-accent text-white font-semibold px-4 py-2 rounded-lg transition-colors">Find All</button>
+                        <button id="replace-btn" class="bg-green-600 hover:bg-green-700 text-white font-semibold px-4 py-2 rounded-lg transition-colors">Replace All</button>
+                        <button id="replace-single-btn" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-4 py-2 rounded-lg transition-colors">Replace First</button>
+                    </div>
+                    <div class="mt-4">
+                        <label class="block text-sm font-medium text-ameya-gray mb-2">Result</label>
+                        <textarea id="find-output" class="text-editor w-full h-32 px-4 py-3 border border-gray-300 rounded-lg bg-gray-50 focus:ring-2 focus:ring-ameya-electric focus:border-transparent resize-none" readonly aria-label="Find and replace result"></textarea>
+                    </div>
+                </div>
+
+                <!-- Other tools will be added here -->
+                <div id="remove-duplicates" class="tool-interface hidden">
+                    <div class="text-center py-8">
+                        <p class="text-ameya-gray">Remove Duplicates tool coming soon...</p>
+                    </div>
+                </div>
+                <div id="text-formatter" class="tool-interface hidden">
+                    <div class="mb-6">
+                        <h3 class="text-lg font-semibold text-ameya-navy mb-4">Text Formatter</h3>
+                        <p class="text-ameya-gray text-sm mb-4">Clean, format, and manipulate text with advanced text processing operations.</p>
+                    </div>
+
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-sm font-medium text-ameya-gray mb-2">Input Text</label>
+                            <textarea id="formatter-input" class="text-editor w-full h-64 px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-ameya-electric focus:border-transparent resize-none" placeholder="Paste or type text to format..." aria-label="Text input for formatting"></textarea>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-ameya-gray mb-2">Formatted Text</label>
+                            <textarea id="formatter-output" class="text-editor w-full h-64 px-4 py-3 border border-gray-300 rounded-lg bg-gray-50 focus:ring-2 focus:ring-ameya-electric focus:border-transparent resize-none" readonly aria-label="Formatted text output"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="mt-6">
+                        <label class="block text-sm font-medium text-ameya-gray mb-3">Formatting Options</label>
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+
+                            <!-- Text Cleaning -->
+                            <div class="space-y-2">
+                                <h4 class="text-sm font-semibold text-ameya-navy">Text Cleaning</h4>
+                                <label class="flex items-center text-sm">
+                                    <input type="checkbox" id="remove-extra-spaces" class="mr-2">
+                                    <span>Remove extra spaces</span>
+                                </label>
+                                <label class="flex items-center text-sm">
+                                    <input type="checkbox" id="remove-empty-lines" class="mr-2">
+                                    <span>Remove empty lines</span>
+                                </label>
+                                <label class="flex items-center text-sm">
+                                    <input type="checkbox" id="trim-lines" class="mr-2">
+                                    <span>Trim line whitespace</span>
+                                </label>
+                                <label class="flex items-center text-sm">
+                                    <input type="checkbox" id="normalize-quotes" class="mr-2">
+                                    <span>Normalize quotes</span>
+                                </label>
+                            </div>
+
+                            <!-- Line Operations -->
+                            <div class="space-y-2">
+                                <h4 class="text-sm font-semibold text-ameya-navy">Line Operations</h4>
+                                <label class="flex items-center text-sm">
+                                    <input type="checkbox" id="sort-lines" class="mr-2">
+                                    <span>Sort lines A-Z</span>
+                                </label>
+                                <label class="flex items-center text-sm">
+                                    <input type="checkbox" id="reverse-lines" class="mr-2">
+                                    <span>Reverse line order</span>
+                                </label>
+                                <label class="flex items-center text-sm">
+                                    <input type="checkbox" id="remove-duplicate-lines" class="mr-2">
+                                    <span>Remove duplicate lines</span>
+                                </label>
+                                <label class="flex items-center text-sm">
+                                    <input type="checkbox" id="number-lines" class="mr-2">
+                                    <span>Add line numbers</span>
+                                </label>
+                            </div>
+
+                            <!-- Character Operations -->
+                            <div class="space-y-2">
+                                <h4 class="text-sm font-semibold text-ameya-navy">Character Operations</h4>
+                                <label class="flex items-center text-sm">
+                                    <input type="checkbox" id="remove-diacritics" class="mr-2">
+                                    <span>Remove diacritics</span>
+                                </label>
+                                <label class="flex items-center text-sm">
+                                    <input type="checkbox" id="remove-punctuation" class="mr-2">
+                                    <span>Remove punctuation</span>
+                                </label>
+                                <label class="flex items-center text-sm">
+                                    <input type="checkbox" id="remove-numbers" class="mr-2">
+                                    <span>Remove numbers</span>
+                                </label>
+                                <label class="flex items-center text-sm">
+                                    <input type="checkbox" id="extract-urls" class="mr-2">
+                                    <span>Extract URLs only</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Advanced Options -->
+                        <div class="mt-4 p-4 bg-gray-50 rounded-lg">
+                            <h4 class="text-sm font-semibold text-ameya-navy mb-3">Advanced Options</h4>
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                                <div>
+                                    <label class="block text-sm text-ameya-gray mb-1">Line Length Limit</label>
+                                    <input type="number" id="line-length" class="w-full px-2 py-1 text-sm border border-gray-300 rounded focus:ring-1 focus:ring-ameya-electric focus:border-transparent" placeholder="80" min="20" max="200" aria-label="Maximum line length">
+                                </div>
+                                <div>
+                                    <label class="block text-sm text-ameya-gray mb-1">Indentation</label>
+                                    <select id="indentation-type" class="w-full px-2 py-1 text-sm border border-gray-300 rounded focus:ring-1 focus:ring-ameya-electric focus:border-transparent" aria-label="Indentation type">
+                                        <option value="none">None</option>
+                                        <option value="spaces">Spaces (4)</option>
+                                        <option value="tab">Tab</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="block text-sm text-ameya-gray mb-1">Line Ending</label>
+                                    <select id="line-ending" class="w-full px-2 py-1 text-sm border border-gray-300 rounded focus:ring-1 focus:ring-ameya-electric focus:border-transparent" aria-label="Line ending type">
+                                        <option value="lf">Unix (LF)</option>
+                                        <option value="crlf">Windows (CRLF)</option>
+                                        <option value="cr">Mac (CR)</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mt-6 flex flex-wrap gap-3">
+                        <button id="format-text-btn" class="bg-ameya-electric hover:bg-ameya-accent text-white font-semibold px-6 py-2 rounded-lg transition-colors">Format Text</button>
+                        <button id="copy-formatted-btn" class="bg-gray-600 hover:bg-gray-700 text-white font-semibold px-6 py-2 rounded-lg transition-colors">Copy Result</button>
+                        <button id="clear-formatter-btn" class="bg-gray-500 hover:bg-gray-600 text-white font-semibold px-4 py-2 rounded-lg transition-colors">Clear</button>
+                        <button id="reset-options-btn" class="bg-red-500 hover:bg-red-600 text-white font-semibold px-4 py-2 rounded-lg transition-colors">Reset Options</button>
+                    </div>
+
+                    <div class="mt-6 p-4 bg-blue-50 rounded-lg">
+                        <h4 class="text-sm font-semibold text-blue-800 mb-2">Common Use Cases:</h4>
+                        <ul class="text-sm text-blue-700 space-y-1">
+                            <li>• <strong>Data Cleaning:</strong> Remove extra whitespace and normalize text</li>
+                            <li>• <strong>Code Formatting:</strong> Clean up copied code snippets</li>
+                            <li>• <strong>Content Processing:</strong> Prepare text for import/export</li>
+                            <li>• <strong>SEO Optimization:</strong> Clean meta descriptions and titles</li>
+                            <li>• <strong>Data Analysis:</strong> Normalize text data before processing</li>
+                        </ul>
+                    </div>
+                </div>
+                <div id="slug-generator" class="tool-interface hidden">
+                    <div class="mb-6">
+                        <h3 class="text-lg font-semibold text-ameya-navy mb-4">URL Slug Generator</h3>
+                        <p class="text-ameya-gray text-sm mb-4">Convert text into SEO-friendly URL slugs for blogs, articles, and web pages.</p>
+                    </div>
+
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-sm font-medium text-ameya-gray mb-2">Input Text</label>
+                            <textarea id="slug-input" class="text-editor w-full h-32 px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-ameya-electric focus:border-transparent resize-none" placeholder="Enter title or text to convert to slug..." aria-label="Text input for slug generation"></textarea>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-ameya-gray mb-2">Generated Slug</label>
+                            <textarea id="slug-output" class="text-editor w-full h-32 px-4 py-3 border border-gray-300 rounded-lg bg-gray-50 focus:ring-2 focus:ring-ameya-electric focus:border-transparent resize-none" readonly aria-label="Generated slug output"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="mt-6">
+                        <label class="block text-sm font-medium text-ameya-gray mb-3">Options</label>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                            <div>
+                                <label class="block text-sm text-ameya-gray mb-2">Separator</label>
+                                <select id="slug-separator" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-ameya-electric focus:border-transparent" aria-label="Slug separator character">
+                                    <option value="-">Hyphen (-)</option>
+                                    <option value="_">Underscore (_)</option>
+                                    <option value=".">Dot (.)</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-sm text-ameya-gray mb-2">Max Length</label>
+                                <input type="number" id="slug-max-length" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-ameya-electric focus:border-transparent" value="100" min="10" max="200" aria-label="Maximum slug length">
+                            </div>
+                            <div class="flex items-end">
+                                <label class="flex items-center">
+                                    <input type="checkbox" id="slug-lowercase" class="mr-2" checked>
+                                    <span class="text-sm text-ameya-gray">Convert to lowercase</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mt-6 flex gap-3">
+                        <button id="generate-slug-btn" class="bg-ameya-electric hover:bg-ameya-accent text-white font-semibold px-6 py-2 rounded-lg transition-colors">Generate Slug</button>
+                        <button id="copy-slug-btn" class="bg-gray-600 hover:bg-gray-700 text-white font-semibold px-6 py-2 rounded-lg transition-colors">Copy Slug</button>
+                        <button id="clear-slug-btn" class="bg-gray-500 hover:bg-gray-600 text-white font-semibold px-4 py-2 rounded-lg transition-colors">Clear</button>
+                    </div>
+
+                    <div class="mt-6 p-4 bg-green-50 rounded-lg">
+                        <h4 class="text-sm font-semibold text-green-800 mb-2">Slug Examples:</h4>
+                        <div class="text-sm text-green-700 space-y-1">
+                            <div><strong>Input:</strong> "Hello World! This is a Test"</div>
+                            <div><strong>Slug:</strong> "hello-world-this-is-a-test"</div>
+                        </div>
+                        <div class="mt-3 text-xs text-green-600">
+                            <strong>Best Practices:</strong> Keep slugs under 60 characters, use hyphens, avoid special characters, and make them descriptive for SEO.
+                        </div>
+                    </div>
+
+                    <div class="mt-4 p-4 bg-blue-50 rounded-lg">
+                        <h4 class="text-sm font-semibold text-blue-800 mb-2">Common Use Cases:</h4>
+                        <ul class="text-sm text-blue-700 space-y-1">
+                            <li>• <strong>Blog Posts:</strong> Convert article titles to URL-friendly slugs</li>
+                            <li>• <strong>CMS Systems:</strong> Generate permalinks for pages and posts</li>
+                            <li>• <strong>E-commerce:</strong> Create SEO-friendly product URLs</li>
+                            <li>• <strong>API Endpoints:</strong> Generate clean REST API paths</li>
+                        </ul>
+                    </div>
+                </div>
+                <div id="programming-cases" class="tool-interface hidden">
+                    <div class="mb-6">
+                        <h3 class="text-lg font-semibold text-ameya-navy mb-4">Programming Case Converter</h3>
+                        <p class="text-ameya-gray text-sm mb-4">Convert between different programming naming conventions commonly used in code.</p>
+                    </div>
+
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-sm font-medium text-ameya-gray mb-2">Input Text</label>
+                            <textarea id="programming-input" class="text-editor w-full h-48 px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-ameya-electric focus:border-transparent resize-none" placeholder="Enter variable or function name..." aria-label="Text input for programming case conversion"></textarea>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-ameya-gray mb-2">Converted Text</label>
+                            <textarea id="programming-output" class="text-editor w-full h-48 px-4 py-3 border border-gray-300 rounded-lg bg-gray-50 focus:ring-2 focus:ring-ameya-electric focus:border-transparent resize-none" readonly aria-label="Programming case converted output"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="mt-6">
+                        <label class="block text-sm font-medium text-ameya-gray mb-3">Convert To:</label>
+                        <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+                            <button id="to-camel-case" class="bg-ameya-electric hover:bg-ameya-accent text-white font-semibold px-4 py-3 rounded-lg transition-colors text-sm">
+                                <div class="font-bold">camelCase</div>
+                                <div class="text-xs opacity-90">firstName</div>
+                            </button>
+                            <button id="to-pascal-case" class="bg-ameya-electric hover:bg-ameya-accent text-white font-semibold px-4 py-3 rounded-lg transition-colors text-sm">
+                                <div class="font-bold">PascalCase</div>
+                                <div class="text-xs opacity-90">FirstName</div>
+                            </button>
+                            <button id="to-snake-case" class="bg-ameya-electric hover:bg-ameya-accent text-white font-semibold px-4 py-3 rounded-lg transition-colors text-sm">
+                                <div class="font-bold">snake_case</div>
+                                <div class="text-xs opacity-90">first_name</div>
+                            </button>
+                            <button id="to-kebab-case" class="bg-ameya-electric hover:bg-ameya-accent text-white font-semibold px-4 py-3 rounded-lg transition-colors text-sm">
+                                <div class="font-bold">kebab-case</div>
+                                <div class="text-xs opacity-90">first-name</div>
+                            </button>
+                            <button id="to-screaming-snake-case" class="bg-ameya-electric hover:bg-ameya-accent text-white font-semibold px-4 py-3 rounded-lg transition-colors text-sm">
+                                <div class="font-bold">SCREAMING_SNAKE</div>
+                                <div class="text-xs opacity-90">FIRST_NAME</div>
+                            </button>
+                            <button id="to-train-case" class="bg-ameya-electric hover:bg-ameya-accent text-white font-semibold px-4 py-3 rounded-lg transition-colors text-sm">
+                                <div class="font-bold">Train-Case</div>
+                                <div class="text-xs opacity-90">First-Name</div>
+                            </button>
+                            <button id="to-cobol-case" class="bg-ameya-electric hover:bg-ameya-accent text-white font-semibold px-4 py-3 rounded-lg transition-colors text-sm">
+                                <div class="font-bold">COBOL-CASE</div>
+                                <div class="text-xs opacity-90">FIRST-NAME</div>
+                            </button>
+                            <button id="to-flat-case" class="bg-ameya-electric hover:bg-ameya-accent text-white font-semibold px-4 py-3 rounded-lg transition-colors text-sm">
+                                <div class="font-bold">flatcase</div>
+                                <div class="text-xs opacity-90">firstname</div>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="mt-6 p-4 bg-blue-50 rounded-lg">
+                        <h4 class="text-sm font-semibold text-blue-800 mb-2">Common Use Cases:</h4>
+                        <ul class="text-sm text-blue-700 space-y-1">
+                            <li>• <strong>camelCase:</strong> JavaScript variables, functions</li>
+                            <li>• <strong>PascalCase:</strong> Classes, components, types</li>
+                            <li>• <strong>snake_case:</strong> Python variables, database columns</li>
+                            <li>• <strong>kebab-case:</strong> CSS classes, HTML attributes</li>
+                            <li>• <strong>SCREAMING_SNAKE_CASE:</strong> Constants, environment variables</li>
+                        </ul>
+                    </div>
+                </div>
+                <div id="morse-code" class="tool-interface hidden">
+                    <div class="mb-6">
+                        <h3 class="text-lg font-semibold text-ameya-navy mb-4">Morse Code Converter</h3>
+                        <p class="text-ameya-gray text-sm mb-4">Convert text to Morse code and vice versa. Includes audio playback for learning and communication.</p>
+                    </div>
+
+                    <!-- Conversion Direction Selector -->
+                    <div class="mb-6">
+                        <label class="block text-sm font-medium text-ameya-gray mb-3">Conversion Direction</label>
+                        <div class="flex gap-4">
+                            <label class="flex items-center">
+                                <input type="radio" name="conversion-direction" value="text-to-morse" checked class="mr-2">
+                                <span class="text-sm">Text → Morse Code</span>
+                            </label>
+                            <label class="flex items-center">
+                                <input type="radio" name="conversion-direction" value="morse-to-text" class="mr-2">
+                                <span class="text-sm">Morse Code → Text</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-sm font-medium text-ameya-gray mb-2" id="input-label">Input Text</label>
+                            <textarea id="morse-input" class="text-editor w-full h-48 px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-ameya-electric focus:border-transparent resize-none" placeholder="Enter text to convert..." aria-label="Text input for Morse code conversion"></textarea>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-ameya-gray mb-2" id="output-label">Morse Code Output</label>
+                            <textarea id="morse-output" class="text-editor w-full h-48 px-4 py-3 border border-gray-300 rounded-lg bg-gray-50 focus:ring-2 focus:ring-ameya-electric focus:border-transparent resize-none font-mono text-sm" readonly aria-label="Morse code output"></textarea>
+                        </div>
+                    </div>
+
+                    <!-- Audio Controls -->
+                    <div class="mt-6 p-4 bg-yellow-50 rounded-lg">
+                        <h4 class="text-sm font-semibold text-yellow-800 mb-3">Audio Playback</h4>
+                        <div class="flex flex-wrap gap-4 items-center">
+                            <button id="play-morse-btn" class="bg-yellow-600 hover:bg-yellow-700 text-white font-semibold px-4 py-2 rounded-lg transition-colors flex items-center">
+                                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h1.586a1 1 0 01.707.293l.707.707A1 1 0 0012.414 11H13a4 4 0 014 4v1a1 1 0 01-1 1H8a1 1 0 01-1-1v-1a4 4 0 014-4h.586a1 1 0 00.707-.293l.707-.707A1 1 0 0111.414 9H12a1 1 0 011 1v2a1 1 0 01-1 1H9a1 1 0 01-1-1V9z"></path>
+                                </svg>
+                                Play Morse Code
+                            </button>
+                            <div class="flex items-center gap-2">
+                                <label class="text-sm text-yellow-700">Speed:</label>
+                                <input type="range" id="morse-speed" min="5" max="25" value="15" class="w-20" aria-label="Morse code playback speed">
+                                <span id="speed-value" class="text-sm text-yellow-700 ml-2">15 WPM</span>
+                            </div>
+                            <button id="stop-audio-btn" class="bg-red-600 hover:bg-red-700 text-white font-semibold px-4 py-2 rounded-lg transition-colors">Stop</button>
+                        </div>
+                        <p class="text-xs text-yellow-600 mt-2">WPM = Words Per Minute. Standard Morse code is ~15 WPM.</p>
+                    </div>
+
+                    <div class="mt-6 flex flex-wrap gap-3">
+                        <button id="convert-morse-btn" class="bg-ameya-electric hover:bg-ameya-accent text-white font-semibold px-6 py-2 rounded-lg transition-colors">Convert</button>
+                        <button id="copy-morse-btn" class="bg-gray-600 hover:bg-gray-700 text-white font-semibold px-6 py-2 rounded-lg transition-colors">Copy Result</button>
+                        <button id="clear-morse-btn" class="bg-gray-500 hover:bg-gray-600 text-white font-semibold px-4 py-2 rounded-lg transition-colors">Clear</button>
+                        <button id="show-reference-btn" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-4 py-2 rounded-lg transition-colors">Show Reference</button>
+                    </div>
+
+                    <!-- Morse Code Reference (Hidden by default) -->
+                    <div id="morse-reference" class="mt-6 p-4 bg-gray-50 rounded-lg hidden">
+                        <h4 class="text-sm font-semibold text-gray-800 mb-3">Morse Code Reference</h4>
+                        <div class="grid grid-cols-2 md:grid-cols-4 gap-2 text-sm">
+                            <div><strong>A</strong> •-</div>
+                            <div><strong>B</strong> -•••</div>
+                            <div><strong>C</strong> -•-•</div>
+                            <div><strong>D</strong> -••</div>
+                            <div><strong>E</strong> •</div>
+                            <div><strong>F</strong> ••-•</div>
+                            <div><strong>G</strong> --•</div>
+                            <div><strong>H</strong> ••••</div>
+                            <div><strong>I</strong> ••</div>
+                            <div><strong>J</strong> •---</div>
+                            <div><strong>K</strong> -•-</div>
+                            <div><strong>L</strong> •-••</div>
+                            <div><strong>M</strong> --</div>
+                            <div><strong>N</strong> -•</div>
+                            <div><strong>O</strong> ---</div>
+                            <div><strong>P</strong> •--•</div>
+                            <div><strong>Q</strong> --•-</div>
+                            <div><strong>R</strong> •-•</div>
+                            <div><strong>S</strong> •••</div>
+                            <div><strong>T</strong> -</div>
+                            <div><strong>U</strong> ••-</div>
+                            <div><strong>V</strong> •••-</div>
+                            <div><strong>W</strong> •--</div>
+                            <div><strong>X</strong> -••-</div>
+                            <div><strong>Y</strong> -•--</div>
+                            <div><strong>Z</strong> --••</div>
+                            <div><strong>0</strong> -----</div>
+                            <div><strong>1</strong> •----</div>
+                            <div><strong>2</strong> ••---</div>
+                            <div><strong>3</strong> •••--</div>
+                            <div><strong>4</strong> ••••-</div>
+                            <div><strong>5</strong> •••••</div>
+                            <div><strong>6</strong> -••••</div>
+                            <div><strong>7</strong> --•••</div>
+                            <div><strong>8</strong> ---••</div>
+                            <div><strong>9</strong> ----•</div>
+                            <div><strong>.</strong> •-•-•-</div>
+                            <div><strong>,</strong> --••--</div>
+                            <div><strong>?</strong> ••--••</div>
+                            <div><strong>'</strong> •----•</div>
+                            <div><strong>!</strong> -•-•--</div>
+                            <div><strong>/</strong> -••-•</div>
+                            <div><strong>(</strong> -•--•</div>
+                            <div><strong>)</strong> -•--•-</div>
+                            <div><strong>&</strong> •-•••</div>
+                            <div><strong>:</strong> ---•••</div>
+                            <div><strong>;</strong> -•-•-•</div>
+                            <div><strong>=</strong> -•••-</div>
+                            <div><strong>+</strong> •-•-•</div>
+                            <div><strong>-</strong> -••••-</div>
+                            <div><strong>_</strong> ••--•-</div>
+                            <div><strong>"</strong> •-••-•</div>
+                            <div><strong>$</strong> •••-••-</div>
+                            <div><strong>@</strong> •--•-•</div>
+                        </div>
+                        <div class="mt-3 text-xs text-gray-600">
+                            <strong>Prosigns:</strong> < •• •• (Wait) | ••••• (End of work) | ••• •- (Starting signal) | ••• -• (Invitation to transmit)
+                        </div>
+                    </div>
+
+                    <div class="mt-6 p-4 bg-green-50 rounded-lg">
+                        <h4 class="text-sm font-semibold text-green-800 mb-2">About Morse Code</h4>
+                        <ul class="text-sm text-green-700 space-y-1">
+                            <li>• <strong>Samuel F.B. Morse</strong> developed the code in 1838</li>
+                            <li>• <strong>International Standard</strong> uses • (dot) and - (dash)</li>
+                            <li>• <strong>Letter separation</strong>: / | <strong>Word separation</strong>: // or /</li>
+                            <li>• <strong>Emergency signal</strong>: SOS (••• --- •••)</li>
+                            <li>• <strong>Learning tool</strong>: Great for teaching patterns and communication</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Features Section -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+            <div class="bg-white rounded-xl shadow-lg p-6 text-center">
+                <div class="w-12 h-12 bg-ameya-electric rounded-lg flex items-center justify-center mx-auto mb-4">
+                    <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
+                    </svg>
+                </div>
+                <h3 class="text-lg font-semibold text-ameya-navy mb-2">Case Conversion</h3>
+                <p class="text-ameya-gray text-sm">Convert text between uppercase, lowercase, title case, and programming cases.</p>
+            </div>
+
+            <div class="bg-white rounded-xl shadow-lg p-6 text-center">
+                <div class="w-12 h-12 bg-ameya-electric rounded-lg flex items-center justify-center mx-auto mb-4">
+                    <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+                    </svg>
+                </div>
+                <h3 class="text-lg font-semibold text-ameya-navy mb-2">Text Analysis</h3>
+                <p class="text-ameya-gray text-sm">Count words, characters, sentences, and estimate reading time.</p>
+            </div>
+
+            <div class="bg-white rounded-xl shadow-lg p-6 text-center">
+                <div class="w-12 h-12 bg-ameya-electric rounded-lg flex items-center justify-center mx-auto mb-4">
+                    <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                    </svg>
+                </div>
+                <h3 class="text-lg font-semibold text-ameya-navy mb-2">Find & Replace</h3>
+                <p class="text-ameya-gray text-sm">Search and replace text with advanced options including regex support.</p>
+            </div>
+        </div>
+
+        <!-- Usage Guide -->
+        <div class="bg-white rounded-xl shadow-lg p-8">
+            <h2 class="text-2xl font-semibold text-ameya-navy mb-6">Text Tools for Content Creators</h2>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div>
+                    <h3 class="text-lg font-semibold text-ameya-electric mb-3">For Writers</h3>
+                    <ul class="space-y-2 text-ameya-gray">
+                        <li class="flex items-start">
+                            <span class="text-ameya-accent mr-2">•</span>
+                            <span>Word and character counting for content limits</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-ameya-accent mr-2">•</span>
+                            <span>Case conversion for titles and headings</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-ameya-accent mr-2">•</span>
+                            <span>Reading time estimation</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-ameya-accent mr-2">•</span>
+                            <span>Find and replace for editing</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h3 class="text-lg font-semibold text-ameya-electric mb-3">For Developers</h3>
+                    <ul class="space-y-2 text-ameya-gray">
+                        <li class="flex items-start">
+                            <span class="text-ameya-accent mr-2">•</span>
+                            <span>Programming case conversions (camelCase, snake_case)</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-ameya-accent mr-2">•</span>
+                            <span>Slug generation for URLs</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-ameya-accent mr-2">•</span>
+                            <span>Base64 encoding/decoding</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-ameya-accent mr-2">•</span>
+                            <span>Regular expression find and replace</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-ameya-navy text-white py-8 mt-16">
+        <div class="max-w-6xl mx-auto px-6 sm:px-8 lg:px-10 text-center">
+            <p class="text-white/80">&copy; 2025 Ameya Labs. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Text Tools Logic
+        let currentTool = 'case-converter';
+
+        const toolBtns = document.querySelectorAll('.tool-btn');
+        const toolInterfaces = document.querySelectorAll('.tool-interface');
+
+        // Case converter elements
+        const caseInput = document.getElementById('case-input');
+        const caseOutput = document.getElementById('case-output');
+        const uppercaseBtn = document.getElementById('uppercase-btn');
+        const lowercaseBtn = document.getElementById('lowercase-btn');
+        const titlecaseBtn = document.getElementById('titlecase-btn');
+        const sentencecaseBtn = document.getElementById('sentencecase-btn');
+        const camelcaseBtn = document.getElementById('camelcase-btn');
+        const snakecaseBtn = document.getElementById('snakecase-btn');
+        const kebabcaseBtn = document.getElementById('kebabcase-btn');
+
+        // Word counter elements
+        const counterInput = document.getElementById('counter-input');
+        const wordCount = document.getElementById('word-count');
+        const charCount = document.getElementById('char-count');
+        const charNoSpaceCount = document.getElementById('char-no-space-count');
+        const sentenceCount = document.getElementById('sentence-count');
+        const readingTime = document.getElementById('reading-time');
+
+        // Find & replace elements
+        const findInput = document.getElementById('find-input');
+        const findText = document.getElementById('find-text');
+        const replaceText = document.getElementById('replace-text');
+        const caseSensitive = document.getElementById('case-sensitive');
+        const wholeWords = document.getElementById('whole-words');
+        const regexMode = document.getElementById('regex-mode');
+        const findBtn = document.getElementById('find-btn');
+        const replaceBtn = document.getElementById('replace-btn');
+        const replaceSingleBtn = document.getElementById('replace-single-btn');
+        const findOutput = document.getElementById('find-output');
+
+        // Tool switching
+        toolBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const tool = btn.dataset.tool;
+
+                // Update button styles
+                toolBtns.forEach(b => {
+                    b.classList.remove('active', 'bg-ameya-electric', 'text-white');
+                    b.classList.add('bg-gray-100', 'text-ameya-gray', 'hover:bg-gray-200');
+                });
+                btn.classList.add('active', 'bg-ameya-electric', 'text-white');
+                btn.classList.remove('bg-gray-100', 'text-ameya-gray', 'hover:bg-gray-200');
+
+                // Show selected tool interface
+                toolInterfaces.forEach(interface => {
+                    interface.classList.add('hidden');
+                });
+                document.getElementById(tool).classList.remove('hidden');
+
+                currentTool = tool;
+            });
+        });
+
+        // Case conversion functions
+        function toUpperCase(text) {
+            return text.toUpperCase();
+        }
+
+        function toLowerCase(text) {
+            return text.toLowerCase();
+        }
+
+        function toTitleCase(text) {
+            return text.replace(/\w\S*/g, (txt) =>
+                txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase()
+            );
+        }
+
+        function toSentenceCase(text) {
+            return text.replace(/(^\s*\w|[\.\!\?]\s*\w)/g, (c) => c.toUpperCase());
+        }
+
+        function toCamelCase(text) {
+            return text
+                .replace(/(?:^\w|[A-Z]|\b\w)/g, (word, index) =>
+                    index === 0 ? word.toLowerCase() : word.toUpperCase()
+                )
+                .replace(/\s+/g, '');
+        }
+
+        function toSnakeCase(text) {
+            return text
+                .replace(/\W+/g, ' ')
+                .split(/ |\B(?=[A-Z])/)
+                .map(word => word.toLowerCase())
+                .join('_');
+        }
+
+        function toKebabCase(text) {
+            return text
+                .replace(/\W+/g, ' ')
+                .split(/ |\B(?=[A-Z])/)
+                .map(word => word.toLowerCase())
+                .join('-');
+        }
+
+        // Case converter event listeners
+        uppercaseBtn.addEventListener('click', () => {
+            caseOutput.value = toUpperCase(caseInput.value);
+        });
+
+        lowercaseBtn.addEventListener('click', () => {
+            caseOutput.value = toLowerCase(caseInput.value);
+        });
+
+        titlecaseBtn.addEventListener('click', () => {
+            caseOutput.value = toTitleCase(caseInput.value);
+        });
+
+        sentencecaseBtn.addEventListener('click', () => {
+            caseOutput.value = toSentenceCase(caseInput.value);
+        });
+
+        camelcaseBtn.addEventListener('click', () => {
+            caseOutput.value = toCamelCase(caseInput.value);
+        });
+
+        snakecaseBtn.addEventListener('click', () => {
+            caseOutput.value = toSnakeCase(caseInput.value);
+        });
+
+        kebabcaseBtn.addEventListener('click', () => {
+            caseOutput.value = toKebabCase(caseInput.value);
+        });
+
+        // Word counter
+        function updateWordCount() {
+            const text = counterInput.value;
+            const words = text.trim() === '' ? 0 : text.trim().split(/\s+/).length;
+            const chars = text.length;
+            const charsNoSpace = text.replace(/\s/g, '').length;
+            const sentences = text.split(/[.!?]+/).filter(s => s.trim().length > 0).length;
+
+            wordCount.textContent = words;
+            charCount.textContent = chars;
+            charNoSpaceCount.textContent = charsNoSpace;
+            sentenceCount.textContent = sentences;
+
+            // Estimate reading time (average 200 words per minute)
+            const readingMinutes = Math.ceil(words / 200);
+            const readingTimeText = readingMinutes === 1 ? '1 minute' : `${readingMinutes} minutes`;
+            readingTime.innerHTML = `Estimated reading time: <span class="stats-highlight">${readingTimeText}</span>`;
+        }
+
+        counterInput.addEventListener('input', updateWordCount);
+
+        // Find & replace
+        findBtn.addEventListener('click', () => {
+            const text = findInput.value;
+            const searchTerm = findText.value;
+
+            if (!searchTerm) {
+                findOutput.value = 'Please enter text to find.';
+                return;
+            }
+
+            let flags = 'g';
+            if (!caseSensitive.checked) flags += 'i';
+
+            let regex;
+            try {
+                if (regexMode.checked) {
+                    regex = new RegExp(searchTerm, flags);
+                } else {
+                    const escaped = searchTerm.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+                    regex = new RegExp(escaped, flags);
+                }
+
+                if (wholeWords.checked) {
+                    regex = new RegExp('\\b' + regex.source + '\\b', flags);
+                }
+
+                const matches = text.match(regex);
+                if (matches) {
+                    findOutput.value = `Found ${matches.length} occurrence(s):\n\n${matches.join('\n')}`;
+                } else {
+                    findOutput.value = 'No matches found.';
+                }
+            } catch (error) {
+                findOutput.value = `Invalid regular expression: ${error.message}`;
+            }
+        });
+
+        replaceBtn.addEventListener('click', () => {
+            const text = findInput.value;
+            const searchTerm = findText.value;
+            const replacement = replaceText.value;
+
+            if (!searchTerm) {
+                findOutput.value = 'Please enter text to find.';
+                return;
+            }
+
+            let flags = 'g';
+            if (!caseSensitive.checked) flags += 'i';
+
+            try {
+                let result;
+                if (regexMode.checked) {
+                    const regex = new RegExp(searchTerm, flags);
+                    result = text.replace(regex, replacement);
+                } else {
+                    const escaped = searchTerm.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+                    let regex = new RegExp(escaped, flags);
+
+                    if (wholeWords.checked) {
+                        regex = new RegExp('\\b' + regex.source + '\\b', flags);
+                    }
+
+                    result = text.replace(regex, replacement);
+                }
+
+                findOutput.value = result;
+                findInput.value = result; // Update input with result
+            } catch (error) {
+                findOutput.value = `Error: ${error.message}`;
+            }
+        });
+
+        replaceSingleBtn.addEventListener('click', () => {
+            const text = findInput.value;
+            const searchTerm = findText.value;
+            const replacement = replaceText.value;
+
+            if (!searchTerm) {
+                findOutput.value = 'Please enter text to find.';
+                return;
+            }
+
+            let flags = '';
+            if (!caseSensitive.checked) flags += 'i';
+
+            try {
+                let result;
+                if (regexMode.checked) {
+                    const regex = new RegExp(searchTerm, flags);
+                    result = text.replace(regex, replacement);
+                } else {
+                    const escaped = searchTerm.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+                    let regex = new RegExp(escaped, flags);
+
+                    if (wholeWords.checked) {
+                        regex = new RegExp('\\b' + regex.source + '\\b', flags);
+                    }
+
+                    result = text.replace(regex, replacement);
+                }
+
+                findOutput.value = result;
+                findInput.value = result; // Update input with result
+            } catch (error) {
+                findOutput.value = `Error: ${error.message}`;
+            }
+        });
+
+        // Programming case converter elements
+        const programmingInput = document.getElementById('programming-input');
+        const programmingOutput = document.getElementById('programming-output');
+        const toCamelCaseBtn = document.getElementById('to-camel-case');
+        const toPascalCaseBtn = document.getElementById('to-pascal-case');
+        const toSnakeCaseBtn = document.getElementById('to-snake-case');
+        const toKebabCaseBtn = document.getElementById('to-kebab-case');
+        const toScreamingSnakeCaseBtn = document.getElementById('to-screaming-snake-case');
+        const toTrainCaseBtn = document.getElementById('to-train-case');
+        const toCobolCaseBtn = document.getElementById('to-cobol-case');
+        const toFlatCaseBtn = document.getElementById('to-flat-case');
+
+        // Programming case conversion functions
+        function toCamelCase(text) {
+            return text
+                .replace(/[^a-zA-Z0-9]+/g, ' ')
+                .split(' ')
+                .map((word, index) =>
+                    index === 0
+                        ? word.toLowerCase()
+                        : word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
+                )
+                .join('');
+        }
+
+        function toPascalCase(text) {
+            return text
+                .replace(/[^a-zA-Z0-9]+/g, ' ')
+                .split(' ')
+                .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+                .join('');
+        }
+
+        function toSnakeCase(text) {
+            return text
+                .replace(/[^a-zA-Z0-9]+/g, ' ')
+                .split(' ')
+                .map(word => word.toLowerCase())
+                .join('_');
+        }
+
+        function toKebabCase(text) {
+            return text
+                .replace(/[^a-zA-Z0-9]+/g, ' ')
+                .split(' ')
+                .map(word => word.toLowerCase())
+                .join('-');
+        }
+
+        function toScreamingSnakeCase(text) {
+            return text
+                .replace(/[^a-zA-Z0-9]+/g, ' ')
+                .split(' ')
+                .map(word => word.toUpperCase())
+                .join('_');
+        }
+
+        function toTrainCase(text) {
+            return text
+                .replace(/[^a-zA-Z0-9]+/g, ' ')
+                .split(' ')
+                .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+                .join('-');
+        }
+
+        function toCobolCase(text) {
+            return text
+                .replace(/[^a-zA-Z0-9]+/g, ' ')
+                .split(' ')
+                .map(word => word.toUpperCase())
+                .join('-');
+        }
+
+        function toFlatCase(text) {
+            return text
+                .replace(/[^a-zA-Z0-9]+/g, ' ')
+                .split(' ')
+                .map(word => word.toLowerCase())
+                .join('');
+        }
+
+        // Programming case converter event listeners
+        toCamelCaseBtn.addEventListener('click', () => {
+            programmingOutput.value = toCamelCase(programmingInput.value);
+        });
+
+        toPascalCaseBtn.addEventListener('click', () => {
+            programmingOutput.value = toPascalCase(programmingInput.value);
+        });
+
+        toSnakeCaseBtn.addEventListener('click', () => {
+            programmingOutput.value = toSnakeCase(programmingInput.value);
+        });
+
+        toKebabCaseBtn.addEventListener('click', () => {
+            programmingOutput.value = toKebabCase(programmingInput.value);
+        });
+
+        toScreamingSnakeCaseBtn.addEventListener('click', () => {
+            programmingOutput.value = toScreamingSnakeCase(programmingInput.value);
+        });
+
+        toTrainCaseBtn.addEventListener('click', () => {
+            programmingOutput.value = toTrainCase(programmingInput.value);
+        });
+
+        toCobolCaseBtn.addEventListener('click', () => {
+            programmingOutput.value = toCobolCase(programmingInput.value);
+        });
+
+        toFlatCaseBtn.addEventListener('click', () => {
+            programmingOutput.value = toFlatCase(programmingInput.value);
+        });
+
+        // Slug generator elements
+        const slugInput = document.getElementById('slug-input');
+        const slugOutput = document.getElementById('slug-output');
+        const slugSeparator = document.getElementById('slug-separator');
+        const slugMaxLength = document.getElementById('slug-max-length');
+        const slugLowercase = document.getElementById('slug-lowercase');
+        const generateSlugBtn = document.getElementById('generate-slug-btn');
+        const copySlugBtn = document.getElementById('copy-slug-btn');
+        const clearSlugBtn = document.getElementById('clear-slug-btn');
+
+        // Slug generator function
+        function generateSlug(text, options = {}) {
+            const {
+                separator = '-',
+                maxLength = 100,
+                lowercase = true
+            } = options;
+
+            if (!text || text.trim() === '') {
+                return '';
+            }
+
+            let slug = text;
+
+            // Convert to lowercase if requested
+            if (lowercase) {
+                slug = slug.toLowerCase();
+            }
+
+            // Replace spaces and special characters with separator
+            slug = slug
+                .replace(/[^\w\s-]/g, '') // Remove special characters except spaces and hyphens
+                .replace(/[\s_-]+/g, separator) // Replace spaces, underscores, and existing separators with chosen separator
+                .replace(new RegExp(`${separator}+`, 'g'), separator) // Replace multiple consecutive separators with single one
+                .replace(new RegExp(`^${separator}+|${separator}+$`, 'g'), ''); // Remove leading/trailing separators
+
+            // Limit length
+            if (slug.length > maxLength) {
+                slug = slug.substring(0, maxLength);
+                // Make sure we don't cut in the middle of a word
+                const lastSeparatorIndex = slug.lastIndexOf(separator);
+                if (lastSeparatorIndex > maxLength * 0.7) {
+                    slug = slug.substring(0, lastSeparatorIndex);
+                }
+                // Remove trailing separator after truncation
+                slug = slug.replace(new RegExp(`${separator}$`), '');
+            }
+
+            return slug;
+        }
+
+        // Auto-generate slug on input change
+        let slugTimeout;
+        slugInput.addEventListener('input', () => {
+            clearTimeout(slugTimeout);
+            slugTimeout = setTimeout(() => {
+                const options = {
+                    separator: slugSeparator.value,
+                    maxLength: parseInt(slugMaxLength.value) || 100,
+                    lowercase: slugLowercase.checked
+                };
+                slugOutput.value = generateSlug(slugInput.value, options);
+            }, 300); // Debounce for better performance
+        });
+
+        // Update slug when options change
+        slugSeparator.addEventListener('change', () => {
+            const options = {
+                separator: slugSeparator.value,
+                maxLength: parseInt(slugMaxLength.value) || 100,
+                lowercase: slugLowercase.checked
+            };
+            slugOutput.value = generateSlug(slugInput.value, options);
+        });
+
+        slugMaxLength.addEventListener('input', () => {
+            const options = {
+                separator: slugSeparator.value,
+                maxLength: parseInt(slugMaxLength.value) || 100,
+                lowercase: slugLowercase.checked
+            };
+            slugOutput.value = generateSlug(slugInput.value, options);
+        });
+
+        slugLowercase.addEventListener('change', () => {
+            const options = {
+                separator: slugSeparator.value,
+                maxLength: parseInt(slugMaxLength.value) || 100,
+                lowercase: slugLowercase.checked
+            };
+            slugOutput.value = generateSlug(slugInput.value, options);
+        });
+
+        // Manual generate button
+        generateSlugBtn.addEventListener('click', () => {
+            const options = {
+                separator: slugSeparator.value,
+                maxLength: parseInt(slugMaxLength.value) || 100,
+                lowercase: slugLowercase.checked
+            };
+            slugOutput.value = generateSlug(slugInput.value, options);
+        });
+
+        // Copy slug button
+        copySlugBtn.addEventListener('click', async () => {
+            const slug = slugOutput.value;
+            if (!slug) {
+                showNotification('No slug to copy!', 'error');
+                return;
+            }
+
+            try {
+                await navigator.clipboard.writeText(slug);
+                showNotification('Slug copied to clipboard!', 'success');
+            } catch (err) {
+                // Fallback
+                const textArea = document.createElement('textarea');
+                textArea.value = slug;
+                document.body.appendChild(textArea);
+                textArea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textArea);
+                showNotification('Slug copied to clipboard!', 'success');
+            }
+        });
+
+        // Clear button
+        clearSlugBtn.addEventListener('click', () => {
+            slugInput.value = '';
+            slugOutput.value = '';
+        });
+
+        // Text formatter elements
+        const formatterInput = document.getElementById('formatter-input');
+        const formatterOutput = document.getElementById('formatter-output');
+        const formatTextBtn = document.getElementById('format-text-btn');
+        const copyFormattedBtn = document.getElementById('copy-formatted-btn');
+        const clearFormatterBtn = document.getElementById('clear-formatter-btn');
+        const resetOptionsBtn = document.getElementById('reset-options-btn');
+
+        // Text formatter checkboxes
+        const removeExtraSpaces = document.getElementById('remove-extra-spaces');
+        const removeEmptyLines = document.getElementById('remove-empty-lines');
+        const trimLines = document.getElementById('trim-lines');
+        const normalizeQuotes = document.getElementById('normalize-quotes');
+        const sortLines = document.getElementById('sort-lines');
+        const reverseLines = document.getElementById('reverse-lines');
+        const removeDuplicateLines = document.getElementById('remove-duplicate-lines');
+        const numberLines = document.getElementById('number-lines');
+        const removeDiacritics = document.getElementById('remove-diacritics');
+        const removePunctuation = document.getElementById('remove-punctuation');
+        const removeNumbers = document.getElementById('remove-numbers');
+        const extractUrls = document.getElementById('extract-urls');
+
+        // Text formatter advanced options
+        const lineLength = document.getElementById('line-length');
+        const indentationType = document.getElementById('indentation-type');
+        const lineEnding = document.getElementById('line-ending');
+
+        // Text formatter functions
+        function formatText(text, options) {
+            if (!text) return '';
+
+            let result = text;
+
+            // Text cleaning operations
+            if (options.removeExtraSpaces) {
+                result = result.replace(/[ \t]+/g, ' '); // Replace multiple spaces/tabs with single space
+            }
+
+            if (options.trimLines) {
+                result = result.split('\n').map(line => line.trim()).join('\n');
+            }
+
+            if (options.removeEmptyLines) {
+                result = result.split('\n').filter(line => line.trim().length > 0).join('\n');
+            }
+
+            if (options.normalizeQuotes) {
+                result = result
+                    .replace(/[""]/g, '"') // Smart double quotes to regular
+                    .replace(/['']/g, "'"); // Smart single quotes to regular
+            }
+
+            // Line operations
+            let lines = result.split('\n');
+
+            if (options.sortLines) {
+                lines = lines.sort();
+            }
+
+            if (options.reverseLines) {
+                lines = lines.reverse();
+            }
+
+            if (options.removeDuplicateLines) {
+                const seen = new Set();
+                lines = lines.filter(line => {
+                    const trimmed = line.trim();
+                    if (seen.has(trimmed)) return false;
+                    seen.add(trimmed);
+                    return true;
+                });
+            }
+
+            if (options.numberLines) {
+                lines = lines.map((line, index) => `${(index + 1).toString().padStart(3, ' ')}. ${line}`);
+            }
+
+            result = lines.join('\n');
+
+            // Character operations
+            if (options.removeDiacritics) {
+                result = result.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+            }
+
+            if (options.removePunctuation) {
+                result = result.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, '');
+            }
+
+            if (options.removeNumbers) {
+                result = result.replace(/[0-9]/g, '');
+            }
+
+            if (options.extractUrls) {
+                const urlRegex = /(https?:\/\/[^\s]+)/g;
+                const urls = result.match(urlRegex);
+                result = urls ? urls.join('\n') : '';
+            }
+
+            // Advanced formatting
+            if (options.lineLength > 0) {
+                result = wrapText(result, options.lineLength);
+            }
+
+            if (options.indentationType !== 'none') {
+                const indent = options.indentationType === 'spaces' ? '    ' : '\t';
+                result = result.split('\n').map(line => indent + line).join('\n');
+            }
+
+            // Line ending conversion
+            if (options.lineEnding === 'crlf') {
+                result = result.replace(/\n/g, '\r\n');
+            } else if (options.lineEnding === 'cr') {
+                result = result.replace(/\n/g, '\r');
+            }
+            // lf is default, no change needed
+
+            return result;
+        }
+
+        function wrapText(text, maxLength) {
+            const words = text.split(' ');
+            const lines = [];
+            let currentLine = '';
+
+            for (const word of words) {
+                if (currentLine.length + word.length + 1 <= maxLength) {
+                    currentLine += (currentLine ? ' ' : '') + word;
+                } else {
+                    if (currentLine) lines.push(currentLine);
+                    currentLine = word;
+                }
+            }
+            if (currentLine) lines.push(currentLine);
+
+            return lines.join('\n');
+        }
+
+        // Text formatter event listeners
+        formatTextBtn.addEventListener('click', () => {
+            const options = {
+                removeExtraSpaces: removeExtraSpaces.checked,
+                removeEmptyLines: removeEmptyLines.checked,
+                trimLines: trimLines.checked,
+                normalizeQuotes: normalizeQuotes.checked,
+                sortLines: sortLines.checked,
+                reverseLines: reverseLines.checked,
+                removeDuplicateLines: removeDuplicateLines.checked,
+                numberLines: numberLines.checked,
+                removeDiacritics: removeDiacritics.checked,
+                removePunctuation: removePunctuation.checked,
+                removeNumbers: removeNumbers.checked,
+                extractUrls: extractUrls.checked,
+                lineLength: parseInt(lineLength.value) || 0,
+                indentationType: indentationType.value,
+                lineEnding: lineEnding.value
+            };
+
+            formatterOutput.value = formatText(formatterInput.value, options);
+        });
+
+        copyFormattedBtn.addEventListener('click', async () => {
+            const formattedText = formatterOutput.value;
+            if (!formattedText) {
+                showNotification('No formatted text to copy!', 'error');
+                return;
+            }
+
+            try {
+                await navigator.clipboard.writeText(formattedText);
+                showNotification('Formatted text copied to clipboard!', 'success');
+            } catch (err) {
+                // Fallback
+                const textArea = document.createElement('textarea');
+                textArea.value = formattedText;
+                document.body.appendChild(textArea);
+                textArea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textArea);
+                showNotification('Formatted text copied to clipboard!', 'success');
+            }
+        });
+
+        clearFormatterBtn.addEventListener('click', () => {
+            formatterInput.value = '';
+            formatterOutput.value = '';
+        });
+
+        resetOptionsBtn.addEventListener('click', () => {
+            // Reset all checkboxes
+            const checkboxes = [
+                removeExtraSpaces, removeEmptyLines, trimLines, normalizeQuotes,
+                sortLines, reverseLines, removeDuplicateLines, numberLines,
+                removeDiacritics, removePunctuation, removeNumbers, extractUrls
+            ];
+            checkboxes.forEach(cb => cb.checked = false);
+
+            // Reset select elements
+            lineLength.value = '';
+            indentationType.value = 'none';
+            lineEnding.value = 'lf';
+
+            // Clear output
+            formatterOutput.value = '';
+        });
+
+        // Morse code elements
+        const morseInput = document.getElementById('morse-input');
+        const morseOutput = document.getElementById('morse-output');
+        const convertMorseBtn = document.getElementById('convert-morse-btn');
+        const copyMorseBtn = document.getElementById('copy-morse-btn');
+        const clearMorseBtn = document.getElementById('clear-morse-btn');
+        const showReferenceBtn = document.getElementById('show-reference-btn');
+        const morseReference = document.getElementById('morse-reference');
+        const inputLabel = document.getElementById('input-label');
+        const outputLabel = document.getElementById('output-label');
+        const conversionDirection = document.getElementsByName('conversion-direction');
+        const playMorseBtn = document.getElementById('play-morse-btn');
+        const stopAudioBtn = document.getElementById('stop-audio-btn');
+        const morseSpeed = document.getElementById('morse-speed');
+        const speedValue = document.getElementById('speed-value');
+
+        // Morse code dictionary
+        const morseCode = {
+            'A': '•-', 'B': '-•••', 'C': '-•-•', 'D': '-••', 'E': '•',
+            'F': '••-•', 'G': '--•', 'H': '••••', 'I': '••', 'J': '•---',
+            'K': '-•-', 'L': '•-••', 'M': '--', 'N': '-•', 'O': '---',
+            'P': '•--•', 'Q': '--•-', 'R': '•-•', 'S': '•••', 'T': '-',
+            'U': '••-', 'V': '•••-', 'W': '•--', 'X': '-••-', 'Y': '-•--',
+            'Z': '--••',
+            '0': '-----', '1': '•----', '2': '••---', '3': '•••--', '4': '••••-',
+            '5': '•••••', '6': '-••••', '7': '--•••', '8': '---••', '9': '----•',
+            '.': '•-•-•-', ',': '--••--', '?': '••--••', "'": '•----•',
+            '!': '-•-•--', '/': '-••-•', '(': '-•--•', ')': '-•--•-',
+            '&': '•-•••', ':': '---•••', ';': '-•-•-•', '=': '-•••-',
+            '+': '•-•-•', '-': '-••••-', '_': '••--•-', '"': '•-••-•',
+            '$': '•••-••-', '@': '•--•-•', ' ': '/'
+        };
+
+        const reverseMorseCode = {};
+        for (const [char, code] of Object.entries(morseCode)) {
+            reverseMorseCode[code] = char;
+        }
+
+        // Morse code conversion functions
+        function textToMorse(text) {
+            if (!text) return '';
+
+            return text.toUpperCase()
+                .split('')
+                .map(char => morseCode[char] || char)
+                .join(' ')
+                .replace(/ \/ /g, ' / '); // Ensure word separators are preserved
+        }
+
+        function morseToText(morse) {
+            if (!morse) return '';
+
+            return morse
+                .split(' ')
+                .map(code => {
+                    if (code === '/') return ' ';
+                    return reverseMorseCode[code] || code;
+                })
+                .join('')
+                .replace(/\s+/g, ' ')
+                .trim();
+        }
+
+        // Audio playback variables
+        let audioContext = null;
+        let isPlaying = false;
+        let currentTimeouts = [];
+
+        // Initialize audio context
+        function initAudioContext() {
+            if (!audioContext) {
+                audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            }
+            return audioContext;
+        }
+
+        // Play Morse code audio
+        function playMorseCode(morseText, wpm = 15) {
+            if (isPlaying) return;
+
+            isPlaying = true;
+            const context = initAudioContext();
+
+            // Morse code timing (in milliseconds)
+            const ditLength = 1200 / wpm; // Standard dit length
+            const dahLength = ditLength * 3;
+            const symbolSpace = ditLength;
+            const letterSpace = ditLength * 3;
+            const wordSpace = ditLength * 7;
+
+            let currentTime = context.currentTime;
+            const symbols = morseText.replace(/\s+/g, ' ').split('');
+
+            symbols.forEach((symbol, index) => {
+                if (symbol === '•') {
+                    // Play dit
+                    playTone(context, currentTime, ditLength);
+                    currentTime += ditLength + symbolSpace;
+                } else if (symbol === '-') {
+                    // Play dah
+                    playTone(context, currentTime, dahLength);
+                    currentTime += dahLength + symbolSpace;
+                } else if (symbol === ' ') {
+                    // Word space
+                    currentTime += wordSpace - symbolSpace;
+                } else if (symbol === '/') {
+                    // Letter space (already handled by default)
+                    currentTime += letterSpace - symbolSpace;
+                }
+            });
+
+            // Auto-stop after playback
+            const totalDuration = currentTime - context.currentTime;
+            setTimeout(() => {
+                isPlaying = false;
+            }, totalDuration * 1000);
+        }
+
+        function playTone(context, startTime, duration) {
+            const oscillator = context.createOscillator();
+            const gainNode = context.createGain();
+
+            oscillator.connect(gainNode);
+            gainNode.connect(context.destination);
+
+            oscillator.frequency.setValueAtTime(800, startTime); // 800Hz tone
+            gainNode.gain.setValueAtTime(0.3, startTime);
+            gainNode.gain.exponentialRampToValueAtTime(0.01, startTime + duration);
+
+            oscillator.start(startTime);
+            oscillator.stop(startTime + duration);
+        }
+
+        function stopMorseAudio() {
+            if (audioContext) {
+                audioContext.close();
+                audioContext = null;
+            }
+            currentTimeouts.forEach(timeout => clearTimeout(timeout));
+            currentTimeouts = [];
+            isPlaying = false;
+        }
+
+        // Morse code event listeners
+        conversionDirection.forEach(radio => {
+            radio.addEventListener('change', () => {
+                const direction = document.querySelector('input[name="conversion-direction"]:checked').value;
+
+                if (direction === 'text-to-morse') {
+                    inputLabel.textContent = 'Input Text';
+                    morseInput.placeholder = 'Enter text to convert...';
+                    outputLabel.textContent = 'Morse Code Output';
+                    morseOutput.classList.add('font-mono');
+                } else {
+                    inputLabel.textContent = 'Input Morse Code';
+                    morseInput.placeholder = 'Enter Morse code (• - /)...';
+                    outputLabel.textContent = 'Text Output';
+                    morseOutput.classList.remove('font-mono');
+                }
+
+                // Clear inputs when switching
+                morseInput.value = '';
+                morseOutput.value = '';
+            });
+        });
+
+        convertMorseBtn.addEventListener('click', () => {
+            const direction = document.querySelector('input[name="conversion-direction"]:checked').value;
+            const input = morseInput.value.trim();
+
+            if (!input) {
+                showNotification('Please enter text to convert!', 'error');
+                return;
+            }
+
+            if (direction === 'text-to-morse') {
+                morseOutput.value = textToMorse(input);
+            } else {
+                morseOutput.value = morseToText(input);
+            }
+        });
+
+        copyMorseBtn.addEventListener('click', async () => {
+            const result = morseOutput.value;
+            if (!result) {
+                showNotification('No result to copy!', 'error');
+                return;
+            }
+
+            try {
+                await navigator.clipboard.writeText(result);
+                showNotification('Morse code copied to clipboard!', 'success');
+            } catch (err) {
+                // Fallback
+                const textArea = document.createElement('textarea');
+                textArea.value = result;
+                document.body.appendChild(textArea);
+                textArea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textArea);
+                showNotification('Morse code copied to clipboard!', 'success');
+            }
+        });
+
+        clearMorseBtn.addEventListener('click', () => {
+            morseInput.value = '';
+            morseOutput.value = '';
+        });
+
+        showReferenceBtn.addEventListener('click', () => {
+            morseReference.classList.toggle('hidden');
+            showReferenceBtn.textContent = morseReference.classList.contains('hidden')
+                ? 'Show Reference'
+                : 'Hide Reference';
+        });
+
+        playMorseBtn.addEventListener('click', () => {
+            const morseText = morseOutput.value;
+            if (!morseText) {
+                showNotification('No Morse code to play!', 'error');
+                return;
+            }
+
+            const wpm = parseInt(morseSpeed.value);
+            playMorseCode(morseText, wpm);
+        });
+
+        stopAudioBtn.addEventListener('click', () => {
+            stopMorseAudio();
+        });
+
+        morseSpeed.addEventListener('input', () => {
+            speedValue.textContent = `${morseSpeed.value} WPM`;
+        });
+
+        // Copy to clipboard utility
+        async function copyToClipboard(text) {
+            try {
+                await navigator.clipboard.writeText(text);
+                showNotification('Copied to clipboard!', 'success');
+            } catch (err) {
+                // Fallback
+                const textArea = document.createElement('textarea');
+                textArea.value = text;
+                document.body.appendChild(textArea);
+                textArea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textArea);
+                showNotification('Copied to clipboard!', 'success');
+            }
+        }
+
+        function showNotification(message, type = 'info') {
+            const notification = document.createElement('div');
+            notification.className = `fixed top-4 right-4 px-4 py-2 rounded-lg text-white z-50 ${
+                type === 'success' ? 'bg-green-500' : 'bg-blue-500'
+            }`;
+            notification.textContent = message;
+            document.body.appendChild(notification);
+
+            setTimeout(() => {
+                notification.remove();
+            }, 3000);
+        }
+
+        // Initialize
+        updateWordCount();
+    </script>
+</body>
+</html>

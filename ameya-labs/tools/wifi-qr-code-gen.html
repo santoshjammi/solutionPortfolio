@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Updated Title for SEO -->
+    <title>Wi-Fi QR Code Generator | Create QR Codes for Any Network</title>
+    <!-- SEO-friendly meta description -->
+    <meta name="description" content="Quickly create a scannable QR code for any Wi-Fi network. Share your Wi-Fi password without typing. Supports WPA/WPA2, WEP, and open networks.">
+    <!-- Meta keywords for search engines -->
+    <meta name="keywords" content="Wi-Fi QR code, QR code generator, network QR code, Wi-Fi password QR, share Wi-Fi, free QR code, WPA, WEP, open network">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        :root {
+            --am-navy: #071226;
+            --am-electric: #6C4BFF;
+            --am-accent: #4F46E5;
+            --am-light: #f8fafc;
+            --am-gray: #64748b;
+        }
+        .ameya-navy { color: var(--am-navy); }
+        .ameya-electric { color: var(--am-electric); }
+        .ameya-accent { color: var(--am-accent); }
+        .ameya-light { background-color: var(--am-light); }
+        .ameya-gray { color: var(--am-gray); }
+        .bg-ameya-navy { background-color: var(--am-navy); }
+        .bg-ameya-electric { background-color: var(--am-electric); }
+        .bg-ameya-accent { background-color: var(--am-accent); }
+        .border-ameya-electric { border-color: var(--am-electric); }
+        .text-ameya-navy { color: var(--am-navy); }
+        .text-ameya-electric { color: var(--am-electric); }
+        .text-ameya-accent { color: var(--am-accent); }
+        .text-ameya-gray { color: var(--am-gray); }
+    </style>
+</head>
+<body class="bg-ameya-light min-h-screen">
+
+    <!-- Header -->
+    <header class="bg-white shadow-sm border-b border-ameya-gray/20">
+        <div class="max-w-6xl mx-auto px-6 sm:px-8 lg:px-10 py-4">
+            <div class="flex items-center justify-between">
+                <a href="../index.html" class="flex items-center space-x-3">
+                    <img src="../AmeyaLogo12.png" alt="Ameya Labs Logo" class="h-8 w-auto">
+                    <span class="text-xl font-bold text-ameya-navy">Ameya Labs</span>
+                </a>
+                <a href="../index.html#tools" class="text-ameya-electric hover:text-ameya-accent font-medium transition-colors flex items-center">
+                    <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+                    </svg>
+                    Back to Tools
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="flex items-center justify-center min-h-screen p-4 pt-8">
+        <div class="bg-white p-8 rounded-xl shadow-lg w-full max-w-md space-y-6 text-center border border-ameya-gray/20">
+        <!-- Main heading with improved keywords -->
+        <h1 class="text-3xl font-bold text-ameya-electric">Generate a QR Code for Your Wi-Fi Network</h1>
+        <p class="text-ameya-gray">Enter your Wi-Fi details below to generate a QR code for easy sharing. Just scan with a phone camera!</p>
+
+        <!-- New section for SEO-rich content -->
+        <div class="space-y-2 text-left">
+            <h2 class="text-xl font-semibold text-ameya-navy">How Wi-Fi QR Codes Work</h2>
+            <p class="text-ameya-gray">
+                A Wi-Fi QR code makes connecting to any network simple and fast. Instead of manually typing in a long and complex password, people can use their smartphone's camera to scan the code. This automatically populates the network name (SSID), encryption type, and password, streamlining the connection process. It's a perfect solution for homes, businesses, or public spaces.
+            </p>
+        </div>
+
+        <!-- Input fields for user data -->
+        <div class="space-y-4">
+            <div>
+                <label for="ssid" class="block text-left text-sm font-medium text-ameya-navy">Network Name (SSID)</label>
+                <input type="text" id="ssid" placeholder="e.g., MyHomeNetwork" class="mt-1 block w-full px-4 py-2 bg-ameya-light border border-ameya-gray/30 rounded-md focus:ring-2 focus:ring-ameya-electric focus:border-ameya-electric text-ameya-navy placeholder-ameya-gray/60">
+            </div>
+
+            <div>
+                <label for="password" class="block text-left text-sm font-medium text-ameya-navy">Password</label>
+                <input type="password" id="password" placeholder="Leave blank for no password" class="mt-1 block w-full px-4 py-2 bg-ameya-light border border-ameya-gray/30 rounded-md focus:ring-2 focus:ring-ameya-electric focus:border-ameya-electric text-ameya-navy placeholder-ameya-gray/60">
+            </div>
+
+            <div>
+                <label for="encryption" class="block text-left text-sm font-medium text-ameya-navy">Encryption Type</label>
+                <select id="encryption" class="mt-1 block w-full px-4 py-2 bg-ameya-light border border-ameya-gray/30 rounded-md focus:ring-2 focus:ring-ameya-electric focus:border-ameya-electric text-ameya-navy">
+                    <option value="WPA" selected>WPA/WPA2</option>
+                    <option value="WEP">WEP</option>
+                    <option value="nopass">None (Open Network)</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- Container for the QR code -->
+        <div id="qrcode-container" class="mt-6 flex justify-center items-center hidden">
+            <div id="qrcode" class="border-4 border-ameya-electric/20 rounded-xl p-2 bg-white shadow-sm"></div>
+        </div>
+
+        <!-- Instructions for the user -->
+        <div id="instructions" class="text-sm text-ameya-gray hidden">
+            <p>Scan the QR code with your phone camera to connect automatically.</p>
+        </div>
+    </div>
+
+    <script>
+        // Use a variable to hold the QR code instance to prevent multiple creations
+        let qrCodeInstance = null;
+        
+        // Function to create or update the QR code
+        function generateQRCode() {
+            const ssid = document.getElementById('ssid').value.trim();
+            const password = document.getElementById('password').value;
+            const encryption = document.getElementById('encryption').value;
+            const qrcodeContainer = document.getElementById('qrcode-container');
+            const instructions = document.getElementById('instructions');
+
+            // Construct the Wi-Fi data string
+            const wifiData = `WIFI:S:${ssid};T:${encryption};P:${password};;`;
+            
+            if (ssid) {
+                // Show the container and instructions
+                qrcodeContainer.classList.remove('hidden');
+                instructions.classList.remove('hidden');
+
+                // Check if a QR code instance already exists
+                if (qrCodeInstance) {
+                    qrCodeInstance.clear();
+                    qrCodeInstance.makeCode(wifiData);
+                } else {
+                    // Create a new QR code instance if it doesn't exist
+                    qrCodeInstance = new QRCode(document.getElementById("qrcode"), {
+                        text: wifiData,
+                        width: 200,
+                        height: 200,
+                        colorDark : "#071226", // Ameya navy
+                        colorLight : "#ffffff",
+                        correctLevel : QRCode.CorrectLevel.H
+                    });
+                }
+            } else {
+                // Hide the container and instructions if no SSID is entered
+                qrcodeContainer.classList.add('hidden');
+                instructions.classList.add('hidden');
+            }
+        }
+        
+        // Add event listeners to update the QR code automatically as the user types
+        document.getElementById('ssid').addEventListener('input', generateQRCode);
+        document.getElementById('password').addEventListener('input', generateQRCode);
+        document.getElementById('encryption').addEventListener('change', generateQRCode);
+    </script>
+</body>
+</html>

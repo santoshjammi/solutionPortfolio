@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Color Picker Tool | Hex, RGB, HSL Color Converter | Ameya Labs</title>
+    <meta name="description" content="Free online color picker tool. Pick colors from palette, convert between HEX, RGB, HSL formats, generate color schemes, and copy color codes instantly.">
+    <meta name="keywords" content="color picker, color converter, hex to rgb, rgb to hex, hsl converter, color palette, color schemes, web colors, design tools, color codes">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        :root {
+            --am-navy: #071226;
+            --am-electric: #6C4BFF;
+            --am-accent: #4F46E5;
+            --am-light: #f8fafc;
+            --am-gray: #64748b;
+        }
+        .ameya-navy { color: var(--am-navy); }
+        .ameya-electric { color: var(--am-electric); }
+        .ameya-accent { color: var(--am-accent); }
+        .ameya-light { background-color: var(--am-light); }
+        .ameya-gray { color: var(--am-gray); }
+        .bg-ameya-navy { background-color: var(--am-navy); }
+        .bg-ameya-electric { background-color: var(--am-electric); }
+        .bg-ameya-accent { background-color: var(--am-accent); }
+        .border-ameya-electric { border-color: var(--am-electric); }
+        .text-ameya-navy { color: var(--am-navy); }
+        .text-ameya-electric { color: var(--am-electric); }
+        .text-ameya-accent { color: var(--am-accent); }
+        .text-ameya-gray { color: var(--am-gray); }
+        .color-swatch {
+            width: 60px;
+            height: 60px;
+            border-radius: 8px;
+            border: 2px solid #e5e7eb;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .color-swatch:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+        .color-input {
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body class="bg-ameya-light min-h-screen">
+
+    <!-- Header -->
+    <header class="bg-white shadow-sm border-b border-gray-200">
+        <div class="max-w-6xl mx-auto px-6 sm:px-8 lg:px-10 py-4">
+            <div class="flex items-center justify-between">
+                <a href="../index.html" class="flex items-center space-x-3">
+                    <img src="../AmeyaLogo12.png" alt="Ameya Labs Logo" class="h-8 w-auto">
+                    <span class="text-xl font-bold text-ameya-navy">Ameya Labs</span>
+                </a>
+                <a href="../index.html#tools" class="text-ameya-electric hover:text-ameya-accent font-medium transition-colors flex items-center">
+                    <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+                    </svg>
+                    Back to Tools
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="max-w-6xl mx-auto px-6 sm:px-8 lg:px-10 py-12">
+
+        <!-- Hero Section -->
+        <div class="text-center mb-12">
+            <h1 class="text-4xl font-bold text-ameya-navy mb-4">Color Picker & Converter</h1>
+            <p class="text-xl text-ameya-gray max-w-2xl mx-auto">Pick colors visually, convert between formats, and generate beautiful color schemes for your projects.</p>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+
+            <!-- Color Picker Section -->
+            <div class="bg-white rounded-xl shadow-lg p-8">
+                <h2 class="text-2xl font-semibold text-ameya-navy mb-6">Color Picker</h2>
+
+                <!-- Color Preview -->
+                <div class="mb-6">
+                    <div id="color-preview" class="w-full h-32 rounded-lg border-2 border-gray-200 mb-4 bg-blue-500"></div>
+                    <div class="text-center">
+                        <p class="text-sm text-ameya-gray">Click anywhere on the color wheel to pick a color</p>
+                    </div>
+                </div>
+
+                <!-- Color Wheel -->
+                <div class="mb-6">
+                    <canvas id="color-wheel" width="300" height="300" class="border border-gray-200 rounded-lg mx-auto block"></canvas>
+                </div>
+
+                <!-- Quick Color Palette -->
+                <div class="mb-6">
+                    <h3 class="text-lg font-semibold text-ameya-navy mb-3">Quick Colors</h3>
+                    <div class="grid grid-cols-8 gap-2">
+                        <div class="color-swatch bg-red-500" data-color="#ef4444"></div>
+                        <div class="color-swatch bg-orange-500" data-color="#f97316"></div>
+                        <div class="color-swatch bg-yellow-500" data-color="#eab308"></div>
+                        <div class="color-swatch bg-green-500" data-color="#22c55e"></div>
+                        <div class="color-swatch bg-blue-500" data-color="#3b82f6"></div>
+                        <div class="color-swatch bg-purple-500" data-color="#8b5cf6"></div>
+                        <div class="color-swatch bg-pink-500" data-color="#ec4899"></div>
+                        <div class="color-swatch bg-gray-500" data-color="#6b7280"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Color Converter Section -->
+            <div class="bg-white rounded-xl shadow-lg p-8">
+                <h2 class="text-2xl font-semibold text-ameya-navy mb-6">Color Converter</h2>
+
+                <!-- Color Formats -->
+                <div class="space-y-4">
+                    <!-- HEX -->
+                    <div>
+                        <label class="block text-sm font-medium text-ameya-gray mb-2">HEX</label>
+                        <div class="flex">
+                            <input type="text" id="hex-input" class="color-input flex-1 px-3 py-2 border border-gray-300 rounded-l-lg focus:ring-2 focus:ring-ameya-electric focus:border-transparent" placeholder="#3b82f6">
+                            <button id="copy-hex" class="px-3 py-2 bg-ameya-electric text-white rounded-r-lg hover:bg-ameya-accent transition-colors" title="Copy HEX color code">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- RGB -->
+                    <div>
+                        <label class="block text-sm font-medium text-ameya-gray mb-2">RGB</label>
+                        <div class="flex">
+                            <input type="text" id="rgb-input" class="color-input flex-1 px-3 py-2 border border-gray-300 rounded-l-lg focus:ring-2 focus:ring-ameya-electric focus:border-transparent" placeholder="rgb(59, 130, 246)">
+                            <button id="copy-rgb" class="px-3 py-2 bg-ameya-electric text-white rounded-r-lg hover:bg-ameya-accent transition-colors" title="Copy RGB color code">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- HSL -->
+                    <div>
+                        <label class="block text-sm font-medium text-ameya-gray mb-2">HSL</label>
+                        <div class="flex">
+                            <input type="text" id="hsl-input" class="color-input flex-1 px-3 py-2 border border-gray-300 rounded-l-lg focus:ring-2 focus:ring-ameya-electric focus:border-transparent" placeholder="hsl(217, 91%, 60%)">
+                            <button id="copy-hsl" class="px-3 py-2 bg-ameya-electric text-white rounded-r-lg hover:bg-ameya-accent transition-colors" title="Copy HSL color code">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- HSV -->
+                    <div>
+                        <label class="block text-sm font-medium text-ameya-gray mb-2">HSV</label>
+                        <div class="flex">
+                            <input type="text" id="hsv-input" class="color-input flex-1 px-3 py-2 border border-gray-300 rounded-l-lg focus:ring-2 focus:ring-ameya-electric focus:border-transparent" placeholder="hsv(217, 91%, 60%)">
+                            <button id="copy-hsv" class="px-3 py-2 bg-ameya-electric text-white rounded-r-lg hover:bg-ameya-accent transition-colors" title="Copy HSV color code">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Color Sliders -->
+                <div class="mt-6">
+                    <h3 class="text-lg font-semibold text-ameya-navy mb-3">Adjust Color</h3>
+                    <div class="space-y-3">
+                        <div>
+                            <label class="block text-sm text-ameya-gray mb-1">Hue: <span id="hue-value">217</span>°</label>
+                            <input type="range" id="hue-slider" min="0" max="360" value="217" class="w-full" aria-label="Hue adjustment slider">
+                        </div>
+                        <div>
+                            <label class="block text-sm text-ameya-gray mb-1">Saturation: <span id="saturation-value">91</span>%</label>
+                            <input type="range" id="saturation-slider" min="0" max="100" value="91" class="w-full" aria-label="Saturation adjustment slider">
+                        </div>
+                        <div>
+                            <label class="block text-sm text-ameya-gray mb-1">Lightness: <span id="lightness-value">60</span>%</label>
+                            <input type="range" id="lightness-slider" min="0" max="100" value="60" class="w-full" aria-label="Lightness adjustment slider">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Color Schemes Section -->
+        <div class="bg-white rounded-xl shadow-lg p-8 mt-8">
+            <h2 class="text-2xl font-semibold text-ameya-navy mb-6">Color Schemes</h2>
+
+            <div class="mb-4">
+                <label class="block text-sm font-medium text-ameya-gray mb-2">Scheme Type</label>
+                <select id="scheme-type" class="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-ameya-electric focus:border-transparent" aria-label="Color scheme type selection">
+                    <option value="complementary">Complementary</option>
+                    <option value="triadic">Triadic</option>
+                    <option value="analogous">Analogous</option>
+                    <option value="split-complementary">Split Complementary</option>
+                    <option value="tetradic">Tetradic</option>
+                    <option value="monochromatic">Monochromatic</option>
+                </select>
+            </div>
+
+            <div id="color-scheme" class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
+                <!-- Color scheme will be populated by JavaScript -->
+            </div>
+        </div>
+
+        <!-- Features Section -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mt-8">
+            <div class="bg-white rounded-xl shadow-lg p-6 text-center">
+                <div class="w-12 h-12 bg-ameya-electric rounded-lg flex items-center justify-center mx-auto mb-4">
+                    <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zM21 5a2 2 0 00-2-2h-4a2 2 0 00-2 2v12a4 4 0 004 4h4a2 2 0 002-2V5z"></path>
+                    </svg>
+                </div>
+                <h3 class="text-lg font-semibold text-ameya-navy mb-2">Multiple Formats</h3>
+                <p class="text-ameya-gray text-sm">Convert between HEX, RGB, HSL, and HSV color formats instantly.</p>
+            </div>
+
+            <div class="bg-white rounded-xl shadow-lg p-6 text-center">
+                <div class="w-12 h-12 bg-ameya-electric rounded-lg flex items-center justify-center mx-auto mb-4">
+                    <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
+                    </svg>
+                </div>
+                <h3 class="text-lg font-semibold text-ameya-navy mb-2">Color Schemes</h3>
+                <p class="text-ameya-gray text-sm">Generate harmonious color palettes using professional color theory.</p>
+            </div>
+
+            <div class="bg-white rounded-xl shadow-lg p-6 text-center">
+                <div class="w-12 h-12 bg-ameya-electric rounded-lg flex items-center justify-center mx-auto mb-4">
+                    <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path>
+                    </svg>
+                </div>
+                <h3 class="text-lg font-semibold text-ameya-navy mb-2">One-Click Copy</h3>
+                <p class="text-ameya-gray text-sm">Copy color codes to clipboard with a single click for easy use.</p>
+            </div>
+        </div>
+
+        <!-- SEO Content -->
+        <div class="bg-white rounded-xl shadow-lg p-8 mt-8">
+            <h2 class="text-2xl font-semibold text-ameya-navy mb-6">Color Picker Tools for Developers & Designers</h2>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div>
+                    <h3 class="text-lg font-semibold text-ameya-electric mb-3">For Web Developers</h3>
+                    <ul class="space-y-2 text-ameya-gray">
+                        <li class="flex items-start">
+                            <span class="text-ameya-accent mr-2">•</span>
+                            <span>Quick color selection for CSS styling</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-ameya-accent mr-2">•</span>
+                            <span>Convert between different color formats</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-ameya-accent mr-2">•</span>
+                            <span>Generate color schemes for consistent design</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-ameya-accent mr-2">•</span>
+                            <span>Copy color codes directly to clipboard</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h3 class="text-lg font-semibold text-ameya-electric mb-3">For Designers</h3>
+                    <ul class="space-y-2 text-ameya-gray">
+                        <li class="flex items-start">
+                            <span class="text-ameya-accent mr-2">•</span>
+                            <span>Visual color wheel for intuitive selection</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-ameya-accent mr-2">•</span>
+                            <span>Professional color scheme generation</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-ameya-accent mr-2">•</span>
+                            <span>Precise color adjustment with sliders</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-ameya-accent mr-2">•</span>
+                            <span>Quick access to common colors</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-ameya-navy text-white py-8 mt-16">
+        <div class="max-w-6xl mx-auto px-6 sm:px-8 lg:px-10 text-center">
+            <p class="text-white/80">&copy; 2025 Ameya Labs. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Color Picker Logic
+        let currentColor = { h: 217, s: 91, l: 60 };
+        let isDragging = false;
+
+        const colorPreview = document.getElementById('color-preview');
+        const colorWheel = document.getElementById('color-wheel');
+        const ctx = colorWheel.getContext('2d');
+
+        const hexInput = document.getElementById('hex-input');
+        const rgbInput = document.getElementById('rgb-input');
+        const hslInput = document.getElementById('hsl-input');
+        const hsvInput = document.getElementById('hsv-input');
+
+        const hueSlider = document.getElementById('hue-slider');
+        const saturationSlider = document.getElementById('saturation-slider');
+        const lightnessSlider = document.getElementById('lightness-slider');
+
+        const hueValue = document.getElementById('hue-value');
+        const saturationValue = document.getElementById('saturation-value');
+        const lightnessValue = document.getElementById('lightness-value');
+
+        // Initialize color wheel
+        function initColorWheel() {
+            const centerX = colorWheel.width / 2;
+            const centerY = colorWheel.height / 2;
+            const radius = Math.min(centerX, centerY) - 10;
+
+            for (let angle = 0; angle < 360; angle++) {
+                for (let r = 0; r < radius; r++) {
+                    const x = centerX + r * Math.cos(angle * Math.PI / 180);
+                    const y = centerY + r * Math.sin(angle * Math.PI / 180);
+
+                    const hue = angle;
+                    const saturation = (r / radius) * 100;
+                    const lightness = 50;
+
+                    ctx.fillStyle = `hsl(${hue}, ${saturation}%, ${lightness}%)`;
+                    ctx.fillRect(x, y, 1, 1);
+                }
+            }
+
+            // Draw border
+            ctx.strokeStyle = '#e5e7eb';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.arc(centerX, centerY, radius, 0, 2 * Math.PI);
+            ctx.stroke();
+        }
+
+        // Convert HSL to RGB
+        function hslToRgb(h, s, l) {
+            h /= 360;
+            s /= 100;
+            l /= 100;
+
+            const hue2rgb = (p, q, t) => {
+                if (t < 0) t += 1;
+                if (t > 1) t -= 1;
+                if (t < 1/6) return p + (q - p) * 6 * t;
+                if (t < 1/2) return q;
+                if (t < 2/3) return p + (q - p) * (2/3 - t) * 6;
+                return p;
+            };
+
+            let r, g, b;
+            if (s === 0) {
+                r = g = b = l;
+            } else {
+                const q = l < 0.5 ? l * (1 + s) : l + s - l * s;
+                const p = 2 * l - q;
+                r = hue2rgb(p, q, h + 1/3);
+                g = hue2rgb(p, q, h);
+                b = hue2rgb(p, q, h - 1/3);
+            }
+
+            return {
+                r: Math.round(r * 255),
+                g: Math.round(g * 255),
+                b: Math.round(b * 255)
+            };
+        }
+
+        // Convert RGB to HSL
+        function rgbToHsl(r, g, b) {
+            r /= 255;
+            g /= 255;
+            b /= 255;
+
+            const max = Math.max(r, g, b);
+            const min = Math.min(r, g, b);
+            let h, s, l = (max + min) / 2;
+
+            if (max === min) {
+                h = s = 0;
+            } else {
+                const d = max - min;
+                s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+                switch (max) {
+                    case r: h = (g - b) / d + (g < b ? 6 : 0); break;
+                    case g: h = (b - r) / d + 2; break;
+                    case b: h = (r - g) / d + 4; break;
+                }
+                h /= 6;
+            }
+
+            return {
+                h: Math.round(h * 360),
+                s: Math.round(s * 100),
+                l: Math.round(l * 100)
+            };
+        }
+
+        // Convert RGB to HSV
+        function rgbToHsv(r, g, b) {
+            r /= 255;
+            g /= 255;
+            b /= 255;
+
+            const max = Math.max(r, g, b);
+            const min = Math.min(r, g, b);
+            let h, s, v = max;
+
+            const d = max - min;
+            s = max === 0 ? 0 : d / max;
+
+            if (max === min) {
+                h = 0;
+            } else {
+                switch (max) {
+                    case r: h = (g - b) / d + (g < b ? 6 : 0); break;
+                    case g: h = (b - r) / d + 2; break;
+                    case b: h = (r - g) / d + 4; break;
+                }
+                h /= 6;
+            }
+
+            return {
+                h: Math.round(h * 360),
+                s: Math.round(s * 100),
+                v: Math.round(v * 100)
+            };
+        }
+
+        // Update color display
+        function updateColor() {
+            const rgb = hslToRgb(currentColor.h, currentColor.s, currentColor.l);
+            const hex = `#${rgb.r.toString(16).padStart(2, '0')}${rgb.g.toString(16).padStart(2, '0')}${rgb.b.toString(16).padStart(2, '0')}`;
+            const rgbString = `rgb(${rgb.r}, ${rgb.g}, ${rgb.b})`;
+            const hslString = `hsl(${currentColor.h}, ${currentColor.s}%, ${currentColor.l}%)`;
+            const hsv = rgbToHsv(rgb.r, rgb.g, rgb.b);
+            const hsvString = `hsv(${hsv.h}, ${hsv.s}%, ${hsv.v}%)`;
+
+            colorPreview.style.backgroundColor = hex;
+            hexInput.value = hex;
+            rgbInput.value = rgbString;
+            hslInput.value = hslString;
+            hsvInput.value = hsvString;
+
+            hueSlider.value = currentColor.h;
+            saturationSlider.value = currentColor.s;
+            lightnessSlider.value = currentColor.l;
+
+            hueValue.textContent = currentColor.h;
+            saturationValue.textContent = currentColor.s;
+            lightnessValue.textContent = currentColor.l;
+
+            updateColorScheme();
+        }
+
+        // Update color scheme
+        function updateColorScheme() {
+            const schemeType = document.getElementById('scheme-type').value;
+            const schemeContainer = document.getElementById('color-scheme');
+            schemeContainer.innerHTML = '';
+
+            let colors = [];
+
+            switch (schemeType) {
+                case 'complementary':
+                    colors = [currentColor, { h: (currentColor.h + 180) % 360, s: currentColor.s, l: currentColor.l }];
+                    break;
+                case 'triadic':
+                    colors = [
+                        currentColor,
+                        { h: (currentColor.h + 120) % 360, s: currentColor.s, l: currentColor.l },
+                        { h: (currentColor.h + 240) % 360, s: currentColor.s, l: currentColor.l }
+                    ];
+                    break;
+                case 'analogous':
+                    colors = [
+                        { h: (currentColor.h - 30 + 360) % 360, s: currentColor.s, l: currentColor.l },
+                        currentColor,
+                        { h: (currentColor.h + 30) % 360, s: currentColor.s, l: currentColor.l }
+                    ];
+                    break;
+                case 'split-complementary':
+                    colors = [
+                        currentColor,
+                        { h: (currentColor.h + 150) % 360, s: currentColor.s, l: currentColor.l },
+                        { h: (currentColor.h + 210) % 360, s: currentColor.s, l: currentColor.l }
+                    ];
+                    break;
+                case 'tetradic':
+                    colors = [
+                        currentColor,
+                        { h: (currentColor.h + 90) % 360, s: currentColor.s, l: currentColor.l },
+                        { h: (currentColor.h + 180) % 360, s: currentColor.s, l: currentColor.l },
+                        { h: (currentColor.h + 270) % 360, s: currentColor.s, l: currentColor.l }
+                    ];
+                    break;
+                case 'monochromatic':
+                    colors = [
+                        { h: currentColor.h, s: currentColor.s, l: Math.max(10, currentColor.l - 30) },
+                        { h: currentColor.h, s: currentColor.s, l: Math.max(20, currentColor.l - 15) },
+                        currentColor,
+                        { h: currentColor.h, s: currentColor.s, l: Math.min(90, currentColor.l + 15) },
+                        { h: currentColor.h, s: currentColor.s, l: Math.min(95, currentColor.l + 30) }
+                    ];
+                    break;
+            }
+
+            colors.forEach(color => {
+                const rgb = hslToRgb(color.h, color.s, color.l);
+                const hex = `#${rgb.r.toString(16).padStart(2, '0')}${rgb.g.toString(16).padStart(2, '0')}${rgb.b.toString(16).padStart(2, '0')}`;
+
+                const colorDiv = document.createElement('div');
+                colorDiv.className = 'color-swatch';
+                colorDiv.style.backgroundColor = hex;
+                colorDiv.title = hex;
+                colorDiv.addEventListener('click', () => {
+                    currentColor = { ...color };
+                    updateColor();
+                });
+
+                schemeContainer.appendChild(colorDiv);
+            });
+        }
+
+        // Event listeners
+        colorWheel.addEventListener('mousedown', (e) => {
+            isDragging = true;
+            updateColorFromWheel(e);
+        });
+
+        colorWheel.addEventListener('mousemove', (e) => {
+            if (isDragging) {
+                updateColorFromWheel(e);
+            }
+        });
+
+        document.addEventListener('mouseup', () => {
+            isDragging = false;
+        });
+
+        function updateColorFromWheel(e) {
+            const rect = colorWheel.getBoundingClientRect();
+            const centerX = colorWheel.width / 2;
+            const centerY = colorWheel.height / 2;
+            const x = e.clientX - rect.left - centerX;
+            const y = e.clientY - rect.top - centerY;
+            const radius = Math.min(centerX, centerY) - 10;
+
+            const distance = Math.sqrt(x * x + y * y);
+            if (distance <= radius) {
+                const angle = Math.atan2(y, x) * 180 / Math.PI;
+                currentColor.h = (angle + 360) % 360;
+                currentColor.s = Math.min(100, (distance / radius) * 100);
+                updateColor();
+            }
+        }
+
+        // Quick color swatches
+        document.querySelectorAll('.color-swatch[data-color]').forEach(swatch => {
+            swatch.addEventListener('click', () => {
+                const hex = swatch.dataset.color;
+                const rgb = hexToRgb(hex);
+                currentColor = rgbToHsl(rgb.r, rgb.g, rgb.b);
+                updateColor();
+            });
+        });
+
+        // Sliders
+        hueSlider.addEventListener('input', (e) => {
+            currentColor.h = parseInt(e.target.value);
+            updateColor();
+        });
+
+        saturationSlider.addEventListener('input', (e) => {
+            currentColor.s = parseInt(e.target.value);
+            updateColor();
+        });
+
+        lightnessSlider.addEventListener('input', (e) => {
+            currentColor.l = parseInt(e.target.value);
+            updateColor();
+        });
+
+        // Input fields
+        hexInput.addEventListener('input', (e) => {
+            const hex = e.target.value;
+            if (/^#[0-9A-Fa-f]{6}$/.test(hex)) {
+                const rgb = hexToRgb(hex);
+                currentColor = rgbToHsl(rgb.r, rgb.g, rgb.b);
+                updateColor();
+            }
+        });
+
+        rgbInput.addEventListener('input', (e) => {
+            const match = e.target.value.match(/rgb\((\d+),\s*(\d+),\s*(\d+)\)/);
+            if (match) {
+                const rgb = { r: parseInt(match[1]), g: parseInt(match[2]), b: parseInt(match[3]) };
+                currentColor = rgbToHsl(rgb.r, rgb.g, rgb.b);
+                updateColor();
+            }
+        });
+
+        hslInput.addEventListener('input', (e) => {
+            const match = e.target.value.match(/hsl\((\d+),\s*(\d+)%,\s*(\d+)%\)/);
+            if (match) {
+                currentColor = { h: parseInt(match[1]), s: parseInt(match[2]), l: parseInt(match[3]) };
+                updateColor();
+            }
+        });
+
+        // Copy buttons
+        document.getElementById('copy-hex').addEventListener('click', () => copyToClipboard(hexInput.value));
+        document.getElementById('copy-rgb').addEventListener('click', () => copyToClipboard(rgbInput.value));
+        document.getElementById('copy-hsl').addEventListener('click', () => copyToClipboard(hslInput.value));
+        document.getElementById('copy-hsv').addEventListener('click', () => copyToClipboard(hsvInput.value));
+
+        // Scheme type change
+        document.getElementById('scheme-type').addEventListener('change', updateColorScheme);
+
+        // Utility functions
+        function hexToRgb(hex) {
+            const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+            return result ? {
+                r: parseInt(result[1], 16),
+                g: parseInt(result[2], 16),
+                b: parseInt(result[3], 16)
+            } : null;
+        }
+
+        async function copyToClipboard(text) {
+            try {
+                await navigator.clipboard.writeText(text);
+                showNotification('Copied to clipboard!', 'success');
+            } catch (err) {
+                // Fallback
+                const textArea = document.createElement('textarea');
+                textArea.value = text;
+                document.body.appendChild(textArea);
+                textArea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textArea);
+                showNotification('Copied to clipboard!', 'success');
+            }
+        }
+
+        function showNotification(message, type = 'info') {
+            const notification = document.createElement('div');
+            notification.className = `fixed top-4 right-4 px-4 py-2 rounded-lg text-white z-50 ${
+                type === 'success' ? 'bg-green-500' : 'bg-blue-500'
+            }`;
+            notification.textContent = message;
+            document.body.appendChild(notification);
+
+            setTimeout(() => {
+                notification.remove();
+            }, 3000);
+        }
+
+        // Initialize
+        initColorWheel();
+        updateColor();
+    </script>
+</body>
+</html>

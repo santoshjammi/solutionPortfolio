@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unit Converter | Measurement Conversion Tool | Ameya Labs</title>
+    <meta name="description" content="Free online unit converter. Convert between length, weight, temperature, area, volume, and more. Fast, accurate conversions with multiple measurement systems.">
+    <meta name="keywords" content="unit converter, measurement converter, length converter, weight converter, temperature converter, area converter, volume converter, metric conversion, imperial conversion">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        :root {
+            --am-navy: #071226;
+            --am-electric: #6C4BFF;
+            --am-accent: #4F46E5;
+            --am-light: #f8fafc;
+            --am-gray: #64748b;
+        }
+        .ameya-navy { color: var(--am-navy); }
+        .ameya-electric { color: var(--am-electric); }
+        .ameya-accent { color: var(--am-accent); }
+        .ameya-light { background-color: var(--am-light); }
+        .ameya-gray { color: var(--am-gray); }
+        .bg-ameya-navy { background-color: var(--am-navy); }
+        .bg-ameya-electric { background-color: var(--am-electric); }
+        .bg-ameya-accent { background-color: var(--am-accent); }
+        .border-ameya-electric { border-color: var(--am-electric); }
+        .text-ameya-navy { color: var(--am-navy); }
+        .text-ameya-electric { color: var(--am-electric); }
+        .text-ameya-accent { color: var(--am-accent); }
+        .text-ameya-gray { color: var(--am-gray); }
+        .converter-input {
+            font-family: 'Courier New', monospace;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body class="bg-ameya-light min-h-screen">
+
+    <!-- Header -->
+    <header class="bg-white shadow-sm border-b border-gray-200">
+        <div class="max-w-6xl mx-auto px-6 sm:px-8 lg:px-10 py-4">
+            <div class="flex items-center justify-between">
+                <a href="../index.html" class="flex items-center space-x-3">
+                    <img src="../AmeyaLogo12.png" alt="Ameya Labs Logo" class="h-8 w-auto">
+                    <span class="text-xl font-bold text-ameya-navy">Ameya Labs</span>
+                </a>
+                <a href="../index.html#tools" class="text-ameya-electric hover:text-ameya-accent font-medium transition-colors flex items-center">
+                    <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+                    </svg>
+                    Back to Tools
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="max-w-6xl mx-auto px-6 sm:px-8 lg:px-10 py-12">
+
+        <!-- Hero Section -->
+        <div class="text-center mb-12">
+            <h1 class="text-4xl font-bold text-ameya-navy mb-4">Unit Converter</h1>
+            <p class="text-xl text-ameya-gray max-w-2xl mx-auto">Convert between different units of measurement instantly. Length, weight, temperature, area, volume, and more.</p>
+        </div>
+
+        <!-- Unit Converter Tool -->
+        <div class="bg-white rounded-xl shadow-lg p-8 mb-8">
+
+            <!-- Category Selection -->
+            <div class="mb-8">
+                <label class="block text-sm font-medium text-ameya-gray mb-3">Select Conversion Type</label>
+                <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">
+                    <button class="category-btn active bg-ameya-electric text-white px-4 py-3 rounded-lg font-medium transition-colors" data-category="length">
+                        <svg class="w-5 h-5 mx-auto mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+                        </svg>
+                        Length
+                    </button>
+                    <button class="category-btn bg-gray-100 text-ameya-gray hover:bg-gray-200 px-4 py-3 rounded-lg font-medium transition-colors" data-category="weight">
+                        <svg class="w-5 h-5 mx-auto mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 6l3 1m0 0l-3 9a5.002 5.002 0 006.001 0M6 7l3 9M6 7l6-2m6 2l3-1m-3 1l-3 9a5.002 5.002 0 006.001 0M18 7l3 9m-3-9l-6-2m0-2v2m0 16V5m0 16H9m3 0h3"></path>
+                        </svg>
+                        Weight
+                    </button>
+                    <button class="category-btn bg-gray-100 text-ameya-gray hover:bg-gray-200 px-4 py-3 rounded-lg font-medium transition-colors" data-category="temperature">
+                        <svg class="w-5 h-5 mx-auto mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path>
+                        </svg>
+                        Temperature
+                    </button>
+                    <button class="category-btn bg-gray-100 text-ameya-gray hover:bg-gray-200 px-4 py-3 rounded-lg font-medium transition-colors" data-category="area">
+                        <svg class="w-5 h-5 mx-auto mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 5a1 1 0 011-1h14a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM4 13a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H5a1 1 0 01-1-1v-6zM16 13a1 1 0 011-1h2a1 1 0 011 1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-6z"></path>
+                        </svg>
+                        Area
+                    </button>
+                    <button class="category-btn bg-gray-100 text-ameya-gray hover:bg-gray-200 px-4 py-3 rounded-lg font-medium transition-colors" data-category="volume">
+                        <svg class="w-5 h-5 mx-auto mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path>
+                        </svg>
+                        Volume
+                    </button>
+                    <button class="category-btn bg-gray-100 text-ameya-gray hover:bg-gray-200 px-4 py-3 rounded-lg font-medium transition-colors" data-category="time">
+                        <svg class="w-5 h-5 mx-auto mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                        Time
+                    </button>
+                </div>
+            </div>
+
+            <!-- Converter Interface -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <!-- From -->
+                <div>
+                    <label class="block text-sm font-medium text-ameya-gray mb-2">From</label>
+                    <div class="space-y-3">
+                        <input type="number" id="from-value" step="any" placeholder="Enter value" class="converter-input w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-ameya-electric focus:border-transparent" aria-label="Value to convert from">
+                        <select id="from-unit" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-ameya-electric focus:border-transparent" aria-label="Unit to convert from">
+                            <!-- Options will be populated by JavaScript -->
+                        </select>
+                    </div>
+                </div>
+
+                <!-- To -->
+                <div>
+                    <label class="block text-sm font-medium text-ameya-gray mb-2">To</label>
+                    <div class="space-y-3">
+                        <input type="text" id="to-value" readonly class="converter-input w-full px-4 py-3 border border-gray-300 rounded-lg bg-gray-50" aria-label="Converted value">
+                        <select id="to-unit" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-ameya-electric focus:border-transparent" aria-label="Unit to convert to">
+                            <!-- Options will be populated by JavaScript -->
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Swap Button -->
+            <div class="flex justify-center mt-6">
+                <button id="swap-btn" class="bg-ameya-electric hover:bg-ameya-accent text-white font-semibold px-6 py-3 rounded-lg transition-colors duration-200 flex items-center">
+                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4"></path>
+                    </svg>
+                    Swap Units
+                </button>
+            </div>
+
+            <!-- Quick Conversions -->
+            <div id="quick-conversions" class="mt-8 hidden">
+                <h3 class="text-lg font-semibold text-ameya-navy mb-4">Quick Conversions</h3>
+                <div id="quick-results" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    <!-- Quick conversion results will be populated here -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Features Section -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+            <div class="bg-white rounded-xl shadow-lg p-6 text-center">
+                <div class="w-12 h-12 bg-ameya-electric rounded-lg flex items-center justify-center mx-auto mb-4">
+                    <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+                    </svg>
+                </div>
+                <h3 class="text-lg font-semibold text-ameya-navy mb-2">Multiple Categories</h3>
+                <p class="text-ameya-gray text-sm">Convert between length, weight, temperature, area, volume, and time units.</p>
+            </div>
+
+            <div class="bg-white rounded-xl shadow-lg p-6 text-center">
+                <div class="w-12 h-12 bg-ameya-electric rounded-lg flex items-center justify-center mx-auto mb-4">
+                    <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                    </svg>
+                </div>
+                <h3 class="text-lg font-semibold text-ameya-navy mb-2">Instant Conversion</h3>
+                <p class="text-ameya-gray text-sm">Real-time conversion as you type with accurate calculations.</p>
+            </div>
+
+            <div class="bg-white rounded-xl shadow-lg p-6 text-center">
+                <div class="w-12 h-12 bg-ameya-electric rounded-lg flex items-center justify-center mx-auto mb-4">
+                    <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
+                    </svg>
+                </div>
+                <h3 class="text-lg font-semibold text-ameya-navy mb-2">Swap Units</h3>
+                <p class="text-ameya-gray text-sm">Easily swap between source and target units with one click.</p>
+            </div>
+        </div>
+
+        <!-- Popular Conversions -->
+        <div class="bg-white rounded-xl shadow-lg p-8">
+            <h2 class="text-2xl font-semibold text-ameya-navy mb-6">Popular Unit Conversions</h2>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div>
+                    <h3 class="text-lg font-semibold text-ameya-electric mb-3">Length Conversions</h3>
+                    <ul class="space-y-2 text-ameya-gray">
+                        <li class="flex items-center justify-between py-2 border-b border-gray-100">
+                            <span>1 meter =</span>
+                            <span class="font-mono">3.28084 feet</span>
+                        </li>
+                        <li class="flex items-center justify-between py-2 border-b border-gray-100">
+                            <span>1 kilometer =</span>
+                            <span class="font-mono">0.621371 miles</span>
+                        </li>
+                        <li class="flex items-center justify-between py-2 border-b border-gray-100">
+                            <span>1 inch =</span>
+                            <span class="font-mono">2.54 centimeters</span>
+                        </li>
+                        <li class="flex items-center justify-between py-2">
+                            <span>1 foot =</span>
+                            <span class="font-mono">0.3048 meters</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h3 class="text-lg font-semibold text-ameya-electric mb-3">Weight Conversions</h3>
+                    <ul class="space-y-2 text-ameya-gray">
+                        <li class="flex items-center justify-between py-2 border-b border-gray-100">
+                            <span>1 kilogram =</span>
+                            <span class="font-mono">2.20462 pounds</span>
+                        </li>
+                        <li class="flex items-center justify-between py-2 border-b border-gray-100">
+                            <span>1 pound =</span>
+                            <span class="font-mono">0.453592 kg</span>
+                        </li>
+                        <li class="flex items-center justify-between py-2 border-b border-gray-100">
+                            <span>1 ounce =</span>
+                            <span class="font-mono">28.3495 grams</span>
+                        </li>
+                        <li class="flex items-center justify-between py-2">
+                            <span>1 ton =</span>
+                            <span class="font-mono">1000 kg</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-ameya-navy text-white py-8 mt-16">
+        <div class="max-w-6xl mx-auto px-6 sm:px-8 lg:px-10 text-center">
+            <p class="text-white/80">&copy; 2025 Ameya Labs. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Unit Converter Logic
+        const fromValue = document.getElementById('from-value');
+        const toValue = document.getElementById('to-value');
+        const fromUnit = document.getElementById('from-unit');
+        const toUnit = document.getElementById('to-unit');
+        const swapBtn = document.getElementById('swap-btn');
+        const categoryBtns = document.querySelectorAll('.category-btn');
+        const quickConversions = document.getElementById('quick-conversions');
+        const quickResults = document.getElementById('quick-results');
+
+        let currentCategory = 'length';
+
+        // Unit definitions
+        const units = {
+            length: {
+                'Millimeter (mm)': 0.001,
+                'Centimeter (cm)': 0.01,
+                'Meter (m)': 1,
+                'Kilometer (km)': 1000,
+                'Inch (in)': 0.0254,
+                'Foot (ft)': 0.3048,
+                'Yard (yd)': 0.9144,
+                'Mile (mi)': 1609.344,
+                'Nautical Mile (nmi)': 1852
+            },
+            weight: {
+                'Milligram (mg)': 0.000001,
+                'Gram (g)': 0.001,
+                'Kilogram (kg)': 1,
+                'Metric Ton (t)': 1000,
+                'Ounce (oz)': 0.0283495,
+                'Pound (lb)': 0.453592,
+                'Stone (st)': 6.35029,
+                'US Ton (ton)': 907.185,
+                'UK Ton (ton)': 1016.05
+            },
+            temperature: {
+                'Celsius (°C)': 'celsius',
+                'Fahrenheit (°F)': 'fahrenheit',
+                'Kelvin (K)': 'kelvin'
+            },
+            area: {
+                'Square Millimeter (mm²)': 0.000001,
+                'Square Centimeter (cm²)': 0.0001,
+                'Square Meter (m²)': 1,
+                'Square Kilometer (km²)': 1000000,
+                'Square Inch (in²)': 0.00064516,
+                'Square Foot (ft²)': 0.092903,
+                'Square Yard (yd²)': 0.836127,
+                'Acre (ac)': 4046.86,
+                'Hectare (ha)': 10000,
+                'Square Mile (mi²)': 2589988.11
+            },
+            volume: {
+                'Milliliter (ml)': 0.000001,
+                'Liter (l)': 0.001,
+                'Cubic Meter (m³)': 1,
+                'Cubic Inch (in³)': 0.0000163871,
+                'Cubic Foot (ft³)': 0.0283168,
+                'Fluid Ounce (fl oz)': 0.0000295735,
+                'Cup (cup)': 0.000236588,
+                'Pint (pt)': 0.000473176,
+                'Quart (qt)': 0.000946353,
+                'Gallon (gal)': 0.00378541
+            },
+            time: {
+                'Nanosecond (ns)': 0.000000001,
+                'Microsecond (μs)': 0.000001,
+                'Millisecond (ms)': 0.001,
+                'Second (s)': 1,
+                'Minute (min)': 60,
+                'Hour (h)': 3600,
+                'Day (d)': 86400,
+                'Week (wk)': 604800,
+                'Month (mo)': 2629746, // Average month
+                'Year (yr)': 31556952 // Average year
+            }
+        };
+
+        // Initialize
+        loadCategory('length');
+
+        // Category selection
+        categoryBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                categoryBtns.forEach(b => {
+                    b.classList.remove('active', 'bg-ameya-electric', 'text-white');
+                    b.classList.add('bg-gray-100', 'text-ameya-gray', 'hover:bg-gray-200');
+                });
+                btn.classList.add('active', 'bg-ameya-electric', 'text-white');
+                btn.classList.remove('bg-gray-100', 'text-ameya-gray', 'hover:bg-gray-200');
+                loadCategory(btn.dataset.category);
+            });
+        });
+
+        // Load category
+        function loadCategory(category) {
+            currentCategory = category;
+            const categoryUnits = units[category];
+
+            // Clear existing options
+            fromUnit.innerHTML = '';
+            toUnit.innerHTML = '';
+
+            // Add options
+            Object.keys(categoryUnits).forEach(unit => {
+                const option1 = document.createElement('option');
+                option1.value = unit;
+                option1.textContent = unit;
+                fromUnit.appendChild(option1);
+
+                const option2 = document.createElement('option');
+                option2.value = unit;
+                option2.textContent = unit;
+                toUnit.appendChild(option2);
+            });
+
+            // Set default selections
+            if (category === 'length') {
+                fromUnit.value = 'Meter (m)';
+                toUnit.value = 'Foot (ft)';
+            } else if (category === 'weight') {
+                fromUnit.value = 'Kilogram (kg)';
+                toUnit.value = 'Pound (lb)';
+            } else if (category === 'temperature') {
+                fromUnit.value = 'Celsius (°C)';
+                toUnit.value = 'Fahrenheit (°F)';
+            }
+
+            // Clear values
+            fromValue.value = '';
+            toValue.value = '';
+
+            // Show/hide quick conversions
+            if (category === 'length' || category === 'weight') {
+                quickConversions.classList.remove('hidden');
+                updateQuickConversions();
+            } else {
+                quickConversions.classList.add('hidden');
+            }
+        }
+
+        // Convert function
+        function convert() {
+            const value = parseFloat(fromValue.value);
+            if (isNaN(value)) {
+                toValue.value = '';
+                return;
+            }
+
+            const from = fromUnit.value;
+            const to = toUnit.value;
+
+            if (currentCategory === 'temperature') {
+                toValue.value = convertTemperature(value, from, to);
+            } else {
+                const fromFactor = units[currentCategory][from];
+                const toFactor = units[currentCategory][to];
+                const result = (value * fromFactor) / toFactor;
+                toValue.value = result.toFixed(6).replace(/\.?0+$/, '');
+            }
+
+            if (currentCategory === 'length' || currentCategory === 'weight') {
+                updateQuickConversions();
+            }
+        }
+
+        // Temperature conversion
+        function convertTemperature(value, from, to) {
+            let celsius;
+
+            // Convert to Celsius first
+            switch (from) {
+                case 'Celsius (°C)':
+                    celsius = value;
+                    break;
+                case 'Fahrenheit (°F)':
+                    celsius = (value - 32) * 5/9;
+                    break;
+                case 'Kelvin (K)':
+                    celsius = value - 273.15;
+                    break;
+            }
+
+            // Convert from Celsius to target
+            switch (to) {
+                case 'Celsius (°C)':
+                    return celsius.toFixed(2);
+                case 'Fahrenheit (°F)':
+                    return (celsius * 9/5 + 32).toFixed(2);
+                case 'Kelvin (K)':
+                    return (celsius + 273.15).toFixed(2);
+            }
+        }
+
+        // Update quick conversions
+        function updateQuickConversions() {
+            if (!fromValue.value || !toValue.value) return;
+
+            const value = parseFloat(fromValue.value);
+            quickResults.innerHTML = '';
+
+            if (currentCategory === 'length') {
+                const conversions = [
+                    { unit: 'Feet', factor: 3.28084 },
+                    { unit: 'Inches', factor: 39.3701 },
+                    { unit: 'Yards', factor: 1.09361 },
+                    { unit: 'Miles', factor: 0.000621371 },
+                    { unit: 'Kilometers', factor: 0.001 },
+                    { unit: 'Centimeters', factor: 100 }
+                ];
+
+                conversions.forEach(conv => {
+                    const result = (value * conv.factor).toFixed(4).replace(/\.?0+$/, '');
+                    const div = document.createElement('div');
+                    div.className = 'bg-gray-50 p-3 rounded-lg';
+                    div.innerHTML = `
+                        <div class="text-sm text-ameya-gray">${value} meters =</div>
+                        <div class="font-mono font-semibold text-ameya-navy">${result} ${conv.unit.toLowerCase()}</div>
+                    `;
+                    quickResults.appendChild(div);
+                });
+            } else if (currentCategory === 'weight') {
+                const conversions = [
+                    { unit: 'Pounds', factor: 2.20462 },
+                    { unit: 'Ounces', factor: 35.274 },
+                    { unit: 'Stones', factor: 0.157473 },
+                    { unit: 'Grams', factor: 1000 },
+                    { unit: 'Metric Tons', factor: 0.001 }
+                ];
+
+                conversions.forEach(conv => {
+                    const result = (value * conv.factor).toFixed(4).replace(/\.?0+$/, '');
+                    const div = document.createElement('div');
+                    div.className = 'bg-gray-50 p-3 rounded-lg';
+                    div.innerHTML = `
+                        <div class="text-sm text-ameya-gray">${value} kg =</div>
+                        <div class="font-mono font-semibold text-ameya-navy">${result} ${conv.unit.toLowerCase()}</div>
+                    `;
+                    quickResults.appendChild(div);
+                });
+            }
+        }
+
+        // Event listeners
+        fromValue.addEventListener('input', convert);
+        fromUnit.addEventListener('change', convert);
+        toUnit.addEventListener('change', convert);
+
+        // Swap units
+        swapBtn.addEventListener('click', function() {
+            const tempValue = fromValue.value;
+            const tempUnit = fromUnit.value;
+
+            fromValue.value = toValue.value;
+            fromUnit.value = toUnit.value;
+
+            toValue.value = tempValue;
+            toUnit.value = tempUnit;
+
+            convert();
+        });
+
+        // Initialize with default conversion
+        setTimeout(() => {
+            fromValue.value = '1';
+            convert();
+        }, 100);
+    </script>
+</body>
+</html>

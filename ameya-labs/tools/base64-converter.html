@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Base64 Encoder/Decoder | Base64 Converter Tool | Ameya Labs</title>
+    <meta name="description" content="Free online Base64 encoder and decoder. Convert text to Base64 and Base64 to text instantly. Perfect for encoding data, images, and API communications.">
+    <meta name="keywords" content="Base64 encoder, Base64 decoder, Base64 converter, text encoding, data encoding, Base64 to text, text to Base64, online encoder, developer tools">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        :root {
+            --am-navy: #071226;
+            --am-electric: #6C4BFF;
+            --am-accent: #4F46E5;
+            --am-light: #f8fafc;
+            --am-gray: #64748b;
+        }
+        .ameya-navy { color: var(--am-navy); }
+        .ameya-electric { color: var(--am-electric); }
+        .ameya-accent { color: var(--am-accent); }
+        .ameya-light { background-color: var(--am-light); }
+        .ameya-gray { color: var(--am-gray); }
+        .bg-ameya-navy { background-color: var(--am-navy); }
+        .bg-ameya-electric { background-color: var(--am-electric); }
+        .bg-ameya-accent { background-color: var(--am-accent); }
+        .border-ameya-electric { border-color: var(--am-electric); }
+        .text-ameya-navy { color: var(--am-navy); }
+        .text-ameya-electric { color: var(--am-electric); }
+        .text-ameya-accent { color: var(--am-accent); }
+        .text-ameya-gray { color: var(--am-gray); }
+        .base64-editor {
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            line-height: 1.4;
+        }
+    </style>
+</head>
+<body class="bg-ameya-light min-h-screen">
+
+    <!-- Header -->
+    <header class="bg-white shadow-sm border-b border-gray-200">
+        <div class="max-w-6xl mx-auto px-6 sm:px-8 lg:px-10 py-4">
+            <div class="flex items-center justify-between">
+                <a href="../index.html" class="flex items-center space-x-3">
+                    <img src="../AmeyaLogo12.png" alt="Ameya Labs Logo" class="h-8 w-auto">
+                    <span class="text-xl font-bold text-ameya-navy">Ameya Labs</span>
+                </a>
+                <a href="../index.html#tools" class="text-ameya-electric hover:text-ameya-accent font-medium transition-colors flex items-center">
+                    <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+                    </svg>
+                    Back to Tools
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="max-w-6xl mx-auto px-6 sm:px-8 lg:px-10 py-12">
+
+        <!-- Hero Section -->
+        <div class="text-center mb-12">
+            <h1 class="text-4xl font-bold text-ameya-navy mb-4">Base64 Encoder/Decoder</h1>
+            <p class="text-xl text-ameya-gray max-w-2xl mx-auto">Convert text to Base64 and Base64 to text instantly. Perfect for encoding data, images, and API communications.</p>
+        </div>
+
+        <!-- Base64 Tool -->
+        <div class="bg-white rounded-xl shadow-lg p-8 mb-8">
+
+            <!-- Mode Toggle -->
+            <div class="flex justify-center mb-6">
+                <div class="bg-gray-100 p-1 rounded-lg">
+                    <button id="encode-mode" class="px-6 py-2 rounded-md font-medium transition-colors bg-ameya-electric text-white">Encode to Base64</button>
+                    <button id="decode-mode" class="px-6 py-2 rounded-md font-medium transition-colors text-ameya-gray hover:text-ameya-navy">Decode from Base64</button>
+                </div>
+            </div>
+
+            <!-- Input/Output Section -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <!-- Input -->
+                <div>
+                    <div class="flex items-center justify-between mb-2">
+                        <label id="input-label" for="text-input" class="block text-sm font-medium text-ameya-gray">Text Input</label>
+                        <div class="flex gap-2">
+                            <button id="paste-input" class="text-ameya-electric hover:text-ameya-accent text-sm font-medium transition-colors" title="Paste from clipboard">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path>
+                                </svg>
+                            </button>
+                            <button id="copy-input" class="text-ameya-electric hover:text-ameya-accent text-sm font-medium transition-colors" title="Copy input">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                    <textarea id="text-input" class="base64-editor w-full h-64 px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-ameya-electric focus:border-transparent resize-none" placeholder="Enter text to encode..." aria-label="Text input for Base64 conversion"></textarea>
+                </div>
+
+                <!-- Output -->
+                <div>
+                    <div class="flex items-center justify-between mb-2">
+                        <label id="output-label" for="base64-output" class="block text-sm font-medium text-ameya-gray">Base64 Output</label>
+                        <div class="flex gap-2">
+                            <button id="download-output" class="text-ameya-electric hover:text-ameya-accent text-sm font-medium transition-colors" title="Download as file">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                                </svg>
+                            </button>
+                            <button id="copy-output" class="text-ameya-electric hover:text-ameya-accent text-sm font-medium transition-colors" title="Copy output">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                    <textarea id="base64-output" class="base64-editor w-full h-64 px-4 py-3 border border-gray-300 rounded-lg bg-gray-50 focus:ring-2 focus:ring-ameya-electric focus:border-transparent resize-none" placeholder="Base64 output will appear here..." readonly aria-label="Base64 output display"></textarea>
+                </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="flex justify-center mt-6">
+                <button id="convert-btn" class="bg-ameya-electric hover:bg-ameya-accent text-white font-semibold px-8 py-3 rounded-lg transition-colors duration-200">
+                    Convert
+                </button>
+            </div>
+
+            <!-- Status Messages -->
+            <div id="status-section" class="mt-6 hidden">
+                <div id="success-message" class="bg-green-50 border border-green-200 rounded-lg p-4">
+                    <div class="flex items-center">
+                        <svg class="w-5 h-5 text-green-500 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                        <div>
+                            <h4 class="text-green-800 font-medium">Success</h4>
+                            <p id="success-text" class="text-green-700 text-sm mt-1">Conversion completed successfully!</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="error-message" class="bg-red-50 border border-red-200 rounded-lg p-4">
+                    <div class="flex items-center">
+                        <svg class="w-5 h-5 text-red-500 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                        <div>
+                            <h4 class="text-red-800 font-medium">Error</h4>
+                            <p id="error-text" class="text-red-700 text-sm mt-1">Invalid Base64 string. Please check your input.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- File Upload Section -->
+        <div class="bg-white rounded-xl shadow-lg p-8 mb-8">
+            <h2 class="text-2xl font-semibold text-ameya-navy mb-6">File Conversion</h2>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Encode File -->
+                <div class="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center">
+                    <svg class="w-12 h-12 text-ameya-gray mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path>
+                    </svg>
+                    <h3 class="text-lg font-semibold text-ameya-navy mb-2">Encode File to Base64</h3>
+                    <p class="text-ameya-gray text-sm mb-4">Convert any file to Base64 string</p>
+                    <input type="file" id="encode-file" class="hidden" aria-label="Select file to encode">
+                    <label for="encode-file" class="bg-ameya-electric hover:bg-ameya-accent text-white font-semibold px-4 py-2 rounded-lg cursor-pointer transition-colors duration-200">
+                        Choose File
+                    </label>
+                    <p id="encode-file-name" class="text-sm text-ameya-gray mt-2">No file selected</p>
+                </div>
+
+                <!-- Decode File -->
+                <div class="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center">
+                    <svg class="w-12 h-12 text-ameya-gray mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                    </svg>
+                    <h3 class="text-lg font-semibold text-ameya-navy mb-2">Decode Base64 to File</h3>
+                    <p class="text-ameya-gray text-sm mb-4">Convert Base64 string back to file</p>
+                    <button id="decode-file-btn" class="bg-ameya-electric hover:bg-ameya-accent text-white font-semibold px-4 py-2 rounded-lg transition-colors duration-200">
+                        Decode to File
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Features Section -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+            <div class="bg-white rounded-xl shadow-lg p-6 text-center">
+                <div class="w-12 h-12 bg-ameya-electric rounded-lg flex items-center justify-center mx-auto mb-4">
+                    <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                    </svg>
+                </div>
+                <h3 class="text-lg font-semibold text-ameya-navy mb-2">Text Encoding</h3>
+                <p class="text-ameya-gray text-sm">Encode text to Base64 and decode Base64 back to readable text.</p>
+            </div>
+
+            <div class="bg-white rounded-xl shadow-lg p-6 text-center">
+                <div class="w-12 h-12 bg-ameya-electric rounded-lg flex items-center justify-center mx-auto mb-4">
+                    <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                    </svg>
+                </div>
+                <h3 class="text-lg font-semibold text-ameya-navy mb-2">File Support</h3>
+                <p class="text-ameya-gray text-sm">Convert files to Base64 and decode Base64 strings back to files.</p>
+            </div>
+
+            <div class="bg-white rounded-xl shadow-lg p-6 text-center">
+                <div class="w-12 h-12 bg-ameya-electric rounded-lg flex items-center justify-center mx-auto mb-4">
+                    <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path>
+                    </svg>
+                </div>
+                <h3 class="text-lg font-semibold text-ameya-navy mb-2">One-Click Copy</h3>
+                <p class="text-ameya-gray text-sm">Copy encoded/decoded results to clipboard with a single click.</p>
+            </div>
+        </div>
+
+        <!-- Usage Guide -->
+        <div class="bg-white rounded-xl shadow-lg p-8">
+            <h2 class="text-2xl font-semibold text-ameya-navy mb-6">What is Base64?</h2>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div>
+                    <h3 class="text-lg font-semibold text-ameya-electric mb-3">How Base64 Works</h3>
+                    <p class="text-ameya-gray mb-4">Base64 is a binary-to-text encoding scheme that represents binary data in an ASCII string format. It encodes every 3 bytes of binary data into 4 ASCII characters.</p>
+                    <ul class="space-y-2 text-ameya-gray">
+                        <li class="flex items-start">
+                            <span class="text-ameya-accent mr-2">•</span>
+                            <span>Uses 64 different ASCII characters (A-Z, a-z, 0-9, +, /)</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-ameya-accent mr-2">•</span>
+                            <span>Increases data size by approximately 33%</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-ameya-accent mr-2">•</span>
+                            <span>Commonly used for email attachments and data URIs</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h3 class="text-lg font-semibold text-ameya-electric mb-3">Common Use Cases</h3>
+                    <ul class="space-y-2 text-ameya-gray">
+                        <li class="flex items-start">
+                            <span class="text-ameya-accent mr-2">•</span>
+                            <span>Embedding images in HTML/CSS</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-ameya-accent mr-2">•</span>
+                            <span>API authentication (Basic Auth)</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-ameya-accent mr-2">•</span>
+                            <span>Storing binary data in text files</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-ameya-accent mr-2">•</span>
+                            <span>Email attachments</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-ameya-navy text-white py-8 mt-16">
+        <div class="max-w-6xl mx-auto px-6 sm:px-8 lg:px-10 text-center">
+            <p class="text-white/80">&copy; 2025 Ameya Labs. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Base64 Encoder/Decoder Logic
+        let currentMode = 'encode';
+        const textInput = document.getElementById('text-input');
+        const base64Output = document.getElementById('base64-output');
+        const encodeModeBtn = document.getElementById('encode-mode');
+        const decodeModeBtn = document.getElementById('decode-mode');
+        const convertBtn = document.getElementById('convert-btn');
+        const copyInputBtn = document.getElementById('copy-input');
+        const copyOutputBtn = document.getElementById('copy-output');
+        const pasteInputBtn = document.getElementById('paste-input');
+        const downloadOutputBtn = document.getElementById('download-output');
+        const encodeFileInput = document.getElementById('encode-file');
+        const encodeFileName = document.getElementById('encode-file-name');
+        const decodeFileBtn = document.getElementById('decode-file-btn');
+        const inputLabel = document.getElementById('input-label');
+        const outputLabel = document.getElementById('output-label');
+        const statusSection = document.getElementById('status-section');
+        const successMessage = document.getElementById('success-message');
+        const errorMessage = document.getElementById('error-message');
+        const successText = document.getElementById('success-text');
+        const errorText = document.getElementById('error-text');
+
+        // Mode switching
+        encodeModeBtn.addEventListener('click', () => setMode('encode'));
+        decodeModeBtn.addEventListener('click', () => setMode('decode'));
+
+        function setMode(mode) {
+            currentMode = mode;
+            if (mode === 'encode') {
+                encodeModeBtn.classList.add('bg-ameya-electric', 'text-white');
+                encodeModeBtn.classList.remove('text-ameya-gray', 'hover:text-ameya-navy');
+                decodeModeBtn.classList.remove('bg-ameya-electric', 'text-white');
+                decodeModeBtn.classList.add('text-ameya-gray', 'hover:text-ameya-navy');
+                inputLabel.textContent = 'Text Input';
+                outputLabel.textContent = 'Base64 Output';
+                textInput.placeholder = 'Enter text to encode...';
+                base64Output.placeholder = 'Base64 output will appear here...';
+            } else {
+                decodeModeBtn.classList.add('bg-ameya-electric', 'text-white');
+                decodeModeBtn.classList.remove('text-ameya-gray', 'hover:text-ameya-navy');
+                encodeModeBtn.classList.remove('bg-ameya-electric', 'text-white');
+                encodeModeBtn.classList.add('text-ameya-gray', 'hover:text-ameya-navy');
+                inputLabel.textContent = 'Base64 Input';
+                outputLabel.textContent = 'Text Output';
+                textInput.placeholder = 'Enter Base64 to decode...';
+                base64Output.placeholder = 'Decoded text will appear here...';
+            }
+            textInput.value = '';
+            base64Output.value = '';
+            hideStatus();
+        }
+
+        // Convert button
+        convertBtn.addEventListener('click', function() {
+            const input = textInput.value.trim();
+            if (!input) {
+                showError('Please enter some text to convert.');
+                return;
+            }
+
+            try {
+                if (currentMode === 'encode') {
+                    const encoded = btoa(unescape(encodeURIComponent(input)));
+                    base64Output.value = encoded;
+                    showSuccess('Text encoded to Base64 successfully!');
+                } else {
+                    const decoded = decodeURIComponent(escape(atob(input)));
+                    base64Output.value = decoded;
+                    showSuccess('Base64 decoded to text successfully!');
+                }
+            } catch (error) {
+                showError('Invalid input. Please check your ' + (currentMode === 'encode' ? 'text' : 'Base64 string') + '.');
+            }
+        });
+
+        // Copy functions
+        copyInputBtn.addEventListener('click', () => copyToClipboard(textInput.value));
+        copyOutputBtn.addEventListener('click', () => copyToClipboard(base64Output.value));
+
+        // Paste function
+        pasteInputBtn.addEventListener('click', async () => {
+            try {
+                const text = await navigator.clipboard.readText();
+                textInput.value = text;
+                hideStatus();
+            } catch (err) {
+                showError('Unable to paste from clipboard.');
+            }
+        });
+
+        // Download output
+        downloadOutputBtn.addEventListener('click', function() {
+            const content = base64Output.value;
+            if (!content) {
+                showError('No content to download.');
+                return;
+            }
+
+            const blob = new Blob([content], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = currentMode === 'encode' ? 'encoded.txt' : 'decoded.txt';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+            showSuccess('File downloaded successfully!');
+        });
+
+        // File encoding
+        encodeFileInput.addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (!file) return;
+
+            encodeFileName.textContent = file.name;
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const base64 = e.target.result.split(',')[1]; // Remove data URL prefix
+                textInput.value = 'File: ' + file.name + '\n\n' + base64;
+                setMode('encode');
+                showSuccess('File loaded. Click Convert to encode.');
+            };
+            reader.readAsDataURL(file);
+        });
+
+        // File decoding
+        decodeFileBtn.addEventListener('click', function() {
+            const base64 = textInput.value.trim();
+            if (!base64) {
+                showError('Please enter Base64 string to decode.');
+                return;
+            }
+
+            try {
+                // Try to decode as data URL first
+                if (base64.includes(',')) {
+                    const parts = base64.split(',');
+                    const mimeType = parts[0].split(':')[1].split(';')[0];
+                    const data = parts[1];
+
+                    const byteCharacters = atob(data);
+                    const byteNumbers = new Array(byteCharacters.length);
+                    for (let i = 0; i < byteCharacters.length; i++) {
+                        byteNumbers[i] = byteCharacters.charCodeAt(i);
+                    }
+                    const byteArray = new Uint8Array(byteNumbers);
+                    const blob = new Blob([byteArray], { type: mimeType });
+
+                    const url = URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = 'decoded_file' + getExtensionFromMimeType(mimeType);
+                    document.body.appendChild(a);
+                    a.click();
+                    document.body.removeChild(a);
+                    URL.revokeObjectURL(url);
+                    showSuccess('File decoded and downloaded!');
+                } else {
+                    // Plain Base64 text
+                    const decoded = decodeURIComponent(escape(atob(base64)));
+                    base64Output.value = decoded;
+                    showSuccess('Base64 decoded successfully!');
+                }
+            } catch (error) {
+                showError('Invalid Base64 string for file decoding.');
+            }
+        });
+
+        // Utility functions
+        function getExtensionFromMimeType(mimeType) {
+            const extensions = {
+                'image/jpeg': '.jpg',
+                'image/png': '.png',
+                'image/gif': '.gif',
+                'image/webp': '.webp',
+                'text/plain': '.txt',
+                'application/json': '.json',
+                'application/pdf': '.pdf',
+                'application/zip': '.zip'
+            };
+            return extensions[mimeType] || '.bin';
+        }
+
+        async function copyToClipboard(text) {
+            if (!text) {
+                showError('No content to copy.');
+                return;
+            }
+
+            try {
+                await navigator.clipboard.writeText(text);
+                showNotification('Copied to clipboard!', 'success');
+            } catch (err) {
+                // Fallback
+                const textArea = document.createElement('textarea');
+                textArea.value = text;
+                document.body.appendChild(textArea);
+                textArea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textArea);
+                showNotification('Copied to clipboard!', 'success');
+            }
+        }
+
+        function showSuccess(message) {
+            statusSection.classList.remove('hidden');
+            successMessage.classList.remove('hidden');
+            errorMessage.classList.add('hidden');
+            successText.textContent = message;
+        }
+
+        function showError(message) {
+            statusSection.classList.remove('hidden');
+            errorMessage.classList.remove('hidden');
+            successMessage.classList.add('hidden');
+            errorText.textContent = message;
+        }
+
+        function hideStatus() {
+            statusSection.classList.add('hidden');
+            successMessage.classList.add('hidden');
+            errorMessage.classList.add('hidden');
+        }
+
+        function showNotification(message, type = 'info') {
+            const notification = document.createElement('div');
+            notification.className = `fixed top-4 right-4 px-4 py-2 rounded-lg text-white z-50 ${
+                type === 'success' ? 'bg-green-500' : 'bg-blue-500'
+            }`;
+            notification.textContent = message;
+            document.body.appendChild(notification);
+
+            setTimeout(() => {
+                notification.remove();
+            }, 3000);
+        }
+
+        // Auto-convert on input (debounced)
+        let convertTimeout;
+        textInput.addEventListener('input', function() {
+            clearTimeout(convertTimeout);
+            convertTimeout = setTimeout(() => {
+                if (textInput.value.trim()) {
+                    convertBtn.click();
+                } else {
+                    base64Output.value = '';
+                    hideStatus();
+                }
+            }, 500);
+        });
+    </script>
+</body>
+</html>
