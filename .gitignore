@@ -2,3 +2,6 @@ hostinger-deploy/
 vendor/
 *.zip
 *.tar.gz
+.env
+./*.env*
+ameya-labs/.env*

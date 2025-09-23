@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- SEO: Updated Title Tag - More descriptive and keyword-rich -->
+    <title>Metkan Engineering & IT Services | Mechanical, Electrical, Civil & Digital Solutions</title>
+    <!-- SEO: Meta Description - Compelling and keyword-rich summary for search results -->
+    <meta name="description" content="Metkan Engineering & Services (P) Limited offers comprehensive Mechanical, Electrical, Civil, EPC, and IT & Digital services from Ameya Labs across India.">
+    <!-- SEO: Keywords (less critical now, but still good practice) -->
+    <meta name="keywords" content="Metkan, Ameya Labs, IT Services, Digital Transformation, Engineering Services India, Mechanical Engineering, Electrical Engineering, Civil Engineering, EPC Projects, Software Development, Cloud Solutions, Visakhapatnam, India">
+    <!-- SEO: Canonical Tag (important for single-page sites to prevent duplicate content issues if accessed via different URLs) -->
+    <link rel="canonical" href="https://metkan.countrysnews.com/"> <!-- Updated with the new website URL -->
+
+    <!-- Tailwind CSS CDN for rapid styling and responsiveness -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts - Inter for a modern and legible typeface -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Base font family for consistent typography */
+        body {
+            font-family: 'Inter', sans-serif;
+            /* Smooth scrolling for a better user experience when navigating sections */
+            scroll-behavior: smooth;
+        }
+        /* Custom scrollbar styling for a cleaner visual appearance across browsers */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1; /* Light background for the scrollbar track */
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #888; /* Grey scrollbar thumb */
+            border-radius: 4px; /* Rounded corners for the thumb */
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #555; /* Darker grey on hover for interactivity */
+        }
+
+        /* Keyframe animations for subtle entrance effects, enhancing perceived speed */
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fade-in-down {
+            animation: fadeInDown 0.6s ease-out forwards;
+        }
+        .animate-fade-in-up {
+            animation: fadeInUp 0.6s ease-out forwards;
+        }
+        .delay-200 { animation-delay: 0.2s; }
+        .delay-400 { animation-delay: 0.4s; }
+        .delay-600 { animation-delay: 0.6s; }
+    </style>
+
+    <!-- SEO: Schema.org Structured Data (JSON-LD) for Organization and Service -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "Organization",
+          "@id": "https://metkan.countrysnews.com/#organization",
+          "name": "Metkan Engineering and Services (P) Limited",
+          "url": "https://metkan.countrysnews.com/",
+          "logo": "https://placehold.co/150x50/0284C7/FFFFFF?text=METKAN+LOGO", <!-- Replace with your actual logo URL -->
+          "contactPoint": {
+            "@type": "ContactPoint",
+            "telephone": "+91-9900112020",
+            "contactType": "Customer Service",
+            "email": "metkanengg@gmail.com",
+            "areaServed": "IN"
+          },
+          "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "A-3, 'B' Block, Autonagar",
+            "addressLocality": "Visakhapatnam",
+            "addressRegion": "AP",
+            "postalCode": "530012",
+            "addressCountry": "IN"
+          },
+          "description": "Professionally managed Engineering company focusing on Engineering Services, EPC Projects, Infrastructure, Civil, On-site fabrication, Installation/Erection, Testing and Commissioning of Electrical and Mechanical Equipment, Piping, Instrumentation and IT & Digital Services.",
+          "sameAs": [
+            "https://www.linkedin.com/company/metkan-engineering-services", <!-- Replace with actual social media links -->
+            "https://twitter.com/metkanengg"
+          ]
+        },
+        {
+          "@type": "WebSite",
+          "@id": "https://metkan.countrysnews.com/#website",
+          "url": "https://metkan.countrysnews.com/",
+          "name": "Metkan Engineering & IT Services",
+          "publisher": {
+            "@id": "https://metkan.countrysnews.com/#organization"
+          }
+        },
+        {
+          "@type": "Service",
+          "serviceType": "IT & Digital Services",
+          "provider": {
+            "@id": "https://metkan.countrysnews.com/#organization"
+          },
+          "name": "IT Consulting & Digital Transformation",
+          "description": "Strategic IT consulting and digital transformation services to modernize your business.",
+          "url": "https://metkan.countrysnews.com/#it-services"
+        }
+      ]
+    }
+    </script>
+</head>
+<body class="bg-gray-50 text-gray-800">
+
+    <!-- Header and Navigation -->
+    <header class="bg-white shadow-md sticky top-0 z-50">
+        <nav class="container mx-auto px-4 py-4 flex justify-between items-center" role="navigation" aria-label="Main Navigation">
+            <div class="flex items-center space-x-2">
+                <!-- Company Logo Placeholder for branding -->
+                <div class="w-10 h-10 bg-blue-600 rounded-full flex items-center justify-center text-white font-bold text-xl">M</div>
+                <a href="#home" class="text-2xl font-bold text-blue-800" aria-label="Metkan Home">METKAN</a>
+            </div>
+            <!-- Desktop Navigation Links -->
+            <!-- Adjusted space-x to fit new items -->
+            <ul class="hidden md:flex space-x-2 lg:space-x-4">
+                <li><a href="#home" class="text-gray-600 hover:text-blue-600 transition duration-300 px-3 py-2 rounded-md">Home</a></li>
+                <li><a href="#about" class="text-gray-600 hover:text-blue-600 transition duration-300 px-3 py-2 rounded-md">About Us</a></li>
+                <li><a href="#services" class="text-gray-600 hover:text-blue-600 transition duration-300 px-3 py-2 rounded-md">Engineering</a></li>
+                <li><a href="#it-services" class="text-gray-600 hover:text-blue-600 transition duration-300 px-3 py-2 rounded-md">IT Services</a></li>
+                <li><a href="#products" class="text-gray-600 hover:text-blue-600 transition duration-300 px-3 py-2 rounded-md">Products</a></li>
+                <li><a href="#projects" class="text-gray-600 hover:text-blue-600 transition duration-300 px-3 py-2 rounded-md">Projects</a></li>
+                <li><a href="#contact" class="text-gray-600 hover:text-blue-600 transition duration-300 px-3 py-2 rounded-md">Contact</a></li>
+            </ul>
+            <!-- Mobile Menu Button for accessibility and responsiveness -->
+            <button id="mobile-menu-button" class="md:hidden text-gray-600 hover:text-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 rounded-md p-2" aria-label="Open mobile menu" aria-expanded="false" aria-controls="mobile-menu">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                </svg>
+            </button>
+        </nav>
+        <!-- Mobile Menu (initially hidden) -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white py-2 shadow-inner" aria-labelledby="mobile-menu-button">
+            <ul class="flex flex-col items-center space-y-2" role="menu">
+                <li role="none"><a href="#home" class="block py-2 px-4 text-gray-600 hover:bg-blue-100 w-full text-center rounded-md" role="menuitem">Home</a></li>
+                <li role="none"><a href="#about" class="block py-2 px-4 text-gray-600 hover:bg-blue-100 w-full text-center rounded-md" role="menuitem">About Us</a></li>
+                <li role="none"><a href="#services" class="block py-2 px-4 text-gray-600 hover:bg-blue-100 w-full text-center rounded-md" role="menuitem">Engineering</a></li>
+                <li role="none"><a href="#it-services" class="block py-2 px-4 text-gray-600 hover:bg-blue-100 w-full text-center rounded-md" role="menuitem">IT Services</a></li>
+                <li role="none"><a href="#products" class="block py-2 px-4 text-gray-600 hover:bg-blue-100 w-full text-center rounded-md" role="menuitem">Products</a></li>
+                <li role="none"><a href="#projects" class="block py-2 px-4 text-gray-600 hover:bg-blue-100 w-full text-center rounded-md" role="menuitem">Projects</a></li>
+                <li role="none"><a href="#contact" class="block py-2 px-4 text-gray-600 hover:bg-blue-100 w-full text-center rounded-md" role="menuitem">Contact</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <!-- Hero Section: First impression of the company -->
+    <section id="home" class="relative bg-gradient-to-r from-blue-700 to-blue-900 text-white py-20 md:py-32 overflow-hidden">
+        <div class="absolute inset-0 opacity-10">
+            <!-- Background pattern for visual interest -->
+            <svg class="w-full h-full" fill="currentColor" viewBox="0 0 100 100">
+                <pattern id="pattern-circles" x="0" y="0" width="10" height="10" patternUnits="userSpaceOnUse">
+                    <circle cx="2" cy="2" r="1" fill="rgba(255,255,255,0.1)"/>
+                </pattern>
+                <rect x="0" y="0" width="100%" height="100%" fill="url(#pattern-circles)"/>
+            </svg>
+        </div>
+        <div class="container mx-auto px-4 text-center relative z-10">
+            <h1 class="text-4xl sm:text-5xl md:text-6xl font-extrabold leading-tight mb-4 animate-fade-in-down">
+                METKAN ENGINEERING AND SERVICES (P) LIMITED
+            </h1>
+            <p class="text-xl sm:text-2xl md:text-3xl font-light mb-8 animate-fade-in-up">
+                Total Engineering and Digital Solutions.
+            </p>
+            <p class="text-lg md:text-xl font-light mb-10 max-w-3xl mx-auto animate-fade-in-up delay-200">
+                A professionally managed company focusing on Engineering Services, EPC Projects, Infrastructure, Civil, Fabrication, and now offering comprehensive IT and Digital Transformation solutions in partnership with Ameya Labs.
+            </p>
+            <a href="#contact" class="inline-block bg-white text-blue-700 hover:bg-blue-100 px-8 py-3 rounded-full text-lg font-semibold shadow-lg transition duration-300 transform hover:scale-105 animate-fade-in-up delay-400" aria-label="Contact us for more information">
+                Get in Touch
+            </a>
+        </div>
+    </section>
+
+    <!-- About Us Section: Detailed company information -->
+    <section id="about" class="py-16 md:py-24 bg-white">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl md:text-4xl font-bold text-center text-blue-800 mb-12">About Us</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+                <div class="space-y-6">
+                    <p class="text-lg leading-relaxed text-gray-700">
+                        Incorporated on 13 Dec 2011, Metkan Engineering & Services (P) Limited ("MESPL or Metkan") was earlier a group company of Boyance Infrastructure Private Limited, one of the fastest growing companies in the domain of Engineering, Procurement and Construction (EPC), development of residential and commercial spaces, Hospitality Services, Engineering Services and NBFC activities over the last many years. There are two branches of Metkan Engineering & Services (P) Limited across Visakhapatnam.
+                    </p>
+                    <p class="text-lg leading-relaxed text-gray-700">
+                        Its continuous focus on innovation and expansion together with its commitment to quality and excellence contributed significantly to the progress of the company. We've expanded our portfolio to include cutting-edge IT and Digital services in Ameya Labs which is incubated as our sister concern.
+                    </p>
+                    <p class="text-lg leading-relaxed text-gray-700">
+                        We aim to excel in engineering and digital contracts, enlarging our capability continuously in the value chain from concept to commissioning. We achieve this though commitment to quality, safety, environment, cost economics and delivery.
+                    </p>
+                </div>
+                <div>
+                    <!-- Placeholder image for the team, with descriptive alt text for accessibility -->
+                    <img src="https://placehold.co/600x400/E0F2F7/0284C7?text=Our+Team" alt="A diverse team collaborating in a modern office environment" class="rounded-lg shadow-xl w-full h-auto object-cover transform hover:scale-105 transition duration-500">
+                </div>
+            </div>
+            <div class="mt-12 pt-8 border-t border-gray-200">
+                <h3 class="text-2xl font-semibold text-blue-700 mb-6 text-center">Our Leadership</h3>
+                <div class="flex flex-col md:flex-row items-center md:items-start justify-center text-center md:text-left space-y-6 md:space-y-0 md:space-x-12">
+                    <div class="flex-shrink-0">
+                        <!-- Placeholder image for the CEO, with descriptive alt text -->
+                        <img src="https://placehold.co/150x150/E0F2F7/0284C7?text=K.V.+Srikanth" alt="Portrait of Mr. K.V. Srikanth, CEO of Metkan Engineering & Services" class="rounded-full w-36 h-36 object-cover shadow-lg mx-auto md:mx-0">
+                    </div>
+                    <!-- Applied flex-1 to allow this div to grow and take available space -->
+                    <div class="flex-1"> 
+                        <h4 class="text-xl font-bold text-gray-900">Mr. K.V. Srikanth</h4>
+                        <p class="text-blue-600 mb-2">Chief Executive Officer (CEO) & Director, Metkan Engineering & Services</p>
+                        <p class="text-md leading-relaxed text-gray-700">
+Srikanth Kotih, CEO of METKAN Engineering & Services, is a seasoned mechanical engineer with over 24 years of professional experience spanning marine, manufacturing, fabrication, and infrastructure sectors. He has successfully led complex EPC projects, including large-scale earthworks for railways and roads, coal plant assemblies, and electrical transmission line erection. Under his visionary leadership, METKAN has excelled in project planning, onsite fabrication, installation, testing, and commissioning of both mechanical and electrical systems. Srikanth is recognized for building high-performing, value-driven teams, fostering innovation, and consistently delivering client-centric solutions that meet industry standards for quality, safety, and reliability.
+                        </p>
+                    </div>
+                </div>
+                <!-- CTO Entry -->
+                <div class="flex flex-col md:flex-row items-center md:items-start justify-center text-center md:text-left space-y-6 md:space-y-0 md:space-x-12 mt-8 pt-8 border-t border-gray-200">
+                    <div class="flex-shrink-0">
+                        <!-- Placeholder image for the CTO, with descriptive alt text -->
+                        <img src="https://placehold.co/150x150/E0F2F7/0284C7?text=Santosh+Jammi" alt="Portrait of Mr. Santosh Jammi, CTO of Metkan Engineering & Services" class="rounded-full w-36 h-36 object-cover shadow-lg mx-auto md:mx-0">
+                    </div>
+                    <!-- Applied flex-1 to allow this div to grow and take available space -->
+                    <div class="flex-1"> 
+                        <h4 class="text-xl font-bold text-gray-900">Mr. Santosh Jammi</h4>
+                        <p class="text-blue-600 mb-2">Chief Technology Officer (CTO), Metkan Engineering & Services</p>
+                        <p class="text-md leading-relaxed text-gray-700">
+                            Santosh Jammi is a versatile software engineer recognized for solving complex technical problems across the enterprise software lifecycle. With 16+ years of experience, he excels in automating processes, reducing regression cycles from thousands to hundreds of hours, and improving application reliability for legacy systems. Santosh has led DevOps teams, introduced CI/CD pipelines, and delivered infrastructure automation projects that enhance productivity and performance. His approach centers on clear problem definition, practical technology application, and learning-driven solution design. Santosh’s track record includes client issue resolution, technical leadership, and driving impactful change through thoughtful engineering practices .
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Values Section remains unchanged -->
+    <section id="values" class="py-16 md:py-24 bg-blue-50">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl md:text-4xl font-bold text-center text-blue-800 mb-12">Our Core Values</h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="bg-white rounded-lg shadow-lg p-6 text-center transform hover:scale-105 transition duration-300">
+                    <div class="text-blue-600 text-5xl mb-4" aria-hidden="true">✔</div>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-2">Deliver the Promise</h3>
+                    <p class="text-gray-700">We are committed to fulfilling our commitments and exceeding expectations.</p>
+                </div>
+                <div class="bg-white rounded-lg shadow-lg p-6 text-center transform hover:scale-105 transition duration-300">
+                    <div class="text-blue-600 text-5xl mb-4" aria-hidden="true">✔</div>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-2">Client Satisfaction</h3>
+                    <p class="text-gray-700">Our primary focus is on ensuring the utmost satisfaction of our clients.</p>
+                </div>
+                <div class="bg-white rounded-lg shadow-lg p-6 text-center transform hover:scale-105 transition duration-300">
+                    <div class="text-blue-600 text-5xl mb-4" aria-hidden="true">✔</div>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-2">Integrity & Responsibility</h3>
+                    <p class="text-gray-700">We operate with the highest level of integrity and take full responsibility for our actions.</p>
+                </div>
+                <div class="bg-white rounded-lg shadow-lg p-6 text-center transform hover:scale-105 transition duration-300">
+                    <div class="text-blue-600 text-5xl mb-4" aria-hidden="true">✔</div>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-2">Humility & Respect</h3>
+                    <p class="text-gray-700">We approach every interaction with humility and profound respect for individuals.</p>
+                </div>
+                <div class="bg-white rounded-lg shadow-lg p-6 text-center transform hover:scale-105 transition duration-300">
+                    <div class="text-blue-600 text-5xl mb-4" aria-hidden="true">✔</div>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-2">Honesty & Transparency</h3>
+                    <p class="text-gray-700">We believe in fostering an environment of honesty and complete transparency.</p>
+                </div>
+                <div class="bg-white rounded-lg shadow-lg p-6 text-center transform hover:scale-105 transition duration-300">
+                    <div class="text-blue-600 text-5xl mb-4" aria-hidden="true">✔</div>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-2">Positive & Optimistic</h3>
+                    <p class="text-gray-700">We maintain a positive outlook and an optimistic approach in all our endeavors.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Engineering Services Section -->
+    <section id="services" class="py-16 md:py-24 bg-white">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl md:text-4xl font-bold text-center text-blue-800 mb-12">Our Engineering Services</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Service 1: Total Material Management -->
+                <div class="bg-blue-50 rounded-lg shadow-lg p-6">
+                    <h3 class="text-xl font-semibold text-blue-700 mb-3">Total Material Management</h3>
+                    <p class="text-gray-700">Efficient and comprehensive management of all materials required for projects, ensuring timely availability and cost-effectiveness.</p>
+                </div>
+                <!-- Service 2: Infrastructure - Roads & Railway Earthworks -->
+                <div class="bg-blue-50 rounded-lg shadow-lg p-6">
+                    <h3 class="text-xl font-semibold text-blue-700 mb-3">Infrastructure - Roads & Railway Earthworks</h3>
+                    <p class="text-gray-700">Expertise in design, engineering, procurement, construction, operation, and maintenance of road and railway infrastructure projects.</p>
+                </div>
+                <!-- Service 3: On-Site Fabrication & Erection -->
+                <div class="bg-blue-50 rounded-lg shadow-lg p-6">
+                    <h3 class="text-xl font-semibold text-blue-700 mb-3">On-Site Fabrication & Erection</h3>
+                    <ul class="list-disc list-inside text-gray-700 space-y-1">
+                        <li>Structural elements (platforms, handrails, walkways, gratings)</li>
+                        <li>Ducts, Stacks, Flues, Bins, Hoppers</li>
+                        <li>Tanks and Low Pressure Vessels, pipes, fittings and supports</li>
+                    </ul>
+                </div>
+                <!-- Service 4: Installation, Testing & Commissioning -->
+                <div class="bg-blue-50 rounded-lg shadow-lg p-6">
+                    <h3 class="text-xl font-semibold text-blue-700 mb-3">Installation, Testing & Commissioning</h3>
+                    <ul class="list-disc list-inside text-gray-700 space-y-1">
+                        <li>Mechanical, Electrical, Control & Instrumentation works for various plants.</li>
+                    </ul>
+                </div>
+                <!-- Service 5: Electrical Distribution and Transmission -->
+                <div class="bg-blue-50 rounded-lg shadow-lg p-6">
+                    <h3 class="text-xl font-semibold text-blue-700 mb-3">Electrical Distribution and Transmission</h3>
+                    <p class="text-gray-700">Specialized services in the erection, installation, and maintenance of electrical distribution and transmission lines.</p>
+                </div>
+                <!-- Service 6: Operations and Maintenance (O&M) Services -->
+                <div class="bg-blue-50 rounded-lg shadow-lg p-6">
+                    <h3 class="text-xl font-semibold text-blue-700 mb-3">Operations and Maintenance (O&M) Services</h3>
+                    <p class="text-gray-700">Comprehensive O&M services for main plants and Balance of Plant (BOP) components, ensuring optimal performance and longevity.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- NEW: IT & Digital Services Section (from Ameya Labs) -->
+    <section id="it-services" class="py-16 md:py-24 bg-blue-50">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl md:text-4xl font-bold text-center text-blue-800 mb-2">Our IT & Digital Services</h2>
+            <p class="text-center text-gray-600 mb-12 text-lg">
+                <a href="https://ameyalabs.in" target="_blank" rel="noopener noreferrer" class="text-blue-600 hover:text-blue-800 transition-colors duration-200">Powered by Ameya Labs</a>
+            </p>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <a href="https://ameyalabs.in" target="_blank" rel="noopener noreferrer" class="block bg-white rounded-lg shadow-lg p-6 transition-all duration-300 hover:shadow-xl hover:-translate-y-1 flex flex-col justify-between">
+                    <div>
+                        <h3 class="text-xl font-semibold text-blue-700 mb-3">IT Consulting & Digital Transformation</h3>
+                        <p class="text-gray-700">Strategic guidance to align your technology with business goals for scalable growth and efficiency.</p>
+                    </div>
+                    <p class="text-blue-600 font-semibold mt-4">Learn More &rarr;</p>
+                </a>
+                <a href="https://ameyalabs.in" target="_blank" rel="noopener noreferrer" class="block bg-white rounded-lg shadow-lg p-6 transition-all duration-300 hover:shadow-xl hover:-translate-y-1 flex flex-col justify-between">
+                    <div>
+                        <h3 class="text-xl font-semibold text-blue-700 mb-3">Custom Software Development</h3>
+                        <p class="text-gray-700">Bespoke software solutions tailored to your unique business processes and requirements.</p>
+                    </div>
+                    <p class="text-blue-600 font-semibold mt-4">Learn More &rarr;</p>
+                </a>
+                <a href="https://ameyalabs.in" target="_blank" rel="noopener noreferrer" class="block bg-white rounded-lg shadow-lg p-6 transition-all duration-300 hover:shadow-xl hover:-translate-y-1 flex flex-col justify-between">
+                    <div>
+                        <h3 class="text-xl font-semibold text-blue-700 mb-3">Web & Mobile App Development</h3>
+                        <p class="text-gray-700">Engaging and high-performance web and mobile applications for iOS and Android platforms.</p>
+                    </div>
+                    <p class="text-blue-600 font-semibold mt-4">Learn More &rarr;</p>
+                </a>
+                <a href="https://ameyalabs.in" target="_blank" rel="noopener noreferrer" class="block bg-white rounded-lg shadow-lg p-6 transition-all duration-300 hover:shadow-xl hover:-translate-y-1 flex flex-col justify-between">
+                    <div>
+                        <h3 class="text-xl font-semibold text-blue-700 mb-3">Cloud Solutions</h3>
+                        <p class="text-gray-700">Expertise in AWS, Azure, and Google Cloud for scalable, secure, and cost-effective infrastructure.</p>
+                    </div>
+                    <p class="text-blue-600 font-semibold mt-4">Learn More &rarr;</p>
+                </a>
+                <a href="https://ameyalabs.in" target="_blank" rel="noopener noreferrer" class="block bg-white rounded-lg shadow-lg p-6 transition-all duration-300 hover:shadow-xl hover:-translate-y-1 flex flex-col justify-between">
+                    <div>
+                        <h3 class="text-xl font-semibold text-blue-700 mb-3">Data Analytics & AI</h3>
+                        <p class="text-gray-700">Turn data into actionable insights with our advanced analytics and artificial intelligence solutions.</p>
+                    </div>
+                    <p class="text-blue-600 font-semibold mt-4">Learn More &rarr;</p>
+                </a>
+                <a href="https://ameyalabs.in" target="_blank" rel="noopener noreferrer" class="block bg-white rounded-lg shadow-lg p-6 transition-all duration-300 hover:shadow-xl hover:-translate-y-1 flex flex-col justify-between">
+                    <div>
+                        <h3 class="text-xl font-semibold text-blue-700 mb-3">Cybersecurity Services</h3>
+                        <p class="text-gray-700">Protect your digital assets with comprehensive security assessments, monitoring, and threat management.</p>
+                    </div>
+                    <p class="text-blue-600 font-semibold mt-4">Learn More &rarr;</p>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- NEW: Products Section (from Ameya Labs) -->
+    <section id="products" class="py-16 md:py-24 bg-white">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl md:text-4xl font-bold text-center text-blue-800 mb-12">Our Products</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Product 1 -->
+                <div class="bg-blue-50 rounded-lg shadow-lg overflow-hidden transform hover:scale-105 transition duration-300">
+                    <img src="https://placehold.co/600x400/D1E9FF/0056B3?text=InsightEdge+AI" alt="Data analytics dashboard for InsightEdge AI" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold text-blue-700 mb-2">InsightEdge AI</h3>
+                        <p class="text-gray-700 text-sm">An advanced AI-powered analytics platform to unlock business intelligence from your data.</p>
+                    </div>
+                </div>
+                <!-- Product 2 -->
+                <div class="bg-blue-50 rounded-lg shadow-lg overflow-hidden transform hover:scale-105 transition duration-300">
+                    <img src="https://placehold.co/600x400/D1E9FF/0056B3?text=ConnectSphere" alt="IoT devices connecting through the ConnectSphere platform" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold text-blue-700 mb-2">ConnectSphere IoT</h3>
+                        <p class="text-gray-700 text-sm">A robust and scalable IoT platform to connect, manage, and monitor your smart devices seamlessly.</p>
+                    </div>
+                </div>
+                <!-- Product 3 -->
+                <div class="bg-blue-50 rounded-lg shadow-lg overflow-hidden transform hover:scale-105 transition duration-300">
+                    <img src="https://placehold.co/600x400/D1E9FF/0056B3?text=SecureShield" alt="Cybersecurity shield protecting a network" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold text-blue-700 mb-2">SecureShield Suite</h3>
+                        <p class="text-gray-700 text-sm">A comprehensive cybersecurity suite offering end-to-end protection for your business infrastructure.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- Projects Section: Showcasing past work -->
+    <section id="projects" class="py-16 md:py-24 bg-blue-100">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl md:text-4xl font-bold text-center text-blue-800 mb-12">Our Key Engineering Projects</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Project 3: Electrical Distribution - 11KV Line Erection -->
+                <div class="bg-white rounded-lg shadow-lg overflow-hidden transform hover:scale-105 transition duration-300">
+                    <img src="https://placehold.co/600x400/D1E9FF/0056B3?text=11KV+Line+Erection+Site" alt="Workers erecting an 11KV electrical distribution line" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold text-blue-700 mb-2">11KV Line Erection, Installation & Maintenance</h3>
+                        <p class="text-gray-700 text-sm mb-4">Project under DDUGJY Scheme for NCC Limited at Yadgir, Karnataka.</p>
+                        <p class="text-gray-600 text-sm font-medium">Work Site: Yadgir, Karnataka</p>
+                    </div>
+                </div>
+                <!-- Project 4: Earthwork - DFCC Package 201B -->
+                <div class="bg-white rounded-lg shadow-lg overflow-hidden transform hover:scale-105 transition duration-300">
+                    <img src="https://placehold.co/600x400/D1E9FF/0056B3?text=DFCC+Earthwork+Site" alt="Heavy machinery performing earthwork for DFCC Package 201B" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold text-blue-700 mb-2">Earthwork for DFCC Package 201B</h3>
+                        <p class="text-gray-700 text-sm mb-4">Earthwork between Ch202+000 to 220+000 for DFCC Package 201B, executed for GIL-SIL JV.</p>
+                        <p class="text-gray-600 text-sm font-medium">Work Site: Mirzapur, Uttar Pradesh</p>
+                    </div>
+                </div>
+                <!-- Project 5: Main Plant and Equipment - Coal Bunker Assembly -->
+                <div class="bg-white rounded-lg shadow-lg overflow-hidden transform hover:scale-105 transition duration-300">
+                    <img src="https://placehold.co/600x400/D1E9FF/0056B3?text=Coal+Bunker+Assembly+Plant" alt="Large coal bunker assembly structure at a thermal power plant" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold text-blue-700 mb-2">Coal Bunker Assembly & SS Lining</h3>
+                        <p class="text-gray-700 text-sm mb-4">Assembly of 2 Nos. Coal Bunkers and SS lining for 6 Nos. for SEPCO, China, at GMR Kamlanga Energy.</p>
+                        <p class="text-gray-600 text-sm font-medium">Work Site: Kamalanga, Orissa</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Us Section: Providing contact information and form -->
+    <section id="contact" class="py-16 md:py-24 bg-white">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl md:text-4xl font-bold text-center text-blue-800 mb-12">Contact Us</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+                <!-- Contact Information Details -->
+                <div class="bg-blue-50 rounded-lg shadow-lg p-8 space-y-6">
+                    <h3 class="text-2xl font-semibold text-blue-700 mb-4">Get in Touch</h3>
+                    <div class="flex items-start space-x-4">
+                        <svg class="w-8 h-8 text-blue-600 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.828 0l-4.243-4.243m11.314 0A8.996 8.996 0 0020 12c0-9.727-11-2-11-2S2 2 2 12c0 2.972 1.18 5.727 3.143 7.657M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                        <div>
+                            <p class="font-semibold text-gray-900">Address:</p>
+                            <p class="text-gray-700">A-3, 'B' Block, Autonagar, Visakhapatnam - 530 012, India</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start space-x-4">
+                        <svg class="w-8 h-8 text-blue-600 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path></svg>
+                        <div>
+                            <p class="font-semibold text-gray-900">Phone:</p>
+                            <p class="text-gray-700">+91 9900112020</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start space-x-4">
+                        <svg class="w-8 h-8 text-blue-600 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8m-18 4v7a2 2 0 002 2h14a2 2 0 002-2v-7m-18 0h18"></path></svg>
+                        <div>
+                            <p class="font-semibold text-gray-900">Email:</p>
+                            <p class="text-gray-700"><a href="mailto:metkanengg@gmail.com" class="text-blue-600 hover:underline">metkanengg@gmail.com</a></p>
+                            <p class="text-gray-700"><a href="mailto:kvsrikanth@yahoo.com" class="text-blue-600 hover:underline">kvsrikanth@yahoo.com</a></p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Contact Form -->
+                <div class="bg-white rounded-lg shadow-lg p-8">
+                    <h3 class="text-2xl font-semibold text-blue-700 mb-4">Send us a Message</h3>
+                    <form class="space-y-4">
+                        <div>
+                            <label for="name" class="block text-gray-700 text-sm font-bold mb-2">Name</label>
+                            <input type="text" id="name" name="name" class="shadow-sm appearance-none border rounded-md w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="Your Name" aria-required="true">
+                        </div>
+                        <div>
+                            <label for="email" class="block text-gray-700 text-sm font-bold mb-2">Email</label>
+                            <input type="email" id="email" name="email" class="shadow-sm appearance-none border rounded-md w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="your@example.com" aria-required="true">
+                        </div>
+                        <div>
+                            <label for="subject" class="block text-gray-700 text-sm font-bold mb-2">Subject</label>
+                            <input type="text" id="subject" name="subject" class="shadow-sm appearance-none border rounded-md w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="Subject of your message">
+                        </div>
+                        <div>
+                            <label for="message" class="block text-gray-700 text-sm font-bold mb-2">Message</label>
+                            <textarea id="message" name="message" rows="5" class="shadow-sm appearance-none border rounded-md w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="Your message" aria-required="true"></textarea>
+                        </div>
+                        <button type="submit" class="bg-blue-700 text-white px-6 py-3 rounded-md font-semibold hover:bg-blue-800 transition duration-300 shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
+                            Send Message
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-8">
+        <div class="container mx-auto px-4 text-center">
+            <p>&copy; <span id="current-year"></span> Metkan Engineering and Services (P) Limited. All rights reserved.</p>
+            <p class="text-sm mt-2">Designed with <span class="text-red-500" aria-hidden="true">&hearts;</span> by Metkan Team</p>
+        </div>
+    </footer>
+
+    <script>
+        // Set current year dynamically for the footer
+        document.getElementById('current-year').textContent = new Date().getFullYear();
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault(); // Prevent default anchor click behavior
+
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+
+                if (targetElement) {
+                    targetElement.scrollIntoView({
+                        behavior: 'smooth' // Enable smooth scrolling
+                    });
+                }
+
+                // Close mobile menu after clicking a link
+                if (mobileMenu.classList.contains('flex')) {
+                    mobileMenu.classList.remove('flex');
+                    mobileMenu.classList.add('hidden');
+                    mobileMenuButton.setAttribute('aria-expanded', 'false'); // Update ARIA attribute
+                }
+            });
+        });
+
+        // Mobile menu toggle functionality for responsiveness and accessibility
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        mobileMenuButton.addEventListener('click', () => {
+            const isExpanded = mobileMenuButton.getAttribute('aria-expanded') === 'true' || false;
+            mobileMenuButton.setAttribute('aria-expanded', !isExpanded); // Toggle ARIA attribute
+            mobileMenu.classList.toggle('hidden');
+            mobileMenu.classList.toggle('flex');
+        });
+
+        // Close mobile menu when clicking outside for better UX
+        document.addEventListener('click', (event) => {
+            // Check if the click is outside the mobile menu and the button, and if the menu is open
+            if (mobileMenu && !mobileMenu.contains(event.target) && !mobileMenuButton.contains(event.target) && mobileMenu.classList.contains('flex')) {
+                mobileMenu.classList.remove('flex');
+                mobileMenu.classList.add('hidden');
+                mobileMenuButton.setAttribute('aria-expanded', 'false'); // Update ARIA attribute
+            }
+        });
+    </script>
+</body>
+</html>
+
