@@ -4,4 +4,4 @@ vendor/
 *.tar.gz
 .env
 ./*.env*
-ameya-labs/.env*
+ameya-labs/.env
