@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HeptaCare Health: Requirements & User Workflows</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        'primary-blue': '#0065FF',
+                        'secondary-gray': '#E5E7EB',
+                        'dark-text': '#111827',
+                    },
+                    keyframes: {
+                        fadeIn: {
+                            '0%': { opacity: '0', transform: 'translateY(20px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        },
+                        slideIn: {
+                            '0%': { transform: 'translateX(-100%)' },
+                            '100%': { transform: 'translateX(0)' },
+                        }
+                    },
+                    animation: {
+                        fadeIn: 'fadeIn 0.6s ease-out',
+                        slideIn: 'slideIn 0.8s ease-out',
+                    },
+                }
+            }
+        }
+    </script>
+    <style>
+        .icon-svg {
+            width: 48px;
+            height: 48px;
+            fill: #0065FF;
+        }
+
+        .gradient-bg {
+            background: linear-gradient(180deg, #F3F4F6 0%, #FFFFFF 100%);
+        }
+
+        .card {
+            -webkit-backdrop-filter: blur(10px);
+            backdrop-filter: blur(10px);
+            background-color: rgba(255, 255, 255, 0.7);
+            border: 1px solid rgba(229, 231, 235, 0.5);
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-dark-text font-sans leading-relaxed">
+
+    <!-- Header Section -->
+    <header class="w-full py-6">
+        <div class="max-w-7xl mx-auto px-4 md:px-8 flex justify-between items-center">
+            <h1 class="text-3xl font-bold text-primary-blue">HeptaCare Health</h1>
+            <nav class="hidden md:flex space-x-6 text-lg font-medium">
+                <a href="#overview" class="hover:text-primary-blue transition-colors">Overview</a>
+                <a href="#must-haves" class="hover:text-primary-blue transition-colors">Phase 1</a>
+                <a href="#enhancements" class="hover:text-primary-blue transition-colors">Enhancements</a>
+                <a href="#risks" class="hover:text-primary-blue transition-colors">Risks</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="gradient-bg py-20 animate-fadeIn">
+        <div class="max-w-7xl mx-auto px-4 md:px-8 text-center">
+            <h2 class="text-4xl sm:text-5xl md:text-6xl font-extrabold text-dark-text mb-4">
+                Redefining Healthcare Operations
+            </h2>
+            <p class="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto">
+                A modern web application to streamline patient management, multi-party appointments, and lead tracking for Business Development Executives.
+            </p>
+        </div>
+    </section>
+
+    <!-- Overview Section -->
+    <section id="overview" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 md:px-8">
+            <div class="text-center mb-16">
+                <h3 class="text-3xl font-bold text-dark-text mb-4">Core Principles of the Platform</h3>
+                <p class="text-gray-600 max-w-2xl mx-auto">
+                    The HeptaCare Health app is built on three pillars: efficiency, clarity, and security.
+                </p>
+            </div>
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="text-center p-8 rounded-2xl shadow-lg card animate-fadeIn">
+                    <svg class="icon-svg mx-auto mb-4" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM12 20C7.59 20 4 16.41 4 12C4 7.59 7.59 4 12 4C16.41 4 20 7.59 20 12C20 16.41 16.41 20 12 20ZM12 11H8V13H12V17H14V13H18V11H14V7H12V11Z" fill="#0065FF"/>
+                    </svg>
+                    <h4 class="text-xl font-semibold mb-2">Efficiency</h4>
+                    <p class="text-gray-500">
+                        Streamline lead management, appointments, and reporting to boost productivity.
+                    </p>
+                </div>
+                <div class="text-center p-8 rounded-2xl shadow-lg card animate-fadeIn" style="animation-delay: 0.2s;">
+                    <svg class="icon-svg mx-auto mb-4" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM12 20C7.59 20 4 16.41 4 12C4 7.59 7.59 4 12 4C16.41 4 20 7.59 20 12C20 16.41 16.41 20 12 20ZM11.29 15.29L15.29 11.29L14.58 10.58L11.29 13.88L9.71 12.29L9 13L11.29 15.29Z" fill="#0065FF"/>
+                    </svg>
+                    <h4 class="text-xl font-semibold mb-2">Clarity</h4>
+                    <p class="text-gray-500">
+                        Provide a single, clear source of truth for patient records and payment statuses.
+                    </p>
+                </div>
+                <div class="text-center p-8 rounded-2xl shadow-lg card animate-fadeIn" style="animation-delay: 0.4s;">
+                    <svg class="icon-svg mx-auto mb-4" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM12 20C7.59 20 4 16.41 4 12C4 7.59 7.59 4 12 4C16.41 4 20 7.59 20 12C20 16.41 16.41 20 12 20ZM12 11.72L14.12 14.12L12 16.24L9.88 14.12L12 11.72ZM12 10.3L15.5 14L12 17.5L8.5 14L12 10.3ZM12 6L18 12L12 18L6 12L12 6Z" fill="#0065FF"/>
+                    </svg>
+                    <h4 class="text-xl font-semibold mb-2">Security</h4>
+                    <p class="text-gray-500">
+                        Protect sensitive patient data with end-to-end encryption and robust access controls.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Phase 1: Must-Haves vs. Good-to-Haves -->
+    <section id="must-haves" class="py-20 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 md:px-8">
+            <div class="text-center mb-16">
+                <h3 class="text-3xl font-bold text-dark-text mb-4">Phase 1: Must-Haves vs. Good-to-Haves</h3>
+                <p class="text-gray-600 max-w-2xl mx-auto">
+                    A strategic approach to deliver immediate value while planning for future growth.
+                </p>
+            </div>
+            <div class="grid md:grid-cols-2 gap-12">
+                <!-- Must-Haves -->
+                <div class="p-8 rounded-3xl shadow-xl card animate-fadeIn">
+                    <h4 class="text-2xl font-bold text-primary-blue mb-4">Must-Haves for Immediate Launch</h4>
+                    <ul class="space-y-4 text-lg text-gray-700">
+                        <li class="flex items-start">
+                            <svg class="h-6 w-6 text-green-500 mr-2 flex-shrink-0" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM10 17L5 12L6.41 10.59L10 14.17L17.59 6.58L19 8L10 17Z" />
+                            </svg>
+                            <div>
+                                <span class="font-semibold">User & Staff Registration:</span> Onboarding via CRM-integrated SSO.
+                            </div>
+                        </li>
+                        <li class="flex items-start">
+                            <svg class="h-6 w-6 text-green-500 mr-2 flex-shrink-0" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM10 17L5 12L6.41 10.59L10 14.17L17.59 6.58L19 8L10 17Z" />
+                            </svg>
+                            <div>
+                                <span class="font-semibold">Patient Lead Management:</span> Create, manage, and track patient records.
+                            </div>
+                        </li>
+                        <li class="flex items-start">
+                            <svg class="h-6 w-6 text-green-500 mr-2 flex-shrink-0" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM10 17L5 12L6.41 10.59L10 14.17L17.59 6.58L19 8L10 17Z" />
+                            </svg>
+                            <div>
+                                <span class="font-semibold">Appointment Booking:</span> Multi-party confirmation workflow for bookings.
+                            </div>
+                        </li>
+                        <li class="flex items-start">
+                            <svg class="h-6 w-6 text-green-500 mr-2 flex-shrink-0" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM10 17L5 12L6.41 10.59L10 14.17L17.59 6.58L19 8L10 17Z" />
+                            </svg>
+                            <div>
+                                <span class="font-semibold">Post-Appointment Tracking:</span> Status updates for every lead from a single dashboard.
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Good-to-Haves -->
+                <div class="p-8 rounded-3xl shadow-xl card animate-fadeIn" style="animation-delay: 0.2s;">
+                    <h4 class="text-2xl font-bold text-gray-500 mb-4">Good-to-Haves for Later Phases</h4>
+                    <ul class="space-y-4 text-lg text-gray-700">
+                        <li class="flex items-start">
+                            <svg class="h-6 w-6 text-gray-400 mr-2 flex-shrink-0" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM12 20C7.59 20 4 16.41 4 12C4 7.59 7.59 4 12 4C16.41 4 20 7.59 20 12C20 16.41 16.41 20 12 20ZM12 7V13H18V11H14V7H12Z" />
+                            </svg>
+                            <div>
+                                <span class="font-semibold">Advanced MFA:</span> WhatsApp, Signal, and Telegram integration.
+                            </div>
+                        </li>
+                        <li class="flex items-start">
+                            <svg class="h-6 w-6 text-gray-400 mr-2 flex-shrink-0" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM12 20C7.59 20 4 16.41 4 12C4 7.59 7.59 4 12 4C16.41 4 20 7.59 20 12C20 16.41 16.41 20 12 20ZM12 7V13H18V11H14V7H12Z" />
+                            </svg>
+                            <div>
+                                <span class="font-semibold">Telemedicine & Virtual Care:</span> Video calls, AI translation, and e-prescriptions.
+                            </div>
+                        </li>
+                        <li class="flex items-start">
+                            <svg class="h-6 w-6 text-gray-400 mr-2 flex-shrink-0" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM12 20C7.59 20 4 16.41 4 12C4 7.59 7.59 4 12 4C16.41 4 20 7.59 20 12C20 16.41 16.41 20 12 20ZM12 7V13H18V11H14V7H12Z" />
+                            </svg>
+                            <div>
+                                <span class="font-semibold">OCR & AI Analytics:</span> Document autofill and predictive reports.
+                            </div>
+                        </li>
+                        <li class="flex items-start">
+                            <svg class="h-6 w-6 text-gray-400 mr-2 flex-shrink-0" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM12 20C7.59 20 4 16.41 4 12C4 7.59 7.59 4 12 4C16.41 4 20 7.59 20 12C20 16.41 16.41 20 12 20ZM12 7V13H18V11H14V7H12Z" />
+                            </svg>
+                            <div>
+                                <span class="font-semibold">Insurance Pre-Authorization:</span> Full API-driven workflow.
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Key Enhancements Section -->
+    <section id="enhancements" class="py-20 gradient-bg">
+        <div class="max-w-7xl mx-auto px-4 md:px-8">
+            <div class="text-center mb-16">
+                <h3 class="text-3xl font-bold text-dark-text mb-4">Strategic Enhancements & Their Benefits</h3>
+                <p class="text-gray-600 max-w-2xl mx-auto">
+                    We're going beyond the basic requirements to deliver a platform that provides a real competitive advantage.
+                </p>
+            </div>
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <!-- Enhancement 1: CRM & SSO Integration -->
+                <div class="flex flex-col items-center text-center p-6 rounded-2xl shadow-lg card animate-fadeIn">
+                    <svg class="icon-svg mb-4" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM12 20C7.59 20 4 16.41 4 12C4 7.59 7.59 4 12 4C16.41 4 20 7.59 20 12C20 16.41 16.41 20 12 20ZM12 11.72L14.12 14.12L12 16.24L9.88 14.12L12 11.72ZM12 10.3L15.5 14L12 17.5L8.5 14L12 10.3ZM12 6L18 12L12 18L6 12L12 6Z" fill="#0065FF"/>
+                    </svg>
+                    <h5 class="text-xl font-semibold mb-2">CRM-Integrated SSO</h5>
+                    <p class="text-gray-500">
+                        Automated user onboarding and management from your existing CRM.
+                    </p>
+                </div>
+                <!-- Enhancement 2: Multi-Party Confirmation -->
+                <div class="flex flex-col items-center text-center p-6 rounded-2xl shadow-lg card animate-fadeIn" style="animation-delay: 0.2s;">
+                    <svg class="icon-svg mb-4" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM12 20C7.59 20 4 16.41 4 12C4 7.59 7.59 4 12 4C16.41 4 20 7.59 20 12C20 16.41 16.41 20 12 20ZM11.29 15.29L15.29 11.29L14.58 10.58L11.29 13.88L9.71 12.29L9 13L11.29 15.29Z" fill="#0065FF"/>
+                    </svg>
+                    <h5 class="text-xl font-semibold mb-2">Multi-Party Confirmation</h5>
+                    <p class="text-gray-500">
+                        Ensures all parties confirm an appointment, reducing no-shows and errors.
+                    </p>
+                </div>
+                <!-- Enhancement 3: Multi-Level RBAC -->
+                <div class="flex flex-col items-center text-center p-6 rounded-2xl shadow-lg card animate-fadeIn" style="animation-delay: 0.4s;">
+                    <svg class="icon-svg mb-4" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM12 20C7.59 20 4 16.41 4 12C4 7.59 7.59 4 12 4C16.41 4 20 7.59 20 12C20 16.41 16.41 20 12 20ZM12 11H8V13H12V17H14V13H18V11H14V7H12V11Z" fill="#0065FF"/>
+                    </svg>
+                    <h5 class="text-xl font-semibold mb-2">Multi-Level RBAC</h5>
+                    <p class="text-gray-500">
+                        Tailored dashboards and data access for every user from BDE to admin.
+                    </p>
+                </div>
+                <!-- Enhancement 4: End-to-End Tracking -->
+                <div class="flex flex-col items-center text-center p-6 rounded-2xl shadow-lg card animate-fadeIn" style="animation-delay: 0.6s;">
+                    <svg class="icon-svg mb-4" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM12 20C7.59 20 4 16.41 4 12C4 7.59 7.59 4 12 4C16.41 4 20 7.59 20 12C20 16.41 16.41 20 12 20ZM11.29 15.29L15.29 11.29L14.58 10.58L11.29 13.88L9.71 12.29L9 13L11.29 15.29Z" fill="#0065FF"/>
+                    </svg>
+                    <h5 class="text-xl font-semibold mb-2">End-to-End Tracking</h5>
+                    <p class="text-gray-500">
+                        Complete visibility of a patient's journey from lead to billing completion.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Risks Section -->
+    <section id="risks" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 md:px-8">
+            <div class="text-center mb-16">
+                <h3 class="text-3xl font-bold text-dark-text mb-4">Navigating Key Risks for National Growth</h3>
+                <p class="text-gray-600 max-w-2xl mx-auto">
+                    A proactive approach to ensuring long-term success and scalability.
+                </p>
+            </div>
+            <div class="grid md:grid-cols-2 gap-12">
+                <!-- Risk 1: Regulatory & Compliance -->
+                <div class="p-8 rounded-3xl shadow-xl card animate-fadeIn">
+                    <h4 class="text-2xl font-bold text-primary-blue mb-4">Regulatory & Compliance</h4>
+                    <p class="text-lg text-gray-700 mb-4">
+                        Expanding across India means navigating complex, state-specific healthcare and data privacy laws. Non-compliance is a major risk.
+                    </p>
+                    <div class="space-y-2">
+                        <p class="flex items-center text-gray-600">
+                            <svg class="h-6 w-6 text-green-500 mr-2 flex-shrink-0" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM10 17L5 12L6.41 10.59L10 14.17L17.59 6.58L19 8L10 17Z" /></svg>
+                            <span class="font-semibold">Built-in Compliance:</span> The foundation is built on major laws like HIPAA, GDPR, and DPDP/India.
+                        </p>
+                        <p class="flex items-center text-gray-600">
+                            <svg class="h-6 w-6 text-green-500 mr-2 flex-shrink-0" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM10 17L5 12L6.41 10.59L10 14.17L17.59 6.58L19 8L10 17Z" /></svg>
+                            <span class="font-semibold">Granular RBAC:</span> Access is strictly limited by role and location, minimizing exposure.
+                        </p>
+                        <p class="flex items-center text-gray-600">
+                            <svg class="h-6 w-6 text-green-500 mr-2 flex-shrink-0" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM10 17L5 12L6.41 10.59L10 14.17L17.59 6.58L19 8L10 17Z" /></svg>
+                            <span class="font-semibold">Comprehensive Audit Trails:</span> All actions on patient data are logged for accountability.
+                        </p>
+                    </div>
+                </div>
+                <!-- Risk 2: Technical Scalability -->
+                <div class="p-8 rounded-3xl shadow-xl card animate-fadeIn" style="animation-delay: 0.2s;">
+                    <h4 class="text-2xl font-bold text-primary-blue mb-4">Technical Scalability & Performance</h4>
+                    <p class="text-lg text-gray-700 mb-4">
+                        A massive increase in users and data volume could degrade system performance, leading to a poor user experience.
+                    </p>
+                    <div class="space-y-2">
+                        <p class="flex items-center text-gray-600">
+                            <svg class="h-6 w-6 text-green-500 mr-2 flex-shrink-0" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM10 17L5 12L6.41 10.59L10 14.17L17.59 6.58L19 8L10 17Z" /></svg>
+                            <span class="font-semibold">Scalable Cloud Infrastructure:</span> Hosted on a robust platform to handle exponential growth.
+                        </p>
+                        <p class="flex items-center text-gray-600">
+                            <svg class="h-6 w-6 text-green-500 mr-2 flex-shrink-0" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM10 17L5 12L6.41 10.59L10 14.17L17.59 6.58L19 8L10 17Z" /></svg>
+                            <span class="font-semibold">Real-time Data Sync:</span> The architecture is built for speed to prevent bottlenecks during high-volume operations.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="w-full py-6 text-center text-gray-500 text-sm">
+        <p>&copy; 2025 Ameya Labs. All rights reserved.</p>
+    </footer>
+
+</body>
+</html>
