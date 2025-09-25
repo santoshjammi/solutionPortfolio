@@ -11,65 +11,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌐</text></svg>">
     <style>
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #f0f4f8;
-            /* Added padding-top to body to account for fixed header, ensuring content isn't hidden */
-            padding-top: 64px;
-        }
-
-        .main-content-iframe {
-            width: 100%;
-            height: calc(100vh - 64px); /* Full height minus header */
-            border: none;
-            background-color: #ffffff; /* Ensure iframe has a solid background */
-            flex-grow: 1;
-        }
-
-        /* Mobile menu specific styles */
-        .sidebar {
-            transition: transform 0.3s ease-in-out;
-            position: fixed; /* Use fixed for mobile to overlay content */
-            z-index: 40; /* Above main content, below overlay */
-            height: calc(100vh - 64px); /* Full height minus header */
-            top: 64px;
-            left: 0;
-            width: 256px; /* Fixed width for the sidebar */
-            transform: translateX(-100%); /* Hidden by default */
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            background-color: #ffffff;
-            overflow-y: auto; /* Enable scrolling for long menus */
-            display: flex; /* Always use flex for sidebar content layout */
-            flex-direction: column;
-        }
-
-        .sidebar.is-open {
-            transform: translateX(0%); /* Slide in when open */
-        }
-
-        /* Desktop styles for sidebar */
-        @media (min-width: 768px) { /* md breakpoint */
-            .sidebar {
-                position: relative; /* Take up space in layout */
-                transform: translateX(0%); /* Always visible on desktop */
-                flex-shrink: 0;
-                box-shadow: none;
-                height: calc(100vh - 64px); /* Revert height for desktop */
-            }
-        }
-        
-        .sidebar-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-color: rgba(0, 0, 0, 0.5);
-            z-index: 30; /* Below sidebar, above content */
-            display: none; /* Hidden by default */
-        }
-        .sidebar-overlay.is-open {
-            display: block; /* Show when sidebar is open */
+        /* Custom styles for dropdown animations */
+        .rotate-180 {
+            transform: rotate(180deg);
         }
     </style>
 </head>
@@ -77,19 +21,95 @@
 
     <header class="bg-[#00449E] fixed top-0 left-0 right-0 z-50 shadow-md">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-            <h1 class="text-xl sm:text-2xl font-bold text-white flex items-center">
-                <a href="index.html" target="_top" class="flex items-center text-white hover:text-[#85BDE9] transition-colors duration-200"><span class="text-2xl sm:text-3xl mr-2 sm:mr-3">🌐</span> Strategic Solutions Hub</a>
+            <h1 class="text-lg sm:text-xl md:text-2xl lg:text-2xl font-bold text-white flex items-center">
+                <a href="index.html" target="_top" class="flex items-center text-white hover:text-[#85BDE9] transition-colors duration-200"><span class="text-xl sm:text-2xl md:text-3xl lg:text-3xl mr-2 sm:mr-3">🌐</span> Strategic Solutions Hub</a>
             </h1>
-            <!-- Desktop Navigation Links (Hidden on mobile) -->
-            <div class="hidden md:flex space-x-4">
-                <a href="payment-gateway-solution.html" class="text-white hover:text-[#85BDE9] px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200" aria-label="Open Business Growth Solutions">Business Growth Solutions</a>
-                <a href="payment-gateway-security-solution.html" class="text-white hover:text-[#85BDE9] px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200" aria-label="Open Security & Compliance solutions">Security & Compliance</a>
-                <a href="apartment-management-system-prd.html" class="text-white hover:text-[#85BDE9] px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200" aria-label="Open Product & Requirements solutions">Product & Requirements</a>
-                <a href="lms-presentation.html" class="text-white hover:text-[#85BDE9] px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200" aria-label="Open Education & Learning solutions">Education & Learning</a>
-                <a href="heptacare-health.html" class="text-white hover:text-[#85BDE9] px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200" aria-label="Open Healthcare Solutions">Healthcare Solutions</a>
-            </div>
-            <!-- Mobile menu button -->
-            <button id="mobile-menu-button" class="md:hidden p-2 rounded-md text-white hover:bg-[#0076D4] focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white" aria-label="Toggle mobile menu" aria-expanded="false" aria-controls="sidebar">
+            <!-- Desktop Navigation with Dropdowns -->
+            <nav class="hidden lg:flex items-center space-x-6">
+                <!-- Business Growth Solutions Dropdown -->
+                <div class="relative group">
+                    <button class="text-white hover:text-[#85BDE9] px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200 flex items-center">
+                        Business Growth
+                        <svg class="ml-1 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                        </svg>
+                    </button>
+                    <div class="absolute left-0 mt-2 w-80 bg-white rounded-md shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+                        <div class="py-2">
+                            <a href="payment-gateway-solution.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-[#85BDE9] hover:text-white">💰 Payment Gateway Scaling (For C-Level/Execs)</a>
+                            <a href="payment-gateway-technical-infographic.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-[#85BDE9] hover:text-white">🔧 Payment Gateway Scaling (Technical Deep Dive)</a>
+                            <a href="investment-banking-crm-solution.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-[#85BDE9] hover:text-white">💼 Investment Banking CRM (For C-Level/Execs)</a>
+                            <a href="investment-banking-crm-technical-infographic.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-[#85BDE9] hover:text-white">🔬 Investment Banking CRM (Technical Deep Dive)</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Security & Compliance Dropdown -->
+                <div class="relative group">
+                    <button class="text-white hover:text-[#85BDE9] px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200 flex items-center">
+                        Security & Compliance
+                        <svg class="ml-1 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                        </svg>
+                    </button>
+                    <div class="absolute left-0 mt-2 w-80 bg-white rounded-md shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+                        <div class="py-2">
+                            <a href="payment-gateway-security-solution.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-[#85BDE9] hover:text-white">🛡️ Payment Gateway Security (For C-Level/Execs)</a>
+                            <a href="payment-gateway-security-technical-infographic.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-[#85BDE9] hover:text-white">💻 Payment Gateway Security (Technical Deep Dive)</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product & Requirements Dropdown -->
+                <div class="relative group">
+                    <button class="text-white hover:text-[#85BDE9] px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200 flex items-center">
+                        Product & Requirements
+                        <svg class="ml-1 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                        </svg>
+                    </button>
+                    <div class="absolute left-0 mt-2 w-80 bg-white rounded-md shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+                        <div class="py-2">
+                            <a href="question-bank-prd.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-[#85BDE9] hover:text-white">📝 Question Bank Management System PRD</a>
+                            <a href="payment-gateway-questions.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-[#85BDE9] hover:text-white">❓ Payment Gateway Integration Requirements</a>
+                            <a href="apartment-management-system-prd.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-[#85BDE9] hover:text-white">🏠 Apartment Management System PRD</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Education & Learning Dropdown -->
+                <div class="relative group">
+                    <button class="text-white hover:text-[#85BDE9] px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200 flex items-center">
+                        Education & Learning
+                        <svg class="ml-1 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                        </svg>
+                    </button>
+                    <div class="absolute left-0 mt-2 w-80 bg-white rounded-md shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+                        <div class="py-2">
+                            <a href="lms-presentation.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-[#85BDE9] hover:text-white">💡 Learning by Doing Methodology</a>
+                            <a href="university-management-system.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-[#85BDE9] hover:text-white">🎓 University Management System</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Healthcare Solutions Dropdown -->
+                <div class="relative group">
+                    <button class="text-white hover:text-[#85BDE9] px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200 flex items-center">
+                        Healthcare Solutions
+                        <svg class="ml-1 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                        </svg>
+                    </button>
+                    <div class="absolute left-0 mt-2 w-80 bg-white rounded-md shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+                        <div class="py-2">
+                            <a href="heptacare-health.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-[#85BDE9] hover:text-white">🏥 HeptaCare Health Platform</a>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+            <!-- Mobile and Tablet menu button -->
+            <button id="mobile-menu-button" class="lg:hidden p-2 rounded-md text-white hover:bg-[#0076D4] focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white" aria-label="Toggle mobile menu" aria-expanded="false" aria-controls="mobile-menu">
                 <svg id="mobile-menu-icon-open" class="h-6 w-6 block" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
                 </svg>
@@ -97,177 +117,224 @@
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
                 </svg>
             </button>
+
+            <!-- Mobile Navigation Menu -->
+            <div id="mobile-menu" class="lg:hidden hidden absolute top-full left-0 right-0 bg-[#1a1a1a] border-t border-gray-700 shadow-lg z-50">
+                <div class="px-4 py-4 space-y-4">
+                    <!-- Business Growth Solutions -->
+                    <div class="border-b border-gray-700 pb-4">
+                        <button class="text-white hover:text-[#85BDE9] font-medium mb-2 flex items-center w-full text-left" onclick="toggleMobileDropdown('business-growth')">
+                            Business Growth Solutions
+                            <svg class="ml-auto h-4 w-4 transform transition-transform" id="business-growth-arrow" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </button>
+                        <div id="business-growth-menu" class="hidden space-y-2 ml-4">
+                            <a href="payment-gateway-solution.html" class="block text-gray-300 hover:text-[#85BDE9] text-sm py-1">💰 Payment Gateway Scaling (For C-Level/Execs)</a>
+                            <a href="payment-gateway-technical-infographic.html" class="block text-gray-300 hover:text-[#85BDE9] text-sm py-1">🔧 Payment Gateway Scaling (Technical Deep Dive)</a>
+                            <a href="investment-banking-crm-solution.html" class="block text-gray-300 hover:text-[#85BDE9] text-sm py-1">💼 Investment Banking CRM (For C-Level/Execs)</a>
+                            <a href="investment-banking-crm-technical-infographic.html" class="block text-gray-300 hover:text-[#85BDE9] text-sm py-1">🔬 Investment Banking CRM (Technical Deep Dive)</a>
+                        </div>
+                    </div>
+
+                    <!-- Security & Compliance -->
+                    <div class="border-b border-gray-700 pb-4">
+                        <button class="text-white hover:text-[#85BDE9] font-medium mb-2 flex items-center w-full text-left" onclick="toggleMobileDropdown('security-compliance')">
+                            Security & Compliance
+                            <svg class="ml-auto h-4 w-4 transform transition-transform" id="security-compliance-arrow" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </button>
+                        <div id="security-compliance-menu" class="hidden space-y-2 ml-4">
+                            <a href="payment-gateway-security-solution.html" class="block text-gray-300 hover:text-[#85BDE9] text-sm py-1">🛡️ Payment Gateway Security (For C-Level/Execs)</a>
+                            <a href="payment-gateway-security-technical-infographic.html" class="block text-gray-300 hover:text-[#85BDE9] text-sm py-1">💻 Payment Gateway Security (Technical Deep Dive)</a>
+                        </div>
+                    </div>
+
+                    <!-- Product & Requirements -->
+                    <div class="border-b border-gray-700 pb-4">
+                        <button class="text-white hover:text-[#85BDE9] font-medium mb-2 flex items-center w-full text-left" onclick="toggleMobileDropdown('product-requirements')">
+                            Product & Requirements
+                            <svg class="ml-auto h-4 w-4 transform transition-transform" id="product-requirements-arrow" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </button>
+                        <div id="product-requirements-menu" class="hidden space-y-2 ml-4">
+                            <a href="question-bank-prd.html" class="block text-gray-300 hover:text-[#85BDE9] text-sm py-1">📝 Question Bank Management System PRD</a>
+                            <a href="payment-gateway-questions.html" class="block text-gray-300 hover:text-[#85BDE9] text-sm py-1">❓ Payment Gateway Integration Requirements</a>
+                            <a href="apartment-management-system-prd.html" class="block text-gray-300 hover:text-[#85BDE9] text-sm py-1">🏠 Apartment Management System PRD</a>
+                        </div>
+                    </div>
+
+                    <!-- Education & Learning -->
+                    <div class="border-b border-gray-700 pb-4">
+                        <button class="text-white hover:text-[#85BDE9] font-medium mb-2 flex items-center w-full text-left" onclick="toggleMobileDropdown('education-learning')">
+                            Education & Learning
+                            <svg class="ml-auto h-4 w-4 transform transition-transform" id="education-learning-arrow" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </button>
+                        <div id="education-learning-menu" class="hidden space-y-2 ml-4">
+                            <a href="lms-presentation.html" class="block text-gray-300 hover:text-[#85BDE9] text-sm py-1">💡 Learning by Doing Methodology</a>
+                            <a href="university-management-system.html" class="block text-gray-300 hover:text-[#85BDE9] text-sm py-1">🎓 University Management System</a>
+                        </div>
+                    </div>
+
+                    <!-- Healthcare Solutions -->
+                    <div>
+                        <button class="text-white hover:text-[#85BDE9] font-medium mb-2 flex items-center w-full text-left" onclick="toggleMobileDropdown('healthcare-solutions')">
+                            Healthcare Solutions
+                            <svg class="ml-auto h-4 w-4 transform transition-transform" id="healthcare-solutions-arrow" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </button>
+                        <div id="healthcare-solutions-menu" class="hidden space-y-2 ml-4">
+                            <a href="heptacare-health.html" class="block text-gray-300 hover:text-[#85BDE9] text-sm py-1">🏥 HeptaCare Health Platform</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </header>
 
-    <div class="flex flex-1 relative">
-        <!-- Sidebar Overlay -->
-        <div id="sidebar-overlay" class="sidebar-overlay"></div>
+    <!-- Main Content Area - Landing Page -->
+    <main class="bg-gray-50 min-h-screen pt-16">
+            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+                <!-- Hero Section -->
+                <div class="text-center mb-12">
+                    <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold text-gray-900 mb-4">
+                        Strategic Solutions Hub
+                    </h1>
+                    <p class="text-xl sm:text-2xl text-gray-600 max-w-3xl mx-auto">
+                        Comprehensive business solutions for growth, security, and innovation across industries
+                    </p>
+                </div>
 
-        <aside id="sidebar" class="w-64 bg-white p-6 flex flex-col border-r border-gray-200">
-            <h2 class="text-lg font-bold text-[#00449E] mb-4">Solution Portfolio</h2>
-            <nav>
-                <div class="mb-4">
-                    <h3 class="text-md font-semibold text-gray-700 mb-2">🚀 Business Growth Solutions</h3>
-                    <ul class="space-y-1 pl-4">
-                        <li><a href="payment-gateway-solution.html" target="solutionIframe" class="block py-2 px-3 rounded-md text-gray-600 hover:bg-[#85BDE9] hover:text-white transition-colors duration-200 text-sm">💰 Payment Gateway Scaling (For C-Level/Execs)</a></li>
-                        <li><a href="payment-gateway-technical-infographic.html" target="solutionIframe" class="block py-2 px-3 rounded-md text-gray-600 hover:bg-[#85BDE9] hover:text-white transition-colors duration-200 text-sm" aria-label="Payment Gateway Scaling Technical Deep Dive">🔧 Payment Gateway Scaling (Technical Deep Dive)</a></li>
-                        <li><a href="investment-banking-crm-solution.html" target="solutionIframe" class="block py-2 px-3 rounded-md text-gray-600 hover:bg-[#85BDE9] hover:text-white transition-colors duration-200 text-sm">💼 Investment Banking CRM (For C-Level/Execs)</a></li>
-                        <li><a href="investment-banking-crm-technical-infographic.html" target="solutionIframe" class="block py-2 px-3 rounded-md text-gray-600 hover:bg-[#85BDE9] hover:text-white transition-colors duration-200 text-sm" aria-label="Investment Banking CRM Technical Deep Dive">🔬 Investment Banking CRM (Technical Deep Dive)</a></li>
-                    </ul>
-                </div>
-                <div class="mb-4">
-                    <h3 class="text-md font-semibold text-gray-700 mb-2">🔒 Security & Compliance</h3>
-                    <ul class="space-y-1 pl-4">
-                        <li><a href="payment-gateway-security-solution.html" target="solutionIframe" class="block py-2 px-3 rounded-md text-gray-600 hover:bg-[#85BDE9] hover:text-white transition-colors duration-200 text-sm" aria-label="Payment Gateway Security For C-Level/Execs">🛡️ Payment Gateway Security (For C-Level/Execs)</a></li>
-                        <li><a href="payment-gateway-security-technical-infographic.html" target="solutionIframe" class="block py-2 px-3 rounded-md text-gray-600 hover:bg-[#85BDE9] hover:text-white transition-colors duration-200 text-sm">💻 Payment Gateway Security (Technical Deep Dive)</a></li>
-                    </ul>
-                </div>
-                <div class="mb-4">
-                    <h3 class="text-md font-semibold text-gray-700 mb-2">📚 Product & Requirements</h3>
-                    <ul class="space-y-1 pl-4">
-                        <li><a href="question-bank-prd.html" target="solutionIframe" class="block py-2 px-3 rounded-md text-gray-600 hover:bg-[#85BDE9] hover:text-white transition-colors duration-200 text-sm">📝 Question Bank Management System PRD</a></li>
-                        <li><a href="payment-gateway-questions.html" target="solutionIframe" class="block py-2 px-3 rounded-md text-gray-600 hover:bg-[#85BDE9] hover:text-white transition-colors duration-200 text-sm">❓ Payment Gateway Integration Requirements</a></li>
-                        <li><a href="apartment-management-system-prd.html" target="solutionIframe" class="block py-2 px-3 rounded-md text-gray-600 hover:bg-[#85BDE9] hover:text-white transition-colors duration-200 text-sm">🏠 Apartment Mgmt. PRD</a></li> <!-- Added new link -->
-                    </ul>
-                </div>
-                <div class="mb-4">
-                    <h3 class="text-md font-semibold text-gray-700 mb-2">🎓 Education & Learning</h3>
-                    <ul class="space-y-1 pl-4">
-                        <li><a href="lms-presentation.html" target="solutionIframe" class="block py-2 px-3 rounded-md text-gray-600 hover:bg-[#85BDE9] hover:text-white transition-colors duration-200 text-sm">💡 Learning by Doing Methodology</a></li>
-                    </ul>
-                </div>
-                <div class="mb-4">
-                    <h3 class="text-md font-semibold text-gray-700 mb-2">🏥 Healthcare Solutions</h3>
-                    <ul class="space-y-1 pl-4">
-                        <li><a href="heptacare-health.html" target="solutionIframe" class="block py-2 px-3 rounded-md text-gray-600 hover:bg-[#85BDE9] hover:text-white transition-colors duration-200 text-sm">🏥 HeptaCare Health Platform</a></li>
-                    </ul>
-                </div>
-            </nav>
-        </aside>
+                <!-- Solution Categories Grid -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+                    <!-- Business Growth -->
+                    <div class="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition-shadow duration-300">
+                        <div class="text-4xl mb-4">🚀</div>
+                        <h3 class="text-xl font-bold text-gray-900 mb-3">Business Growth Solutions</h3>
+                        <p class="text-gray-600 mb-4">Scale your payment infrastructure and CRM systems for enterprise-level performance.</p>
+                        <div class="space-y-2">
+                            <a href="payment-gateway-solution.html" class="block text-[#00449E] hover:text-[#85BDE9] font-medium">💰 Payment Gateway Scaling</a>
+                            <a href="investment-banking-crm-solution.html" class="block text-[#00449E] hover:text-[#85BDE9] font-medium">💼 Investment Banking CRM</a>
+                        </div>
+                    </div>
 
-        <main class="flex-1 overflow-auto">
-            <!-- Initial iframe src set to the new PRD for immediate visibility -->
-            <iframe id="solutionIframe" name="solutionIframe" class="main-content-iframe" src="apartment-management-system-prd.html" title="Solution content viewer"></iframe>
+                    <!-- Security & Compliance -->
+                    <div class="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition-shadow duration-300">
+                        <div class="text-4xl mb-4">🔒</div>
+                        <h3 class="text-xl font-bold text-gray-900 mb-3">Security & Compliance</h3>
+                        <p class="text-gray-600 mb-4">Enterprise-grade security solutions and compliance frameworks.</p>
+                        <div class="space-y-2">
+                            <a href="payment-gateway-security-solution.html" class="block text-[#00449E] hover:text-[#85BDE9] font-medium">🛡️ Payment Security Solutions</a>
+                        </div>
+                    </div>
+
+                    <!-- Product & Requirements -->
+                    <div class="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition-shadow duration-300">
+                        <div class="text-4xl mb-4">📚</div>
+                        <h3 class="text-xl font-bold text-gray-900 mb-3">Product & Requirements</h3>
+                        <p class="text-gray-600 mb-4">Detailed product requirements and technical specifications.</p>
+                        <div class="space-y-2">
+                            <a href="apartment-management-system-prd.html" class="block text-[#00449E] hover:text-[#85BDE9] font-medium">🏠 Apartment Management PRD</a>
+                            <a href="question-bank-prd.html" class="block text-[#00449E] hover:text-[#85BDE9] font-medium">📝 Question Bank System</a>
+                        </div>
+                    </div>
+
+                    <!-- Education & Learning -->
+                    <div class="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition-shadow duration-300">
+                        <div class="text-4xl mb-4">🎓</div>
+                        <h3 class="text-xl font-bold text-gray-900 mb-3">Education & Learning</h3>
+                        <p class="text-gray-600 mb-4">Innovative learning methodologies and educational management systems.</p>
+                        <div class="space-y-2">
+                            <a href="university-management-system.html" class="block text-[#00449E] hover:text-[#85BDE9] font-medium">🎓 University Management System</a>
+                            <a href="lms-presentation.html" class="block text-[#00449E] hover:text-[#85BDE9] font-medium">💡 Learning by Doing</a>
+                        </div>
+                    </div>
+
+                    <!-- Healthcare Solutions -->
+                    <div class="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition-shadow duration-300">
+                        <div class="text-4xl mb-4">🏥</div>
+                        <h3 class="text-xl font-bold text-gray-900 mb-3">Healthcare Solutions</h3>
+                        <p class="text-gray-600 mb-4">Comprehensive healthcare platform solutions for modern medical practices.</p>
+                        <div class="space-y-2">
+                            <a href="heptacare-health.html" class="block text-[#00449E] hover:text-[#85BDE9] font-medium">🏥 HeptaCare Health Platform</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Call to Action -->
+                <div class="text-center bg-[#00449E] rounded-2xl p-8 text-white">
+                    <h2 class="text-2xl sm:text-3xl font-bold mb-4">Ready to Transform Your Business?</h2>
+                    <p class="text-lg sm:text-xl mb-6 opacity-90">Explore our comprehensive solutions portfolio and discover how we can help you achieve your goals.</p>
+                    <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                        <a href="#top" class="bg-[#85BDE9] hover:bg-white hover:text-[#00449E] px-8 py-3 rounded-lg font-semibold transition-colors duration-200">Browse Solutions</a>
+                        <a href="mailto:contact@example.com" class="border-2 border-white hover:bg-white hover:text-[#00449E] px-8 py-3 rounded-lg font-semibold transition-colors duration-200">Get in Touch</a>
+                    </div>
+                </div>
+            </div>
         </main>
     </div>
 
     <script>
         const mobileMenuButton = document.getElementById('mobile-menu-button');
-        const sidebar = document.getElementById('sidebar');
-        const sidebarOverlay = document.getElementById('sidebar-overlay');
+        const mobileMenu = document.getElementById('mobile-menu');
         const mobileMenuIconOpen = document.getElementById('mobile-menu-icon-open');
         const mobileMenuIconClose = document.getElementById('mobile-menu-icon-close');
-        const solutionIframe = document.getElementById('solutionIframe');
 
-        function toggleSidebar() {
-            const isOpen = sidebar.classList.toggle('is-open');
-            sidebarOverlay.classList.toggle('is-open', isOpen);
-            mobileMenuIconOpen.classList.toggle('hidden', isOpen);
-            mobileMenuIconClose.classList.toggle('hidden', !isOpen);
-            mobileMenuButton.setAttribute('aria-expanded', isOpen);
-            document.body.style.overflow = isOpen ? 'hidden' : ''; // Prevent scrolling body when sidebar is open
+        function toggleMobileMenu() {
+            const isOpen = mobileMenu.classList.toggle('hidden');
+            mobileMenuIconOpen.classList.toggle('hidden', !isOpen);
+            mobileMenuIconClose.classList.toggle('hidden', isOpen);
+            mobileMenuButton.setAttribute('aria-expanded', !isOpen);
         }
 
-        mobileMenuButton.addEventListener('click', toggleSidebar);
-        sidebarOverlay.addEventListener('click', toggleSidebar);
+        function toggleMobileDropdown(dropdownId) {
+            const menu = document.getElementById(dropdownId + '-menu');
+            const arrow = document.getElementById(dropdownId + '-arrow');
 
-        sidebar.querySelectorAll('a').forEach(link => {
-            link.addEventListener('click', () => {
-                if (window.innerWidth < 768) { // Only close sidebar on click if on mobile
-                    toggleSidebar();
+            // Close all other dropdowns
+            document.querySelectorAll('[id$="-menu"]').forEach(m => {
+                if (m.id !== dropdownId + '-menu') {
+                    m.classList.add('hidden');
                 }
             });
+            document.querySelectorAll('[id$="-arrow"]').forEach(a => {
+                if (a.id !== dropdownId + '-arrow') {
+                    a.classList.remove('rotate-180');
+                }
+            });
+
+            // Toggle current dropdown
+            menu.classList.toggle('hidden');
+            arrow.classList.toggle('rotate-180');
+        }
+
+        mobileMenuButton.addEventListener('click', toggleMobileMenu);
+
+        // Close mobile menu when clicking outside or on a link
+        document.addEventListener('click', (e) => {
+            if (!mobileMenuButton.contains(e.target) && !mobileMenu.contains(e.target)) {
+                if (!mobileMenu.classList.contains('hidden')) {
+                    toggleMobileMenu();
+                }
+            }
         });
 
-        // Close sidebar if resized to desktop while open
+        // Close mobile menu on window resize to desktop
         window.addEventListener('resize', () => {
-            if (window.innerWidth >= 768 && sidebar.classList.contains('is-open')) {
-                toggleSidebar();
+            if (window.innerWidth >= 1024 && !mobileMenu.classList.contains('hidden')) {
+                toggleMobileMenu();
             }
         });
 
-        // Ensure iframe content has viewport meta tag for responsiveness
-        solutionIframe.onload = function() {
-            try {
-                const iframeDoc = solutionIframe.contentWindow.document;
-                let viewportMeta = iframeDoc.querySelector('meta[name="viewport"]');
-                if (!viewportMeta) {
-                    viewportMeta = iframeDoc.createElement('meta');
-                    viewportMeta.setAttribute('name', 'viewport');
-                    viewportMeta.setAttribute('content', 'width=device-width, initial-scale=1.0');
-                    iframeDoc.head.appendChild(viewportMeta);
-                }
-                
-                // Hide main header for pages that have their own navigation, but keep sidebar
-                const currentSrc = solutionIframe.src;
-                const pagesWithOwnNavigation = ['lms-presentation.html'];
-                const shouldHideMainHeader = pagesWithOwnNavigation.some(page => currentSrc.includes(page));
-                
-                const mainHeader = document.querySelector('header');
-                const sidebar = document.querySelector('aside');
-                const mainContent = document.querySelector('main');
-                
-                if (shouldHideMainHeader) {
-                    // Hide only the main header, keep sidebar for navigation
-                    mainHeader.style.display = 'none';
-                    document.body.style.paddingTop = '0';
-                    solutionIframe.style.height = '100vh';
-                    // Keep sidebar visible for page navigation
-                    sidebar.style.display = 'flex';
-                } else {
-                    // Show main header and sidebar for other pages
-                    mainHeader.style.display = 'block';
-                    sidebar.style.display = 'flex';
-                    document.body.style.paddingTop = '64px';
-                    solutionIframe.style.height = 'calc(100vh - 64px)';
-                }
-                
-            } catch (e) {
-                console.warn("Could not access iframe content:", e);
-                // This warning is expected if the iframe content is from a different origin (not applicable here as it's local)
-            }
-        };
-
-        // Handle initial load and popstate for URL hash
-        window.addEventListener('load', () => {
-            const initialHash = window.location.hash.substring(1);
-            if (initialHash) {
-                const link = document.querySelector(`a[href$="${initialHash}.html"]`);
-                if (link) {
-                    solutionIframe.src = link.href;
-                }
-            } else {
-                // If no hash, load the default PRD
-                solutionIframe.src = "apartment-management-system-prd.html";
-            }
-        });
-
-        window.addEventListener('popstate', (event) => {
-            if (event.state && event.state.iframeSrc) {
-                solutionIframe.src = event.state.iframeSrc;
-            } else if (window.location.hash) {
-                const initialHash = window.location.hash.substring(1);
-                const link = document.querySelector(`a[href$="${initialHash}.html"]`);
-                if (link) {
-                    solutionIframe.src = link.href;
-                }
-            }
-        });
-
-        // Handle clicks on sidebar links and top navigation links
-        document.querySelectorAll('aside a, header nav a').forEach(link => {
-            link.addEventListener('click', (e) => {
-                e.preventDefault();
-                const newSrc = link.href;
-                if (solutionIframe.src !== newSrc) {
-                    solutionIframe.src = newSrc;
-                    const state = { iframeSrc: newSrc };
-                    const title = link.textContent.trim();
-                    // Extract filename from URL to use as hash
-                    const url = '#' + newSrc.split('/').pop().replace('.html', '');
-                    history.pushState(state, title, url);
-                }
+        // Close mobile menu when a link is clicked
+        mobileMenu.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                toggleMobileMenu();
             });
         });
     </script>
