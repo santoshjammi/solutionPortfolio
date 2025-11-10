@@ -12,10 +12,8 @@
     <style>
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #f0f4f8;
-            overflow-x: hidden; /* Prevent horizontal scrolling on small screens */ /* Ensure main content is not hidden by fixed header */
- padding-top: 48px; /* Adjust based on header height */
- }
+            overflow-x: hidden; /* Prevent horizontal scrolling on small screens */
+        }
         h1, h2, h3, h4 {
  line-height: 1.2; /* Improve readability on small screens */ /* Tighter line height for large headings */
         }
@@ -141,61 +139,10 @@
 
     </style>
 </head>
-<body class="text-gray-700">
+<body class="text-gray-700 flex flex-col min-h-screen">
 
-    <header class="bg-white sticky top-0 z-50 shadow-md">
-        <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-12 relative">
-            <div class="flex items-center justify-between h-full w-full">
-                <div class="flex items-center">
-                    <h1 class="text-lg font-bold text-[#00449E]">Security Technical Deep Dive</h1>
-                </div>
-
-                <!-- Mobile nav toggle button for internal page -->
-                <div class="block sm:hidden flex-shrink-0">
-                    <button id="mobile-nav-toggle" class="hamburger-menu p-2 rounded-md text-gray-600 hover:bg-[#85BDE9] hover:text-white focus:outline-none" aria-controls="mobile-nav-menu" aria-expanded="false" aria-label="Toggle mobile navigation menu">
-                        <svg id="hamburger-icon" class="h-6 w-6 block" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-                        </svg>
-                        <svg id="close-icon" class="h-6 w-6 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-                        </svg>
-                    </button>
-                </div>
-
-
-                <!-- Desktop Navigation Links -->
-                <div class="hidden sm:block ml-10">
-                    <div class="flex items-baseline space-x-2">
-                        <a href="#overview" class="text-gray-600 hover:bg-[#85BDE9] hover:text-white px-2 py-1 rounded-md text-sm font-medium">Overview</a>
-                        <a href="#threats" class="text-gray-600 hover:bg-[#85BDE9] hover:text-white px-2 py-1 rounded-md text-sm font-medium">Threats</a>
-                        <a href="#architecture" class="text-gray-600 hover:bg-[#85BDE9] hover:text-white px-2 py-1 rounded-md text-sm font-medium">Arch. Security</a>
-                        <a href="#data-protection" class="text-gray-600 hover:bg-[#85BDE9] hover:text-white px-2 py-1 rounded-md text-sm font-medium">Data Prot.</a>
-                        <a href="#access-control" class="text-gray-600 hover:bg-[#85BDE9] hover:text-white px-2 py-1 rounded-md text-sm font-medium">Access Control</a>
-                        <a href="#pci-dss" class="text-gray-600 hover:bg-[#85BDE9] hover:text-white px-2 py-1 rounded-md text-sm font-medium">PCI DSS</a>
-                        <a href="#vulnerability-mgmt" class="text-gray-600 hover:bg-[#85BDE9] hover:text-white px-2 py-1 rounded-md text-sm font-medium">Vuln. Mgmt</a>
-                        <a href="#metrics" class="text-gray-600 hover:bg-[#85BDE9] hover:text-white px-2 py-1 rounded-md text-sm font-medium">Metrics</a>
-                    </div>
-                </div>
-
-            </div>
-        </nav>
-    </header>
-
-    <div id="mobile-nav-menu" class="mobile-nav-menu">
-        <div class="flex flex-col space-y-1">
-            <a href="#overview" class="block px-3 py-2 rounded-md text-base font-medium text-gray-800 hover:bg-[#85BDE9] hover:text-white">Overview</a>
- <a href="#threats" class="block px-3 py-2 rounded-md text-base font-medium text-gray-800 hover:bg-[#85BDE9] hover:text-white">Threats Landscape</a>
-            <a href="#architecture" class="block px-3 py-2 rounded-md text-base font-medium text-gray-800 hover:bg-[#85BDE9] hover:text-white">Arch. Security</a>
- <a href="#data-protection" class="block px-3 py-2 rounded-md text-base font-medium text-gray-800 hover:bg-[#85BDE9] hover:text-white">Data Protection</a>
-            <a href="#access-control" class="block px-3 py-2 rounded-md text-base font-medium text-gray-800 hover:bg-[#85BDE9] hover:text-white">Access Control</a>
-            <a href="#pci-dss" class="block px-3 py-2 rounded-md text-base font-medium text-gray-800 hover:bg-[#85BDE9] hover:text-white">PCI DSS</a>
- <a href="#vulnerability-mgmt" class="block px-3 py-2 rounded-md text-base font-medium text-gray-800 hover:bg-[#85BDE9] hover:text-white">Vuln. Management</a>
-            <a href="#metrics" class="block px-3 py-2 rounded-md text-base font-medium text-gray-800 hover:bg-[#85BDE9] hover:text-white">Metrics</a>
-        </div>
-    </div>
-
-    <!-- Mobile Navigation Overlay -->
-    <div id="mobile-nav-overlay" class="mobile-nav-overlay" aria-hidden="true"></div>
+    <div id="navbar-container"></div>
+    <script src="navbar.js"></script>
 
     <main class="max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
 
@@ -463,6 +410,65 @@
 
 
 <script>
+    // Standardized Mobile Navigation Script
+    const mobileMenuButton = document.getElementById('mobile-menu-button');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const mobileMenuIconOpen = document.getElementById('mobile-menu-icon-open');
+    const mobileMenuIconClose = document.getElementById('mobile-menu-icon-close');
+
+    function toggleMobileMenu() {
+        const isOpen = mobileMenu.classList.toggle('hidden');
+        mobileMenuIconOpen.classList.toggle('hidden', !isOpen);
+        mobileMenuIconClose.classList.toggle('hidden', isOpen);
+        mobileMenuButton.setAttribute('aria-expanded', !isOpen);
+    }
+
+    function toggleMobileDropdown(dropdownId) {
+        const menu = document.getElementById(dropdownId + '-menu');
+        const arrow = document.getElementById(dropdownId + '-arrow');
+
+        // Close all other dropdowns
+        document.querySelectorAll('[id$="-menu"]').forEach(m => {
+            if (m.id !== dropdownId + '-menu') {
+                m.classList.add('hidden');
+            }
+        });
+        document.querySelectorAll('[id$="-arrow"]').forEach(a => {
+            if (a.id !== dropdownId + '-arrow') {
+                a.classList.remove('rotate-180');
+            }
+        });
+
+        // Toggle current dropdown
+        menu.classList.toggle('hidden');
+        arrow.classList.toggle('rotate-180');
+    }
+
+    mobileMenuButton.addEventListener('click', toggleMobileMenu);
+
+    // Close mobile menu when clicking outside or on a link
+    document.addEventListener('click', (e) => {
+        if (!mobileMenuButton.contains(e.target) && !mobileMenu.contains(e.target)) {
+            if (!mobileMenu.classList.contains('hidden')) {
+                toggleMobileMenu();
+            }
+        }
+    });
+
+    // Close mobile menu on window resize to desktop
+    window.addEventListener('resize', () => {
+        if (window.innerWidth >= 1024 && !mobileMenu.classList.contains('hidden')) {
+            toggleMobileMenu();
+        }
+    });
+
+    // Close mobile menu when a link is clicked
+    mobileMenu.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => {
+            toggleMobileMenu();
+        });
+    });
+
     const chartColors = {
         primary: '#0076D4',
         secondary: '#4195D7',
@@ -609,53 +615,6 @@
                 }
             }
         });
-    }
-
-    // Mobile nav toggle for internal pages
-    const mobileNavToggle = document.getElementById('mobile-nav-toggle');
-    const mobileNavMenu = document.getElementById('mobile-nav-menu');
-    const mobileNavOverlay = document.getElementById('mobile-nav-overlay');
- const mobileMenuIconOpen = document.getElementById('hamburger-icon'); // Renamed for clarity
- const mobileMenuIconClose = document.getElementById('close-icon'); // Renamed for clarity
-
-    if (mobileNavToggle && mobileNavMenu && mobileNavOverlay) {
-        mobileNavToggle.addEventListener('click', () => {
-            const isOpen = mobileNavMenu.classList.contains('is-open');
- if (isOpen) {
-                mobileNavMenu.classList.remove('is-open');
-                mobileNavOverlay.style.display = 'none';
-                mobileMenuIconOpen.classList.remove('hidden');
-                mobileMenuIconClose.classList.add('hidden');
-            } else {
-                mobileNavMenu.classList.add('is-open');
-            mobileNavOverlay.style.display = mobileNavMenu.classList.contains('is-open') ? 'block' : 'none';
-                mobileMenuIconOpen.classList.add('hidden');
-                mobileMenuIconClose.classList.remove('hidden');
-            }
- mobileNavToggle.setAttribute('aria-expanded', !isOpen); // Update ARIA attribute
-        });
-
-        mobileNavOverlay.addEventListener('click', () => {
-            mobileNavMenu.classList.remove('is-open');
-            hamburgerIcon.classList.remove('hidden');
-            closeIcon.classList.add('hidden');
-            mobileNavOverlay.style.display = 'none';
- mobileNavToggle.setAttribute('aria-expanded', 'false'); // Update ARIA attribute
-        });
-
-        // Close mobile menu when a link is clicked
-        mobileNavMenu.querySelectorAll('a').forEach(link => {
-            link.addEventListener('click', () => {
-                mobileNavMenu.classList.remove('is-open');
-                hamburgerIcon.classList.remove('hidden');
-                closeIcon.classList.add('hidden');
-                mobileNavOverlay.style.display = 'none';
- mobileNavToggle.setAttribute('aria-expanded', 'false'); // Update ARIA attribute
-            });
-        });
-
- // Initially hide the close icon
- mobileMenuIconClose.classList.add('hidden');
     }
 </script>
 </body>

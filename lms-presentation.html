@@ -21,8 +21,6 @@
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #f8f9fa;
-            color: #343a40;
         }
         /* Add smooth scrolling offset for sticky header */
         html {
@@ -90,67 +88,27 @@
         body.iframe-mode {
             padding-top: 0;
         }
+        /* Standardized heading classes */
+        .heading-1 { @apply text-4xl sm:text-5xl lg:text-6xl font-bold text-gray-900; }
+        .heading-2 { @apply text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900; }
+        .heading-3 { @apply text-xl sm:text-2xl md:text-3xl font-semibold text-gray-900; }
+        .heading-4 { @apply text-lg sm:text-xl font-semibold text-gray-900; }
+        .text-body { @apply text-sm sm:text-base text-gray-700; }
+        .text-small { @apply text-xs sm:text-sm text-gray-600; }
     </style>
 </head>
-<body>
+<body class="text-gray-700 flex flex-col min-h-screen">
 
     <!-- Add mobile menu overlay -->
     <div id="mobile-menu-overlay" class="mobile-menu-overlay md:hidden"></div>
 
-    <header class="sticky top-0 z-50 bg-white/80 backdrop-blur-lg shadow-sm">
-        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
-            <!-- Brand/Logo for mobile alignment -->
-            <div class="flex items-left">
-                <h1 class="text-xl font-bold text-gray-900 md:hidden">LbD Platform</h1>
-            </div>
-            
-            <!-- Desktop Navigation -->
-            <div class="hidden md:flex items-center space-x-10 text-sm font-medium text-gray-500">
-                <a href="#problem" class="nav-link hover:text-indigo-700 transition-colors duration-300">The Problem</a>
-                <a href="#philosophy" class="nav-link hover:text-indigo-700 transition-colors duration-300">Philosophy</a>
-                <a href="#methodology" class="nav-link hover:text-indigo-700 transition-colors duration-300">Methodology</a>
-                <a href="#journey" class="nav-link hover:text-indigo-700 transition-colors duration-300">The Journey</a>
-                <a href="#versatility" class="nav-link hover:text-indigo-700 transition-colors duration-300">Approach</a>
-                <a href="#future" class="nav-link hover:text-indigo-700 transition-colors duration-300">The Future</a>
-                <a href="#impact" class="nav-link hover:text-indigo-700 transition-colors duration-300">Impact</a>
-            </div>
-
-            <!-- Mobile Menu Button -->
-            <div class="md:hidden flex items-center">
-                <button id="mobile-menu-button" class="text-gray-500 hover:text-gray-700 focus:outline-none focus:text-gray-700 transition-colors duration-300 p-2" aria-label="Open mobile menu">
-                    <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
-                    </svg>
-                </button>
-            </div>
-        </nav>
-        <!-- Mobile Navigation Menu -->
-        <div id="mobile-menu" class="mobile-nav fixed inset-y-0 right-0 w-64 bg-white shadow-xl z-50 p-6 md:hidden overflow-y-auto">
-            <div class="flex justify-end mb-8">
-                <button id="close-menu-button" class="text-gray-500 hover:text-gray-700 focus:outline-none focus:text-gray-700 p-2" aria-label="Close mobile menu">
-                    <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-                    </svg>
-                </button>
-            </div>
-            <div class="flex flex-col space-y-4 font-medium text-gray-700">
-                <a href="#problem" class="nav-link hover:text-indigo-700 transition-colors duration-300 py-3 px-2 rounded-lg hover:bg-gray-50">The Problem</a>
-                <a href="#philosophy" class="nav-link hover:text-indigo-700 transition-colors duration-300 py-3 px-2 rounded-lg hover:bg-gray-50">Philosophy</a>
-                <a href="#methodology" class="nav-link hover:text-indigo-700 transition-colors duration-300 py-3 px-2 rounded-lg hover:bg-gray-50">Methodology</a>
-                <a href="#journey" class="nav-link hover:text-indigo-700 transition-colors duration-300 py-3 px-2 rounded-lg hover:bg-gray-50">The Journey</a>
-                <a href="#versatility" class="nav-link hover:text-indigo-700 transition-colors duration-300 py-3 px-2 rounded-lg hover:bg-gray-50">Approach</a>
-                <a href="#future" class="nav-link hover:text-indigo-700 transition-colors duration-300 py-3 px-2 rounded-lg hover:bg-gray-50">The Future</a>
-                <a href="#impact" class="nav-link hover:text-indigo-700 transition-colors duration-300 py-3 px-2 rounded-lg hover:bg-gray-50">Impact</a>
-            </div>
-        </div>
-            </div>
-        </div>
-    </header>
+    <div id="navbar-container"></div>
+    <script src="navbar.js"></script>
 
     <main>
         <section id="hero" class="py-24 md:py-32 text-center">
             <div class="container mx-auto px-6">
-                <h2 class="text-4xl md:text-6xl font-extrabold text-gray-900 leading-tight">Bridging the Gap Between Knowing and Doing.</h2>
+                <h2 class="heading-1 leading-tight">Bridging the Gap Between Knowing and Doing.</h2>
                 <p class="mt-4 max-w-3xl mx-auto text-lg text-gray-600">Traditional education excels at delivering knowledge, but true mastery is forged through application. We're pioneering a new methodology to transform passive learning into active problem-solving.</p>
             </div>
         </section>
@@ -158,13 +116,13 @@
         <section id="problem" class="py-20 md:py-28 bg-white">
             <div class="container mx-auto px-6">
                 <div class="text-center max-w-3xl mx-auto">
-                    <h3 class="text-3xl md:text-4xl font-bold text-gray-900">The Disconnect in Modern Education</h3>
+                    <h3 class="heading-2 text-gray-900">The Disconnect in Modern Education</h3>
                     <p class="mt-4 text-gray-600">Students absorb vast amounts of theory, but often lack a structured environment to apply it. This creates a critical gap, leaving them unprepared for the complex, real-world challenges that await them after graduation.</p>
                 </div>
 
                 <div class="mt-16 grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
                     <div class="bg-gray-50 p-8 rounded-xl border border-gray-200">
-                        <h4 class="text-xl font-semibold text-gray-800 flex items-center"><span class="text-2xl mr-3">📖</span> Traditional Approach: Theory First</h4>
+                        <h4 class="heading-4 flex items-center"><span class="text-2xl mr-3">📖</span> Traditional Approach: Theory First</h4>
                         <p class="mt-2 text-gray-600">Learners consume information through lectures and textbooks.</p>
                         <div class="mt-4 bg-gray-800 text-white p-4 rounded-lg font-mono text-sm">
                             <p><span class="text-purple-400">function</span> <span class="text-yellow-300">calculateFibonacci</span>(<span class="text-blue-400">n</span>) {</p>
@@ -175,7 +133,7 @@
                         <p class="mt-4 text-xs text-gray-500">The concept is presented, but practical application is a separate, often disconnected, step.</p>
                     </div>
                     <div class="bg-indigo-50 p-8 rounded-xl border border-indigo-200 ring-2 ring-indigo-500">
-                        <h4 class="text-xl font-semibold text-indigo-800 flex items-center"><span class="text-2xl mr-3">💡</span> Our Approach: Applied Challenge</h4>
+                        <h4 class="heading-4 flex items-center"><span class="text-2xl mr-3">💡</span> Our Approach: Applied Challenge</h4>
                         <p class="mt-2 text-gray-700">Learners are immediately faced with a practical task.</p>
                         <div class="mt-4 bg-white p-4 rounded-lg border border-gray-300">
                             <p class="font-semibold text-gray-800">Your Task:</p>
@@ -190,7 +148,7 @@
 
         <section id="philosophy" class="py-20 md:py-28">
             <div class="container mx-auto px-6 text-center max-w-3xl">
-                <h3 class="text-3xl md:text-4xl font-bold text-gray-900">Our Guiding Philosophy: Learning by Doing</h3>
+                <h3 class="heading-2 text-gray-900">Our Guiding Philosophy: Learning by Doing</h3>
                 <p class="mt-4 text-lg text-gray-600">We believe the most profound learning occurs not from passive consumption, but from active engagement. It's an age-old principle: we master skills by practicing them. Our methodology structures this practice into a powerful, guided, and adaptive experience.</p>
             </div>
         </section>
@@ -198,7 +156,7 @@
         <section id="methodology" class="py-20 md:py-28 bg-white">
             <div class="container mx-auto px-6">
                 <div class="text-center max-w-3xl mx-auto">
-                    <h3 class="text-3xl md:text-4xl font-bold text-gray-900">An Evolving, Iterative Process</h3>
+                    <h3 class="heading-2 text-gray-900">An Evolving, Iterative Process</h3>
                     <p class="mt-4 text-gray-600">Our application guides learners through a continuous cycle of action and reflection. This isn't a linear path; it's a dynamic loop that adapts to the user, strengthening skills with each iteration. Click through the steps below to see how it works.</p>
                 </div>
 
@@ -419,63 +377,83 @@
 
             updateStepDisplay(1);
             
-            const navLinks = document.querySelectorAll('.nav-link');
-            const sections = document.querySelectorAll('section[id]');
+            // Mobile menu toggle functionality
             const mobileMenuButton = document.getElementById('mobile-menu-button');
-            const closeMenuButton = document.getElementById('close-menu-button');
             const mobileMenu = document.getElementById('mobile-menu');
-            const mobileMenuOverlay = document.getElementById('mobile-menu-overlay');
+            const mobileMenuIconOpen = document.getElementById('mobile-menu-icon-open');
+            const mobileMenuIconClose = document.getElementById('mobile-menu-icon-close');
 
-            // Debug: Check if elements exist
-            console.log('Mobile menu elements:', {
-                button: mobileMenuButton,
-                closeButton: closeMenuButton,
-                menu: mobileMenu,
-                overlay: mobileMenuOverlay
+            let isMobileMenuOpen = false;
+
+            mobileMenuButton.addEventListener('click', () => {
+                isMobileMenuOpen = !isMobileMenuOpen;
+                mobileMenu.classList.toggle('hidden', !isMobileMenuOpen);
+                mobileMenuIconOpen.classList.toggle('hidden', isMobileMenuOpen);
+                mobileMenuIconClose.classList.toggle('hidden', !isMobileMenuOpen);
+                mobileMenuButton.setAttribute('aria-expanded', isMobileMenuOpen);
             });
 
-            // Toggle mobile menu visibility
-            if (mobileMenuButton) {
-                mobileMenuButton.addEventListener('click', (e) => {
+            // Close mobile menu when clicking outside
+            document.addEventListener('click', (event) => {
+                if (!mobileMenuButton.contains(event.target) && !mobileMenu.contains(event.target)) {
+                    if (isMobileMenuOpen) {
+                        isMobileMenuOpen = false;
+                        mobileMenu.classList.add('hidden');
+                        mobileMenuIconOpen.classList.remove('hidden');
+                        mobileMenuIconClose.classList.add('hidden');
+                        mobileMenuButton.setAttribute('aria-expanded', 'false');
+                    }
+                }
+            });
+
+            // Mobile dropdown toggle functionality
+            function toggleMobileDropdown(dropdownId) {
+                const menu = document.getElementById(dropdownId + '-menu');
+                const arrow = document.getElementById(dropdownId + '-arrow');
+
+                if (menu.classList.contains('hidden')) {
+                    menu.classList.remove('hidden');
+                    arrow.classList.add('rotate-180');
+                } else {
+                    menu.classList.add('hidden');
+                    arrow.classList.remove('rotate-180');
+                }
+            }
+
+            // Smooth scrolling for anchor links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
                     e.preventDefault();
-                    console.log('Mobile menu button clicked');
-                    mobileMenu.classList.add('open');
-                    mobileMenuOverlay.classList.add('open');
-                    document.body.style.overflow = 'hidden'; // Prevent scrolling
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
                 });
-            }
+            });
 
-            if (closeMenuButton) {
-                closeMenuButton.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    console.log('Close menu button clicked');
-                    mobileMenu.classList.remove('open');
-                    mobileMenuOverlay.classList.remove('open');
-                    document.body.style.overflow = 'auto'; // Restore scrolling
-                });
-            }
+            // Add scroll effect to navbar
+            window.addEventListener('scroll', () => {
+                const header = document.querySelector('header');
+                if (window.scrollY > 0) {
+                    header.classList.add('shadow-lg');
+                } else {
+                    header.classList.remove('shadow-lg');
+                }
+            });
 
-            // Close menu when overlay is clicked
-            if (mobileMenuOverlay) {
-                mobileMenuOverlay.addEventListener('click', () => {
-                    console.log('Overlay clicked');
-                    mobileMenu.classList.remove('open');
-                    mobileMenuOverlay.classList.remove('open');
-                    document.body.style.overflow = 'auto';
-                });
-            }
-
-            // Close menu when a link is clicked
-            if (mobileMenu) {
-                mobileMenu.querySelectorAll('a').forEach(link => {
-                    link.addEventListener('click', () => {
-                        console.log('Menu link clicked');
-                        mobileMenu.classList.remove('open');
-                        mobileMenuOverlay.classList.remove('open');
-                        document.body.style.overflow = 'auto';
-                    });
-                });
-            }
+            // Close mobile menu on window resize if desktop view
+            window.addEventListener('resize', () => {
+                if (window.innerWidth >= 1024 && isMobileMenuOpen) {
+                    isMobileMenuOpen = false;
+                    mobileMenu.classList.add('hidden');
+                    mobileMenuIconOpen.classList.remove('hidden');
+                    mobileMenuIconClose.classList.add('hidden');
+                    mobileMenuButton.setAttribute('aria-expanded', 'false');
+                }
+            });
 
 
             const observer = new IntersectionObserver((entries) => {

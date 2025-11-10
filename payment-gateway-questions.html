@@ -14,9 +14,7 @@
         /* Base font and background color */
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #f0f4f8; /* Light background matching the theme */
             color: #4B5563; /* Default text color (gray-700) */
-            padding-top: 48px; /* Space for fixed header */
         }
 
         /* Mobile navigation overlay and menu styles */
@@ -164,43 +162,10 @@
         }
     </style>
 </head>
-<body class="text-gray-700">
+<body class="text-gray-700 flex flex-col min-h-screen">
 
-    <header class="bg-white sticky top-0 z-50 shadow-md">
-        <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-12 relative">
-            <div class="flex items-center justify-between h-full">
-                <div class="flex items-center">
-                    <h1 class="text-lg font-bold text-[#00449E]">Payment Gateway Requirements</h1>
-                </div>
-
-                <!-- Desktop Navigation Links -->
-                <div class="hidden sm:block ml-10">
-                    <div class="flex items-baseline space-x-2">
-                        <a href="#functional" class="text-gray-600 hover:bg-[#85BDE9] hover:text-white px-2 py-1 rounded-md text-sm font-medium">Functional</a>
-                        <a href="#non-functional" class="text-gray-600 hover:bg-[#85BDE9] hover:text-white px-2 py-1 rounded-md text-sm font-medium">Non-Functional</a>
-                    </div>
-                </div>
-
-                <!-- Mobile nav toggle button -->
-                <div class="block sm:hidden">
-                    <button id="mobile-nav-toggle" class="p-2 rounded-md text-gray-600 hover:bg-[#85BDE9] hover:text-white focus:outline-none" aria-label="Open mobile navigation">
-                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-                        </svg>
-                    </button>
-                </div>
-            </div>
-        </nav>
-    </header>
-
-    <!-- Mobile Navigation Menu -->
-    <div id="mobile-nav-overlay" class="mobile-nav-overlay"></div>
-    <div id="mobile-nav-menu" class="mobile-nav-menu">
-        <div class="flex flex-col space-y-1">
-            <a href="#functional" class="block px-3 py-2 rounded-md text-base font-medium text-gray-800 hover:bg-[#85BDE9] hover:text-white">Functional Requirements</a>
-            <a href="#non-functional" class="block px-3 py-2 rounded-md text-base font-medium text-gray-800 hover:bg-[#85BDE9] hover:text-white">Non-Functional Requirements</a>
-        </div>
-    </div>
+    <div id="navbar-container"></div>
+    <script src="navbar.js"></script>
 
     <main class="max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
         <div class="grid-container">
@@ -317,30 +282,64 @@
     </footer>
 
 <script>
-    // Mobile nav toggle for internal pages
-    const mobileNavToggle = document.getElementById('mobile-nav-toggle');
-    const mobileNavMenu = document.getElementById('mobile-nav-menu');
-    const mobileNavOverlay = document.getElementById('mobile-nav-overlay');
+    // Standardized Mobile Navigation Script
+    const mobileMenuButton = document.getElementById('mobile-menu-button');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const mobileMenuIconOpen = document.getElementById('mobile-menu-icon-open');
+    const mobileMenuIconClose = document.getElementById('mobile-menu-icon-close');
 
-    if (mobileNavToggle && mobileNavMenu && mobileNavOverlay) {
-        mobileNavToggle.addEventListener('click', () => {
-            mobileNavMenu.classList.toggle('is-open');
-            mobileNavOverlay.style.display = mobileNavMenu.classList.contains('is-open') ? 'block' : 'none';
-        });
-
-        mobileNavOverlay.addEventListener('click', () => {
-            mobileNavMenu.classList.remove('is-open');
-            mobileNavOverlay.style.display = 'none';
-        });
-
-        // Close mobile menu when a link is clicked
-        mobileNavMenu.querySelectorAll('a').forEach(link => {
-            link.addEventListener('click', () => {
-                mobileNavMenu.classList.remove('is-open');
-                mobileNavOverlay.style.display = 'none';
-            });
-        });
+    function toggleMobileMenu() {
+        const isOpen = mobileMenu.classList.toggle('hidden');
+        mobileMenuIconOpen.classList.toggle('hidden', !isOpen);
+        mobileMenuIconClose.classList.toggle('hidden', isOpen);
+        mobileMenuButton.setAttribute('aria-expanded', !isOpen);
     }
+
+    function toggleMobileDropdown(dropdownId) {
+        const menu = document.getElementById(dropdownId + '-menu');
+        const arrow = document.getElementById(dropdownId + '-arrow');
+
+        // Close all other dropdowns
+        document.querySelectorAll('[id$="-menu"]').forEach(m => {
+            if (m.id !== dropdownId + '-menu') {
+                m.classList.add('hidden');
+            }
+        });
+        document.querySelectorAll('[id$="-arrow"]').forEach(a => {
+            if (a.id !== dropdownId + '-arrow') {
+                a.classList.remove('rotate-180');
+            }
+        });
+
+        // Toggle current dropdown
+        menu.classList.toggle('hidden');
+        arrow.classList.toggle('rotate-180');
+    }
+
+    mobileMenuButton.addEventListener('click', toggleMobileMenu);
+
+    // Close mobile menu when clicking outside or on a link
+    document.addEventListener('click', (e) => {
+        if (!mobileMenuButton.contains(e.target) && !mobileMenu.contains(e.target)) {
+            if (!mobileMenu.classList.contains('hidden')) {
+                toggleMobileMenu();
+            }
+        }
+    });
+
+    // Close mobile menu on window resize to desktop
+    window.addEventListener('resize', () => {
+        if (window.innerWidth >= 1024 && !mobileMenu.classList.contains('hidden')) {
+            toggleMobileMenu();
+        }
+    });
+
+    // Close mobile menu when a link is clicked
+    mobileMenu.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => {
+            toggleMobileMenu();
+        });
+    });
 
     // Ensure overlay is hidden on larger screens if it was open on mobile
     window.addEventListener('resize', () => {

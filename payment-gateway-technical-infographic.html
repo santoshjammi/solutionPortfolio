@@ -12,9 +12,7 @@
     <style>
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #f0f4f8;
             color: #4B5563;
-            padding-top: 48px;
         }
         .chart-container {
             position: relative;
@@ -60,45 +58,10 @@
         }
     </style>
 </head>
-<body class="text-gray-700">
+<body class="text-gray-700 flex flex-col min-h-screen">
 
-    <header class="bg-white fixed top-0 left-0 right-0 z-40 shadow-md h-12 flex items-center">
-        <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full w-full flex items-center justify-between">
-            <div class="flex items-center flex-shrink-0">
-                <h1 class="text-lg font-bold text-[#00449E]">Gateway Technical Deep Dive</h1>
-            </div>
-            <div class="hidden sm:block">
-                <div class="ml-10 flex items-baseline space-x-2">
-                    <a href="#overview" class="text-gray-600 hover:bg-[#85BDE9] hover:text-white px-2 py-1 rounded-md text-sm font-medium">Overview</a>
-                    <a href="#architecture" class="text-gray-600 hover:bg-[#85BDE9] hover:text-white px-2 py-1 rounded-md text-sm font-medium">Architecture</a>
-                    <a href="#database" class="text-gray-600 hover:bg-[#85BDE9] hover:text-white px-2 py-1 rounded-md text-sm font-medium">Database</a>
-                    <a href="#infrastructure" class="text-gray-600 hover:bg-[#85BDE9] hover:text-white px-2 py-1 rounded-md text-sm font-medium">Infrastructure</a>
-                    <a href="#code" class="text-gray-600 hover:bg-[#85BDE9] hover:text-white px-2 py-1 rounded-md text-sm font-medium">Code</a>
-                    <a href="#testing" class="text-gray-600 hover:bg-[#85BDE9] hover:text-white px-2 py-1 rounded-md text-sm font-medium">Testing</a>
-                </div>
-            </div>
-            <button id="mobile-menu-button" class="sm:hidden p-2 rounded-md text-gray-600 hover:bg-[#85BDE9] hover:text-white focus:outline-none" aria-label="Toggle mobile menu">
-                <svg id="hamburger-icon" class="h-6 w-6 block" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-                </svg>
-                <svg id="close-icon" class="h-6 w-6 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
-                </svg>
-            </button>
-        </nav>
-    </header>
-
-    <div id="mobile-nav-overlay" class="mobile-nav-overlay"></div>
-    <div id="mobile-nav-menu" class="mobile-nav-menu">
-        <div class="flex flex-col space-y-2">
-            <a href="#overview" class="text-gray-800 hover:bg-[#85BDE9] hover:text-white block px-3 py-2 rounded-md text-base font-medium">Overview</a>
-            <a href="#architecture" class="text-gray-800 hover:bg-[#85BDE9] hover:text-white block px-3 py-2 rounded-md text-base font-medium">Architecture</a>
-            <a href="#database" class="text-gray-800 hover:bg-[#85BDE9] hover:text-white block px-3 py-2 rounded-md text-base font-medium">Database</a>
-            <a href="#infrastructure" class="text-gray-800 hover:bg-[#85BDE9] hover:text-white block px-3 py-2 rounded-md text-base font-medium">Infrastructure</a>
-            <a href="#code" class="text-gray-800 hover:bg-[#85BDE9] hover:text-white block px-3 py-2 rounded-md text-base font-medium">Code</a>
-            <a href="#testing" class="text-gray-800 hover:bg-[#85BDE9] hover:text-white block px-3 py-2 rounded-md text-base font-medium">Testing</a>
-        </div>
-    </div>
+    <div id="navbar-container"></div>
+    <script src="navbar.js"></script>
 
     <main class="max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
         <section id="overview" class="text-center mb-16 p-6 sm:p-8">
@@ -288,34 +251,61 @@
 <script>
     // Standardized Mobile Navigation Script
     const mobileMenuButton = document.getElementById('mobile-menu-button');
-    const mobileNavMenu = document.getElementById('mobile-nav-menu');
-    const mobileNavOverlay = document.getElementById('mobile-nav-overlay');
-    const hamburgerIcon = document.getElementById('hamburger-icon');
-    const closeIcon = document.getElementById('close-icon');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const mobileMenuIconOpen = document.getElementById('mobile-menu-icon-open');
+    const mobileMenuIconClose = document.getElementById('mobile-menu-icon-close');
 
-    function toggleMenu() {
-        const isOpen = mobileNavMenu.classList.toggle('is-open');
-        mobileNavOverlay.style.display = isOpen ? 'block' : 'none';
-        hamburgerIcon.classList.toggle('hidden', isOpen);
-        closeIcon.classList.toggle('hidden', !isOpen);
-        document.body.style.overflow = isOpen ? 'hidden' : '';
+    function toggleMobileMenu() {
+        const isOpen = mobileMenu.classList.toggle('hidden');
+        mobileMenuIconOpen.classList.toggle('hidden', !isOpen);
+        mobileMenuIconClose.classList.toggle('hidden', isOpen);
+        mobileMenuButton.setAttribute('aria-expanded', !isOpen);
     }
 
-    mobileMenuButton.addEventListener('click', toggleMenu);
-    mobileNavOverlay.addEventListener('click', toggleMenu);
+    function toggleMobileDropdown(dropdownId) {
+        const menu = document.getElementById(dropdownId + '-menu');
+        const arrow = document.getElementById(dropdownId + '-arrow');
 
-    mobileNavMenu.querySelectorAll('a').forEach(link => {
-        link.addEventListener('click', () => {
-            if (mobileNavMenu.classList.contains('is-open')) {
-                toggleMenu();
+        // Close all other dropdowns
+        document.querySelectorAll('[id$="-menu"]').forEach(m => {
+            if (m.id !== dropdownId + '-menu') {
+                m.classList.add('hidden');
             }
         });
-    });
-    
-    window.addEventListener('resize', () => {
-        if (window.innerWidth >= 640 && mobileNavMenu.classList.contains('is-open')) {
-            toggleMenu();
+        document.querySelectorAll('[id$="-arrow"]').forEach(a => {
+            if (a.id !== dropdownId + '-arrow') {
+                a.classList.remove('rotate-180');
+            }
+        });
+
+        // Toggle current dropdown
+        menu.classList.toggle('hidden');
+        arrow.classList.toggle('rotate-180');
+    }
+
+    mobileMenuButton.addEventListener('click', toggleMobileMenu);
+
+    // Close mobile menu when clicking outside or on a link
+    document.addEventListener('click', (e) => {
+        if (!mobileMenuButton.contains(e.target) && !mobileMenu.contains(e.target)) {
+            if (!mobileMenu.classList.contains('hidden')) {
+                toggleMobileMenu();
+            }
         }
+    });
+
+    // Close mobile menu on window resize to desktop
+    window.addEventListener('resize', () => {
+        if (window.innerWidth >= 1024 && !mobileMenu.classList.contains('hidden')) {
+            toggleMobileMenu();
+        }
+    });
+
+    // Close mobile menu when a link is clicked
+    mobileMenu.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => {
+            toggleMobileMenu();
+        });
     });
 
     // Charting Script

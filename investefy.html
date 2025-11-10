@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Investefy Advisory Platform</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌐</text></svg>">
+    <style>
+        /* Standardized heading styles */
+        .heading-1 { font-size: 2.25rem; line-height: 2.5rem; font-weight: 700; color: rgb(17 24 39); }
+        @media (min-width: 640px) { .heading-1 { font-size: 3rem; line-height: 1; } }
+        @media (min-width: 1024px) { .heading-1 { font-size: 3.75rem; line-height: 1; } }
+
+        .heading-2 { font-size: 1.5rem; line-height: 2rem; font-weight: 700; color: rgb(17 24 39); }
+        @media (min-width: 640px) { .heading-2 { font-size: 1.875rem; line-height: 2.25rem; } }
+        @media (min-width: 768px) { .heading-2 { font-size: 2.25rem; line-height: 2.5rem; } }
+        @media (min-width: 1024px) { .heading-2 { font-size: 3rem; line-height: 1; } }
+
+        .heading-3 { font-size: 1.25rem; line-height: 1.75rem; font-weight: 600; color: rgb(17 24 39); }
+        @media (min-width: 640px) { .heading-3 { font-size: 1.5rem; line-height: 2rem; } }
+        @media (min-width: 768px) { .heading-3 { font-size: 1.875rem; line-height: 2.25rem; } }
+        @media (min-width: 1024px) { .heading-3 { font-size: 2.25rem; line-height: 2.5rem; } }
+
+        .heading-4 { font-size: 1.125rem; line-height: 1.75rem; font-weight: 600; color: rgb(17 24 39); }
+        @media (min-width: 640px) { .heading-4 { font-size: 1.25rem; line-height: 1.75rem; } }
+
+        .text-body { font-size: 0.875rem; line-height: 1.25rem; color: rgb(55 65 81); }
+        @media (min-width: 640px) { .text-body { font-size: 1rem; line-height: 1.5rem; } }
+
+        .text-small { font-size: 0.75rem; line-height: 1rem; color: rgb(75 85 99); }
+        @media (min-width: 640px) { .text-small { font-size: 0.875rem; line-height: 1.25rem; } }
+
+        /* Custom styles for dropdown animations */
+        .rotate-180 {
+            transform: rotate(180deg);
+        }
+        /* Style for the question bullets using a corporate blue */
+        .question-list li {
+            padding-left: 1.5rem;
+            text-indent: -1.5rem;
+        }
+        .question-list li::before {
+            content: "•";
+            color: #1d4ed8; /* Blue 700 - Deep, professional blue */
+            font-weight: bold;
+            display: inline-block;
+            width: 1.5rem;
+        }
+
+        /* Base styles for the accordion header, ensuring transition works */
+        .accordion-header {
+            transition: background-color 0.2s, color 0.2s, border-left-color 0.2s;
+        }
+        
+        /* Active state for the header */
+        .accordion-header.active {
+            background-color: #1e3a8a; /* Blue 800 */
+            color: white;
+            border-bottom-left-radius: 0;
+            border-bottom-right-radius: 0;
+        }
+
+        /* Content panel styling for active state */
+        .accordion-content.active {
+            border-left: 4px solid #1e3a8a; /* Strong left border accent */
+            padding-top: 1.25rem; /* Restore top padding when content is visible */
+        }
+
+        /* Inactive state styles for headers */
+        .accordion-header:not(.active) {
+            background-color: #ffffff;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+    </style>
+</head>
+<body class="text-gray-700 flex flex-col min-h-screen">
+
+    <div id="navbar-container"></div>
+    <script src="navbar.js"></script>
+
+    <!-- Main Content Area -->
+    <main class="bg-gray-50 min-h-screen pt-16">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <div class="bg-white shadow-2xl rounded-xl p-6 md:p-12">
+                <div class="mb-10 border-b-2 border-blue-800 pb-4">
+                    <h1 class="heading-1 mb-2">Investefy Advisory Platform</h1>
+                    <p class="heading-4 text-gray-600 mb-4">Project Discovery Workshop: Key Requirements</p>
+                    <p class="text-body">This structured agenda ensures we align on the <strong>core vision, technical scope, and monetization strategy</strong> required for a successful MVP and subsequent phases.</p>
+                </div>
+
+        <!-- Accordion Container -->
+        <div id="accordion-container" class="space-y-6">
+
+            <!-- Category 1: Project Core & Brand -->
+            <div class="rounded-xl shadow-xl overflow-hidden border border-gray-200">
+                <button type="button" class="accordion-header flex items-center justify-between w-full p-6 font-extrabold text-left text-gray-800 focus:outline-none hover:bg-gray-50 transition duration-300" aria-expanded="true" aria-controls="content-1">
+                    <span class="flex items-center">
+                        <svg class="w-6 h-6 mr-4 text-blue-700" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.275a1.996 1.996 0 01.306 1.132v7.14a2.001 2.001 0 01-1.393 1.874l-6.8 2.871a2.002 2.002 0 01-1.83 0l-6.8-2.871A2.001 2.001 0 014 14.996v-7.14a1.996 1.996 0 01.306-1.132m.367 0a2 2 0 012.28 0m.367 0h7.24a2 2 0 012.28 0"></path></svg>
+                        <span class="text-2xl">1. Core Vision & Brand Identity</span>
+                    </span>
+                    <svg class="w-6 h-6 transition-transform duration-300 transform rotate-0 text-blue-800" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                </button>
+                <div id="content-1" class="accordion-content p-5 text-gray-700 bg-white" style="display: block;">
+                    <ul class="question-list space-y-4">
+                        <li class="font-medium text-gray-800">What is the **Philosophy** and the ultimate **End Goal** for the customer using this advisory application?</li>
+                        <li>What is the **Objective of the company** (Advisory for Investors) and the defined **process/workflow** for the end-user?</li>
+                        <li>For **Logo Creation**, what is the desired visual tone (e.g., classic vs. modern, discreet vs. bold) and the preferred logo type (Wordmark, Monogram, or Combination Mark)?</li>
+                        <li>Do we confirm the primary color direction of **Deep Blue/Navy** to establish trust, and what accent color is preferred?</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Category 2: Product Scope (Web & Mobile) -->
+            <div class="rounded-xl shadow-xl overflow-hidden border border-gray-200">
+                <button type="button" class="accordion-header flex items-center justify-between w-full p-6 font-extrabold text-left text-gray-800 focus:outline-none hover:bg-gray-50 transition duration-300" aria-expanded="false" aria-controls="content-2">
+                    <span class="flex items-center">
+                        <svg class="w-6 h-6 mr-4 text-blue-700" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4m-8-4l-4 4 4 4"></path></svg>
+                        <span class="text-2xl">2. Product Scope: Web & Mobile App Strategy</span>
+                    </span>
+                    <svg class="w-6 h-6 transition-transform duration-300 transform -rotate-90 text-blue-800" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                </button>
+                <div id="content-2" class="accordion-content p-5 text-gray-700 bg-white" style="display: none;">
+                    <ul class="question-list space-y-4">
+                        <li class="font-medium text-gray-800">What is the required **Number of Pages**? Are we targeting similar functionality to `smergers.com` but with a different design/UX?</li>
+                        <li>**Mobile Target Platforms:** Are we targeting **iOS and Android**? What is the preferred technical approach (e.g., React Native/Flutter vs. PWA)?</li>
+                        <li>Will the mobile app launch with **Full Feature Parity** with the web, or will it be a **Phased Mobile MVP** (which core modules first)?</li>
+                        <li>What is the scope for **Mobile UX** elements like biometrics for quick login, offline reading, or background sync?</li>
+                        <li>Are **Company related pages** (e.g., Careers, About Us) required, and who will supply the final content for these pages?</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Category 3: Features: Listings, Discovery, & Communication -->
+            <div class="rounded-xl shadow-xl overflow-hidden border border-gray-200">
+                <button type="button" class="accordion-header flex items-center justify-between w-full p-6 font-extrabold text-left text-gray-800 focus:outline-none hover:bg-gray-50 transition duration-300" aria-expanded="false" aria-controls="content-3">
+                    <span class="flex items-center">
+                        <svg class="w-6 h-6 mr-4 text-blue-700" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                        <span class="text-2xl">3. Discovery, Listings, & Communication</span>
+                    </span>
+                    <svg class="w-6 h-6 transition-transform duration-300 transform -rotate-90 text-blue-800" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                </button>
+                <div id="content-3" class="accordion-content p-5 text-gray-700 bg-white" style="display: none;">
+                    <ul class="question-list space-y-4">
+                        <li class="font-medium text-gray-800">Define the **Required Fields and Media** per listing type (e.g., documents, images). What are the rules for **watermarks/redaction**?</li>
+                        <li>What are the **Visibility Rules**? Which attributes are public vs. gated for verified/paid users?</li>
+                        <li>Regarding the **Real Estate page**: What is the functional/visual goal, and who is the target audience (public vs. premium)?</li>
+                        <li>Is **In-App Chat** the only required channel, or will we need Email Relay, voice/video, or other channels?</li>
+                        <li>Outline the **Proposal Lifecycle**: required stages, **e-sign needs**, and audit trail requirements.</li>
+                        <li>Is there a need for **AI** capabilities (e.g., enhanced matching, valuation tools, or a support chatbot)?</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Category 4: Business & Finance -->
+            <div class="rounded-xl shadow-xl overflow-hidden border border-gray-200">
+                <button type="button" class="accordion-header flex items-center justify-between w-full p-6 font-extrabold text-left text-gray-800 focus:outline-none hover:bg-gray-50 transition duration-300" aria-expanded="false" aria-controls="content-4">
+                    <span class="flex items-center">
+                        <svg class="w-6 h-6 mr-4 text-blue-700" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
+                        <span class="text-2xl">4. Business: Monetization, Payments, & KYC</span>
+                    </span>
+                    <svg class="w-6 h-6 transition-transform duration-300 transform -rotate-90 text-blue-800" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                </button>
+                <div id="content-4" class="accordion-content p-5 text-gray-700 bg-white" style="display: none;">
+                    <ul class="question-list space-y-4">
+                        <li class="font-medium text-gray-800">Define the **Monetization Model** (subscriptions, listing fees, commissions, or hybrid) and the specific features each tier **unlocks**.</li>
+                        <li>What are the **Payment Gateway Preferences**? Are there requirements for **multi-currency** acceptance, proration, and chargeback handling?</li>
+                        <li>Is the scope for **On-Platform Payouts** (marketplace escrow to sellers/advisors) needed in the MVP?</li>
+                        <li>What is the required **Level of KYC/Vetting** for all user types (manual vs. automated checks)?</li>
+                        <li>What are the initial **Jurisdictions** and applicable **privacy/compliance** and data retention requirements?</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Category 5: Technical & Operational Readiness -->
+            <div class="rounded-xl shadow-xl overflow-hidden border border-gray-200">
+                <button type="button" class="accordion-header flex items-center justify-between w-full p-6 font-extrabold text-left text-gray-800 focus:outline-none hover:bg-gray-50 transition duration-300" aria-expanded="false" aria-controls="content-5">
+                    <span class="flex items-center">
+                        <svg class="w-6 h-6 mr-4 text-blue-700" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37a1.724 1.724 0 002.572-1.065z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                        <span class="text-2xl">5. Technical & Operational Readiness</span>
+                    </span>
+                    <svg class="w-6 h-6 transition-transform duration-300 transform -rotate-90 text-blue-800" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                </button>
+                <div id="content-5" class="accordion-content p-5 text-gray-700 bg-white" style="display: none;">
+                    <ul class="question-list space-y-4">
+                        <li class="font-medium text-gray-800">Who will be responsible for providing all necessary **Content for "How-To," Q&A, and the Blog** (if required)?</li>
+                        <li>What are the required **Admin Roles and Permissions** (Moderator, Analyst, Finance, Super-Admin)?</li>
+                        <li>What are the **Key Reports and KPIs** that the Admin Dashboard must track (e.g., MRR, registrations, match rate)?</li>
+                        <li>Which **Third-party integrations** are preferred for Live Chat, Ticketing, CRM, and Email/SMS providers?</li>
+                        <li>Is a **CMS (Content Management System)** needed to manage static content (FAQs, guides, etc.) without code deployment?</li>
+                    </ul>
+                </div>
+            </div>
+
+        </div> <!-- End of Accordion Container -->
+
+        <div class="mt-12 pt-6 border-t border-gray-300">
+            <h2 class="heading-3 mb-4">Timeline & Next Steps</h2>
+            <p class="text-body">A clear, phased approach works best. Once we have clarity on these items, we can:</p>
+            <ul class="list-disc pl-8 mt-4 space-y-2 text-body">
+                <li class="font-semibold text-blue-800">Define the <strong>MVP (Minimum Viable Product)</strong> feature set.</li>
+                <li>Create a <strong>Phasing Plan</strong> (MVP vs. Phase 2) tied to acceptance criteria.</li>
+            </ul>
+        </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Simple JavaScript for Accordion Functionality
+        document.querySelectorAll('.accordion-header').forEach(button => {
+            button.addEventListener('click', () => {
+                const content = button.nextElementSibling;
+                const icon = button.querySelector('svg:last-child');
+                const isExpanded = button.getAttribute('aria-expanded') === 'true';
+
+                // Close all other open sections
+                document.querySelectorAll('.accordion-header').forEach(otherButton => {
+                    const otherContent = otherButton.nextElementSibling;
+                    const otherIcon = otherButton.querySelector('svg:last-child');
+                    
+                    if (otherButton !== button && otherButton.getAttribute('aria-expanded') === 'true') {
+                        otherButton.setAttribute('aria-expanded', 'false');
+                        otherContent.style.display = 'none';
+                        otherIcon.classList.remove('rotate-0');
+                        otherIcon.classList.add('-rotate-90');
+                        otherButton.classList.remove('active');
+                        otherContent.classList.remove('active');
+                    }
+                });
+
+                // Toggle current section
+                button.setAttribute('aria-expanded', isExpanded ? 'false' : 'true');
+                content.style.display = isExpanded ? 'none' : 'block';
+                icon.classList.toggle('rotate-0', !isExpanded);
+                icon.classList.toggle('-rotate-90', isExpanded);
+                
+                // Toggle active classes for styling
+                button.classList.toggle('active');
+                content.classList.toggle('active');
+            });
+        });
+
+        // Initialize: Set the first item to open and apply active styles
+        const firstHeader = document.querySelector('#accordion-container > div:first-child .accordion-header');
+        const firstContent = document.querySelector('#accordion-container > div:first-child .accordion-content');
+        const firstIcon = document.querySelector('#accordion-container > div:first-child .accordion-header svg:last-child');
+
+        if (firstHeader && firstContent && firstIcon) {
+            firstHeader.setAttribute('aria-expanded', 'true');
+            firstContent.style.display = 'block';
+            firstHeader.classList.add('active');
+            firstContent.classList.add('active');
+            firstIcon.classList.add('rotate-0');
+            firstIcon.classList.remove('-rotate-90');
+        }
+
+    </script>
+</body>
+</html>

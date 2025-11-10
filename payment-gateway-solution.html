@@ -12,8 +12,6 @@
     <style>
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #f0f4f8;
-            padding-top: 64px;
         }
         .chart-container {
             position: relative;
@@ -30,12 +28,12 @@
             color: #85BDE9;
         }
         .section-padding { @apply p-6 sm:p-8 md:p-12; }
-        .heading-1 { @apply text-3xl sm:text-4xl md:text-5xl lg:text-6xl; }
-        .heading-2 { @apply text-2xl sm:text-3xl md:text-4xl; }
-        .heading-3 { @apply text-xl sm:text-2xl md:text-3xl; }
-        .heading-4 { @apply text-lg sm:text-xl; }
-        .text-content { @apply text-sm sm:text-base; }
-        .text-small { @apply text-xs sm:text-sm; }
+        .heading-1 { @apply text-4xl sm:text-5xl lg:text-6xl font-bold text-gray-900; }
+        .heading-2 { @apply text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900; }
+        .heading-3 { @apply text-xl sm:text-2xl md:text-3xl font-semibold text-gray-900; }
+        .heading-4 { @apply text-lg sm:text-xl font-semibold text-gray-900; }
+        .text-body { @apply text-sm sm:text-base text-gray-700; }
+        .text-small { @apply text-xs sm:text-sm text-gray-600; }
         .icon-size { @apply text-3xl sm:text-4xl; }
         .numeric-large { @apply text-5xl sm:text-6xl; }
         .mobile-nav-overlay {
@@ -64,36 +62,10 @@
         }
     </style>
 </head>
-<body class="text-gray-700">
+<body class="text-gray-700 flex flex-col min-h-screen">
 
-    <header class="bg-white fixed top-0 left-0 right-0 z-40 shadow-md h-16 flex items-center">
-        <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full w-full flex items-center justify-between">
-            <div class="flex items-center flex-shrink-0 space-x-3">
-                <a href="index.html" class="text-[#00449E] hover:text-[#85BDE9] transition-colors" title="Back to Solutions Hub">
-                    <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
-                    </svg>
-                </a>
-                <h1 class="text-lg font-bold text-[#00449E]">Payment Gateway Scaling</h1>
-            </div>
-            <div class="hidden sm:block">
-                <div class="ml-10 flex items-baseline space-x-2">
-                    <a href="#challenge" class="text-gray-600 hover:bg-[#85BDE9] hover:text-white px-2 py-1 rounded-md text-sm font-medium">Challenge</a>
-                    <a href="#pillars" class="text-gray-600 hover:bg-[#85BDE9] hover:text-white px-2 py-1 rounded-md text-sm font-medium">Pillars</a>
-                    <a href="#roadmap" class="text-gray-600 hover:bg-[#85BDE9] hover:text-white px-2 py-1 rounded-md text-sm font-medium">Roadmap</a>
-                    <a href="#impact" class="text-gray-600 hover:bg-[#85BDE9] hover:text-white px-2 py-1 rounded-md text-sm font-medium">Impact</a>
-                </div>
-            </div>
-            <button id="mobile-menu-button" class="sm:hidden p-2 rounded-md text-gray-600 hover:bg-[#85BDE9] hover:text-white focus:outline-none" aria-label="Toggle mobile menu">
-                <svg id="hamburger-icon" class="h-6 w-6 block" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-                </svg>
-                <svg id="close-icon" class="h-6 w-6 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
-                </svg>
-            </button>
-        </nav>
-    </header>
+    <div id="navbar-container"></div>
+    <script src="navbar.js"></script>
 
     <div id="mobile-nav-overlay" class="mobile-nav-overlay"></div>
     <div id="mobile-nav-menu" class="mobile-nav-menu">
@@ -389,34 +361,44 @@
 
 <script>
     // Standardized Mobile Navigation Script
-    const mobileMenuButton = document.getElementById('mobile-menu-button');
-    const mobileNavMenu = document.getElementById('mobile-nav-menu');
-    const mobileNavOverlay = document.getElementById('mobile-nav-overlay');
-    const hamburgerIcon = document.getElementById('hamburger-icon');
-    const closeIcon = document.getElementById('close-icon');
+    function toggleMobileDropdown(dropdownId) {
+        const menu = document.getElementById(dropdownId + '-menu');
+        const arrow = document.getElementById(dropdownId + '-arrow');
 
-    function toggleMenu() {
-        const isOpen = mobileNavMenu.classList.toggle('is-open');
-        mobileNavOverlay.style.display = isOpen ? 'block' : 'none';
-        hamburgerIcon.classList.toggle('hidden', isOpen);
-        closeIcon.classList.toggle('hidden', !isOpen);
-        document.body.style.overflow = isOpen ? 'hidden' : '';
+        if (menu.classList.contains('hidden')) {
+            menu.classList.remove('hidden');
+            arrow.style.transform = 'rotate(180deg)';
+        } else {
+            menu.classList.add('hidden');
+            arrow.style.transform = 'rotate(0deg)';
+        }
     }
 
-    mobileMenuButton.addEventListener('click', toggleMenu);
-    mobileNavOverlay.addEventListener('click', toggleMenu);
+    // Mobile menu toggle
+    const mobileMenuButton = document.getElementById('mobile-menu-button');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const mobileMenuIconOpen = document.getElementById('mobile-menu-icon-open');
+    const mobileMenuIconClose = document.getElementById('mobile-menu-icon-close');
 
-    mobileNavMenu.querySelectorAll('a').forEach(link => {
-        link.addEventListener('click', () => {
-            if (mobileNavMenu.classList.contains('is-open')) {
-                toggleMenu();
-            }
-        });
+    mobileMenuButton.addEventListener('click', () => {
+        const isHidden = mobileMenu.classList.contains('hidden');
+        if (isHidden) {
+            mobileMenu.classList.remove('hidden');
+            mobileMenuIconOpen.classList.add('hidden');
+            mobileMenuIconClose.classList.remove('hidden');
+        } else {
+            mobileMenu.classList.add('hidden');
+            mobileMenuIconOpen.classList.remove('hidden');
+            mobileMenuIconClose.classList.add('hidden');
+        }
     });
-    
-    window.addEventListener('resize', () => {
-        if (window.innerWidth >= 640 && mobileNavMenu.classList.contains('is-open')) {
-            toggleMenu();
+
+    // Close mobile menu when clicking outside
+    document.addEventListener('click', (e) => {
+        if (!mobileMenuButton.contains(e.target) && !mobileMenu.contains(e.target)) {
+            mobileMenu.classList.add('hidden');
+            mobileMenuIconOpen.classList.remove('hidden');
+            mobileMenuIconClose.classList.add('hidden');
         }
     });
 

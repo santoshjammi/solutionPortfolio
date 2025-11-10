@@ -27,7 +27,6 @@
     <style>
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #fcfcfc;
             line-height: 1.6;
         }
         .top-nav {
@@ -109,56 +108,18 @@
         .arrow-icon.rotated {
             transform: rotate(180deg);
         }
+        /* Standardized heading classes */
+        .heading-1 { @apply text-4xl sm:text-5xl lg:text-6xl font-bold text-gray-900; }
+        .heading-2 { @apply text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900; }
+        .heading-3 { @apply text-xl sm:text-2xl md:text-3xl font-semibold text-gray-900; }
+        .heading-4 { @apply text-lg sm:text-xl font-semibold text-gray-900; }
+        .text-body { @apply text-sm sm:text-base text-gray-700; }
+        .text-small { @apply text-xs sm:text-sm text-gray-600; }
     </style>
 </head>
-<body class="text-gray-800">
-    <!-- Top Navigation -->
-    <nav class="top-nav bg-white shadow-lg border-b border-gray-200">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between items-center h-16">
-                <div class="flex items-center space-x-4">
-                    <a href="index.html" class="text-blue-600 hover:text-blue-800 transition-colors" title="Back to Solutions Hub">
-                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
-                        </svg>
-                    </a>
-                    <h1 class="text-xl font-bold text-gray-900">University Management System</h1>
-                </div>
-                <div class="hidden md:flex space-x-8">
-                    <a href="#introduction" class="toc-link px-3 py-2 text-sm font-medium">Introduction</a>
-                    <a href="#scope" class="toc-link px-3 py-2 text-sm font-medium">Scope of Work</a>
-                    <a href="#objectives" class="toc-link px-3 py-2 text-sm font-medium">Objectives</a>
-                    <a href="#benefits" class="toc-link px-3 py-2 text-sm font-medium">Benefits</a>
-                    <a href="#timeline" class="toc-link px-3 py-2 text-sm font-medium">Timeline</a>
-                </div>
-                <div class="md:hidden">
-                    <button id="mobile-menu-button" class="p-2 rounded-md text-gray-600 hover:text-gray-900 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-500" title="Toggle mobile menu">
-                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
-                        </svg>
-                    </button>
-                </div>
-            </div>
-        </div>
-    </nav>
-
-    <!-- Mobile Navigation Overlay -->
-    <div id="mobile-nav-overlay" class="mobile-nav-overlay">
-        <div class="mobile-nav-content">
-            <button id="mobile-menu-close" class="absolute top-4 right-4 p-2 rounded-md text-gray-600 hover:text-gray-900 hover:bg-gray-100">
-                <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-                </svg>
-            </button>
-            <div class="mt-8 space-y-4">
-                <a href="#introduction" class="toc-link block px-3 py-2 text-base font-medium">Introduction</a>
-                <a href="#scope" class="toc-link block px-3 py-2 text-base font-medium">Scope of Work</a>
-                <a href="#objectives" class="toc-link block px-3 py-2 text-base font-medium">Objectives</a>
-                <a href="#benefits" class="toc-link block px-3 py-2 text-base font-medium">Benefits</a>
-                <a href="#timeline" class="toc-link block px-3 py-2 text-base font-medium">Timeline</a>
-            </div>
-        </div>
-    </div>
+<body class="text-gray-700 flex flex-col min-h-screen">
+    <div id="navbar-container"></div>
+    <script src="navbar.js"></script>
 
     <!-- Main Content -->
     <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -407,35 +368,50 @@
     </div>
 
     <script>
-        // Mobile menu functionality
+        // Mobile menu toggle functionality
         const mobileMenuButton = document.getElementById('mobile-menu-button');
-        const mobileMenuClose = document.getElementById('mobile-menu-close');
-        const mobileNavOverlay = document.getElementById('mobile-nav-overlay');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const mobileMenuIconOpen = document.getElementById('mobile-menu-icon-open');
+        const mobileMenuIconClose = document.getElementById('mobile-menu-icon-close');
 
-        function toggleMobileMenu() {
-            mobileNavOverlay.classList.toggle('open');
+        let isMobileMenuOpen = false;
+
+        mobileMenuButton.addEventListener('click', () => {
+            isMobileMenuOpen = !isMobileMenuOpen;
+            mobileMenu.classList.toggle('hidden', !isMobileMenuOpen);
+            mobileMenuIconOpen.classList.toggle('hidden', isMobileMenuOpen);
+            mobileMenuIconClose.classList.toggle('hidden', !isMobileMenuOpen);
+            mobileMenuButton.setAttribute('aria-expanded', isMobileMenuOpen);
+        });
+
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', (event) => {
+            if (!mobileMenuButton.contains(event.target) && !mobileMenu.contains(event.target)) {
+                if (isMobileMenuOpen) {
+                    isMobileMenuOpen = false;
+                    mobileMenu.classList.add('hidden');
+                    mobileMenuIconOpen.classList.remove('hidden');
+                    mobileMenuIconClose.classList.add('hidden');
+                    mobileMenuButton.setAttribute('aria-expanded', 'false');
+                }
+            }
+        });
+
+        // Mobile dropdown toggle functionality
+        function toggleMobileDropdown(dropdownId) {
+            const menu = document.getElementById(dropdownId + '-menu');
+            const arrow = document.getElementById(dropdownId + '-arrow');
+
+            if (menu.classList.contains('hidden')) {
+                menu.classList.remove('hidden');
+                arrow.classList.add('rotate-180');
+            } else {
+                menu.classList.add('hidden');
+                arrow.classList.remove('rotate-180');
+            }
         }
 
-        mobileMenuButton.addEventListener('click', toggleMobileMenu);
-        mobileMenuClose.addEventListener('click', toggleMobileMenu);
-
-        // Close mobile menu when clicking on a link
-        document.querySelectorAll('.mobile-nav-content a').forEach(link => {
-            link.addEventListener('click', toggleMobileMenu);
-        });
-
-        // Collapsible sections functionality
-        document.querySelectorAll('.collapsible-header').forEach(header => {
-            header.addEventListener('click', () => {
-                const content = header.nextElementSibling;
-                const arrow = header.querySelector('.arrow-icon');
-
-                content.classList.toggle('expanded');
-                arrow.classList.toggle('rotated');
-            });
-        });
-
-        // Smooth scrolling for navigation links
+        // Smooth scrolling for anchor links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
@@ -446,6 +422,38 @@
                         block: 'start'
                     });
                 }
+            });
+        });
+
+        // Add scroll effect to navbar
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('header');
+            if (window.scrollY > 0) {
+                header.classList.add('shadow-lg');
+            } else {
+                header.classList.remove('shadow-lg');
+            }
+        });
+
+        // Close mobile menu on window resize if desktop view
+        window.addEventListener('resize', () => {
+            if (window.innerWidth >= 1024 && isMobileMenuOpen) {
+                isMobileMenuOpen = false;
+                mobileMenu.classList.add('hidden');
+                mobileMenuIconOpen.classList.remove('hidden');
+                mobileMenuIconClose.classList.add('hidden');
+                mobileMenuButton.setAttribute('aria-expanded', 'false');
+            }
+        });
+
+        // Collapsible sections functionality
+        document.querySelectorAll('.collapsible-header').forEach(header => {
+            header.addEventListener('click', () => {
+                const content = header.nextElementSibling;
+                const arrow = header.querySelector('.arrow-icon');
+
+                content.classList.toggle('expanded');
+                arrow.classList.toggle('rotated');
             });
         });
 

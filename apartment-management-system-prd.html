@@ -20,7 +20,6 @@
     <style>
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #fcfcfc;
             line-height: 1.6;
         }
         .top-nav {
@@ -116,34 +115,18 @@
         ul.list-circle {
             list-style-type: circle;
         }
+        /* Standardized heading classes */
+        .heading-1 { @apply text-4xl sm:text-5xl lg:text-6xl font-bold text-gray-900; }
+        .heading-2 { @apply text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900; }
+        .heading-3 { @apply text-xl sm:text-2xl md:text-3xl font-semibold text-gray-900; }
+        .heading-4 { @apply text-lg sm:text-xl font-semibold text-gray-900; }
+        .text-body { @apply text-sm sm:text-base text-gray-700; }
+        .text-small { @apply text-xs sm:text-sm text-gray-600; }
     </style>
 </head>
-<body class="bg-fcfcfc text-slate-800 min-h-screen flex flex-col">
-    <header class="top-nav bg-white shadow-md p-4 flex items-center justify-between w-full">
-        <div class="flex items-center space-x-3">
-            <a href="index.html" class="text-slate-600 hover:text-slate-800 transition-colors" title="Back to Solutions Hub">
-                <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
-                </svg>
-            </a>
-            <h1 class="text-xl md:text-2xl font-bold text-slate-900">Apartment Management System PRD</h1>
-        </div>
-        <nav class="hidden md:flex space-x-2 lg:space-x-4"> <!-- Reduced space-x for more items -->
-            <a href="#introduction" class="toc-link px-2 py-2 rounded-lg text-slate-700 hover:bg-slate-100 text-sm lg:text-base">Intro</a>
-            <a href="#user-roles-permissions" class="toc-link px-2 py-2 rounded-lg text-slate-700 hover:bg-slate-100 text-sm lg:text-base">User Roles</a>
-            <a href="#product-overview" class="toc-link px-2 py-2 rounded-lg text-slate-700 hover:bg-slate-100 text-sm lg:text-base">Prod. Overview</a>
-            <a href="#functional-requirements" class="toc-link px-2 py-2 rounded-lg text-slate-700 hover:bg-slate-100 text-sm lg:text-base">Functional Req.</a>
-            <a href="#non-functional-requirements" class="toc-link px-2 py-2 rounded-lg text-slate-700 hover:bg-slate-100 text-sm lg:text-base">Non-Functional Req.</a>
-            <a href="#technical-architecture" class="toc-link px-2 py-2 rounded-lg text-slate-700 hover:bg-slate-100 text-sm lg:text-base">Tech Arch.</a>
-            <a href="#future-enhancements" class="toc-link px-2 py-2 rounded-lg text-slate-700 hover:bg-slate-100 text-sm lg:text-base">Future Enh.</a>
-            <a href="#assumptions-constraints" class="toc-link px-2 py-2 rounded-lg text-slate-700 hover:bg-slate-100 text-sm lg:text-base">Assumptions</a>
-            <a href="#release-plan" class="toc-link px-2 py-2 rounded-lg text-slate-700 hover:bg-slate-100 text-sm lg:text-base">Release Plan</a>
-            <a href="#success-metrics" class="toc-link px-2 py-2 rounded-lg text-slate-700 hover:bg-slate-100 text-sm lg:text-base">Success Metrics</a>
-        </nav>
-        <button id="mobile-menu-button" class="md:hidden text-slate-600 focus:outline-none p-2 rounded-md hover:bg-slate-100" aria-label="Open mobile menu">
-            <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
-        </button>
-    </header>
+<body class="text-gray-700 flex flex-col min-h-screen">
+    <div id="navbar-container"></div>
+    <script src="navbar.js"></script>
 
     <div id="mobile-nav-overlay" class="mobile-nav-overlay">
         <div class="mobile-nav-content shadow-xl rounded-lg">
@@ -167,22 +150,22 @@
     </div>
 
     <main class="flex-1 p-8 md:p-12 overflow-y-auto">
-        <h1 class="text-4xl font-extrabold text-slate-900 mb-4">Product Requirements Document: Apartment Management System</h1>
+        <h1 class="heading-1 mb-4">Product Requirements Document: Apartment Management System</h1>
         <p class="text-slate-500 mb-8">Version: 1.3 | Date: July 29, 2025</p>
 
         <section id="introduction" class="mb-12">
-            <h2 class="text-3xl font-bold text-slate-900 mb-4">Introduction</h2>
+            <h2 class="heading-2 mb-4">Introduction</h2>
             <p class="text-lg text-slate-700 leading-relaxed">This section provides a high-level overview of the Apartment Management System PRD. It sets the stage by outlining the application's purpose, its core goals, and the technological foundation (MERN stack). Users will find a concise summary of what the system aims to achieve, its target audience, and the strategic choices behind its development, helping them quickly grasp the project's vision before diving into specifics.</p>
             <p class="text-lg text-slate-700 leading-relaxed">This Product Requirements Document (PRD) outlines the scope, features, and requirements for a comprehensive Apartment Management SaaS application. The goal is to create a secure, scalable, and user-friendly platform that streamlines apartment complex operations, enhances community living, and ensures robust data and physical security. This document will serve as a foundational guide for the development team, ensuring alignment on product vision and execution, with a strong emphasis on the MERN (MongoDB, Express.js, React.js, Node.js) stack.</p>
         </section>
 
         <section id="user-roles-permissions" class="mb-12">
-            <h2 class="text-3xl font-bold text-slate-900 mb-6">User Roles & Permissions</h2>
+            <h2 class="heading-2 mb-6">User Roles & Permissions</h2>
             <p class="text-lg text-slate-700 leading-relaxed mb-6">This section details the various user roles within the Apartment Management System and their corresponding permissions. Understanding these roles is crucial for grasping the system's security model and operational workflows. Each role is described with a "Why" explaining its purpose and a list of "Permissions" outlining its access rights, contributing to a secure and efficient application by ensuring appropriate access control for every user type.</p>
 
             <div class="space-y-8">
                 <div class="bg-white p-6 rounded-lg shadow-md">
-                    <h3 class="text-2xl font-semibold text-slate-900 mb-3">1.1 Administrator</h3>
+                    <h3 class="heading-3 mb-3">1.1 Administrator</h3>
                     <p class="text-slate-600 mb-2"><span class="font-medium text-slate-700">Why:</span> This is the central management role responsible for the overall operation and configuration of the apartment management system. They oversee all modules, manage users, finances, and ensure the smooth functioning of the entire complex. This role typically belongs to the society manager or a designated management committee head.</p>
                     <p class="text-slate-600 mb-2"><span class="font-medium text-slate-700">Permissions:</span></p>
                     <ul class="list-disc list-inside text-slate-600 ml-4 space-y-1">
@@ -202,7 +185,7 @@
                 </div>
 
                 <div class="bg-white p-6 rounded-lg shadow-md">
-                    <h3 class="text-2xl font-semibold text-slate-900 mb-3">1.2 Owner</h3>
+                    <h3 class="heading-3 mb-3">1.2 Owner</h3>
                     <p class="text-slate-600 mb-2"><span class="font-medium text-slate-700">Why:</span> Represents the flat owner, who has primary responsibility for the unit and a vested interest in the society's management. They need access to their personal flat details, financial information, and society communications.</p>
                     <p class="text-slate-600 mb-2"><span class="font-medium text-slate-700">Permissions:</span></p>
                     <ul class="list-disc list-inside text-slate-600 ml-4 space-y-1">
@@ -218,7 +201,7 @@
                 </div>
 
                 <div class="bg-white p-6 rounded-lg shadow-md">
-                    <h3 class="text-2xl font-semibold text-slate-900 mb-3">1.3 Tenant</h3>
+                    <h3 class="heading-3 mb-3">1.3 Tenant</h3>
                     <p class="text-slate-600 mb-2"><span class="font-medium text-slate-700">Why:</span> Resides in a flat but does not own it. They need access to daily operational features relevant to their occupancy, such as maintenance, visitor management, and communications, but with limited financial and administrative oversight.</p>
                     <p class="text-slate-600 mb-2"><span class="font-medium text-slate-700">Permissions:</span></p>
                     <ul class="list-disc list-inside text-slate-600 ml-4 space-y-1">
@@ -233,7 +216,7 @@
                 </div>
 
                 <div class="bg-white p-6 rounded-lg shadow-md">
-                    <h3 class="text-2xl font-semibold text-slate-900 mb-3">1.4 Security Staff</h3>
+                    <h3 class="heading-3 mb-3">1.4 Security Staff</h3>
                     <p class="text-slate-600 mb-2"><span class="font-medium text-slate-700">Why:</span> Responsible for managing physical access to the premises, monitoring visitors, and responding to immediate security concerns. Their interface needs to be streamlined for quick actions.</p>
                     <p class="text-slate-600 mb-2"><span class="font-medium text-slate-700">Permissions:</span></p>
                     <ul class="list-disc list-inside text-slate-600 ml-4 space-y-1">
@@ -248,7 +231,7 @@
                 </div>
 
                 <div class="bg-white p-6 rounded-lg shadow-md">
-                    <h3 class="text-2xl font-semibold text-slate-900 mb-3">1.5 Maintenance Staff (General)</h3>
+                    <h3 class="heading-3 mb-3">1.5 Maintenance Staff (General)</h3>
                     <p class="text-slate-600 mb-2"><span class="font-medium text-slate-700">Why:</span> This role covers general maintenance personnel who perform a variety of repair and upkeep tasks across the complex. Specific sub-roles (Plumber, Electrician, Carpenter, etc.) can be configured under this umbrella, each with tailored permissions.</p>
                     <p class="text-slate-600 mb-2"><span class="font-medium text-slate-700">Permissions:</span></p>
                     <ul class="list-disc list-inside text-slate-600 ml-4 space-y-1">
@@ -262,7 +245,7 @@
                 </div>
 
                 <div class="bg-white p-6 rounded-lg shadow-md">
-                    <h3 class="text-2xl font-semibold text-slate-900 mb-3">1.6 Parking Staff</h3>
+                    <h3 class="heading-3 mb-3">1.6 Parking Staff</h3>
                     <p class="text-slate-600 mb-2"><span class="font-medium text-slate-700">Why:</span> Dedicated personnel for managing parking facilities, including slot assignments, visitor parking, and enforcing parking rules.</p>
                     <p class="text-slate-600 mb-2"><span class="font-medium text-slate-700">Permissions:</span></p>
                     <ul class="list-disc list-inside text-slate-600 ml-4 space-y-1">
@@ -275,7 +258,7 @@
                 </div>
 
                 <div class="bg-white p-6 rounded-lg shadow-md">
-                    <h3 class="text-2xl font-semibold text-slate-900 mb-3">1.7 Sanitation Staff</h3>
+                    <h3 class="heading-3 mb-3">1.7 Sanitation Staff</h3>
                     <p class="text-slate-600 mb-2"><span class="font-medium text-slate-700">Why:</span> Responsible for the cleanliness and hygiene of the common areas, waste management, and specific sanitation tasks.</p>
                     <p class="text-slate-600 mb-2"><span class="font-medium text-slate-700">Permissions:</span></p>
                     <ul class="list-disc list-inside text-slate-600 ml-4 space-y-1">
@@ -289,7 +272,7 @@
                 </div>
 
                 <div class="bg-white p-6 rounded-lg shadow-md">
-                    <h3 class="text-2xl font-semibold text-slate-900 mb-3">1.8 Technical Support Staff</h3>
+                    <h3 class="heading-3 mb-3">1.8 Technical Support Staff</h3>
                     <p class="text-slate-600 mb-2"><span class="font-medium text-slate-700">Why:</span> Handles IT and technical infrastructure issues within the complex, such as Wi-Fi, intercom, CCTV system malfunctions, or smart device support.</p>
                     <p class="text-slate-600 mb-2"><span class="font-medium text-slate-700">Permissions:</span></p>
                     <ul class="list-disc list-inside text-slate-600 ml-4 space-y-1">
@@ -303,7 +286,7 @@
                 </div>
 
                 <div class="bg-white p-6 rounded-lg shadow-md">
-                    <h3 class="text-2xl font-semibold text-slate-900 mb-3">1.9 Builder Representative</h3>
+                    <h3 class="heading-3 mb-3">1.9 Builder Representative</h3>
                     <p class="text-slate-600 mb-2"><span class="font-medium text-slate-700">Why:</span> An external party representing the builder, responsible for addressing post-construction complaints, providing project updates, and interacting with the society management during the handover and defect liability period.</p>
                     <p class="text-slate-600 mb-2"><span class="font-medium text-slate-700">Permissions:</span></p>
                     <ul class="list-disc list-inside text-slate-600 ml-4 space-y-1">
@@ -316,7 +299,7 @@
                 </div>
 
                 <div class="bg-white p-6 rounded-lg shadow-md">
-                    <h3 class="text-2xl font-semibold text-slate-900 mb-3">1.10 Management Committee (MC) Member / Resident Welfare Association (RWA) Member</h3>
+                    <h3 class="heading-3 mb-3">1.10 Management Committee (MC) Member / Resident Welfare Association (RWA) Member</h3>
                     <p class="text-slate-600 mb-2"><span class="font-medium text-slate-700">Why:</span> These are elected residents who form the governing body. They need oversight and decision-making capabilities without the full operational burden of an Administrator. This role fosters transparency and resident participation in governance.</p>
                     <p class="text-slate-600 mb-2"><span class="font-medium text-slate-700">Permissions:</span></p>
                     <ul class="list-disc list-inside text-slate-600 ml-4 space-y-1">
@@ -331,7 +314,7 @@
                 </div>
 
                 <div class="bg-white p-6 rounded-lg shadow-md">
-                    <h3 class="text-2xl font-semibold text-slate-900 mb-3">1.11 External Vendor / Service Provider</h3>
+                    <h3 class="heading-3 mb-3">1.11 External Vendor / Service Provider</h3>
                     <p class="text-slate-600 mb-2"><span class="font-medium text-slate-700">Why:</span> For third-party companies or individuals contracted for specialized services (e.g., specialized plumbing, deep cleaning, security agency, IT contractors). This role allows them to interact with the system only for their assigned tasks.</p>
                     <p class="text-slate-600 mb-2"><span class="font-medium text-slate-700">Permissions:</span></p>
                     <ul class="list-disc list-inside text-slate-600 ml-4 space-y-1">
@@ -345,7 +328,7 @@
                 </div>
 
                 <div class="bg-white p-6 rounded-lg shadow-md">
-                    <h3 class="text-2xl font-semibold text-slate-900 mb-3">1.12 Amenities / Recreation Staff</h3>
+                    <h3 class="heading-3 mb-3">1.12 Amenities / Recreation Staff</h3>
                     <p class="text-slate-600 mb-2"><span class="font-medium text-slate-700">Why:</span> For larger complexes with dedicated staff managing recreational facilities like gyms, clubhouses, or swimming pools. They need specific tools for managing bookings, equipment, and cleanliness within their domain.</p>
                     <p class="text-slate-600 mb-2"><span class="font-medium text-slate-700">Permissions:</span></p>
                     <ul class="list-disc list-inside text-slate-600 ml-4 space-y-1">
@@ -448,7 +431,7 @@
             <div class="space-y-6">
                 <div class="bg-white p-6 rounded-lg shadow-md">
                     <div class="collapsible-header flex justify-between items-center py-2 px-4">
-                        <h3 class="text-2xl font-semibold text-slate-900">Phase 1: Foundational Modules & Core Security</h3>
+                        <h3 class="heading-3">Phase 1: Foundational Modules & Core Security</h3>
                         <svg class="arrow-icon w-6 h-6 text-slate-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
                     </div>
                     <div class="collapsible-content">
@@ -623,7 +606,7 @@
 
                 <div class="bg-white p-6 rounded-lg shadow-md">
                     <div class="collapsible-header flex justify-between items-center py-2 px-4">
-                        <h3 class="text-2xl font-semibold text-slate-900">Phase 2: Enhanced Functionality & Deeper Security Integrations</h3>
+                        <h3 class="heading-3">Phase 2: Enhanced Functionality & Deeper Security Integrations</h3>
                         <svg class="arrow-icon w-6 h-6 text-slate-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
                     </div>
                     <div class="collapsible-content">
@@ -706,7 +689,7 @@
 
                 <div class="bg-white p-6 rounded-lg shadow-md">
                     <div class="collapsible-header flex justify-between items-center py-2 px-4">
-                        <h3 class="text-2xl font-semibold text-slate-900">Phase 3: Advanced Utility & Community Management</h3>
+                        <h3 class="heading-3">Phase 3: Advanced Utility & Community Management</h3>
                         <svg class="arrow-icon w-6 h-6 text-slate-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
                     </div>
                     <div class="collapsible-content">
@@ -769,7 +752,7 @@
         <section id="non-functional-requirements" class="mb-12">
             <h2 class="text-3xl font-bold text-slate-900 mb-6">Non-Functional Requirements</h2>
             <p class="text-lg text-slate-700 leading-relaxed mb-6">This section outlines the non-functional requirements that dictate the quality attributes of the Apartment Management System, such as its performance, security, usability, and reliability. These requirements are crucial for ensuring the system is robust, scalable, and provides an excellent user experience, going beyond just what the system does to how well it does it.</p>
-            <h3 class="text-2xl font-semibold text-slate-900 mb-3">4.1 Security (Paramount Importance)</h3>
+            <h3 class="heading-3 mb-3">4.1 Security (Paramount Importance)</h3>
             <h4 class="text-xl font-semibold text-slate-900 mb-2">4.1.1 Authentication & Authorization:</h4>
             <ul class="list-disc list-inside text-slate-600 ml-4 space-y-1 mb-4">
                 <li>Robust User Authentication, Secure Password Management, Session Management, Role-Based Access Control (RBAC), OAuth/OpenID Connect (future).</li>
@@ -791,27 +774,27 @@
                 <li>Regular Security Audits, Logging & Monitoring, Incident Response Plan, Secure Coding Practices.</li>
             </ul>
 
-            <h3 class="text-2xl font-semibold text-slate-900 mb-3">4.2 Performance & Scalability</h3>
+            <h3 class="heading-3 mb-3">4.2 Performance & Scalability</h3>
             <ul class="list-disc list-inside text-slate-600 ml-4 space-y-1 mb-4">
                 <li>Response Time, Concurrency, Scalability (MERN Stack, Cloud Infrastructure), Throughput.</li>
             </ul>
-            <h3 class="text-2xl font-semibold text-slate-900 mb-3">4.3 Reliability & Availability</h3>
+            <h3 class="heading-3 mb-3">4.3 Reliability & Availability</h3>
             <ul class="list-disc list-inside text-slate-600 ml-4 space-y-1 mb-4">
                 <li>Uptime, Error Handling, Fault Tolerance, Monitoring & Alerting.</li>
             </ul>
-            <h3 class="text-2xl font-semibold text-slate-900 mb-3">4.4 Usability & User Experience (UI/UX)</h3>
+            <h3 class="heading-3 mb-3">4.4 Usability & User Experience (UI/UX)</h3>
             <ul class="list-disc list-inside text-slate-600 ml-4 space-y-1 mb-4">
                 <li>Intuitive Interface, Mobile-First Design, Consistency, Accessibility, Feedback & Guidance.</li>
             </ul>
-            <h3 class="text-2xl font-semibold text-slate-900 mb-3">4.5 Maintainability</h3>
+            <h3 class="heading-3 mb-3">4.5 Maintainability</h3>
             <ul class="list-disc list-inside text-slate-600 ml-4 space-y-1 mb-4">
                 <li>Code Quality, Modularity, Testability, Logging.</li>
             </ul>
-            <h3 class="text-2xl font-semibold text-slate-900 mb-3">4.6 Compatibility</h3>
+            <h3 class="heading-3 mb-3">4.6 Compatibility</h3>
             <ul class="list-disc list-inside text-slate-600 ml-4 space-y-1 mb-4">
                 <li>Browser Compatibility, Device Compatibility.</li>
             </ul>
-            <h3 class="text-2xl font-semibold text-slate-900 mb-3">4.7 Data Backup & Disaster Recovery</h3>
+            <h3 class="heading-3 mb-3">4.7 Data Backup & Disaster Recovery</h3>
             <ul class="list-disc list-inside text-slate-600 ml-4 space-y-1">
                 <li>Automated Backups, Disaster Recovery Plan.</li>
             </ul>
@@ -920,143 +903,81 @@
     </main>
 
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const header = document.querySelector('header');
-            let headerHeight = header.offsetHeight; // Get the initial height of the fixed header
+        // Mobile menu toggle functionality
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const mobileMenuIconOpen = document.getElementById('mobile-menu-icon-open');
+        const mobileMenuIconClose = document.getElementById('mobile-menu-icon-close');
 
-            // Function to update header height and main content padding
-            const updateLayout = () => {
-                headerHeight = header.offsetHeight;
-                // Dynamically set padding-top for main content to account for sticky header
-                // Add a small buffer (e.g., 10px) for visual spacing below the header
-                document.querySelector('main').style.paddingTop = `${headerHeight + 10}px`;
-            };
+        let isMobileMenuOpen = false;
 
-            // Call on load and resize
-            updateLayout();
-            window.addEventListener('resize', updateLayout);
+        mobileMenuButton.addEventListener('click', () => {
+            isMobileMenuOpen = !isMobileMenuOpen;
+            mobileMenu.classList.toggle('hidden', !isMobileMenuOpen);
+            mobileMenuIconOpen.classList.toggle('hidden', isMobileMenuOpen);
+            mobileMenuIconClose.classList.toggle('hidden', !isMobileMenuOpen);
+            mobileMenuButton.setAttribute('aria-expanded', isMobileMenuOpen);
+        });
 
-            const allTocLinks = document.querySelectorAll('.toc-link');
-            const mobileMenuButton = document.getElementById('mobile-menu-button');
-            const mobileNavOverlay = document.getElementById('mobile-nav-overlay');
-            const closeMobileMenuButton = document.getElementById('close-mobile-menu-button');
-            const mainContent = document.querySelector('main');
-            const collapsibleHeaders = document.querySelectorAll('.collapsible-header');
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', (event) => {
+            if (!mobileMenuButton.contains(event.target) && !mobileMenu.contains(event.target)) {
+                if (isMobileMenuOpen) {
+                    isMobileMenuOpen = false;
+                    mobileMenu.classList.add('hidden');
+                    mobileMenuIconOpen.classList.remove('hidden');
+                    mobileMenuIconClose.classList.add('hidden');
+                    mobileMenuButton.setAttribute('aria-expanded', 'false');
+                }
+            }
+        });
 
-            mobileMenuButton.addEventListener('click', () => {
-                mobileNavOverlay.classList.add('open');
-            });
+        // Mobile dropdown toggle functionality
+        function toggleMobileDropdown(dropdownId) {
+            const menu = document.getElementById(dropdownId + '-menu');
+            const arrow = document.getElementById(dropdownId + '-arrow');
 
-            closeMobileMenuButton.addEventListener('click', () => {
-                mobileNavOverlay.classList.remove('open');
-            });
+            if (menu.classList.contains('hidden')) {
+                menu.classList.remove('hidden');
+                arrow.classList.add('rotate-180');
+            } else {
+                menu.classList.add('hidden');
+                arrow.classList.remove('rotate-180');
+            }
+        }
 
-            mobileNavOverlay.addEventListener('click', (e) => {
-                if (e.target === mobileNavOverlay) {
-                    mobileNavOverlay.classList.remove('open');
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
                 }
             });
+        });
 
-            allTocLinks.forEach(link => {
-                link.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    const targetId = link.getAttribute('href').substring(1);
-                    const targetElement = document.getElementById(targetId);
-                    if (targetElement) {
-                        // Calculate scroll position relative to the document, then subtract header height
-                        const offset = targetElement.getBoundingClientRect().top + window.scrollY - headerHeight - 10; // 10px buffer
-                        window.scrollTo({
-                            top: offset,
-                            behavior: 'smooth'
-                        });
-                    }
-                    if (mobileNavOverlay.classList.contains('open')) {
-                        mobileNavOverlay.classList.remove('open');
-                    }
-                });
-            });
-
-            const observerOptions = {
-                root: null, // Use the viewport as the root
-                // rootMargin defines a "box" around the root. Intersection occurs when target enters/exits this box.
-                // top: -headerHeight means the intersection line is pushed down by headerHeight from the top of the viewport.
-                // So, the observer triggers when the element's top edge crosses the bottom edge of the fixed header.
-                rootMargin: `-${headerHeight}px 0px 0px 0px`,
-                threshold: 0 // Trigger as soon as any part of the target enters the rootMargin
-            };
-
-            // Re-initialize observer on layout changes (e.g., resize) to update rootMargin
-            let observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    const id = entry.target.id;
-                    const correspondingLinks = document.querySelectorAll(`.toc-link[href="#${id}"]`);
-                    if (correspondingLinks.length > 0) {
-                        if (entry.isIntersecting) {
-                            allTocLinks.forEach(l => l.classList.remove('active'));
-                            correspondingLinks.forEach(l => l.classList.add('active'));
-                        }
-                    }
-                });
-            }, observerOptions);
-
-            // Observe all sections
-            document.querySelectorAll('section[id]').forEach(section => {
-                observer.observe(section);
-            });
-
-            // Re-create observer on resize to ensure rootMargin is accurate
-            window.addEventListener('resize', () => {
-                // Disconnect old observer
-                observer.disconnect();
-                // Update header height
-                headerHeight = header.offsetHeight;
-                // Create new observer with updated rootMargin
-                observerOptions.rootMargin = `-${headerHeight}px 0px 0px 0px`;
-                observer = new IntersectionObserver((entries) => {
-                    entries.forEach(entry => {
-                        const id = entry.target.id;
-                        const correspondingLinks = document.querySelectorAll(`.toc-link[href="#${id}"]`);
-                        if (correspondingLinks.length > 0) {
-                            if (entry.isIntersecting) {
-                                allTocLinks.forEach(l => l.classList.remove('active'));
-                                correspondingLinks.forEach(l => l.classList.add('active'));
-                            }
-                        }
-                    });
-                }, observerOptions);
-                // Re-observe all sections
-                document.querySelectorAll('section[id]').forEach(section => {
-                    observer.observe(section);
-                });
-            });
-
-            collapsibleHeaders.forEach(header => {
-                header.addEventListener('click', () => {
-                    const content = header.nextElementSibling;
-                    const arrow = header.querySelector('.arrow-icon');
-                    if (content.classList.contains('expanded')) {
-                        content.classList.remove('expanded');
-                        arrow.classList.remove('rotate-90');
-                    } else {
-                        content.classList.add('expanded');
-                        arrow.classList.add('rotate-90');
-                    }
-                });
-            });
-
-            // Automatically expand the first phase section on load for better initial visibility
-            const firstPhaseHeader = document.querySelector('#functional-requirements .collapsible-header');
-            if (firstPhaseHeader) {
-                firstPhaseHeader.click();
+        // Add scroll effect to navbar
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('header');
+            if (window.scrollY > 0) {
+                header.classList.add('shadow-lg');
+            } else {
+                header.classList.remove('shadow-lg');
             }
+        });
 
-            // Set initial active link based on current scroll position
-            // This needs to be done after the initial layout update
-            const initialActiveSection = document.querySelector('section[id]');
-            if (initialActiveSection) {
-                const initialLinkId = initialActiveSection.id;
-                document.querySelector(`header nav .toc-link[href="#${initialLinkId}"]`).classList.add('active');
-                document.querySelector(`#mobile-nav-overlay .toc-link[href="#${initialLinkId}"]`).classList.add('active');
+        // Close mobile menu on window resize if desktop view
+        window.addEventListener('resize', () => {
+            if (window.innerWidth >= 1024 && isMobileMenuOpen) {
+                isMobileMenuOpen = false;
+                mobileMenu.classList.add('hidden');
+                mobileMenuIconOpen.classList.remove('hidden');
+                mobileMenuIconClose.classList.add('hidden');
+                mobileMenuButton.setAttribute('aria-expanded', 'false');
             }
         });
     </script>

@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>College Management System (SIMS Apex)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌐</text></svg>">
+    <style>
+        /* Standardized heading styles */
+        .heading-1 { font-size: 2.25rem; line-height: 2.5rem; font-weight: 700; color: rgb(17 24 39); }
+        @media (min-width: 640px) { .heading-1 { font-size: 3rem; line-height: 1; } }
+        @media (min-width: 1024px) { .heading-1 { font-size: 3.75rem; line-height: 1; } }
+
+        .heading-2 { font-size: 1.5rem; line-height: 2rem; font-weight: 700; color: rgb(17 24 39); }
+        @media (min-width: 640px) { .heading-2 { font-size: 1.875rem; line-height: 2.25rem; } }
+        @media (min-width: 768px) { .heading-2 { font-size: 2.25rem; line-height: 2.5rem; } }
+        @media (min-width: 1024px) { .heading-2 { font-size: 3rem; line-height: 1; } }
+
+        .heading-3 { font-size: 1.25rem; line-height: 1.75rem; font-weight: 600; color: rgb(17 24 39); }
+        @media (min-width: 640px) { .heading-3 { font-size: 1.5rem; line-height: 2rem; } }
+        @media (min-width: 768px) { .heading-3 { font-size: 1.875rem; line-height: 2.25rem; } }
+        @media (min-width: 1024px) { .heading-3 { font-size: 2.25rem; line-height: 2.5rem; } }
+
+        .heading-4 { font-size: 1.125rem; line-height: 1.75rem; font-weight: 600; color: rgb(17 24 39); }
+        @media (min-width: 640px) { .heading-4 { font-size: 1.25rem; line-height: 1.75rem; } }
+
+        .text-body { font-size: 0.875rem; line-height: 1.25rem; color: rgb(55 65 81); }
+        @media (min-width: 640px) { .text-body { font-size: 1rem; line-height: 1.5rem; } }
+
+        .text-small { font-size: 0.75rem; line-height: 1rem; color: rgb(75 85 99); }
+        @media (min-width: 640px) { .text-small { font-size: 0.875rem; line-height: 1.25rem; } }
+
+        /* Custom styles for dropdown animations */
+        .rotate-180 {
+            transform: rotate(180deg);
+        }
+    </style>
+</head>
+<body class="text-gray-700 flex flex-col min-h-screen">
+
+    <div id="navbar-container"></div>
+    <script src="navbar.js"></script>
+
+    <!-- Main Content Area -->
+    <main class="bg-gray-50 min-h-screen pt-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <!-- Hero Section -->
+            <div class="text-center mb-12">
+                <h1 class="heading-1 mb-4">
+                    SIMS Apex: College Management System
+                </h1>
+                <p class="text-body max-w-3xl mx-auto">
+                    Centralizing Administration, Academics, and Finance into One Integrated Platform for Operational Excellence.
+                </p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="p-6 bg-blue-50 rounded-xl shadow-lg transform hover:scale-105 transition duration-300">
+                    <div class="text-5xl font-extrabold text-blue-600 mb-2">30%</div>
+                    <h3 class="text-xl font-semibold text-gray-900">Efficiency Gain</h3>
+                    <p class="text-gray-500">Automate manual tasks like timetable scheduling and fee reminders.</p>
+                </div>
+                <div class="p-6 bg-blue-50 rounded-xl shadow-lg transform hover:scale-105 transition duration-300">
+                    <div class="text-5xl font-extrabold text-blue-600 mb-2">99.9%</div>
+                    <h3 class="text-xl font-semibold text-gray-900">Target Uptime</h3>
+                    <p class="text-gray-500">Built on modern, scalable architecture for maximum availability and reliability.</p>
+                </div>
+                <div class="p-6 bg-blue-50 rounded-xl shadow-lg transform hover:scale-105 transition duration-300">
+                    <div class="text-5xl font-extrabold text-blue-600 mb-2">13+</div>
+                    <h3 class="text-xl font-semibold text-gray-900">Stakeholder Coverage</h3>
+                    <p class="text-gray-500">Comprehensive support for internal users, parents, alumni, and external systems.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Core Modules Section -->
+    <section id="modules" class="py-16 px-4 sm:px-6 lg:px-8 bg-gray-50">
+        <div class="max-w-7xl mx-auto">
+            <h2 class="text-3xl sm:text-4xl font-extrabold text-gray-900 text-center mb-12">The 3 Pillars of SIMS Apex</h2>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Pillar 1: Academic Management -->
+                <div class="p-6 bg-white rounded-xl shadow-xl border-t-4 border-teal-500">
+                    <h3 class="text-2xl font-bold text-teal-600 mb-3">Academic Management</h3>
+                    <ul class="list-disc list-inside space-y-2 text-gray-700">
+                        <li>Automated Timetable Scheduling (Module 3)</li>
+                        <li>Real-time Attendance Tracking & Alerts (Module 4)</li>
+                        <li>Exam Management & Hall Ticket Generation (Module 5)</li>
+                        <li>Assignment Submission and Grading Workflow</li>
+                    </ul>
+                </div>
+
+                <!-- Pillar 2: Financial Management -->
+                <div class="p-6 bg-white rounded-xl shadow-xl border-t-4 border-blue-500">
+                    <h3 class="text-2xl font-bold text-blue-600 mb-3">Financial Management</h3>
+                    <ul class="list-disc list-inside space-y-2 text-gray-700">
+                        <li>Flexible Fee Structure Design (Module 6)</li>
+                        <li>Seamless **Online Payments Integration**</li>
+                        <li>Automated Fee Due Notifications via SMS/Email</li>
+                        <li>Scholarship and Financial Aid Tracking</li>
+                    </ul>
+                </div>
+
+                <!-- Pillar 3: Engagement & Support -->
+                <div class="p-6 bg-white rounded-xl shadow-xl border-t-4 border-indigo-500">
+                    <h3 class="text-2xl font-bold text-indigo-600 mb-3">Engagement & Support</h3>
+                    <ul class="list-disc list-inside space-y-2 text-gray-700">
+                        <li>Personalized Dashboards (Student, Faculty, Parent)</li>
+                        <li>Full Library & Hostel Management (Module 8 & 9)</li>
+                        <li>Robust **Placement & Alumni Portal** (Module 7)</li>
+                        <li>Dynamic Reports & Analytics for Management</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Advanced Analytics Section -->
+    <section id="analytics" class="py-16 px-4 sm:px-6 lg:px-8 bg-white">
+        <div class="max-w-7xl mx-auto">
+            <h2 class="text-3xl sm:text-4xl font-extrabold text-gray-900 text-center mb-12">Actionable Intelligence: The Student Analytics Engine</h2>
+            
+            <!-- Executive Summary -->
+            <div class="max-w-4xl mx-auto bg-gray-50 p-8 rounded-xl shadow-lg border-l-4 border-red-500 mb-12">
+                <p class="text-xl font-semibold text-gray-800 mb-6">
+                    The Student Analytics Dashboard consolidates over **80 performance indicators** per student from 10 key areas (academics, attendance, finance, engagement, and placements).
+                </p>
+                <p class="text-gray-600 leading-relaxed">
+                    This powerful capability is driven by a **Hybrid Aggregation Model** (FastAPI, MongoDB, Celery), which computes denormalized data snapshots nightly. This approach ensures your dashboards are always fast, accurate, and provide **real-time visibility** for proactive management.
+                </p>
+            </div>
+            
+            <!-- Analytics Visualization Showcase (Graphs) -->
+            <h3 class="text-2xl font-bold text-gray-800 text-center mb-8">Visualizing Core Performance Indicators</h3>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+                
+                <!-- Graph 1: Academic Index Distribution (Bar Chart - ENHANCED AGAIN) -->
+                <div class="bg-white p-6 rounded-xl shadow-xl border border-gray-100">
+                    <p class="text-lg font-bold text-blue-600 mb-4">Academic Index Distribution</p>
+                    
+                    <!-- Graph Area Container with Simulated Axes -->
+                    <div class="relative h-56 w-full pt-4 pr-2">
+                        <!-- Simulated Y-Axis Labels & Grid Lines -->
+                        <div class="absolute left-0 w-8 h-full flex flex-col justify-between text-xs text-gray-400 font-medium pb-2">
+                            <div class="relative"><span class="absolute right-0 -mt-2">100%</span></div>
+                            <div class="relative"><span class="absolute right-0 -mt-2">75%</span><div class="absolute right-0 w-full h-px bg-gray-200 border-dashed border-t border-r border-gray-300"></div></div>
+                            <div class="relative"><span class="absolute right-0 -mt-2">50%</span><div class="absolute right-0 w-full h-px bg-gray-200 border-dashed border-t border-r border-gray-300"></div></div>
+                            <div class="relative"><span class="absolute right-0 -mt-2">25%</span><div class="absolute right-0 w-full h-px bg-gray-200 border-dashed border-t border-r border-gray-300"></div></div>
+                            <div class="relative"><span class="absolute right-0 -mt-2">0%</span></div>
+                        </div>
+                        
+                        <!-- Bar Chart Inner Area -->
+                        <div class="absolute left-8 right-0 h-full">
+                            <!-- Simulated X and Y Axis Lines -->
+                            <div class="absolute inset-0 border-l border-b border-gray-400"></div>
+
+                            <div class="flex items-end h-full space-x-2 px-2 pb-0 justify-between">
+                                <!-- Bar 1: Needs Coaching (10% -> height: 40%) -->
+                                <div class="flex flex-col justify-end items-center w-1/4 z-10" title="10%">
+                                    <div class="w-2/3 bg-red-500/80 hover:bg-red-500 transition-all rounded-t-md shadow-md" style="height: 40%;"></div>
+                                    <span class="text-xs font-semibold text-gray-700 mt-2">Low</span>
+                                </div>
+                                <!-- Bar 2: Average (45% -> height: 90%) -->
+                                <div class="flex flex-col justify-end items-center w-1/4 z-10" title="45%">
+                                    <div class="w-2/3 bg-yellow-500/80 hover:bg-yellow-500 transition-all rounded-t-md shadow-md" style="height: 90%;"></div>
+                                    <span class="text-xs font-semibold text-gray-700 mt-2">Mid</span>
+                                </div>
+                                <!-- Bar 3: Good (35% -> height: 70%) -->
+                                <div class="flex flex-col justify-end items-center w-1/4 z-10" title="35%">
+                                    <div class="w-2/3 bg-teal-500/80 hover:bg-teal-500 transition-all rounded-t-md shadow-md" style="height: 70%;"></div>
+                                    <span class="text-xs font-semibold text-gray-700 mt-2">Good</span>
+                                </div>
+                                <!-- Bar 4: Excellent (10% -> height: 40%) -->
+                                <div class="flex flex-col justify-end items-center w-1/4 z-10" title="10%">
+                                    <div class="w-2/3 bg-green-500/80 hover:bg-green-500 transition-all rounded-t-md shadow-md" style="height: 40%;"></div>
+                                    <span class="text-xs font-semibold text-gray-700 mt-2">High</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Graph 2: Financial Compliance (Progress Bars) -->
+                <div class="bg-white p-6 rounded-xl shadow-xl border border-gray-100">
+                    <p class="text-lg font-bold text-teal-600 mb-8">Financial Compliance Status</p>
+                    <div class="h-40 flex flex-col justify-center space-y-4">
+                        <div class="flex items-center space-x-3">
+                            <span class="w-20 text-sm font-medium text-gray-700">Paid:</span>
+                            <div class="flex-1 bg-gray-200 rounded-full h-4">
+                                <div class="bg-green-500 h-4 rounded-full" style="width: 80%;"></div>
+                            </div>
+                            <span class="text-sm font-medium text-green-600 w-10 text-right">80%</span>
+                        </div>
+                        <div class="flex items-center space-x-3">
+                            <span class="w-20 text-sm font-medium text-gray-700">Partial:</span>
+                            <div class="flex-1 bg-gray-200 rounded-full h-4">
+                                <div class="bg-yellow-500 h-4 rounded-full" style="width: 15%;"></div>
+                            </div>
+                            <span class="text-sm font-medium text-yellow-600 w-10 text-right">15%</span>
+                        </div>
+                        <div class="flex items-center space-x-3">
+                            <span class="w-20 text-sm font-medium text-gray-700">Pending:</span>
+                            <div class="flex-1 bg-gray-200 rounded-full h-4">
+                                <div class="bg-red-500 h-4 rounded-full" style="width: 5%;"></div>
+                            </div>
+                            <span class="text-sm font-medium text-red-600 w-10 text-right">5%</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Graph 3: Engagement Score Trend (Simulated Line Graph) -->
+                <div class="bg-white p-6 rounded-xl shadow-xl border border-gray-100 relative">
+                    <p class="text-lg font-bold text-indigo-600 mb-4">Engagement Score Trend</p>
+                    <div class="h-40 w-full relative">
+                        <!-- Simulated Grid Lines -->
+                        <div class="absolute inset-0 border-t border-b border-l border-r border-dashed border-gray-200"></div>
+                        <!-- Simulated Line/Area via Clip Path for visual appeal -->
+                        <div class="absolute w-full h-full bg-gradient-to-tr from-indigo-200/50 to-transparent" style="clip-path: polygon(0% 75%, 20% 50%, 40% 30%, 60% 20%, 80% 10%, 100% 15%, 100% 100%, 0% 100%); opacity: 0.6;"></div>
+                         <!-- Data Points -->
+                        <div class="w-3 h-3 bg-indigo-500 border-2 border-white rounded-full absolute -ml-1 -mt-1 shadow-md" style="left: 0%; top: 75%;"></div>
+                        <div class="w-3 h-3 bg-indigo-500 border-2 border-white rounded-full absolute -ml-1 -mt-1 shadow-md" style="left: 20%; top: 50%;"></div>
+                        <div class="w-3 h-3 bg-indigo-500 border-2 border-white rounded-full absolute -ml-1 -mt-1 shadow-md" style="left: 40%; top: 30%;"></div>
+                        <div class="w-3 h-3 bg-indigo-500 border-2 border-white rounded-full absolute -ml-1 -mt-1 shadow-md" style="left: 60%; top: 20%;"></div>
+                        <div class="w-3 h-3 bg-indigo-500 border-2 border-white rounded-full absolute -ml-1 -mt-1 shadow-md" style="left: 80%; top: 10%;"></div>
+                        <div class="w-3 h-3 bg-indigo-500 border-2 border-white rounded-full absolute -ml-1 -mt-1 shadow-md" style="left: 98%; top: 15%;"></div>
+                    </div>
+                    <div class="flex justify-between text-xs text-gray-500 pt-4">
+                        <span>Q1</span>
+                        <span>Q2</span>
+                        <span>Q3</span>
+                        <span>Q4</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- END ADVANCED ANALYTICS SECTION -->
+
+    <!-- Persona Coverage Section -->
+    <section id="personas" class="py-16 px-4 sm:px-6 lg:px-8 bg-blue-600 text-white">
+        <div class="max-w-7xl mx-auto">
+            <h2 class="text-3xl sm:text-4xl font-extrabold text-center mb-12">Comprehensive Stakeholder Coverage</h2>
+            <p class="text-lg text-center font-light mb-8 max-w-4xl mx-auto">
+                SIMS Apex is designed with **Role-Based Access Control (RBAC)**, ensuring every one of your 13 critical stakeholders, from internal staff to external auditors and system APIs, has the precise level of access required to function efficiently.
+            </p>
+
+            <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+                <!-- Internal Operations -->
+                <div class="p-4 bg-blue-700 rounded-lg text-center shadow-lg">
+                    <span class="text-2xl block font-bold">Admin</span>
+                    <span class="text-sm opacity-75">System Governance</span>
+                </div>
+                <div class="p-4 bg-blue-700 rounded-lg text-center shadow-lg">
+                    <span class="text-2xl block font-bold">Faculty</span>
+                    <span class="text-sm opacity-75">Academic Delivery</span>
+                </div>
+                <div class="p-4 bg-blue-700 rounded-lg text-center shadow-lg">
+                    <span class="text-2xl block font-bold">Staff</span>
+                    <span class="text-sm opacity-75">Operational Execution</span>
+                </div>
+                <div class="p-4 bg-blue-700 rounded-lg text-center shadow-lg">
+                    <span class="text-2xl block font-bold">Admissions</span>
+                    <span class="text-sm opacity-75">Enrollment Pipeline</span>
+                </div>
+                <div class="p-4 bg-blue-700 rounded-lg text-center shadow-lg">
+                    <span class="text-2xl block font-bold">Warden</span>
+                    <span class="text-sm opacity-75">Hostel Management</span>
+                </div>
+                 <!-- External & System Stakeholders -->
+                 <div class="p-4 bg-blue-700 rounded-lg text-center shadow-lg">
+                    <span class="text-2xl block font-bold">Student</span>
+                    <span class="text-sm opacity-75">Self-Service Portal</span>
+                </div>
+                <div class="p-4 bg-blue-700 rounded-lg text-center shadow-lg">
+                    <span class="text-2xl block font-bold">Parent</span>
+                    <span class="text-sm opacity-75">Student Oversight</span>
+                </div>
+                <div class="p-4 bg-blue-700 rounded-lg text-center shadow-lg">
+                    <span class="text-2xl block font-bold">Alumni</span>
+                    <span class="text-sm opacity-75">Engagement Portal</span>
+                </div>
+                <div class="p-4 bg-blue-700 rounded-lg text-center shadow-lg">
+                    <span class="text-2xl block font-bold">Principal</span>
+                    <span class="text-sm opacity-75">Strategic Reporting</span>
+                </div>
+                <div class="p-4 bg-blue-700 rounded-lg text-center shadow-lg">
+                    <span class="text-2xl block font-bold">Payment API</span>
+                    <span class="text-sm opacity-75">Financial Integration</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Final CTA and Footer -->
+    <footer class="bg-gray-800 text-white py-12 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-7xl mx-auto text-center">
+            <h3 class="text-3xl font-bold mb-4">Ready to Modernize SIMS?</h3>
+            <p class="mb-6 text-gray-300">Let's start building the Apex of college management solutions today.</p>
+            <a href="#" class="inline-block bg-teal-500 text-gray-900 font-bold py-3 px-8 rounded-full shadow-xl hover:bg-teal-400 transition duration-300">
+                Contact Our Project Lead
+            </a>
+            <p class="mt-8 text-sm text-gray-500">&copy; 2025 SIMS Apex Proposal. All Rights Reserved.</p>
+        </div>
+    <script>
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const mobileMenuIconOpen = document.getElementById('mobile-menu-icon-open');
+        const mobileMenuIconClose = document.getElementById('mobile-menu-icon-close');
+
+        function toggleMobileMenu() {
+            const isOpen = mobileMenu.classList.toggle('hidden');
+            mobileMenuIconOpen.classList.toggle('hidden', !isOpen);
+            mobileMenuIconClose.classList.toggle('hidden', isOpen);
+            mobileMenuButton.setAttribute('aria-expanded', !isOpen);
+        }
+
+        function toggleMobileDropdown(dropdownId) {
+            const menu = document.getElementById(dropdownId + '-menu');
+            const arrow = document.getElementById(dropdownId + '-arrow');
+
+            // Close all other dropdowns
+            document.querySelectorAll('[id$="-menu"]').forEach(m => {
+                if (m.id !== dropdownId + '-menu') {
+                    m.classList.add('hidden');
+                }
+            });
+            document.querySelectorAll('[id$="-arrow"]').forEach(a => {
+                if (a.id !== dropdownId + '-arrow') {
+                    a.classList.remove('rotate-180');
+                }
+            });
+
+            // Toggle current dropdown
+            menu.classList.toggle('hidden');
+            arrow.classList.toggle('rotate-180');
+        }
+
+        mobileMenuButton.addEventListener('click', toggleMobileMenu);
+
+        // Close mobile menu when clicking outside or on a link
+        document.addEventListener('click', (e) => {
+            if (!mobileMenuButton.contains(e.target) && !mobileMenu.contains(e.target)) {
+                if (!mobileMenu.classList.contains('hidden')) {
+                    toggleMobileMenu();
+                }
+            }
+        });
+
+        // Close mobile menu on window resize to desktop
+        window.addEventListener('resize', () => {
+            if (window.innerWidth >= 1024 && !mobileMenu.classList.contains('hidden')) {
+                toggleMobileMenu();
+            }
+        });
+
+        // Close mobile menu when a link is clicked
+        mobileMenu.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                toggleMobileMenu();
+            });
+        });
+    </script>
+</body>
+</html>
