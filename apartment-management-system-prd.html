@@ -1,136 +1,118 @@
 <!DOCTYPE html>
 <html lang="en">
+<!DOCTYPE html>
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Apartment Management System - PRD</title>
-    <!-- Chosen Palette: Modern Tech Blue & Grey -->
-    <!-- Application Structure Plan: The application is designed as a single-page interactive document. A sticky top navigation bar provides quick access to all major sections of the PRD. The main content area dynamically displays the selected section. This structure enhances readability and navigation by allowing engineers to quickly locate specific requirements or architectural details without endless scrolling. Sub-sections within Functional Requirements are made collapsible to manage information density. For mobile and tablet devices, the top navigation collapses into an intuitive hamburger menu, which reveals an off-canvas navigation overlay, ensuring optimal usability on smaller screens. -->
-    <!-- Visualization & Content Choices: Summary: Report Info -> Goal -> Viz/Presentation Method -> Interaction -> Justification -> Library/Method - Confirming NO SVG/Mermaid, supporting the DESIGNED structure.
-        - Top Navigation Bar (HTML/Tailwind/JS): Goal: Organize/Navigate. To provide quick access to all sections. Interaction: Clicking a link scrolls smoothly to the corresponding section; active section highlights. Justification: Essential for long documents to improve navigation and accessibility across devices.
-        - Mobile Hamburger Menu (HTML/Tailwind/JS): Goal: Organize/Navigate. To provide intuitive navigation on small screens. Interaction: Clicking toggles an off-canvas menu. Justification: Ensures mobile-friendliness and clean UI on limited screen real estate.
-        - Collapsible Sections (HTML/Tailwind/JS): Goal: Organize/Inform. To hide/show detailed functional requirements. Interaction: Clicking a header toggles visibility. Justification: Reduces visual clutter and allows engineers to focus on relevant details.
-        - Textual Content (HTML/Tailwind): Goal: Inform. All PRD content is presented directly as text. Justification: The primary goal is to present the PRD content itself.
-        - No Chart.js/Plotly.js: The source PRD is a textual document and does not contain quantitative data suitable for charting within this interactive document. The "Reports & Analytics" sections describe future reports, not data to be visualized in this PRD.
-        - Library/Method: Vanilla JavaScript for navigation and collapsible sections.
-    -->
-    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <style>
-        body {
-            font-family: 'Inter', sans-serif;
-            line-height: 1.6;
-        }
-        .top-nav {
-            position: sticky;
-            top: 0;
-            z-index: 50;
-        }
-        .mobile-nav-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.7);
-            z-index: 50;
-            display: none;
-            justify-content: center;
-            align-items: center;
-            opacity: 0;
-            transition: opacity 0.3s ease-in-out;
-        }
-        .mobile-nav-overlay.open {
-            display: flex;
-            opacity: 1;
-        }
-        .mobile-nav-content {
-            background-color: white;
-            padding: 2rem;
-            border-radius: 0.5rem;
-            width: 90%;
-            max-width: 400px;
-            transform: translateY(-20px);
-            opacity: 0;
-            transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
-            position: relative; /* For close button positioning */
-        }
-        .mobile-nav-overlay.open .mobile-nav-content {
-            transform: translateY(0);
-            opacity: 1;
-        }
-        .toc-link {
-            transition: all 0.2s ease-in-out;
-            color: #475569;
-            font-weight: 500;
-        }
-        .toc-link.active {
-            background-color: #e0f2fe;
-            color: #0ea5e9;
-            font-weight: 600;
-            border-radius: 0.5rem; /* Apply rounded corners to active state */
-        }
-        .toc-link:hover:not(.active) {
-            background-color: #f1f5f9;
-            color: #1e293b;
-            border-radius: 0.5rem; /* Apply rounded corners to hover state */
-        }
-        .collapsible-header {
-            cursor: pointer;
-            transition: background-color 0.2s ease-in-out;
-            background-color: #f8fafc;
-            border-bottom: 1px solid #e2e8f0;
-            border-radius: 0.5rem; /* Rounded corners for collapsible headers */
-        }
-        .collapsible-header:hover {
-            background-color: #eff6ff;
-        }
-        .collapsible-content {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.3s ease-out;
-        }
-        .collapsible-content.expanded {
-            max-height: 4000px; /* Sufficiently large value */
-            transition: max-height 0.7s ease-in;
-        }
-        .arrow-icon {
-            transition: transform 0.3s ease-in-out;
-        }
-        .arrow-icon.rotate-90 {
-            transform: rotate(90deg);
-        }
-        section h2 {
-            border-bottom: 2px solid #e2e8f0;
-            padding-bottom: 0.5rem;
-        }
-        section h3 {
-            color: #1e293b;
-        }
-        .shadow-md {
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
-        }
-        /* Custom list style for nested lists in categories */
-        ul.list-circle {
-            list-style-type: circle;
-        }
-        /* Standardized heading classes */
-        .heading-1 { @apply text-4xl sm:text-5xl lg:text-6xl font-bold text-gray-900; }
-        .heading-2 { @apply text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900; }
-        .heading-3 { @apply text-xl sm:text-2xl md:text-3xl font-semibold text-gray-900; }
-        .heading-4 { @apply text-lg sm:text-xl font-semibold text-gray-900; }
-        .text-body { @apply text-sm sm:text-base text-gray-700; }
-        .text-small { @apply text-xs sm:text-sm text-gray-600; }
-    </style>
-</head>
-<body class="text-gray-700 flex flex-col min-h-screen">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Apartment Management System - Property Management Software | 2025</title>
+  <meta name="description" content="Complete property management solution for apartments, rentals, and real estate. Streamline tenant management, rent collection, and maintenance tracking.">
+  <meta name="keywords" content="property management, apartment management, rental software, tenant management, real estate">
+  <meta name="author" content="Santosh Jammi - Solutions Expert">
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+  <meta name="googlebot" content="index, follow">
+  <meta name="bingbot" content="index, follow">
+
+  <!-- Canonical URL -->
+  <link rel="canonical" href="https://yourwebsite.com/apartment-management-system-prd.html">
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://yourwebsite.com/apartment-management-system-prd.html">
+  <meta property="og:title" content="Apartment Management System - Property Management Software | 2025">
+  <meta property="og:description" content="Complete property management solution for apartments, rentals, and real estate. Streamline tenant management, rent collection, and maintenance tracking.">
+  <meta property="og:image" content="https://yourwebsite.com/images/apartment-management-system-prd-og.jpg">
+  <meta property="og:site_name" content="Strategic Solutions Hub">
+
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image">
+  <meta property="twitter:url" content="https://yourwebsite.com/apartment-management-system-prd.html">
+  <meta property="twitter:title" content="Apartment Management System - Property Management Software | 2025">
+  <meta property="twitter:description" content="Complete property management solution for apartments, rentals, and real estate. Streamline tenant management, rent collection, and maintenance tracking.">
+  <meta property="twitter:image" content="https://yourwebsite.com/images/apartment-management-system-prd-twitter.jpg">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <!-- Icons -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🏢</text></svg>">
+
+  <!-- Structured Data - Organization -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "Strategic Solutions Hub",
+    "url": "https://yourwebsite.com",
+    "logo": "https://yourwebsite.com/images/logo.png",
+    "description": "Comprehensive business solutions for growth, security, and innovation",
+    "founder": {
+      "@type": "Person",
+      "name": "Santosh Jammi",
+      "jobTitle": "Solutions Architect & Business Consultant",
+      "knowsAbout": ["Business Solutions", "Technology Consulting", "Digital Transformation", "Enterprise Architecture"],
+      "hasCredential": "Certified Solutions Architect with 10+ years experience"
+    },
+    "contactPoint": {
+      "@type": "ContactPoint",
+      "telephone": "+1-555-0123",
+      "contactType": "customer service",
+      "availableLanguage": "English"
+    }
+  }
+  </script>
+
+  <!-- Structured Data - Article -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "Apartment Management System - Property Management Software",
+    "description": "Complete property management solution for apartments, rentals, and real estate. Streamline tenant management, rent collection, and maintenance tracking.",
+    "author": {
+      "@type": "Person",
+      "name": "Santosh Jammi",
+      "jobTitle": "Solutions Expert"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "Strategic Solutions Hub"
+    },
+    "datePublished": "2025-11-13",
+    "dateModified": "2025-11-13",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://yourwebsite.com/apartment-management-system-prd.html"
+    },
+    "image": "https://yourwebsite.com/images/apartment-management-system-prd-main.jpg",
+    "keywords": "property management, apartment management, rental software, tenant management, real estate"
+  }
+  </script>
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Standardized Styles -->
+  <link rel="stylesheet" href="standardized-styles.css">
+<body
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=GA_MEASUREMENT_ID"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'GA_MEASUREMENT_ID', {
+      'custom_map': {'dimension1': 'page_category'}
+    });
+  </script> class="text-gray-700 flex flex-col min-h-screen">
     <div id="navbar-container"></div>
     <script src="navbar.js"></script>
 
     <div id="mobile-nav-overlay" class="mobile-nav-overlay">
         <div class="mobile-nav-content shadow-xl rounded-lg">
-            <button id="close-mobile-menu-button" class="absolute top-3 right-3 text-slate-600 focus:outline-none p-2 rounded-md hover:bg-slate-100">
+            <button id="close-mobile-menu-button" class="absolute top-3 right-3 text-slate-600 focus:outline-none p-2 rounded-md hover:bg-slate-100" aria-label="Close mobile menu" title="Close mobile menu">
                 <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
             </button>
             <h2 class="text-2xl font-bold text-slate-900 mb-6 pb-4 border-b">PRD Sections</h2>
@@ -981,5 +963,124 @@
             }
         });
     </script>
-</body>
+
+  <!-- FAQ Section -->
+  <section class="faq-section">
+    <div class="container">
+      <h2>Frequently Asked Questions</h2>
+
+      <div class="faq-item">
+        <h3 class="faq-question">What are the key features of this solution?</h3>
+        <div class="faq-answer">
+          <p>This solution includes comprehensive features designed for enterprise-level performance, scalability, and user experience. Key capabilities include advanced analytics, multi-platform support, and robust security measures.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <h3 class="faq-question">How long does implementation take?</h3>
+        <div class="faq-answer">
+          <p>Implementation timelines vary based on complexity and requirements. Typically, basic setup takes 2-4 weeks, while full enterprise deployment may require 2-3 months including customization and training.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <h3 class="faq-question">What kind of support is provided?</h3>
+        <div class="faq-answer">
+          <p>We provide comprehensive support including documentation, training, technical assistance, and ongoing maintenance. Enterprise clients receive dedicated support channels and priority response times.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- Social Share -->
+  <section class="social-share">
+    <div class="container">
+      <h2>Share This Solution</h2>
+      <p>Help others discover this comprehensive business solution by sharing this guide.</p>
+      <div class="share-buttons">
+        <a href="https://twitter.com/intent/tweet?text=Apartment%20Management%20System%20-%20Property%20Management%20Software%20|%202025&url=https://yourwebsite.com/apartment-management-system-prd.html" class="share-btn twitter" target="_blank" rel="noopener noreferrer">
+          <span>🐦</span> Share on Twitter
+        </a>
+        <a href="https://www.facebook.com/sharer/sharer.php?u=https://yourwebsite.com/apartment-management-system-prd.html" class="share-btn facebook" target="_blank" rel="noopener noreferrer">
+          <span>📘</span> Share on Facebook
+        </a>
+        <a href="https://www.linkedin.com/sharing/share-offsite/?url=https://yourwebsite.com/apartment-management-system-prd.html" class="share-btn linkedin" target="_blank" rel="noopener noreferrer">
+          <span>💼</span> Share on LinkedIn
+        </a>
+      </div>
+    </div>
+  </section>
+  <!-- Author Section -->
+  <section class="author-section">
+    <div class="container">
+      <div class="author-card">
+        <div class="author-avatar">SJ</div>
+        <h3>Santosh Jammi</h3>
+        <p><strong>Solutions Architect & Business Consultant</strong></p>
+        <p>With over 10 years of experience in enterprise solutions and digital transformation, Santosh has helped numerous organizations implement scalable business systems. He specializes in aligning technology solutions with business objectives for maximum impact.</p>
+        <p><em>"Every great solution starts with understanding the problem deeply. These implementations are designed to grow with your business and adapt to changing needs."</em></p>
+        <p><strong>Credentials:</strong> Certified Solutions Architect, Enterprise Software Specialist, Digital Transformation Expert</p>
+        <p><strong>Contact:</strong> <a href="mailto:santosh@strategicsolutionshub.com">santosh@strategicsolutionshub.com</a></p>
+      </div>
+    </div>
+  </section>
+  <!-- Footer -->
+  <footer class="bg-gray-900 text-white py-12 mt-16">
+    <div class="container">
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+        <div>
+          <h3 class="text-lg font-semibold mb-4">Strategic Solutions Hub</h3>
+          <p class="text-gray-400">Comprehensive business solutions for growth, security, and innovation across industries.</p>
+        </div>
+        <div>
+          <h4 class="font-semibold mb-4">Solutions</h4>
+          <ul class="space-y-2 text-gray-400">
+            <li><a href="payment-gateway-solution.html" class="hover:text-white transition-colors">💰 Payment Gateway</a></li>
+            <li><a href="investment-banking-crm-solution.html" class="hover:text-white transition-colors">💼 CRM Solutions</a></li>
+            <li><a href="lms-presentation.html" class="hover:text-white transition-colors">🎓 Learning Management</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="font-semibold mb-4">Resources</h4>
+          <ul class="space-y-2 text-gray-400">
+            <li><a href="question-bank-prd.html" class="hover:text-white transition-colors">📚 Question Bank</a></li>
+            <li><a href="apartment-management-system-prd.html" class="hover:text-white transition-colors">🏢 Property Management</a></li>
+            <li><a href="heptacare-health.html" class="hover:text-white transition-colors">🏥 Healthcare Solutions</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="font-semibold mb-4">Contact</h4>
+          <p class="text-gray-400 mb-2">Ready to transform your business?</p>
+          <a href="mailto:contact@strategicsolutionshub.com" class="text-blue-400 hover:text-blue-300 transition-colors">contact@strategicsolutionshub.com</a>
+        </div>
+      </div>
+      <div class="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
+        <p>&copy; 2025 Strategic Solutions Hub. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+  <!-- FAQ Schema -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What are the key features of this solution?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "This solution includes comprehensive features designed for enterprise-level performance, scalability, and user experience. Key capabilities include advanced analytics, multi-platform support, and robust security measures."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How long does implementation take?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Implementation timelines vary based on complexity and requirements. Typically, basic setup takes 2-4 weeks, while full enterprise deployment may require 2-3 months including customization and training."
+        }
+      }
+    ]
+  }
+  </script></body>
 </html>

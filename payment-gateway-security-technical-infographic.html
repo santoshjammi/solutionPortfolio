@@ -1,145 +1,112 @@
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
+<!DOCTYPE html>
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Payment Gateway Security: Technical Deep Dive</title>
-    <script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <style>
-        body {
-            font-family: 'Inter', sans-serif;
-            overflow-x: hidden; /* Prevent horizontal scrolling on small screens */
-        }
-        h1, h2, h3, h4 {
- line-height: 1.2; /* Improve readability on small screens */ /* Tighter line height for large headings */
-        }
-        p {
-            line-height: 1.5; /* Improve readability on small screens */
-        }
-        .chart-container {
-            position: relative;
-            width: 100%;
-            max-width: 600px;
-            margin-left: auto;
- margin-right: auto; /* Center align charts */ /* Default height for mobile */
-            height: 250px; /* Default height for mobile */
- }
-        @media (min-width: 640px) { /* sm breakpoint */
-            .chart-container {
-                height: 300px;
-            }
-        }
-        @media (min-width: 768px) { /* md breakpoint */
-            .chart-container {
-                height: 350px;
-            }
-        }
-        .technical-flow-arrow {
- font-size: 1.5rem; /* Adjusted for mobile */ /* Smaller arrow */
-            line-height: 1;
-            color: #85BDE9;
-        }
-        .technical-box-sm {
- @apply bg-white p-2 rounded-lg shadow-md text-center font-medium text-xs border border-gray-200 flex-shrink-0; /* Ensure it shrinks if needed */ /* Adjusted padding */
-        }
-        .technical-box-md {
- @apply bg-white p-3 sm:p-4 rounded-lg shadow-md text-center font-semibold text-xs sm:text-sm border border-gray-200 flex-shrink-0; /* Adjusted padding and text size */ /* Minimum width for technical boxes */
-            min-width: 120px; /* Minimum width for technical boxes */
-        }
-        .colored-box {
- @apply text-white; /* White text color for colored boxes */
-        }
-        .pci-requirement-box {
- @apply bg-gray-100 p-2 sm:p-3 rounded-lg shadow-sm text-xs sm:text-sm font-semibold text-gray-700 text-center flex-grow; /* Adjusted text size */
- min-width: 100px; /* Ensure boxes don't get too small */
- flex-basis: auto; /* Allow items to shrink/grow */
-        }
-        /* Adjusted padding and font sizes for mobile optimization */
-        .section-padding {
- @apply p-6 sm:p-8 md:p-12; /* Responsive padding */
-        }
-        .section-padding-y {
- @apply py-6 sm:py-8 md:py-12; /* Responsive vertical padding */
-        }
-        .section-padding-x {
-            @apply px-4 sm:px-6 md:px-8;
-        }
-        .heading-1 {
-            line-height: 1.1; /* Tighter line height for large headings */
-            @apply text-3xl sm:text-4xl md:text-5xl lg:text-6xl;
- }
-        .heading-2 {
-            @apply text-2xl sm:text-3xl md:text-4xl;
-        }
-        .heading-3 {
-            @apply text-xl sm:text-2xl md:text-3xl;
-        }
-        .heading-4 {
-            @apply text-lg sm:text-xl md:text-2xl;
-        }
-        .text-content {
-            @apply text-sm sm:text-base md:text-lg;
-        }
-        .text-small {
-            @apply text-xs sm:text-sm;
-        }
-        .icon-size {
-            @apply text-3xl sm:text-4xl md:text-5xl;
-        }
-        .numeric-large {
-            @apply text-5xl sm:text-6xl md:text-7xl;
-        }
-        .flow-diagram-container {
- @apply flex flex-col items-center justify-center space-y-2 bg-gray-100 p-4 rounded-lg shadow w-full; /* Use w-full, let max-width handle breakpoint */
- max-width: 320px; /* Max width for small screens */
- margin-left: auto;
- margin-right: auto;
- }
- @media (min-width: 768px) { .flow-diagram-container { max-width: 400px; } } /* md breakpoint */
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Payment Gateway Security Technical Infographic - Strategic Solutions Hub | 2025</title>
+  <meta name="description" content="Professional solution for payment gateway security technical infographic. Comprehensive features and expert implementation.">
+  <meta name="keywords" content="payment, gateway, security, technical, infographic, business solution, enterprise software">
+  <meta name="author" content="Santosh Jammi - Solutions Expert">
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+  <meta name="googlebot" content="index, follow">
+  <meta name="bingbot" content="index, follow">
 
-        /* Styles for mobile navigation overlay */
-        .mobile-nav-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-color: rgba(0, 0, 0, 0.7); /* Dark overlay */
-            z-index: 50; /* Above content, below header */
-            -webkit-backdrop-filter: blur(4px); /* Safari support */
-            backdrop-filter: blur(4px); /* Optional: blur background */
-            display: none; /* Hidden by default */
- }
-        .mobile-nav-menu {
-            position: fixed;
-            top: 48px; /* Height of the header */
-            left: 0; /* Start from the left edge */
-            width: 75%; /* Make menu not full width */
- height: calc(100vh - 48px); /* Full height minus header */
-            background-color: white;
-            z-index: 60;
-            transform: translateX(-100%); /* Start off-screen to the left */
- transition: transform 0.3s ease-in-out; /* Smooth transition */
- padding: 1.5rem 1rem; /* Adjust padding */
- overflow-y: auto; /* Enable scrolling for long menus */
- box-shadow: 2px 0 5px rgba(0,0,0,0.2); /* Add shadow */
-        }
-        .mobile-nav-menu.is-open {
-            transform: translateX(0); /* Slide in */
-        }
+  <!-- Canonical URL -->
+  <link rel="canonical" href="https://yourwebsite.com/payment-gateway-security-technical-infographic.html">
 
-        /* Ensure padding for body when header is fixed */
- @media (min-width: 640px) { /* sm breakpoint */
- body { padding-top: 48px; } /* Keep padding consistent */
- }
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://yourwebsite.com/payment-gateway-security-technical-infographic.html">
+  <meta property="og:title" content="Payment Gateway Security Technical Infographic - Strategic Solutions Hub | 2025">
+  <meta property="og:description" content="Professional solution for payment gateway security technical infographic. Comprehensive features and expert implementation.">
+  <meta property="og:image" content="https://yourwebsite.com/images/payment-gateway-security-technical-infographic-og.jpg">
+  <meta property="og:site_name" content="Strategic Solutions Hub">
 
-    </style>
-</head>
-<body class="text-gray-700 flex flex-col min-h-screen">
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image">
+  <meta property="twitter:url" content="https://yourwebsite.com/payment-gateway-security-technical-infographic.html">
+  <meta property="twitter:title" content="Payment Gateway Security Technical Infographic - Strategic Solutions Hub | 2025">
+  <meta property="twitter:description" content="Professional solution for payment gateway security technical infographic. Comprehensive features and expert implementation.">
+  <meta property="twitter:image" content="https://yourwebsite.com/images/payment-gateway-security-technical-infographic-twitter.jpg">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <!-- Icons -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🚀</text></svg>">
+
+  <!-- Structured Data - Organization -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "Strategic Solutions Hub",
+    "url": "https://yourwebsite.com",
+    "logo": "https://yourwebsite.com/images/logo.png",
+    "description": "Comprehensive business solutions for growth, security, and innovation",
+    "founder": {
+      "@type": "Person",
+      "name": "Santosh Jammi",
+      "jobTitle": "Solutions Architect & Business Consultant",
+      "knowsAbout": ["Business Solutions", "Technology Consulting", "Digital Transformation", "Enterprise Architecture"],
+      "hasCredential": "Certified Solutions Architect with 10+ years experience"
+    },
+    "contactPoint": {
+      "@type": "ContactPoint",
+      "telephone": "+1-555-0123",
+      "contactType": "customer service",
+      "availableLanguage": "English"
+    }
+  }
+  </script>
+
+  <!-- Structured Data - Article -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "Payment Gateway Security Technical Infographic - Strategic Solutions Hub",
+    "description": "Professional solution for payment gateway security technical infographic. Comprehensive features and expert implementation.",
+    "author": {
+      "@type": "Person",
+      "name": "Santosh Jammi",
+      "jobTitle": "Solutions Expert"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "Strategic Solutions Hub"
+    },
+    "datePublished": "2025-11-13",
+    "dateModified": "2025-11-13",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://yourwebsite.com/payment-gateway-security-technical-infographic.html"
+    },
+    "image": "https://yourwebsite.com/images/payment-gateway-security-technical-infographic-main.jpg",
+    "keywords": "payment, gateway, security, technical, infographic, business solution, enterprise software"
+  }
+  </script>
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Standardized Styles -->
+  <link rel="stylesheet" href="standardized-styles.css">
+<body
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=GA_MEASUREMENT_ID"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'GA_MEASUREMENT_ID', {
+      'custom_map': {'dimension1': 'page_category'}
+    });
+  </script> class="text-gray-700 flex flex-col min-h-screen">
 
     <div id="navbar-container"></div>
     <script src="navbar.js"></script>
@@ -617,5 +584,89 @@
         });
     }
 </script>
-</body>
+
+  <!-- FAQ Section -->
+  <section class="faq-section">
+    <div class="container">
+      <h2>Frequently Asked Questions</h2>
+
+      <div class="faq-item">
+        <h3 class="faq-question">What are the key features of this solution?</h3>
+        <div class="faq-answer">
+          <p>This solution includes comprehensive features designed for enterprise-level performance, scalability, and user experience. Key capabilities include advanced analytics, multi-platform support, and robust security measures.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <h3 class="faq-question">How long does implementation take?</h3>
+        <div class="faq-answer">
+          <p>Implementation timelines vary based on complexity and requirements. Typically, basic setup takes 2-4 weeks, while full enterprise deployment may require 2-3 months including customization and training.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <h3 class="faq-question">What kind of support is provided?</h3>
+        <div class="faq-answer">
+          <p>We provide comprehensive support including documentation, training, technical assistance, and ongoing maintenance. Enterprise clients receive dedicated support channels and priority response times.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- Social Share -->
+  <section class="social-share">
+    <div class="container">
+      <h2>Share This Solution</h2>
+      <p>Help others discover this comprehensive business solution by sharing this guide.</p>
+      <div class="share-buttons">
+        <a href="https://twitter.com/intent/tweet?text=Payment%20Gateway%20Security%20Technical%20Infographic%20-%20Strategic%20Solutions%20Hub%20|%202025&url=https://yourwebsite.com/payment-gateway-security-technical-infographic.html" class="share-btn twitter" target="_blank" rel="noopener noreferrer">
+          <span>🐦</span> Share on Twitter
+        </a>
+        <a href="https://www.facebook.com/sharer/sharer.php?u=https://yourwebsite.com/payment-gateway-security-technical-infographic.html" class="share-btn facebook" target="_blank" rel="noopener noreferrer">
+          <span>📘</span> Share on Facebook
+        </a>
+        <a href="https://www.linkedin.com/sharing/share-offsite/?url=https://yourwebsite.com/payment-gateway-security-technical-infographic.html" class="share-btn linkedin" target="_blank" rel="noopener noreferrer">
+          <span>💼</span> Share on LinkedIn
+        </a>
+      </div>
+    </div>
+  </section>
+  <!-- Author Section -->
+  <section class="author-section">
+    <div class="container">
+      <div class="author-card">
+        <div class="author-avatar">SJ</div>
+        <h3>Santosh Jammi</h3>
+        <p><strong>Solutions Architect & Business Consultant</strong></p>
+        <p>With over 10 years of experience in enterprise solutions and digital transformation, Santosh has helped numerous organizations implement scalable business systems. He specializes in aligning technology solutions with business objectives for maximum impact.</p>
+        <p><em>"Every great solution starts with understanding the problem deeply. These implementations are designed to grow with your business and adapt to changing needs."</em></p>
+        <p><strong>Credentials:</strong> Certified Solutions Architect, Enterprise Software Specialist, Digital Transformation Expert</p>
+        <p><strong>Contact:</strong> <a href="mailto:santosh@strategicsolutionshub.com">santosh@strategicsolutionshub.com</a></p>
+      </div>
+    </div>
+  </section>
+  <!-- FAQ Schema -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What are the key features of this solution?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "This solution includes comprehensive features designed for enterprise-level performance, scalability, and user experience. Key capabilities include advanced analytics, multi-platform support, and robust security measures."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How long does implementation take?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Implementation timelines vary based on complexity and requirements. Typically, basic setup takes 2-4 weeks, while full enterprise deployment may require 2-3 months including customization and training."
+        }
+      }
+    ]
+  }
+  </script></body>
 </html>

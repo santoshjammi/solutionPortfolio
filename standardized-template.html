@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{PAGE_TITLE}}</title>
+  <meta name="description" content="{{PAGE_DESCRIPTION}}">
+  <meta name="keywords" content="{{PAGE_KEYWORDS}}">
+  <meta name="author" content="Santosh Jammi - Solutions Expert">
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+  <meta name="googlebot" content="index, follow">
+  <meta name="bingbot" content="index, follow">
+
+  <!-- Canonical URL -->
+  <link rel="canonical" href="{{CANONICAL_URL}}">
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="{{CANONICAL_URL}}">
+  <meta property="og:title" content="{{PAGE_TITLE}}">
+  <meta property="og:description" content="{{PAGE_DESCRIPTION}}">
+  <meta property="og:image" content="{{OG_IMAGE}}">
+  <meta property="og:site_name" content="Strategic Solutions Hub">
+
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image">
+  <meta property="twitter:url" content="{{CANONICAL_URL}}">
+  <meta property="twitter:title" content="{{PAGE_TITLE}}">
+  <meta property="twitter:description" content="{{PAGE_DESCRIPTION}}">
+  <meta property="twitter:image" content="{{TWITTER_IMAGE}}">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <!-- Icons -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌐</text></svg>">
+
+  <!-- Structured Data - Organization -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "Strategic Solutions Hub",
+    "url": "https://yourwebsite.com",
+    "logo": "https://yourwebsite.com/images/logo.png",
+    "description": "Comprehensive business solutions for growth, security, and innovation",
+    "founder": {
+      "@type": "Person",
+      "name": "Santosh Jammi",
+      "jobTitle": "Solutions Architect & Business Consultant",
+      "knowsAbout": ["Business Solutions", "Technology Consulting", "Digital Transformation", "Enterprise Architecture"],
+      "hasCredential": "Certified Solutions Architect with 10+ years experience"
+    },
+    "contactPoint": {
+      "@type": "ContactPoint",
+      "telephone": "+1-555-0123",
+      "contactType": "customer service",
+      "availableLanguage": "English"
+    }
+  }
+  </script>
+
+  <!-- Structured Data - Article -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "{{PAGE_TITLE}}",
+    "description": "{{PAGE_DESCRIPTION}}",
+    "author": {
+      "@type": "Person",
+      "name": "Santosh Jammi",
+      "jobTitle": "Solutions Expert"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "Strategic Solutions Hub"
+    },
+    "datePublished": "2025-11-13",
+    "dateModified": "2025-11-13",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "{{CANONICAL_URL}}"
+    },
+    "image": "{{OG_IMAGE}}"
+  }
+  </script>
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Standardized Styles -->
+  <link rel="stylesheet" href="standardized-styles.css">
+
+  <!-- Additional Page Styles -->
+  <style>
+    {{PAGE_STYLES}}
+  </style>
+</head>
+<body class="min-h-screen">
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=GA_MEASUREMENT_ID"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'GA_MEASUREMENT_ID', {
+      'custom_map': {'dimension1': 'page_category'}
+    });
+  </script>
+
+  <!-- Navbar -->
+  <div id="navbar-container"></div>
+  <script src="navbar.js"></script>
+
+  <!-- Main Content -->
+  <main>
+    {{PAGE_CONTENT}}
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-gray-900 text-white py-12 mt-16">
+    <div class="container">
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+        <div>
+          <h3 class="text-lg font-semibold mb-4">Strategic Solutions Hub</h3>
+          <p class="text-gray-400">Comprehensive business solutions for growth, security, and innovation across industries.</p>
+        </div>
+        <div>
+          <h4 class="font-semibold mb-4">Solutions</h4>
+          <ul class="space-y-2 text-gray-400">
+            <li><a href="payment-gateway-solution.html" class="hover:text-white transition-colors">Payment Gateway</a></li>
+            <li><a href="investment-banking-crm-solution.html" class="hover:text-white transition-colors">CRM Solutions</a></li>
+            <li><a href="lms-presentation.html" class="hover:text-white transition-colors">Learning Management</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="font-semibold mb-4">Resources</h4>
+          <ul class="space-y-2 text-gray-400">
+            <li><a href="question-bank-prd.html" class="hover:text-white transition-colors">Question Bank</a></li>
+            <li><a href="apartment-management-system-prd.html" class="hover:text-white transition-colors">Property Management</a></li>
+            <li><a href="heptacare-health.html" class="hover:text-white transition-colors">Healthcare Solutions</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="font-semibold mb-4">Contact</h4>
+          <p class="text-gray-400 mb-2">Ready to transform your business?</p>
+          <a href="mailto:contact@strategicsolutionshub.com" class="text-blue-400 hover:text-blue-300 transition-colors">contact@strategicsolutionshub.com</a>
+        </div>
+      </div>
+      <div class="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
+        <p>&copy; 2025 Strategic Solutions Hub. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Additional Structured Data -->
+  {{STRUCTURED_DATA}}
+
+  <!-- Scripts -->
+  <script>
+    // FAQ Accordion functionality
+    document.querySelectorAll('.faq-question').forEach(question => {
+      question.addEventListener('click', () => {
+        const answer = question.nextElementSibling;
+        const isOpen = answer.style.display === 'block';
+        document.querySelectorAll('.faq-answer').forEach(a => a.style.display = 'none');
+        if (!isOpen) {
+          answer.style.display = 'block';
+        }
+      });
+    });
+
+    // Analytics event tracking
+    document.addEventListener('DOMContentLoaded', function() {
+      // Track page category
+      gtag('event', 'page_view', {
+        'page_category': '{{PAGE_CATEGORY}}'
+      });
+
+      // Track form submissions
+      document.querySelectorAll('form').forEach(form => {
+        form.addEventListener('submit', function() {
+          gtag('event', 'form_submit', {
+            'event_category': 'engagement',
+            'event_label': '{{PAGE_CATEGORY}}'
+          });
+        });
+      });
+    });
+  </script>
+
+  {{PAGE_SCRIPTS}}
+</body>
+</html>

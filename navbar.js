@@ -28,6 +28,7 @@
                             <a href="investment-banking-crm-solution.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-[#85BDE9] hover:text-white">💼 Investment Banking CRM (For C-Level/Execs)</a>
                             <a href="investment-banking-crm-technical-infographic.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-[#85BDE9] hover:text-white">🔬 Investment Banking CRM (Technical Deep Dive)</a>
                             <a href="investefy.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-[#85BDE9] hover:text-white">📈 Investefy Advisory Platform</a>
+                            <a href="logo-request-form.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-[#85BDE9] hover:text-white">🎨 Logo Design Services</a>
                         </div>
                     </div>
                 </div>
@@ -124,6 +125,7 @@
                             <a href="investment-banking-crm-solution.html" class="block text-gray-300 hover:text-[#85BDE9] text-sm py-1">💼 Investment Banking CRM (For C-Level/Execs)</a>
                             <a href="investment-banking-crm-technical-infographic.html" class="block text-gray-300 hover:text-[#85BDE9] text-sm py-1">🔬 Investment Banking CRM (Technical Deep Dive)</a>
                             <a href="investefy.html" class="block text-gray-300 hover:text-[#85BDE9] text-sm py-1">📈 Investefy Advisory Platform</a>
+                            <a href="logo-request-form.html" class="block text-gray-300 hover:text-[#85BDE9] text-sm py-1">🎨 Logo Design Services</a>
                         </div>
                     </div>
 
