@@ -1,0 +1,598 @@
+/* ═══════════════════════════════════════════════════════════════
+   Meta Design System — Countrysnews Solutions
+   Inspired by Meta Store / Dolly design language
+   Shared foundation for all solution pages
+   ═══════════════════════════════════════════════════════════════ */
+
+/* ── 1. Design Tokens ── */
+:root {
+  /* Meta brand blue */
+  --meta-blue:          #0064E0;
+  --meta-blue-hover:    #0143B5;
+  --meta-blue-pressed:  #004BB9;
+  --meta-blue-light:    #47A5FA;
+
+  /* Legacy alias (backward-compat) */
+  --primary-blue:       #0064E0;
+  --accent-blue:        #47A5FA;
+
+  /* Text */
+  --dark-charcoal:      #1C2B33;
+  --slate-gray:         #5D6C7B;
+  --secondary-text:     #65676B;
+  --disabled-text:      #BCC0C4;
+
+  /* Surfaces */
+  --white:              #FFFFFF;
+  --soft-gray:          #F1F4F7;
+  --warm-gray:          #F7F8FA;
+  --near-black:         #1C1E21;
+  --navy:               #071226;
+  --light-bg:           #F1F4F7;
+
+  /* Dividers */
+  --divider-gray:       #DEE3E9;
+  --divider:            #CED0D4;
+
+  /* Border radius */
+  --rad  --rad  --rad  --rad  --rad  --rad  --rad--radius-lg:    20px;
+  --radius-xl:    24px;
+  --radius-pill:  100px;
+
+  /* Shadows */
+  --shadow-1:  0 2px 4px 0 rgba(0,0,0,0.10);
+  --shadow-2:  0 12px 28px 0 rgba(0,0,0,0.20), 0 2px 4px 0 rgba(0,0,0,0.10);
+
+  /* Spacing */
+  --sp-1:  4px;
+  --sp-2:  8px;
+  --sp-3:  12px;
+  --sp-4:  16px;
+  --sp-5:  24px;
+  --sp-6:  32px;
+  --sp-7:  40px;
+  --sp-8:  48px;
+  --sp-9:  64px;
+  --sp-10: 80px;
+
+  /* Legacy spacing aliases */
+  --spacing-xs:   0.25rem;
+  --spacing-sm:   0.5rem;
+  --spacing-md:   1rem;
+  --spacing-lg:   1.5rem;
+  --spacing-xl:   2rem;
+  --spacing-2xl:  3rem;
+
+  /* Font */
+  --font: 'Inter', 'Optimistic Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+  --font-primary: var(--font);
+
+  /* gray */
+  --gray: var(--slate-gray);
+  --electric: #6C4BFF;
+  --accent: #4F46E5;
+}
+
+/* ── 2. Reset & Base ── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+html { scroll-behavior: smooth; }
+g: border-box; margin: 0; padding:  1.5;
+  color: var(--dark-charcoal);
+  background: var(--white);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+img, video { max-width: 100%; display: block; }
+a { color: inherit; text-decoration: none; }
+
+/* Keep navbar from covering content */
+#navbar-container + * { padding-top: 0; }
+main { padding-top: 0; }
+
+/* ── 3. Typography ── */
+.display-1 {
+  font-size: clamp(36px, 5vw, 64px);
+  font-weight: 500;
+  line-height: 1.16;
+  letter-spacing: -0.02em;
+  color: var(--white);
+}
+.display-2.display-2.display-2.d28px, 4vw, 48px);
+  font-weight: 500;
+  line-height: 1.17;
+  letter-spacing: -0.02em;
+  color: var(--dark-charcoal);
+}
+
+/* Legacy heading classes — now map to Meta spec */
+.heading-1 {
+  font-size: clamp(22px, 3vw, 36px);
+  font-weight: 500;
+  line-height: 1.28;
+  color: var(--dark-charcoal);
+  margin-bottom: var(--sp-4);
+}
+.heading-2 {
+  font-size: clamp(18px, 2.5vw, 28px);
+  font-weight: 300;  font-weight: 300;  font-weightar(--dark-charcoal);
+  margin-bottom: var(--sp-3);
+}
+.heading-3 {
+  font-s  font-s  font-s  font-s  70  font-s  font-s  font-s  font-s  70 --dark-charcoal);
+  margin-bottom: var(--sp-2);
+}
+.heading-4 {
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.44;
+  color: var(--dark-charcoal);
+  margin-bottom: var(--sp-2);
+}
+
+.body-text, .text-body, .text-co.body-text, .text-body,px;
+  font-weight: 400;
+  line-height  line-heigolor: var(--slate-gray);
+}
+.body-sm {
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.50;
+  letter-spacing: -0.16px;
+  color: var(--slate-gray);
+}
+.caption, .text-small {
+  font-size: 14px;
+  fo  fo  fo  fo  fo  lin  fo  fo  fo  fo  fo  linspacing: -0.14px;
+  color: var(--sla  color: var(--sla-bold {
+  font-size: 14px;
+  font-we  font-00;
+                                   -dark-charcoal);
+}
+.overline {
+  font-size: 1  font-size: 1  font-size: 1 tter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--meta-blue);
+}
+.small {
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 1.33;
+  color: var(--secondary-text);
+}
+
+/* ── 4. Buttons ── */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font);
+  font-size: 14px;
+  font-weight: 400;
+  letter-spacing: -0.14px;
+  line-height: 1.43;
+  text-decoration: none;
+  cursor: pointer;
+  border: none;
+  border-radius: var(--radius-pill);
+  padding: 10px 22px;
+  min-height: 44px;
+  transition: background 200ms ease, color 200ms ease, transform 150ms ease, box-shadow 200ms ease;
+  white-space: nowrap;
+}
+
+.btn-primary {
+  background: var(--meta-blue);
+  color: var(--white) !important;
+  border: none;
+  border-radius: var(--radius-pill);
+}
+.btn-primary:hover {
+  background: var(--meta-blue-hover);
+  transform: scale(1.02)  transform: scalehi  transform: scale(1.02)  transform: scalehi  trad: var(--meta-blu  transform: scale(1.02)  transform: scalehi  transform: scale(ro  transform: scale(1.02)  tva  transform: scale(1.02) der: 2px solid rgba(10, 19, 23, 0.18);
+  border-radi  border-radi  bordll  border-radi  border-radi  bobackground: rgba(70, 90, 105, 0.09);  borbtn-ghost-white {
+  background: rgba(255,255,255,0.12);
+  color: var(--white) !important;
+  border: 2px solid rgba(255,255,255,0.45);
+  border-radius: var(--radius-pill);
+  backdrop-filter: blur(6px);
+}
+.btn-ghost-white:hover { background: rgba(255,255,255,0.22); }
+
+.btn-disabled {
+  background: var(--divider-gray);
+  color: #85  color: #85  color: #85  color: #85  color: #85  color: #85  color: #85  color: #85  color: #85 ckg  color: #85  cite);
+  bor  bor  bor  bar(--radius-lg);
+  box-shadow: var(--shadow-1);
+  padding: 32px;
+  transition: transform 300ms ease, box-shadow 300ms ease;  transition: tran transform: translateY(-2px);
+  box-shado  box-shado  box-shado  box-shado  box-shado  box-shado  box-shado  box-shado  box-shado  box-shado  box-shado  box-shado  box-shado  box-shado  box-shado  box-shado  box-shado  box-shado  box-shado  box-shado  box-shado  box-shado  box-shado  box-shado  bransform 300ms ease, box-shadow 300ms ease;
+}
+.feature-card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-2);
+}
+
+/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/ legacy class names */
+.card-header { m.card-header { m.card-header { m.card-he {
+                                  700;                         coal);
+  margin-bottom: var(--sp-2);
+  line-height: 1.44;
+}
+.card-description {
+  font-size: 14px;
+  color: var(--slate-gray);
+  line-height: 1.43;
+}
+
+/* ── 6. Container & Layout ── */
+.container {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding:  padding:  padding:  padding:768px  padding:  padding:  padding4p  padding:  pad�� 7. Sections ── */
+.section-light, .section {
+  background: var(--white);
+  padding: var(--sp-10) 0;
+}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}} 1024px) {
+  .section-light, .section, .section-gray, .section-dark, .section-navy, .sectio  .section-light, .section, .section-gray, .section-darktt  .section-light, .section, .section-gray, .section-dark,ti  .section-light, .section, .section-gray, .section-dark, .sectionsect  .section-light, .section,op:  .section-light  paddi  .section-light,sp-8);
+  }
+}
+
+/* Content section (legacy) */
+.content-section {
+  background: var(--white);
+  margin-bottom: 0;
+  border-radius: 0;
+  box-shadow: none;
+}
+.content-section .container { padding: var(--sp-10) 40px; }
+
+/* ── 8. Grid System ── */
+.grid { display: grid; gap: var(--sp-5); }
+.grid-cols-1  { gr.grid-cols-1  { gr.grid-cot(.grid-cols-1  { gr.grid-c{ .grid-cols-1  { gr.grid-cols-1  { gr.grid-cot(.grid-cols-1  { gr.grid-c{ .grid-cols-1  { gr.grid-cols-1  { gr.grid-cot(.grid-cols-1  { gr.grid-c{ .grid-cols-1  { gr.grid-cols-1  { gr.grid-cot(.grid-cols-1  { gr.grid-c{ .grid-cols-1  { gr.grid-cols-1  { gr.grid-cot(.grid-cols-1  { gr.grid-c{ .grid-cols
+@media (max-width:@media (max-width:@media (max-width:@media (max-width:@media (max-width:@media (max-width:@media (max-width:@media (max-width:@media (max-width:@media (max-width:@media (max-width:@media (max-width:@media (max-width:@media (max-width:@media (max-width:@media (max-width:@media (max-width:@media (max-width:@media (max-width:@media (max-width:gap-4 { gap: 16px; }
+.gap-6 { gap: 24px; }
+
+/* ── 9. Dividers ── */
+.divider {
+  border: none;
+  border-top: 1px solid var(--divider-gray);
+  margin: 0;
+}
+
+/* ── 10. Hero ── */
+.hero {
+  background: var(--near-black);
+  color: va  color: va  color: va  color: va  colo) + 56px) 0 var(--sp-10);
+  text-align: center;
+  border-bottom: none;
+}
+.hero h1, .hero .hero-title {
+  font-size: clamp(36px, 5vw, 64px);
+  font-weight: 500;
+  line-height: 1.16;
+  color: var(--white);
+  margin-bottom: var(--sp-5);
+}
+.hero p, .hero .hero-subtitle {
+  font-size: 18px;
+  color: rgba(255,255,255,0.75);
+  max-width: 600px;
+  margin: 0 auto var(--sp-7);
+  line-height: 1.6;
+}
+
+/* Section image banners */
+.section-img {
+  width: 100%;
+  height: 280px;
+  object-fit: cover;
+  border-radius: var(--radius-lg);
+  display: block;
+  margin-bottom: 48px;
+}
+@media (max-width: 768px) { .section-img { height: 180px; margin-bottom: 32px; } }
+
+/* ── 11. Forms ── */
+.form-group { margin-bottom: var(--sp-5); }
+.form-label {
+  display: block;
+  font-weight: 600;
+  font-  font-  font-  font-  font- var(--sp-2);
+  color: var(--dark-charcoal);
+}
+.form-input,
+.form-textarea,
+.form-select {
+  width: 100%;
+  padding: 10px 16px;
+  background: var(--white);
+  border: 1px solid var(--divider);
+  border-radius: var(--radius-sm);
+  font-size: 16px;
+  font-family: var(--font);
+  color: va  color: va  color: va  cnsiti  color: va  color: va  color: va  ad  color: va  colo.fo  color: va  color:rm-textarea:focus,
+.form-select:focus {
+  outline: none;
+  border-color: var(--meta-blue);
+  box-shadow: 0 0 0 3px rgba(0, 100, 224, 0.15);
+}
+.form-input::placeholder,
+.form-textarea::placeholder { color: var(--sec.form-textarea::placehol�� 1.form-texta�─.form-textaresp.form-textarealow.form-textareain: var.form-textarea::placeholder {h: 100%;
+  border-collapse: collapse;
+  backgroun  backgroun  backgroun  backgroun  backgroun  backgroun  backgroun  backgroun  hadow: var(--shadow-1);
+}
+.table th, .table td {
+  padding: 14px 20px;
+  text-align: left;
+  border-bottom: 1px solid var(--divider-gray);
+  font-size: 14px;
+}
+.table th {
+  background: var(--soft-gray);
+  font-we  font-we 
+  color: var(--dark-charcoal);
+}
+.table td { color: var(--slate-gray); }
+
+/* ── 13. FAQ ── */
+.faq-section { background: var(--soft-gray); padding: var(--sp-10) 0; }
+.faq-item {
+  background: var(--white);
+  margin-bottom: 8px;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-1);
+}
+.faq-question {
+  padding: 2  padding:  background: var(--meta-blue);
+  color: var(--white);
+  margi  margi  margi  margi  margi  margi  margx;
+  font-  font-  font- border: none;
+  width: 100%;
+  text-align: left;
+  font-family: var(--font);
+}
+.faq-question:hover { background: var(--meta-blue-hover); }
+.faq-answer {
+  padding: 20px 24px;
+  margin: 0;
+  line-height: 1.6;
+  font-size:  font-size:  font-size:  font-size:  font-size:  font-size:  font-size:  font-size:  font-size:  font-size:  f back  font-size:  font0, 224, 0.06);
+  border-left: 3px solid var(--meta-blue);
+  padding: var(--sp-5);
+  margin: var  margin: var  mader-  margin: va  margin: var  margin: var  ma) 0;
+}
+
+/* ── 15. Social share ── */
+.social-share { margin: var(--sp-6) 0; text-align: center; }
+.share-buttons {
+                                                                   argin-top: var(--sp-4);
+  flex-wrap: wrap;
+}
+..................play:..................play:...s: center..................dd..................play:......us: var(--radius-pil..................pla: none;
+  font-weight: 500;
+  fon  fon  fon  fon  fansition: transform 200ms ease, box-shadow 200ms ease;
+                px;
+}
+.share-btn:hove.share-btn:ho: .share-btn:hove.; box-shadow: var(--shadow-1); }
+............................................................share-btn.facebook { background: #1877F2; color: w...................linkedin { background: #0A66C2; color: white; }
+
+/* ── 16. Author / CTA band ── */
+.author-section {
+  background: var(--near-black);
+  padding: var(--sp-  padding: vt-align: center;
+  border-top:   border-top:   card {
+                                                                                A2E;
+  border-radius: var(--radius-xl);
+                                                             px; height: 72px;
+  border-radius: 50%;
+  background: var(--meta-blue);
+  margin: 0 auto var(--sp-4);
+  display: flex;
+  align-item  align-item  align-item  align-item  align-item  align-item  align-item  align-item  align-item  align-item  align-item  align-item  align-item  align-id: var(--near-black);
+  padding: var(--sp-10) 0;
+  text-align: center;
+}
+
+/* ── 18. Color utilities ── */
+.text-primary  { color: var(--meta-blue); }
+.text-accent   { color: var(--meta-blue-ligh.text-accent   { color: var(--meta-blue-ligh.text-accent   { color: var(--meta-blue-ligh.text-accent   { color: var(--meta-blue-ligh.text-accent   { color: var(--meta-blue-ligar(.text-accent   { color: var(--meta-blue-un.text-accent   {ear-black); }
+.bg-soft-gray  { background-color: var(--soft-gray); }
+.bg-white      { background-color: var(--white); }
+.bg-light      { background-color: var(--soft-gray); }
+.bg-accent     { background-color: var(--meta-blue-light); }
+
+/* ── 19. Responsive: Mobile nav ── */
+.mobile-nav-overlay {
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,0.65);
+  z-index: 50; display: none;
+}
+.mobile-nav-menu {
+  position: fixed; top: 0; left: 0;
+  width: 75%; max-width: 300px; height: 100%;
+  background: var(--white);
+  z-index: 60;
+  transform: translateX(-100%);
+  transition: transform 0.3s ease;
+  box-shadow: 2px 0 5px rgba(0,0,0,0.2);
+  padding: 1.5rem 1rem;
+  overflow-y: auto;
+}
+.mobile-nav-menu.is-open { transform: translateX(0); }
+
+/* ── 20. Accessibility ── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+.btn:focus,
+.faq-question:focus,
+.form-input:focus,
+.form-textarea:focus,
+.form-select:focus {
+  outline: 3px solid var(--meta-blue);
+  outline-offset: 2px;
+}
+
+/* ── 21. Print ── */
+@media print {
+  .social-share, .share-buttons, #navbar-container,
+  .mobile-nav-overlay, .mobile-nav-menu { display: none !important; }
+  body { background: white; color: black; }
+  .section-dark, .section-navy, .cta-band, .author-section { background: #f1f1f1; color: black; }
+}
+
+/* ── 22. Responsive adjustments ── */
+@media (max-width: 768px) {
+  .share-buttons { flex-direction: column; align-items: center; }
+  .hero h1, .hero .hero-title { font-size: 2rem; }
+  .display-2 { font-size: 1.75rem; }
+  .heading-1 { font-size: 1.5rem; }
+  .card { padding: 20px; }
+  .container { padding: 0 20px; }
+  .content-section .container { padding: 32px 20px; }
+  .btn { min-height: 44px; }
+}
+@media (max-width: 480px) {
+  .btn { width: 100%; margin-bottom: 8px; }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   Meta Design Overrides — Re-skin Tailwind Arbitrary Values
+   Loaded AFTER Tailwind CDN → same specificity wins by cascade.
+   ═══════════════════════════════════════════════════════════════ */
+
+/* ── Body ── */
+body {
+  display: block !important;
+  min-height: auto !important;
+  background: #F1F4F7;
+  color: #1C2B33;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+/* ── Typography: ensure headings use Meta spec ── */
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+/* ── Old brand blue text colors → Meta Blue ── */
+[class*="#00449E"]  { color: #0064E0 !important; }
+[class*="#005CB9"]  { color: #0064E0 !important; }
+[class*="#0076D4"]  { color: #0068E0 !important; }
+[class*="#85BDE9"]  { color: #47A5FA !important; }
+[class*="#4195D7"]  { color: #47A5FA !important; }
+
+/* ── Old brand blue backgrounds → Meta Blue ── */
+[class*="bg-[#00449E]"] { background-color: #0064E0 !important; }
+[class*="bg-[#005CB9]"] { background-color: #0064E0 !important; }
+[class*="bg-[#0076D4]"] { background-color: #004FBD !important; }
+[class*="bg-[#4195D7]"] { background-color: #47A5FA !important; }
+[class*="bg-[#85BDE9]"] { background-color: #47A5FA !important; }
+
+/* ── Dark section backgrounds → Near Black ── */
+[class*="bg-[#071226]"] { background-color: #1C1E21 !important; }
+[class*="bg-[#0A1323]"] { background-color: #1C1E21 !important; }
+[class*="bg-[#1a202c]"] { background-color: #1C1E21 !important; }
+
+/* ── Hover state overrides ── */
+[class*="hover:bg-[#85BDE9]"]:hover { background-color: #0064E0 !important; color: #fff !important; }
+[class*="hover:bg-[#0076D4]"]:hover { background-color: #0143B5 !important; }
+[class*="hover:text-[#85BDE9]"]:hover { color: #47A5FA !important; }
+[class*="hover:text-[#00449E]"]:hover { color: #0064E0 !important; }
+
+/* ── Card corners: override sharp radii ── */
+[class*="rounded-xl"] { border-radius: 20px !important; }
+[class*="rounded-2xl"] { border-radius: 24px !important; }
+[class*="rounded-lg"] { border-radius: 16px !important; }
+[class*="rounded-md"] { border-radius: 8px !important; }
+
+/* ── Button-like elements: pill shape ── */
+a[class*="rounded-full"],
+button[class*="rounded-full"],
+a[class*="rounded-lg"][class*="px-"],
+button[class*="rounded-lg"][class*="px-"],
+.btn {
+  border-radius: 100px !important;
+}
+
+/* ── Card shadow upgrade ── */
+[class*="shadow-lg"] {
+  box-shadow: 0 12px 28px 0 rgba(0,0,0,0.20), 0 2px 4px 0 rgba(0,0,0,0.10) !important;
+}
+[class*="shadow-md"] {
+  box-shadow: 0 2px 4px 0 rgba(0,0,0,0.10) !important;
+}
+
+/* ── Section padding standardize ── */
+[class*="py-8"]  { padding-top: 32px  !important; padding-bottom: 32px  !important; }
+[class*="py-12"] { padding-top: 48px  !important; padding-bottom: 48px  !important; }
+[class*="py-16"] { padding-top: 64px  !important; padding-bottom: 64px  !important; }
+[class*="py-20"] { padding-top: 80px  !important; padding-bottom: 80px  !important; }
+
+/* ═══════════════════════════════════════════════════════════════
+   gradient-bg — Meta dark section (was undefined, now Near Black)
+   ═══════════════════════════════════════════════════════════════ */
+.gradient-bg {
+  background: #1C1E21 !important;
+  color: #fff;
+}
+.gradient-bg h1,
+.gradient-bg h2,
+.gradient-bg h3,
+.gradient-bg h4,
+.gradient-bg p,
+.gradient-bg li {
+  color: rgba(255,255,255,0.90) !important;
+}
+.gradient-bg .overline {
+  color: #47A5FA !important;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   .page-   .page-   .page-   .page-   .page-   .page-   .page-   .page-   .page-   .page-   .page-��   .page-   .page-   .page-   .page-   .page-   .page-   .page-   .page-   .page-   .page-   .page-��   .page-   .page-   .page-   .page-   .page-   .page-   .page-   .page-   .page-   .page #   .page-   .page-   .page-   .page-   .page-   .page-   .page-  o-banner .overline {
+  display: block;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #47A5FA;
+  margin-bottom: 16px;
+}
+.page-hero-banner h1 {
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  font-weight: 500;
+  line-height: 1.1;
+  color: #fff;
+  max-width: 800px;
+  margin: 0 auto 20px;
+  letter-spacing: -0.02em;
+}
+.page-hero-banner .hero-subtitle {
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 1.6;
+  color: rgba(255,255,255,0.70);
+  max-width: 600px;
+  margin: 0 auto 32px;
+}
+.page-hero-banner .hero-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+@media (max-width: 768px) {
+  .page-hero-banner { padding: 64px 20px 48px; }
+  .page-hero-banner h1 { font-size: 1.875rem; }
+  .page-hero-banner .hero-subtitle { font-size: 16px; }
+}
+
+/* ── Main content offset for fixed navbar ── */
+main.navbar-offset { padding-top: 72px; }

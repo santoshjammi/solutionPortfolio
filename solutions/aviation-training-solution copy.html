@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aviation Training Management Solution | Enterprise Digital Platform for Flight Schools</title>
+  <meta name="description" content="Digitize flight training operations, instructor approvals, student readiness tracking, and compliance workflows with a structured aviation training management platform for flight schools and aviation academies.">
+  <meta name="keywords" content="aviation training management, flight school software, pilot training platform, instructor approval workflow, digital flight logbook, aviation compliance, student readiness tracking">
+  <meta name="author" content="Countrysnews Solutions">
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+
+  <!-- Canonical URL -->
+  <link rel="canonical" href="https://solutions.countrysnews.com/aviation-training-solution.html">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://solutions.countrysnews.com/aviation-training-solution.html">
+  <meta property="og:title" content="Aviation Training Management Solution | Enterprise Digital Platform for Flight Schools">
+  <meta property="og:description" content="Digitize flight training operations, instructor approvals, student readiness tracking, and compliance workflows with a structured aviation training management platform.">
+  <meta property="og:site_name" content="Countrysnews Solutions">
+
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image">
+  <meta property="twitter:title" content="Aviation Training Management Solution | Enterprise Digital Platform">
+  <meta property="twitter:description" content="Digitize flight training operations, instructor approvals, student readiness tracking, and compliance workflows with a structured aviation training management platform.">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <!-- Icon -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>✈️</text></svg>">
+
+  <!-- Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "Aviation Training Management Solution",
+    "description": "Enterprise platform for digitizing flight training operations, instructor approvals, student readiness tracking, and compliance workflows.",
+    "applicationCategory": "BusinessApplication",
+    "operatingSystem": "Cloud SaaS",
+    "publisher": {
+      "@type": "Organization",
+      "name": "Countrysnews Solutions",
+      "url": "https://solutions.countrysnews.com"
+    }
+  }
+  </script>
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Standardized Styles -->
+  <link rel="stylesheet" href="standardized-styles.css">
+
+  <style>
+    .flow-arrow {
+      font-size: 1.25rem;
+      line-height: 1;
+      color: #85BDE9;
+    }
+    .mobile-nav-overlay {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background-color: rgba(0, 0, 0, 0.7);
+      z-index: 50;
+      display: none;
+    }
+    .mobile-nav-menu {
+      position: fixed;
+      top: 0; left: 0;
+      width: 75%;
+      max-width: 300px;
+      height: 100%;
+      background-color: white;
+      z-index: 60;
+      transform: translateX(-100%);
+      transition: transform 0.3s ease-in-out;
+      box-shadow: 2px 0 5px rgba(0,0,0,0.2);
+      padding: 1.5rem 1rem;
+      overflow-y: auto;
+    }
+    .mobile-nav-menu.is-open {
+      transform: translateX(0);
+    }
+    .workflow-step {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+    .workflow-node {
+      background-color: #0076D4;
+      color: white;
+      border-radius: 0.5rem;
+      padding: 0.75rem 1rem;
+      font-weight: 600;
+      font-size: 0.875rem;
+      min-width: 120px;
+    }
+    .cta-band {
+      background-color: #00449E;
+    }
+    .challenge-item {
+      border-left: 4px solid #85BDE9;
+      padding-left: 1rem;
+    }
+    .module-card {
+      background: white;
+      border-top: 3px solid #0076D4;
+      border-radius: 0.5rem;
+      box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+      padding: 1.5rem;
+    }
+    .benefit-card {
+      background: white;
+      border-radius: 0.5rem;
+      box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+      padding: 1.5rem;
+      text-align: center;
+    }
+    .deploy-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      padding: 1rem;
+      background: #f8fafc;
+      border-radius: 0.5rem;
+      border: 1px solid #e2e8f0;
+    }
+    .deploy-icon {
+      width: 2.5rem;
+      height: 2.5rem;
+      min-width: 2.5rem;
+      background-color: #0076D4;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 1rem;
+    }
+  </style>
+</head>
+<body class="text-gray-700 flex flex-col min-h-screen">
+
+  <div id="navbar-container"></div>
+  <script src="navbar.js"></script>
+
+  <div id="mobile-nav-overlay" class="mobile-nav-overlay"></div>
+  <div id="mobile-nav-menu" class="mobile-nav-menu">
+    <div class="flex flex-col space-y-2">
+      <a href="#challenges" class="text-gray-800 hover:bg-[#85BDE9] hover:text-white block px-3 py-2 rounded-md text-base font-medium">Challenges</a>
+      <a href="#solution" class="text-gray-800 hover:bg-[#85BDE9] hover:text-white block px-3 py-2 rounded-md text-base font-medium">Solution</a>
+      <a href="#modules" class="text-gray-800 hover:bg-[#85BDE9] hover:text-white block px-3 py-2 rounded-md text-base font-medium">Modules</a>
+      <a href="#benefits" class="text-gray-800 hover:bg-[#85BDE9] hover:text-white block px-3 py-2 rounded-md text-base font-medium">Benefits</a>
+      <a href="#future" class="text-gray-800 hover:bg-[#85BDE9] hover:text-white block px-3 py-2 rounded-md text-base font-medium">Future Platform</a>
+      <a href="#deployment" class="text-gray-800 hover:bg-[#85BDE9] hover:text-white block px-3 py-2 rounded-md text-base font-medium">Deployment</a>
+    </div>
+  </div>
+
+  <main class="max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
+
+    <!-- HERO SECTION -->
+    <section id="hero" class="text-center mb-16 section-padding">
+      <div class="max-w-3xl mx-auto">
+        <p class="text-sm font-semibold uppercase tracking-widest text-[#0076D4] mb-3">Enterprise Aviation Solutions</p>
+        <h1 class="heading-1 font-extrabold text-[#00449E]">Aviation Training Management Solution</h1>
+        <p class="mt-4 text-lg text-gray-500 max-w-2xl mx-auto leading-relaxed">
+          Digitize flight training operations, instructor approvals, student readiness tracking, and compliance workflows with a structured aviation training platform built for flight schools, academies, and multi-branch pilot training organizations.
+        </p>
+        <div class="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
+          <a href="#deployment" class="inline-block bg-[#00449E] hover:bg-[#005CB9] text-white font-semibold px-8 py-3 rounded transition-colors duration-200">
+            Request Consultation
+          </a>
+          <a href="#solution" class="inline-block border-2 border-[#00449E] text-[#00449E] hover:bg-[#00449E] hover:text-white font-semibold px-8 py-3 rounded transition-colors duration-200">
+            See How It Works
+          </a>
+        </div>
+      </div>
+      <div class="mt-12 grid grid-cols-2 sm:grid-cols-4 gap-6 max-w-4xl mx-auto">
+        <div class="bg-white rounded-lg shadow-md p-4 text-center">
+          <p class="text-2xl font-black text-[#0076D4]">✈️</p>
+          <p class="text-sm font-semibold text-gray-700 mt-2">Flight Schools</p>
+        </div>
+        <div class="bg-white rounded-lg shadow-md p-4 text-center">
+          <p class="text-2xl font-black text-[#0076D4]">🎓</p>
+          <p class="text-sm font-semibold text-gray-700 mt-2">Aviation Academies</p>
+        </div>
+        <div class="bg-white rounded-lg shadow-md p-4 text-center">
+          <p class="text-2xl font-black text-[#0076D4]">🧑‍✈️</p>
+          <p class="text-sm font-semibold text-gray-700 mt-2">Pilot Training Institutes</p>
+        </div>
+        <div class="bg-white rounded-lg shadow-md p-4 text-center">
+          <p class="text-2xl font-black text-[#0076D4]">🏢</p>
+          <p class="text-sm font-semibold text-gray-700 mt-2">Multi-Branch Organizations</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- INDUSTRY CHALLENGES -->
+    <section id="challenges" class="mb-16 section-padding bg-white rounded-lg shadow-lg">
+      <div class="text-center mb-10">
+        <h2 class="heading-2 font-bold text-[#00449E]">Challenges Aviation Institutes Face</h2>
+        <p class="mt-2 max-w-3xl mx-auto text-content text-gray-500">
+          As training volumes grow, manual processes create compounding operational risk. Regulatory scrutiny intensifies. Audit exposure widens. These are the pressures your organization cannot afford to ignore.
+        </p>
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div class="challenge-item py-2">
+          <h3 class="font-bold text-[#005CB9] text-base mb-1">Manual Logbook Management</h3>
+          <p class="text-small text-gray-600">Paper-based and spreadsheet-driven flight logs create data integrity issues, missing entries, and no real-time visibility into student training hours.</p>
+        </div>
+        <div class="challenge-item py-2">
+          <h3 class="font-bold text-[#005CB9] text-base mb-1">Delayed Instructor Approvals</h3>
+          <p class="text-small text-gray-600">Approval bottlenecks stall student progression. Without a structured workflow, sign-offs are delayed, lost in email, or applied inconsistently across instructors.</p>
+        </div>
+        <div class="challenge-item py-2">
+          <h3 class="font-bold text-[#005CB9] text-base mb-1">Poor Student Readiness Visibility</h3>
+          <p class="text-small text-gray-600">Training coordinators lack a consolidated view to determine whether individual students meet eligibility thresholds before scheduling tests or stage advancements.</p>
+        </div>
+        <div class="challenge-item py-2">
+          <h3 class="font-bold text-[#005CB9] text-base mb-1">Audit Complexity</h3>
+          <p class="text-small text-gray-600">Regulatory audits require comprehensive, time-stamped documentation. Manual record systems cannot produce audit-ready compliance reports quickly or reliably.</p>
+        </div>
+        <div class="challenge-item py-2">
+          <h3 class="font-bold text-[#005CB9] text-base mb-1">Compliance Risk</h3>
+          <p class="text-small text-gray-600">DGCA, FAA, EASA, and equivalent authority requirements demand strict procedural adherence. Gaps in documentation expose institutes to regulatory penalties and license risk.</p>
+        </div>
+        <div class="challenge-item py-2">
+          <h3 class="font-bold text-[#005CB9] text-base mb-1">Fragmented Operations</h3>
+          <p class="text-small text-gray-600">Disconnected systems for student data, flight scheduling, instructor assignment, and reporting prevent management from having a unified operational picture across branches.</p>
+        </div>
+        <div class="challenge-item py-2">
+          <h3 class="font-bold text-[#005CB9] text-base mb-1">Instructor Dependency</h3>
+          <p class="text-small text-gray-600">Critical knowledge, approvals, and student assessments remain locked to individual instructors rather than being captured in a structured, transferable platform.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SOLUTION OVERVIEW -->
+    <section id="solution" class="mb-16 section-padding">
+      <div class="text-center mb-10">
+        <h2 class="heading-2 font-bold text-[#00449E]">Our Solution</h2>
+        <p class="mt-2 max-w-3xl mx-auto text-content text-gray-500">
+          A structured, workflow-driven platform that enforces operational discipline at every stage of pilot training — from first enrollment through final eligibility clearance and compliance sign-off.
+        </p>
+      </div>
+      <div class="bg-white rounded-lg shadow-lg section-padding">
+        <h3 class="heading-4 font-semibold text-[#005CB9] text-center mb-8">End-to-End Training Workflow</h3>
+        <div class="flex flex-col md:flex-row items-center justify-center gap-3 md:gap-2 flex-wrap">
+          <div class="workflow-step">
+            <div class="workflow-node">Student Enrollment</div>
+            <p class="text-xs text-gray-500 mt-2 max-w-24">Profile & batch assignment</p>
+          </div>
+          <div class="flow-arrow font-bold hidden md:block text-2xl">→</div>
+          <div class="flow-arrow font-bold md:hidden text-2xl">↓</div>
+          <div class="workflow-step">
+            <div class="workflow-node">Digital Flight Log</div>
+            <p class="text-xs text-gray-500 mt-2 max-w-24">Hours, routes & exercise entry</p>
+          </div>
+          <div class="flow-arrow font-bold hidden md:block text-2xl">→</div>
+          <div class="flow-arrow font-bold md:hidden text-2xl">↓</div>
+          <div class="workflow-step">
+            <div class="workflow-node">Instructor Approval</div>
+            <p class="text-xs text-gray-500 mt-2 max-w-24">Structured review & sign-off</p>
+          </div>
+          <div class="flow-arrow font-bold hidden md:block text-2xl">→</div>
+          <div class="flow-arrow font-bold md:hidden text-2xl">↓</div>
+          <div class="workflow-step">
+            <div class="workflow-node">Eligibility Engine</div>
+            <p class="text-xs text-gray-500 mt-2 max-w-24">Automated criteria validation</p>
+          </div>
+          <div class="flow-arrow font-bold hidden md:block text-2xl">→</div>
+          <div class="flow-arrow font-bold md:hidden text-2xl">↓</div>
+          <div class="workflow-step">
+            <div class="workflow-node" style="background-color: #00449E;">Compliance Dashboard</div>
+            <p class="text-xs text-gray-500 mt-2 max-w-24">Audit-ready reporting</p>
+          </div>
+        </div>
+        <div class="mt-8 grid grid-cols-1 md:grid-cols-3 gap-4 pt-6 border-t border-gray-100">
+          <div class="text-center">
+            <p class="font-bold text-[#005CB9] text-sm">Centralized Records</p>
+            <p class="text-xs text-gray-500 mt-1">All student and flight data in one structured system, accessible to authorized stakeholders in real time.</p>
+          </div>
+          <div class="text-center">
+            <p class="font-bold text-[#005CB9] text-sm">Enforced Workflows</p>
+            <p class="text-xs text-gray-500 mt-1">Progressive training stages are gated by system-enforced approvals — no stage can be bypassed.</p>
+          </div>
+          <div class="text-center">
+            <p class="font-bold text-[#005CB9] text-sm">Compliance by Design</p>
+            <p class="text-xs text-gray-500 mt-1">Every action is logged, time-stamped, and audit-ready — regulatory evidence is generated automatically.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CORE MODULES -->
+    <section id="modules" class="mb-16 section-padding">
+      <div class="text-center mb-10">
+        <h2 class="heading-2 font-bold text-[#00449E]">Core Modules</h2>
+        <p class="mt-2 max-w-3xl mx-auto text-content text-gray-500">
+          Each module addresses a specific operational bottleneck in aviation training management. Deployed as a unified platform, they eliminate the fragmentation that creates compliance and operational risk.
+        </p>
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div class="module-card">
+          <div class="text-3xl mb-3">📋</div>
+          <h3 class="font-bold text-[#005CB9] text-base mb-2">Digital Flight Logbook</h3>
+          <p class="text-small text-gray-600">Structured digital entry for flight hours, exercise types, routes, weather conditions, and aircraft details. Replaces paper logbooks with audit-grade records.</p>
+        </div>
+        <div class="module-card">
+          <div class="text-3xl mb-3">👤</div>
+          <h3 class="font-bold text-[#005CB9] text-base mb-2">Student Profile Management</h3>
+          <p class="text-small text-gray-600">Centralised student profiles with full training history, document status, medical validity, batch assignment, and progression timeline at a glance.</p>
+        </div>
+        <div class="module-card">
+          <div class="text-3xl mb-3">✅</div>
+          <h3 class="font-bold text-[#005CB9] text-base mb-2">Instructor Approval Workflow</h3>
+          <p class="text-small text-gray-600">Structured sign-off queue with role-based access. Instructors review flight entries, add remarks, and approve or return for correction — with a complete approval audit trail.</p>
+        </div>
+        <div class="module-card">
+          <div class="text-3xl mb-3">📈</div>
+          <h3 class="font-bold text-[#005CB9] text-base mb-2">Training Progress Tracking</h3>
+          <p class="text-small text-gray-600">Real-time dashboards showing each student's completion percentage against required hours, exercise coverage, and stage milestones. Coordinator visibility at scale.</p>
+        </div>
+        <div class="module-card">
+          <div class="text-3xl mb-3">🔍</div>
+          <h3 class="font-bold text-[#005CB9] text-base mb-2">Eligibility Engine</h3>
+          <p class="text-small text-gray-600">Automated rule-based system that evaluates student records against regulatory and institute-defined criteria before marking a student eligible for tests or stage advancement.</p>
+        </div>
+        <div class="module-card">
+          <div class="text-3xl mb-3">📊</div>
+          <h3 class="font-bold text-[#005CB9] text-base mb-2">Compliance Reporting</h3>
+          <p class="text-small text-gray-600">One-click generation of audit-ready reports covering flight hours, instructor approvals, eligibility decisions, and regulatory submission packages.</p>
+        </div>
+        <div class="module-card">
+          <div class="text-3xl mb-3">☁️</div>
+          <h3 class="font-bold text-[#005CB9] text-base mb-2">Multi-Tenant Cloud Platform</h3>
+          <p class="text-small text-gray-600">Secure, isolated environments for each institute or branch within a shared cloud infrastructure. Centralized administration with institute-specific data boundaries.</p>
+        </div>
+        <div class="module-card">
+          <div class="text-3xl mb-3">🔮</div>
+          <h3 class="font-bold text-[#005CB9] text-base mb-2">Future LMS + Analytics Layer</h3>
+          <p class="text-small text-gray-600">Architected to integrate theoretical training, ground school, and predictive performance analytics as the platform evolves — without requiring a system replacement.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- BUSINESS BENEFITS -->
+    <section id="benefits" class="mb-16 section-padding bg-white rounded-lg shadow-lg">
+      <div class="text-center mb-10">
+        <h2 class="heading-2 font-bold text-[#00449E]">Why Choose This Solution</h2>
+        <p class="mt-2 max-w-3xl mx-auto text-content text-gray-500">
+          The platform delivers measurable operational and compliance outcomes for training management teams, institute administrators, and regulatory stakeholders.
+        </p>
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div class="benefit-card">
+          <div class="text-4xl mb-3">⏱️</div>
+          <h3 class="font-bold text-[#005CB9] text-base mb-2">Reduced Manual Workload</h3>
+          <p class="text-small text-gray-600">Automated data entry validation, eligibility checks, and report generation eliminate hours of manual administrative work per student per training cycle.</p>
+        </div>
+        <div class="benefit-card">
+          <div class="text-4xl mb-3">⚡</div>
+          <h3 class="font-bold text-[#005CB9] text-base mb-2">Faster Approvals</h3>
+          <p class="text-small text-gray-600">Structured instructor queues and mobile-accessible sign-off flows reduce approval turnaround from days to hours, keeping training schedules on track.</p>
+        </div>
+        <div class="benefit-card">
+          <div class="text-4xl mb-3">📁</div>
+          <h3 class="font-bold text-[#005CB9] text-base mb-2">Audit-Ready Operations</h3>
+          <p class="text-small text-gray-600">Every action — data entry, approval, eligibility decision — is time-stamped and immutable. Regulatory audits can be prepared in minutes, not days.</p>
+        </div>
+        <div class="benefit-card">
+          <div class="text-4xl mb-3">🎯</div>
+          <h3 class="font-bold text-[#005CB9] text-base mb-2">Real-Time Readiness Visibility</h3>
+          <p class="text-small text-gray-600">Training coordinators have a live view of each student's readiness status — enabling proactive intervention before delays affect time-to-license timelines.</p>
+        </div>
+        <div class="benefit-card">
+          <div class="text-4xl mb-3">🏛️</div>
+          <h3 class="font-bold text-[#005CB9] text-base mb-2">Operational Accountability</h3>
+          <p class="text-small text-gray-600">Role-based access, structured workflows, and complete audit trails establish clear institutional accountability across instructors, coordinators, and management.</p>
+        </div>
+        <div class="benefit-card">
+          <div class="text-4xl mb-3">🌐</div>
+          <h3 class="font-bold text-[#005CB9] text-base mb-2">Scalable Multi-Branch Support</h3>
+          <p class="text-small text-gray-600">Designed for organisations operating multiple training locations. Consolidated reporting across branches with institute-specific operational boundaries.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- FUTURE-READY PLATFORM -->
+    <section id="future" class="mb-16 section-padding">
+      <div class="bg-white rounded-lg shadow-lg section-padding">
+        <div class="text-center mb-10">
+          <h2 class="heading-2 font-bold text-[#00449E]">Built for Analytics + AI Expansion</h2>
+          <p class="mt-2 max-w-3xl mx-auto text-content text-gray-500">
+            The current platform establishes the structured data foundation required for advanced analytics and AI-assisted operations. This is not a current product feature — it is a strategic roadmap that the architecture supports from day one.
+          </p>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div>
+            <h3 class="font-bold text-[#005CB9] text-base mb-4">Expansion Capabilities</h3>
+            <div class="space-y-4">
+              <div class="flex items-start gap-3">
+                <div class="w-8 h-8 min-w-8 bg-[#85BDE9] rounded flex items-center justify-center text-white text-sm font-bold">1</div>
+                <div>
+                  <p class="font-semibold text-gray-800 text-sm">Analytics Dashboard</p>
+                  <p class="text-xs text-gray-500 mt-1">Cohort-level performance metrics, instructor effectiveness reports, and training throughput analysis across branches and time periods.</p>
+                </div>
+              </div>
+              <div class="flex items-start gap-3">
+                <div class="w-8 h-8 min-w-8 bg-[#4195D7] rounded flex items-center justify-center text-white text-sm font-bold">2</div>
+                <div>
+                  <p class="font-semibold text-gray-800 text-sm">Student Readiness Prediction</p>
+                  <p class="text-xs text-gray-500 mt-1">Machine-learning models trained on historical training data to predict which students are at risk of falling behind eligibility requirements — before delays occur.</p>
+                </div>
+              </div>
+              <div class="flex items-start gap-3">
+                <div class="w-8 h-8 min-w-8 bg-[#0076D4] rounded flex items-center justify-center text-white text-sm font-bold">3</div>
+                <div>
+                  <p class="font-semibold text-gray-800 text-sm">Instructor Intelligence</p>
+                  <p class="text-xs text-gray-500 mt-1">Structured insights on instructor workload, approval patterns, and student outcome correlation — supporting resource planning and performance review.</p>
+                </div>
+              </div>
+              <div class="flex items-start gap-3">
+                <div class="w-8 h-8 min-w-8 bg-[#005CB9] rounded flex items-center justify-center text-white text-sm font-bold">4</div>
+                <div>
+                  <p class="font-semibold text-gray-800 text-sm">LMS Integration</p>
+                  <p class="text-xs text-gray-500 mt-1">Ground school, theory modules, and regulated examination preparation delivered within the same platform — connecting theoretical and practical training data.</p>
+                </div>
+              </div>
+              <div class="flex items-start gap-3">
+                <div class="w-8 h-8 min-w-8 bg-[#00449E] rounded flex items-center justify-center text-white text-sm font-bold">5</div>
+                <div>
+                  <p class="font-semibold text-gray-800 text-sm">AI Copilots</p>
+                  <p class="text-xs text-gray-500 mt-1">Context-aware assistants for instructors and trainees that surface relevant guidance, flag anomalies, and accelerate administrative decisions without replacing human judgment.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="bg-[#f8fafc] rounded-lg p-6 flex flex-col justify-center">
+            <h3 class="font-bold text-[#005CB9] text-base mb-4 text-center">Platform Evolution Roadmap</h3>
+            <div class="space-y-3 text-center text-sm font-semibold">
+              <div class="bg-white border-l-4 border-[#85BDE9] p-3 rounded shadow-sm text-left">
+                <p class="text-[#005CB9]">Phase 1 — Now</p>
+                <p class="text-xs text-gray-500 font-normal mt-1">Digital logbooks, approval workflows, compliance reporting, multi-tenant deployment</p>
+              </div>
+              <div class="text-[#85BDE9] text-xl">↓</div>
+              <div class="bg-white border-l-4 border-[#4195D7] p-3 rounded shadow-sm text-left">
+                <p class="text-[#005CB9]">Phase 2 — Analytics</p>
+                <p class="text-xs text-gray-500 font-normal mt-1">Cohort dashboards, trend analysis, instructor workload reporting, branch comparison</p>
+              </div>
+              <div class="text-[#4195D7] text-xl">↓</div>
+              <div class="bg-white border-l-4 border-[#0076D4] p-3 rounded shadow-sm text-left">
+                <p class="text-[#005CB9]">Phase 3 — AI + LMS</p>
+                <p class="text-xs text-gray-500 font-normal mt-1">Predictive readiness engine, ground school integration, AI-assisted operations</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- DEPLOYMENT MODEL -->
+    <section id="deployment" class="mb-16 section-padding bg-white rounded-lg shadow-lg">
+      <div class="text-center mb-10">
+        <h2 class="heading-2 font-bold text-[#00449E]">Secure Multi-Tenant Cloud SaaS</h2>
+        <p class="mt-2 max-w-3xl mx-auto text-content text-gray-500">
+          The platform is deployed as a managed cloud SaaS, removing the infrastructure burden from your organisation while providing the security, reliability, and scalability that enterprise aviation operations require.
+        </p>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div class="space-y-4">
+          <div class="deploy-item">
+            <div class="deploy-icon">🔒</div>
+            <div>
+              <p class="font-semibold text-gray-800 text-sm">Secure Tenant Isolation</p>
+              <p class="text-xs text-gray-500 mt-1">Each institute operates within a logically isolated tenant environment. Data from one organisation is never accessible to another — enforced at the infrastructure level.</p>
+            </div>
+          </div>
+          <div class="deploy-item">
+            <div class="deploy-icon">🏗️</div>
+            <div>
+              <p class="font-semibold text-gray-800 text-sm">Centralized Deployment</p>
+              <p class="text-xs text-gray-500 mt-1">A single platform instance serves all tenants. Updates, security patches, and new features are deployed centrally — no per-institute maintenance required.</p>
+            </div>
+          </div>
+          <div class="deploy-item">
+            <div class="deploy-icon">⚙️</div>
+            <div>
+              <p class="font-semibold text-gray-800 text-sm">Institute-Specific Configuration</p>
+              <p class="text-xs text-gray-500 mt-1">Regulatory frameworks, eligibility criteria, approval chains, and reporting formats are configurable per institute — accommodating different authority requirements.</p>
+            </div>
+          </div>
+        </div>
+        <div class="space-y-4">
+          <div class="deploy-item">
+            <div class="deploy-icon">📡</div>
+            <div>
+              <p class="font-semibold text-gray-800 text-sm">Scalable Cloud Architecture</p>
+              <p class="text-xs text-gray-500 mt-1">The platform scales with your training operations. Whether managing 50 students or 5,000 across multiple locations, infrastructure capacity adjusts without service disruption.</p>
+            </div>
+          </div>
+          <div class="deploy-item">
+            <div class="deploy-icon">📋</div>
+            <div>
+              <p class="font-semibold text-gray-800 text-sm">Audit-Ready Infrastructure</p>
+              <p class="text-xs text-gray-500 mt-1">Infrastructure-level logging, access controls, and change management practices that support regulatory inspections and institutional governance requirements.</p>
+            </div>
+          </div>
+          <div class="deploy-item">
+            <div class="deploy-icon">🌐</div>
+            <div>
+              <p class="font-semibold text-gray-800 text-sm">Multi-Branch Access</p>
+              <p class="text-xs text-gray-500 mt-1">Branch administrators, instructors, and students access the platform through role-based permissions. Consolidated HQ reporting with branch-level operational independence.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FINAL CTA BAND -->
+  <section class="cta-band py-16 px-4">
+    <div class="max-w-3xl mx-auto text-center">
+      <h2 class="text-3xl sm:text-4xl font-extrabold text-white mb-4">Let's Evaluate Your Current Training Workflow</h2>
+      <p class="text-lg text-blue-200 mb-8 max-w-2xl mx-auto">
+        Schedule a consultation to identify operational bottlenecks, assess compliance gaps, and design a structured aviation training system that meets regulatory requirements and scales with your organization.
+      </p>
+      <a href="mailto:solutions@countrysnews.com?subject=Aviation Training Management - Consultation Request" class="inline-block bg-white text-[#00449E] font-bold px-10 py-4 rounded hover:bg-blue-50 transition-colors duration-200 text-base">
+        Schedule Consultation
+      </a>
+      <p class="mt-4 text-blue-300 text-sm">No commitment required. Enterprise consultation for flight schools, academies, and pilot training institutes.</p>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="bg-[#071226] text-white">
+    <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8 text-center text-sm">
+      <p>&copy; 2026 Countrysnews Solutions. All Rights Reserved.</p>
+      <p class="mt-1 opacity-60">Aviation Training Management Solution — Enterprise platform for flight schools, aviation academies, and pilot training institutes.</p>
+    </div>
+  </footer>
+
+  <script>
+    // Mobile Navigation
+    const mobileMenuButton = document.getElementById('mobile-menu-button');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const mobileMenuIconOpen = document.getElementById('mobile-menu-icon-open');
+    const mobileMenuIconClose = document.getElementById('mobile-menu-icon-close');
+
+    if (mobileMenuButton) {
+      mobileMenuButton.addEventListener('click', () => {
+        const isHidden = mobileMenu.classList.contains('hidden');
+        if (isHidden) {
+          mobileMenu.classList.remove('hidden');
+          if (mobileMenuIconOpen) mobileMenuIconOpen.classList.add('hidden');
+          if (mobileMenuIconClose) mobileMenuIconClose.classList.remove('hidden');
+        } else {
+          mobileMenu.classList.add('hidden');
+          if (mobileMenuIconOpen) mobileMenuIconOpen.classList.remove('hidden');
+          if (mobileMenuIconClose) mobileMenuIconClose.classList.add('hidden');
+        }
+      });
+
+      document.addEventListener('click', (e) => {
+        if (!mobileMenuButton.contains(e.target) && mobileMenu && !mobileMenu.contains(e.target)) {
+          mobileMenu.classList.add('hidden');
+          if (mobileMenuIconOpen) mobileMenuIconOpen.classList.remove('hidden');
+          if (mobileMenuIconClose) mobileMenuIconClose.classList.add('hidden');
+        }
+      });
+    }
+  </script>
+
+</body>
+</html>

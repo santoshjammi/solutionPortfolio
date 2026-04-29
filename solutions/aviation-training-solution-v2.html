@@ -1,0 +1,893 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aviation Training Management Solution | Enterprise Digital Platform for Flight Schools</title>
+  <meta name="description" content="Digitize flight training operations, instructor approvals, student readiness tracking, and compliance workflows with a structured aviation training management platform for flight schools and aviation academies.">
+  <meta name="keywords" content="aviation training management, flight school software, pilot training platform, instructor approval workflow, digital flight logbook, aviation compliance, student readiness tracking">
+  <meta name="author" content="Countrysnews Solutions">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://solutions.countrysnews.com/aviation-training-solution.html">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://solutions.countrysnews.com/aviation-training-solution.html">
+  <meta property="og:title" content="Aviation Training Management Solution | Enterprise Digital Platform for Flight Schools">
+  <meta property="og:description" content="Digitize flight training operations, instructor approvals, student readiness tracking, and compliance workflows with a structured aviation training management platform.">
+  <meta property="og:site_name" content="Countrysnews Solutions">
+  <meta property="twitter:card" content="summary_large_image">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "Aviation Training Management Solution",
+    "description": "Enterprise platform for digitizing flight training operations, instructor approvals, student readiness tracking, and compliance workflows.",
+    "applicationCategory": "BusinessApplication",
+    "operatingSystem": "Cloud SaaS",
+    "publisher": { "@type": "Organization", "name": "Countrysnews Solutions", "url": "https://solutions.countrysnews.com" }
+  }
+  </script>
+
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>✈️</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="standardized-styles.css">
+
+  <style>
+    /* ── Meta Design System Variables ── */
+    :root {
+      --meta-blue: #0064E0;
+      --meta-blue-hover: #0143B5;
+      --dark-charcoal: #1C2B33;
+      --slate-gray: #5D6C7B;
+      --soft-gray: #F1F4F7;
+      --near-black: #1C1E21;
+      --divider-gray: #DEE3E9;
+      --white: #FFFFFF;
+      --font: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--font);
+      background: var(--white);
+      color: var(--dark-charcoal);
+      overflow-x: hidden;
+    }
+
+    /* ── Typography ── */
+    .display-1  { font-size: clamp(36px, 5vw, 64px); font-weight: 500; line-height: 1.16; color: var(--white); }
+    .display-2  { font-size: clamp(28px, 4vw, 48px); font-weight: 500; line-height: 1.17; color: var(--dark-charcoal); }
+    .heading-1  { font-size: clamp(22px, 3vw, 36px); font-weight: 500; line-height: 1.28; color: var(--dark-charcoal); }
+    .heading-2  { font-size: clamp(18px, 2.4vw, 28px); font-weight: 300; line-height: 1.21; color: var(--dark-charcoal); }
+    .heading-3  { font-size: 18px; font-weight: 700; line-height: 1.44; color: var(--dark-charcoal); }
+    .body-text  { font-size: 18px; font-weight: 400; line-height: 1.44; color: var(--slate-gray); }
+    .body-sm    { font-size: 16px; font-weight: 500; line-height: 1.50; letter-spacing: -0.16px; color: var(--slate-gray); }
+    .caption    { font-size: 14px; font-weight: 400; line-height: 1.43; letter-spacing: -0.14px; color: var(--slate-gray); }
+    .label-bold { font-size: 14px; font-weight: 700; line-height: 1.43; }
+    .overline   { font-size: 13px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--meta-blue); }
+
+    /* ── Pill Buttons ── */
+    .btn-primary {
+      display: inline-flex; align-items: center; justify-content: center;
+      background: var(--meta-blue);
+      color: var(--white);
+      border: none;
+      border-radius: 100px;
+      padding: 12px 28px;
+      font-family: var(--font);
+      font-size: 14px; font-weight: 400; letter-spacing: -0.14px;
+      text-decoration: none;
+      cursor: pointer;
+      transition: background 200ms ease, transform 150ms ease;
+      min-height: 44px;
+    }
+    .btn-primary:hover { background: var(--meta-blue-hover); transform: scale(1.02); }
+
+    .btn-secondary {
+      display: inline-flex; align-items: center; justify-content: center;
+      background: transparent;
+      color: var(--dark-charcoal);
+      border: 2px solid rgba(10, 19, 23, 0.18);
+      border-radius: 100px;
+      padding: 12px 28px;
+      font-family: var(--font);
+      font-size: 14px; font-weight: 400; letter-spacing: -0.14px;
+      text-decoration: none;
+      cursor: pointer;
+      transition: background 200ms ease, color 200ms ease;
+      min-height: 44px;
+    }
+    .btn-secondary:hover { background: rgba(70, 90, 105, 0.09); }
+
+    .btn-ghost-white {
+      display: inline-flex; align-items: center; justify-content: center;
+      background: rgba(255,255,255,0.12);
+      color: var(--white);
+      border: 2px solid rgba(255,255,255,0.45);
+      border-radius: 100px;
+      padding: 12px 28px;
+      font-family: var(--font);
+      font-size: 14px; font-weight: 400; letter-spacing: -0.14px;
+      text-decoration: none;
+      cursor: pointer;
+      transition: background 200ms ease;
+      min-height: 44px;
+      backdrop-filter: blur(6px);
+    }
+    .btn-ghost-white:hover { background: rgba(255,255,255,0.22); }
+
+    /* ── Containers ── */
+    .container { max-width: 1280px; margin: 0 auto; padding: 0 40px; }
+    @media (max-width: 768px) { .container { padding: 0 24px; } }
+
+    /* ── Cards ── */
+    .card {
+      background: var(--white);
+      border-radius: 20px;
+      box-shadow: 0 2px 4px 0 rgba(0,0,0,0.1);
+      padding: 32px;
+      transition: transform 300ms ease, box-shadow 300ms ease;
+    }
+    .card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 28px 0 rgba(0,0,0,0.2), 0 2px 4px 0 rgba(0,0,0,0.1);
+    }
+    .card-dark {
+      background: #1C1E21;
+      border-radius: 20px;
+      padding: 32px;
+    }
+
+    /* ── Section spacing ── */
+    .section-light  { background: var(--white);    padding: 80px 0; }
+    .section-gray   { background: var(--soft-gray); padding: 80px 0; }
+    .section-dark   { background: var(--near-black); padding: 80px 0; }
+    @media (max-width: 1024px) { .section-light, .section-gray, .section-dark { padding: 64px 0; } }
+    @media (max-width: 768px)  { .section-light, .section-gray, .section-dark { padding: 48px 0; } }
+
+    /* ── Section images ── */
+    .section-img {
+      width: 100%;
+      height: 280px;
+      object-fit: cover;
+      border-radius: 20px;
+      display: block;
+      margin-bottom: 48px;
+    }
+    @media (max-width: 768px) { .section-img { height: 180px; margin-bottom: 32px; } }
+
+    /* ── Divider ── */
+    .divider { border: none; border-top: 1px solid var(--divider-gray); margin: 0; }
+
+    /* ── Hero Parallax ── */
+    /*
+      The hero scene is position:fixed so it sits behind the page
+      at z-index 0. Body padding-top pushes content below the fold.
+      As the user scrolls, <main> (z-index 10, white bg) slides over
+      the pinned dark scene — the Apple / Meta reveal effect.
+    */
+    body { padding-top: 100vh; }
+
+    #hero-scene {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100vh;
+      z-index: 0;
+      overflow: hidden;
+      background: #071226;
+    }
+
+    .parallax-layer {
+      position: absolute;
+      inset: 0;
+      background-size: cover;
+      background-position: center center;
+      will-change: transform;
+    }
+    .bg-layer   { background-image: url('/images/aviation/heroParallax/background.jpg'); z-index: 1; transform: scale(1.15); }
+    .mid-layer  { background-image: url('/images/aviation/heroParallax/midground.jpg');  z-index: 2; mix-blend-mode: screen; opacity: 0.8; }
+    .front-layer{ background-image: url('/images/aviation/heroParallax/foreground.jpg'); z-index: 3; mix-blend-mode: screen; opacity: 0.6; }
+
+    /* Gradient scrim at bottom of hero so content reveal edge is smooth */
+    #hero-scene::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 35%;
+      background: linear-gradient(to bottom, transparent, #071226);
+      z-index: 5;
+      pointer-events: none;
+    }
+
+    .ui-overlay {
+      position: absolute;
+      bottom: 8%; right: 6%;
+      width: min(30%, 380px);
+      aspect-ratio: 16 / 10;
+      background-image: url('/images/aviation/transparentOverlay/ui.jpg');
+      background-size: cover; background-position: center;
+      mix-blend-mode: screen;
+      opacity: 0.7;
+      z-index: 4;
+      pointer-events: none;
+    }
+
+    /* Hero caption — sits over the fixed scene, scrolls naturally */
+    #hero-caption {
+      position: fixed;
+      bottom: 0; left: 0; right: 0;
+      z-index: 2;
+      pointer-events: none;
+      padding-bottom: 56px;
+      text-align: center;
+    }
+    #hero-caption .inner {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+    #hero-caption.hide { opacity: 0; }
+
+    /* ── Main content panel ── */
+    main {
+      position: relative;
+      z-index: 10;
+      background: var(--white);
+      border-radius: 24px 24px 0 0;
+      box-shadow: 0 -12px 56px rgba(0,0,0,0.28);
+      overflow: hidden;
+    }
+
+    /* ── Mobile Nav ── */
+    .mobile-nav-overlay {
+      position: fixed; inset: 0;
+      background: rgba(0,0,0,0.7);
+      z-index: 50; display: none;
+    }
+    .mobile-nav-menu {
+      position: fixed; top: 0; left: 0;
+      width: 75%; max-width: 300px; height: 100%;
+      background: white; z-index: 60;
+      transform: translateX(-100%);
+      transition: transform 0.3s ease;
+      box-shadow: 2px 0 5px rgba(0,0,0,0.2);
+      padding: 1.5rem 1rem; overflow-y: auto;
+    }
+    .mobile-nav-menu.is-open { transform: translateX(0); }
+
+    /* ── Workflow Flow ── */
+    .workflow-node {
+      background: var(--meta-blue);
+      color: white;
+      border-radius: 12px;
+      padding: 12px 16px;
+      font-weight: 600; font-size: 14px;
+      min-width: 130px; text-align: center;
+    }
+    .workflow-node.final { background: var(--near-black); }
+    .flow-arrow { color: var(--meta-blue); font-size: 1.5rem; line-height: 1; }
+
+    /* ── Challenge items ── */
+    .challenge-item {
+      border-left: 3px solid var(--meta-blue);
+      padding: 16px 0 16px 20px;
+    }
+
+    /* ── Module cards ── */
+    .module-card {
+      background: var(--white);
+      border-radius: 20px;
+      border-top: 3px solid var(--meta-blue);
+      box-shadow: 0 2px 4px 0 rgba(0,0,0,0.1);
+      padding: 28px;
+      transition: transform 300ms ease, box-shadow 300ms ease;
+    }
+    .module-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 28px 0 rgba(0,0,0,0.16), 0 2px 4px 0 rgba(0,0,0,0.1);
+    }
+    .module-card-dark {
+      background: #272A2E;
+      border-radius: 20px;
+      border-top: 3px solid #47A5FA;
+      padding: 28px;
+    }
+
+    /* ── Benefit cards ── */
+    .benefit-card {
+      background: var(--white);
+      border-radius: 20px;
+      box-shadow: 0 2px 4px 0 rgba(0,0,0,0.1);
+      padding: 28px;
+      text-align: center;
+      transition: transform 300ms ease, box-shadow 300ms ease;
+    }
+    .benefit-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 28px 0 rgba(0,0,0,0.16), 0 2px 4px 0 rgba(0,0,0,0.1);
+    }
+
+    /* ── Deploy items ── */
+    .deploy-item {
+      display: flex; align-items: flex-start; gap: 16px;
+      padding: 20px;
+      background: #272A2E;
+      border-radius: 16px;
+    }
+    .deploy-icon {
+      width: 44px; height: 44px; min-width: 44px;
+      background: var(--meta-blue);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 18px;
+    }
+
+    /* ── Grid ── */
+    .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+    .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
+    .grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
+    @media (max-width: 1024px) {
+      .grid-4 { grid-template-columns: repeat(2, 1fr); }
+      .grid-3 { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 768px) {
+      .grid-4, .grid-3, .grid-2 { grid-template-columns: 1fr; }
+    }
+
+    /* ── Audience tiles ── */
+    .audience-tile {
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.14);
+      border-radius: 16px;
+      padding: 20px;
+      text-align: center;
+      backdrop-filter: blur(4px);
+    }
+
+    /* ── Phase roadmap ── */
+    .phase-item {
+      background: rgba(255,255,255,0.06);
+      border-left: 3px solid #47A5FA;
+      border-radius: 0 12px 12px 0;
+      padding: 16px 20px;
+    }
+
+    /* ── Expansion step ── */
+    .expan-step {
+      display: flex; align-items: flex-start; gap: 16px;
+      padding: 16px;
+      background: #272A2E;
+      border-radius: 14px;
+    }
+    .expan-num {
+      width: 36px; height: 36px; min-width: 36px;
+      background: var(--meta-blue);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 14px; font-weight: 700; color: white;
+    }
+
+    /* ── CTA Band ── */
+    .cta-band { background: #1C1E21; padding: 80px 0; }
+  </style>
+</head>
+
+<body>
+
+  <!-- ══════════════════════════════════════════
+       FIXED PARALLAX HERO SCENE
+       Sits at z-index 0 behind everything.
+       body { padding-top: 100vh } creates the
+       scroll space so it's seen on first load.
+  ══════════════════════════════════════════ -->
+  <div id="hero-scene">
+    <div class="parallax-layer bg-layer"></div>
+    <div class="parallax-layer mid-layer"></div>
+    <div class="parallax-layer front-layer"></div>
+    <div class="ui-overlay"></div>
+  </div>
+
+  <!-- Hero caption scrolls away with the page naturally -->
+  <div id="hero-caption">
+    <div class="inner">
+      <p class="overline" style="color: #85C8F5; margin-bottom: 16px;">Enterprise Aviation Solutions</p>
+      <h1 class="display-1" style="margin-bottom: 24px;">Aviation Training<br>Management Solution</h1>
+      <p style="font-size: 18px; color: rgba(255,255,255,0.75); max-width: 600px; margin: 0 auto 36px; line-height: 1.6;">
+        Digitize flight training operations, instructor approvals, student readiness tracking, and compliance workflows.
+      </p>
+      <div style="display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; pointer-events: all;">
+        <a href="#contact-cta" class="btn-primary">Request Consultation</a>
+        <a href="#solution-section" class="btn-ghost-white">See How It Works</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mobile nav (injected by navbar.js) -->
+  <div id="navbar-container"></div>
+  <script src="navbar.js"></script>
+  <div id="mobile-nav-overlay" class="mobile-nav-overlay"></div>
+  <div id="mobile-nav-menu" class="mobile-nav-menu">
+    <div style="display:flex; flex-direction:column; gap:4px;">
+      <a href="#challenges" style="color:#1C2B33; display:block; padding:10px 12px; border-radius:8px; font-size:15px; font-weight:500; text-decoration:none;">Challenges</a>
+      <a href="#solution-section" style="color:#1C2B33; display:block; padding:10px 12px; border-radius:8px; font-size:15px; font-weight:500; text-decoration:none;">Solution</a>
+      <a href="#modules" style="color:#1C2B33; display:block; padding:10px 12px; border-radius:8px; font-size:15px; font-weight:500; text-decoration:none;">Modules</a>
+      <a href="#benefits" style="color:#1C2B33; display:block; padding:10px 12px; border-radius:8px; font-size:15px; font-weight:500; text-decoration:none;">Benefits</a>
+      <a href="#future" style="color:#1C2B33; display:block; padding:10px 12px; border-radius:8px; font-size:15px; font-weight:500; text-decoration:none;">Future Platform</a>
+      <a href="#deployment" style="color:#1C2B33; display:block; padding:10px 12px; border-radius:8px; font-size:15px; font-weight:500; text-decoration:none;">Deployment</a>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════
+       MAIN CONTENT
+       z-index: 10 + white bg = slides over hero
+       border-radius top = rounded reveal edge
+  ══════════════════════════════════════════ -->
+  <main>
+
+    <!-- Hero intro text below fold -->
+    <section class="section-light">
+      <div class="container" style="text-align: center;">
+        <p class="overline" style="margin-bottom: 16px;">Enterprise Aviation Solutions</p>
+        <h2 class="display-2" style="max-width: 760px; margin: 0 auto 20px;">Aviation Training Management Solution</h2>
+        <p class="body-text" style="max-width: 640px; margin: 0 auto 40px;">
+          Digitize flight training operations, instructor approvals, student readiness tracking, and compliance workflows with a structured aviation training platform built for flight schools, academies, and multi-branch pilot training organizations.
+        </p>
+        <div style="display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; margin-bottom: 56px;">
+          <a href="#contact-cta" class="btn-primary">Request Consultation</a>
+          <a href="#solution-section" class="btn-secondary">See How It Works</a>
+        </div>
+
+        <!-- Audience tiles -->
+        <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; max-width: 960px; margin: 0 auto;">
+          <div class="card" style="text-align:center; padding: 24px 16px;">
+            <div style="font-size: 32px; margin-bottom: 12px;">✈️</div>
+            <p class="label-bold" style="color: var(--dark-charcoal);">Flight Schools</p>
+          </div>
+          <div class="card" style="text-align:center; padding: 24px 16px;">
+            <div style="font-size: 32px; margin-bottom: 12px;">🎓</div>
+            <p class="label-bold" style="color: var(--dark-charcoal);">Aviation Academies</p>
+          </div>
+          <div class="card" style="text-align:center; padding: 24px 16px;">
+            <div style="font-size: 32px; margin-bottom: 12px;">🧑‍✈️</div>
+            <p class="label-bold" style="color: var(--dark-charcoal);">Pilot Training Institutes</p>
+          </div>
+          <div class="card" style="text-align:center; padding: 24px 16px;">
+            <div style="font-size: 32px; margin-bottom: 12px;">🏢</div>
+            <p class="label-bold" style="color: var(--dark-charcoal);">Multi-Branch Organizations</p>
+          </div>
+        </div>
+        <style>@media (max-width: 768px) { .audience-grid { grid-template-columns: repeat(2,1fr) !important; } }</style>
+      </div>
+    </section>
+
+    <hr class="divider">
+
+    <!-- ── CHALLENGES (dark section) ── -->
+    <section id="challenges" class="section-dark">
+      <div class="container">
+        <img src="/images/aviation/sectionImages/challenges.jpg" alt="Challenges aviation institutes face" class="section-img" loading="lazy">
+        <div style="text-align: center; margin-bottom: 56px;">
+          <p class="overline" style="color: #47A5FA; margin-bottom: 16px;">The Problem</p>
+          <h2 class="display-2" style="color: white; max-width: 700px; margin: 0 auto 16px;">Challenges Aviation Institutes Face</h2>
+          <p class="body-text" style="color: rgba(255,255,255,0.6); max-width: 620px; margin: 0 auto;">
+            As training volumes grow, manual processes create compounding operational risk. Regulatory scrutiny intensifies. Audit exposure widens.
+          </p>
+        </div>
+        <div class="grid-3" style="gap: 20px;">
+          <div class="challenge-item" style="border-left-color: #47A5FA; padding: 16px 0 16px 20px;">
+            <p class="heading-3" style="color: white; margin-bottom: 8px;">Manual Logbook Management</p>
+            <p class="caption" style="color: rgba(255,255,255,0.6);">Paper-based and spreadsheet-driven flight logs create data integrity issues, missing entries, and no real-time visibility into student training hours.</p>
+          </div>
+          <div class="challenge-item" style="border-left-color: #47A5FA; padding: 16px 0 16px 20px;">
+            <p class="heading-3" style="color: white; margin-bottom: 8px;">Delayed Instructor Approvals</p>
+            <p class="caption" style="color: rgba(255,255,255,0.6);">Approval bottlenecks stall student progression. Without a structured workflow, sign-offs are delayed, lost in email, or applied inconsistently.</p>
+          </div>
+          <div class="challenge-item" style="border-left-color: #47A5FA; padding: 16px 0 16px 20px;">
+            <p class="heading-3" style="color: white; margin-bottom: 8px;">Poor Student Readiness Visibility</p>
+            <p class="caption" style="color: rgba(255,255,255,0.6);">Training coordinators lack a consolidated view to determine whether individual students meet eligibility thresholds before scheduling tests.</p>
+          </div>
+          <div class="challenge-item" style="border-left-color: #47A5FA; padding: 16px 0 16px 20px;">
+            <p class="heading-3" style="color: white; margin-bottom: 8px;">Audit Complexity</p>
+            <p class="caption" style="color: rgba(255,255,255,0.6);">Regulatory audits require comprehensive, time-stamped documentation. Manual record systems cannot produce audit-ready compliance reports quickly or reliably.</p>
+          </div>
+          <div class="challenge-item" style="border-left-color: #47A5FA; padding: 16px 0 16px 20px;">
+            <p class="heading-3" style="color: white; margin-bottom: 8px;">Compliance Risk</p>
+            <p class="caption" style="color: rgba(255,255,255,0.6);">DGCA, FAA, EASA, and equivalent authority requirements demand strict procedural adherence. Gaps in documentation expose institutes to regulatory penalties.</p>
+          </div>
+          <div class="challenge-item" style="border-left-color: #47A5FA; padding: 16px 0 16px 20px;">
+            <p class="heading-3" style="color: white; margin-bottom: 8px;">Fragmented Operations</p>
+            <p class="caption" style="color: rgba(255,255,255,0.6);">Disconnected systems for student data, flight scheduling, instructor assignment, and reporting prevent management from having a unified operational picture.</p>
+          </div>
+          <div class="challenge-item" style="border-left-color: #47A5FA; padding: 16px 0 16px 20px;">
+            <p class="heading-3" style="color: white; margin-bottom: 8px;">Instructor Dependency</p>
+            <p class="caption" style="color: rgba(255,255,255,0.6);">Critical knowledge, approvals, and student assessments remain locked to individual instructors rather than being captured in a structured, transferable platform.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── SOLUTION (light section) ── -->
+    <section id="solution-section" class="section-light">
+      <div class="container">
+        <img src="/images/aviation/sectionImages/solution.jpg" alt="Aviation training solution overview" class="section-img" loading="lazy">
+        <div style="text-align: center; margin-bottom: 56px;">
+          <p class="overline" style="margin-bottom: 16px;">The Platform</p>
+          <h2 class="display-2" style="max-width: 700px; margin: 0 auto 16px;">Our Solution</h2>
+          <p class="body-text" style="max-width: 620px; margin: 0 auto;">
+            A structured, workflow-driven platform that enforces operational discipline at every stage of pilot training — from first enrollment through final eligibility clearance and compliance sign-off.
+          </p>
+        </div>
+
+        <!-- Workflow -->
+        <div class="card" style="margin-bottom: 0;">
+          <p class="heading-3" style="text-align: center; margin-bottom: 36px; color: var(--dark-charcoal);">End-to-End Training Workflow</p>
+          <div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 12px;">
+            <div style="display:flex; flex-direction:column; align-items:center; gap:8px;">
+              <div class="workflow-node">Student Enrollment</div>
+              <p class="caption" style="text-align:center; max-width:110px;">Profile &amp; batch assignment</p>
+            </div>
+            <span class="flow-arrow" style="font-size:1.75rem;">→</span>
+            <div style="display:flex; flex-direction:column; align-items:center; gap:8px;">
+              <div class="workflow-node">Digital Flight Log</div>
+              <p class="caption" style="text-align:center; max-width:110px;">Hours, routes &amp; exercises</p>
+            </div>
+            <span class="flow-arrow" style="font-size:1.75rem;">→</span>
+            <div style="display:flex; flex-direction:column; align-items:center; gap:8px;">
+              <div class="workflow-node">Instructor Approval</div>
+              <p class="caption" style="text-align:center; max-width:110px;">Structured review &amp; sign-off</p>
+            </div>
+            <span class="flow-arrow" style="font-size:1.75rem;">→</span>
+            <div style="display:flex; flex-direction:column; align-items:center; gap:8px;">
+              <div class="workflow-node">Eligibility Engine</div>
+              <p class="caption" style="text-align:center; max-width:110px;">Automated criteria check</p>
+            </div>
+            <span class="flow-arrow" style="font-size:1.75rem;">→</span>
+            <div style="display:flex; flex-direction:column; align-items:center; gap:8px;">
+              <div class="workflow-node final">Compliance Dashboard</div>
+              <p class="caption" style="text-align:center; max-width:110px;">Audit-ready reporting</p>
+            </div>
+          </div>
+          <hr style="border:none; border-top: 1px solid var(--divider-gray); margin: 36px 0 28px;">
+          <div style="display:grid; grid-template-columns: repeat(3,1fr); gap: 24px; text-align:center;">
+            <div>
+              <p class="label-bold" style="color: var(--meta-blue); margin-bottom: 6px;">Centralized Records</p>
+              <p class="caption">All student and flight data in one structured system, accessible to authorized stakeholders in real time.</p>
+            </div>
+            <div>
+              <p class="label-bold" style="color: var(--meta-blue); margin-bottom: 6px;">Enforced Workflows</p>
+              <p class="caption">Progressive training stages are gated by system-enforced approvals — no stage can be bypassed.</p>
+            </div>
+            <div>
+              <p class="label-bold" style="color: var(--meta-blue); margin-bottom: 6px;">Compliance by Design</p>
+              <p class="caption">Every action is logged, time-stamped, and audit-ready — regulatory evidence is generated automatically.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── MODULES (gray section) ── -->
+    <section id="modules" class="section-gray">
+      <div class="container">
+        <img src="/images/aviation/sectionImages/modules.jpg" alt="Aviation training core modules" class="section-img" loading="lazy">
+        <div style="text-align: center; margin-bottom: 56px;">
+          <p class="overline" style="margin-bottom: 16px;">What's Inside</p>
+          <h2 class="display-2" style="max-width: 700px; margin: 0 auto 16px;">Core Modules</h2>
+          <p class="body-text" style="max-width: 620px; margin: 0 auto;">
+            Each module addresses a specific operational bottleneck. Deployed as a unified platform, they eliminate the fragmentation that creates compliance and operational risk.
+          </p>
+        </div>
+        <div class="grid-4">
+          <div class="module-card">
+            <div style="font-size: 28px; margin-bottom: 16px;">📋</div>
+            <p class="heading-3" style="margin-bottom: 10px;">Digital Flight Logbook</p>
+            <p class="caption">Structured digital entry for flight hours, exercise types, routes, weather conditions, and aircraft details. Replaces paper logbooks with audit-grade records.</p>
+          </div>
+          <div class="module-card">
+            <div style="font-size: 28px; margin-bottom: 16px;">👤</div>
+            <p class="heading-3" style="margin-bottom: 10px;">Student Profile Management</p>
+            <p class="caption">Centralised student profiles with full training history, document status, medical validity, batch assignment, and progression timeline at a glance.</p>
+          </div>
+          <div class="module-card">
+            <div style="font-size: 28px; margin-bottom: 16px;">✅</div>
+            <p class="heading-3" style="margin-bottom: 10px;">Instructor Approval Workflow</p>
+            <p class="caption">Structured sign-off queue with role-based access. Instructors review flight entries, add remarks, and approve or return — with a complete audit trail.</p>
+          </div>
+          <div class="module-card">
+            <div style="font-size: 28px; margin-bottom: 16px;">📈</div>
+            <p class="heading-3" style="margin-bottom: 10px;">Training Progress Tracking</p>
+            <p class="caption">Real-time dashboards showing each student's completion percentage against required hours, exercise coverage, and stage milestones.</p>
+          </div>
+          <div class="module-card">
+            <div style="font-size: 28px; margin-bottom: 16px;">🔍</div>
+            <p class="heading-3" style="margin-bottom: 10px;">Eligibility Engine</p>
+            <p class="caption">Automated rule-based system that evaluates student records against regulatory and institute-defined criteria before marking a student eligible for tests.</p>
+          </div>
+          <div class="module-card">
+            <div style="font-size: 28px; margin-bottom: 16px;">📊</div>
+            <p class="heading-3" style="margin-bottom: 10px;">Compliance Reporting</p>
+            <p class="caption">One-click generation of audit-ready reports covering flight hours, instructor approvals, eligibility decisions, and regulatory submission packages.</p>
+          </div>
+          <div class="module-card">
+            <div style="font-size: 28px; margin-bottom: 16px;">☁️</div>
+            <p class="heading-3" style="margin-bottom: 10px;">Multi-Tenant Cloud Platform</p>
+            <p class="caption">Secure, isolated environments for each institute within a shared cloud infrastructure. Centralized administration with institute-specific data boundaries.</p>
+          </div>
+          <div class="module-card">
+            <div style="font-size: 28px; margin-bottom: 16px;">🔮</div>
+            <p class="heading-3" style="margin-bottom: 10px;">Future LMS + Analytics Layer</p>
+            <p class="caption">Architected to integrate theoretical training, ground school, and predictive performance analytics as the platform evolves — without a system replacement.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── BENEFITS (dark section) ── -->
+    <section id="benefits" class="section-dark">
+      <div class="container">
+        <img src="/images/aviation/sectionImages/benefits.jpg" alt="Why choose this aviation training solution" class="section-img" loading="lazy">
+        <div style="text-align: center; margin-bottom: 56px;">
+          <p class="overline" style="color: #47A5FA; margin-bottom: 16px;">Business Value</p>
+          <h2 class="display-2" style="color: white; max-width: 700px; margin: 0 auto 16px;">Why Choose This Solution</h2>
+          <p class="body-text" style="color: rgba(255,255,255,0.6); max-width: 620px; margin: 0 auto;">
+            The platform delivers measurable operational and compliance outcomes for training management teams, institute administrators, and regulatory stakeholders.
+          </p>
+        </div>
+        <div class="grid-3">
+          <div class="benefit-card" style="background: #272A2E;">
+            <div style="font-size: 32px; margin-bottom: 16px;">⏱️</div>
+            <p class="heading-3" style="color: white; margin-bottom: 10px;">Reduced Manual Workload</p>
+            <p class="caption" style="color: rgba(255,255,255,0.6);">Automated data entry validation, eligibility checks, and report generation eliminate hours of manual administrative work per student per training cycle.</p>
+          </div>
+          <div class="benefit-card" style="background: #272A2E;">
+            <div style="font-size: 32px; margin-bottom: 16px;">⚡</div>
+            <p class="heading-3" style="color: white; margin-bottom: 10px;">Faster Approvals</p>
+            <p class="caption" style="color: rgba(255,255,255,0.6);">Structured instructor queues and mobile-accessible sign-off flows reduce approval turnaround from days to hours, keeping training schedules on track.</p>
+          </div>
+          <div class="benefit-card" style="background: #272A2E;">
+            <div style="font-size: 32px; margin-bottom: 16px;">📁</div>
+            <p class="heading-3" style="color: white; margin-bottom: 10px;">Audit-Ready Operations</p>
+            <p class="caption" style="color: rgba(255,255,255,0.6);">Every action is time-stamped and immutable. Regulatory audits can be prepared in minutes, not days.</p>
+          </div>
+          <div class="benefit-card" style="background: #272A2E;">
+            <div style="font-size: 32px; margin-bottom: 16px;">🎯</div>
+            <p class="heading-3" style="color: white; margin-bottom: 10px;">Real-Time Readiness Visibility</p>
+            <p class="caption" style="color: rgba(255,255,255,0.6);">Training coordinators have a live view of each student's readiness status — enabling proactive intervention before delays affect time-to-license timelines.</p>
+          </div>
+          <div class="benefit-card" style="background: #272A2E;">
+            <div style="font-size: 32px; margin-bottom: 16px;">🏛️</div>
+            <p class="heading-3" style="color: white; margin-bottom: 10px;">Operational Accountability</p>
+            <p class="caption" style="color: rgba(255,255,255,0.6);">Role-based access, structured workflows, and complete audit trails establish clear institutional accountability across instructors, coordinators, and management.</p>
+          </div>
+          <div class="benefit-card" style="background: #272A2E;">
+            <div style="font-size: 32px; margin-bottom: 16px;">🌐</div>
+            <p class="heading-3" style="color: white; margin-bottom: 10px;">Scalable Multi-Branch Support</p>
+            <p class="caption" style="color: rgba(255,255,255,0.6);">Designed for organisations operating multiple training locations. Consolidated reporting across branches with institute-specific operational boundaries.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── FUTURE (light section) ── -->
+    <section id="future" class="section-light">
+      <div class="container">
+        <img src="/images/aviation/sectionImages/future.jpg" alt="Future-ready aviation training platform" class="section-img" loading="lazy">
+        <div style="text-align: center; margin-bottom: 56px;">
+          <p class="overline" style="margin-bottom: 16px;">Strategic Roadmap</p>
+          <h2 class="display-2" style="max-width: 760px; margin: 0 auto 16px;">Built for Analytics + AI Expansion</h2>
+          <p class="body-text" style="max-width: 620px; margin: 0 auto;">
+            The current platform establishes the structured data foundation required for advanced analytics and AI-assisted operations. A strategic roadmap the architecture supports from day one.
+          </p>
+        </div>
+        <div class="grid-2" style="gap: 40px; align-items: start;">
+          <div style="display: flex; flex-direction: column; gap: 16px;">
+            <p class="heading-3" style="margin-bottom: 8px;">Expansion Capabilities</p>
+            <div class="expan-step">
+              <div class="expan-num">1</div>
+              <div>
+                <p class="label-bold" style="margin-bottom: 4px;">Analytics Dashboard</p>
+                <p class="caption">Cohort-level performance metrics, instructor effectiveness reports, and training throughput analysis across branches and time periods.</p>
+              </div>
+            </div>
+            <div class="expan-step">
+              <div class="expan-num">2</div>
+              <div>
+                <p class="label-bold" style="margin-bottom: 4px;">Student Readiness Prediction</p>
+                <p class="caption">Machine-learning models predict which students are at risk of falling behind eligibility requirements — before delays occur.</p>
+              </div>
+            </div>
+            <div class="expan-step">
+              <div class="expan-num">3</div>
+              <div>
+                <p class="label-bold" style="margin-bottom: 4px;">Instructor Intelligence</p>
+                <p class="caption">Structured insights on instructor workload, approval patterns, and student outcome correlation — supporting resource planning.</p>
+              </div>
+            </div>
+            <div class="expan-step">
+              <div class="expan-num">4</div>
+              <div>
+                <p class="label-bold" style="margin-bottom: 4px;">LMS Integration</p>
+                <p class="caption">Ground school, theory modules, and regulated examination preparation delivered within the same platform.</p>
+              </div>
+            </div>
+            <div class="expan-step">
+              <div class="expan-num">5</div>
+              <div>
+                <p class="label-bold" style="margin-bottom: 4px;">AI Copilots</p>
+                <p class="caption">Context-aware assistants for instructors and trainees that surface relevant guidance and flag anomalies without replacing human judgment.</p>
+              </div>
+            </div>
+          </div>
+          <div>
+            <p class="heading-3" style="margin-bottom: 24px;">Platform Evolution Roadmap</p>
+            <div style="display: flex; flex-direction: column; gap: 16px;">
+              <div class="phase-item">
+                <p class="label-bold" style="color: var(--meta-blue); margin-bottom: 6px;">Phase 1 — Now</p>
+                <p class="caption">Digital logbooks, approval workflows, compliance reporting, multi-tenant deployment</p>
+              </div>
+              <div style="text-align:center; color: var(--meta-blue); font-size: 1.5rem;">↓</div>
+              <div class="phase-item">
+                <p class="label-bold" style="color: var(--meta-blue); margin-bottom: 6px;">Phase 2 — Analytics</p>
+                <p class="caption">Cohort dashboards, trend analysis, instructor workload reporting, branch comparison</p>
+              </div>
+              <div style="text-align:center; color: var(--meta-blue); font-size: 1.5rem;">↓</div>
+              <div class="phase-item">
+                <p class="label-bold" style="color: var(--meta-blue); margin-bottom: 6px;">Phase 3 — AI + LMS</p>
+                <p class="caption">Predictive readiness engine, ground school integration, AI-assisted operations</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── DEPLOYMENT (dark section) ── -->
+    <section id="deployment" class="section-dark">
+      <div class="container">
+        <img src="/images/aviation/sectionImages/deployment.jpg" alt="Secure multi-tenant cloud SaaS deployment" class="section-img" loading="lazy">
+        <div style="text-align: center; margin-bottom: 56px;">
+          <p class="overline" style="color: #47A5FA; margin-bottom: 16px;">Infrastructure</p>
+          <h2 class="display-2" style="color: white; max-width: 700px; margin: 0 auto 16px;">Secure Multi-Tenant Cloud SaaS</h2>
+          <p class="body-text" style="color: rgba(255,255,255,0.6); max-width: 620px; margin: 0 auto;">
+            Deployed as a managed cloud SaaS, removing the infrastructure burden from your organisation while providing the security, reliability, and scalability that enterprise aviation operations require.
+          </p>
+        </div>
+        <div class="grid-2" style="gap: 20px;">
+          <div style="display: flex; flex-direction: column; gap: 16px;">
+            <div class="deploy-item">
+              <div class="deploy-icon">🔒</div>
+              <div>
+                <p class="label-bold" style="color: white; margin-bottom: 4px;">Secure Tenant Isolation</p>
+                <p class="caption" style="color: rgba(255,255,255,0.6);">Each institute operates within a logically isolated tenant environment. Data from one organisation is never accessible to another — enforced at the infrastructure level.</p>
+              </div>
+            </div>
+            <div class="deploy-item">
+              <div class="deploy-icon">🏗️</div>
+              <div>
+                <p class="label-bold" style="color: white; margin-bottom: 4px;">Centralized Deployment</p>
+                <p class="caption" style="color: rgba(255,255,255,0.6);">A single platform instance serves all tenants. Updates, security patches, and new features are deployed centrally — no per-institute maintenance required.</p>
+              </div>
+            </div>
+            <div class="deploy-item">
+              <div class="deploy-icon">⚙️</div>
+              <div>
+                <p class="label-bold" style="color: white; margin-bottom: 4px;">Institute-Specific Configuration</p>
+                <p class="caption" style="color: rgba(255,255,255,0.6);">Regulatory frameworks, eligibility criteria, approval chains, and reporting formats are configurable per institute — accommodating different authority requirements.</p>
+              </div>
+            </div>
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 16px;">
+            <div class="deploy-item">
+              <div class="deploy-icon">📡</div>
+              <div>
+                <p class="label-bold" style="color: white; margin-bottom: 4px;">Scalable Cloud Architecture</p>
+                <p class="caption" style="color: rgba(255,255,255,0.6);">The platform scales with your training operations. Whether managing 50 students or 5,000 across multiple locations, infrastructure capacity adjusts without service disruption.</p>
+              </div>
+            </div>
+            <div class="deploy-item">
+              <div class="deploy-icon">📋</div>
+              <div>
+                <p class="label-bold" style="color: white; margin-bottom: 4px;">Audit-Ready Infrastructure</p>
+                <p class="caption" style="color: rgba(255,255,255,0.6);">Infrastructure-level logging, access controls, and change management practices that support regulatory inspections and institutional governance requirements.</p>
+              </div>
+            </div>
+            <div class="deploy-item">
+              <div class="deploy-icon">🌐</div>
+              <div>
+                <p class="label-bold" style="color: white; margin-bottom: 4px;">Multi-Branch Access</p>
+                <p class="caption" style="color: rgba(255,255,255,0.6);">Branch administrators, instructors, and students access the platform through role-based permissions. Consolidated HQ reporting with branch-level operational independence.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ── CTA BAND ── -->
+  <section id="contact-cta" class="cta-band" style="position: relative; z-index: 10;">
+    <div class="container" style="text-align: center;">
+      <p class="overline" style="color: #47A5FA; margin-bottom: 16px;">Get Started</p>
+      <h2 class="display-2" style="color: white; max-width: 700px; margin: 0 auto 20px;">Let's Evaluate Your Current Training Workflow</h2>
+      <p class="body-text" style="color: rgba(255,255,255,0.65); max-width: 580px; margin: 0 auto 40px;">
+        Schedule a consultation to identify operational bottlenecks, assess compliance gaps, and design a structured aviation training system that meets regulatory requirements.
+      </p>
+      <a href="mailto:solutions@countrysnews.com?subject=Aviation Training Management - Consultation Request" class="btn-primary" style="font-size: 15px; padding: 14px 36px;">
+        Schedule Consultation
+      </a>
+      <p class="caption" style="color: rgba(255,255,255,0.4); margin-top: 16px;">No commitment required. Enterprise consultation for flight schools, academies, and pilot training institutes.</p>
+    </div>
+  </section>
+
+  <!-- ── FOOTER ── -->
+  <footer style="background: #0A0D10; padding: 32px 0; position: relative; z-index: 10;">
+    <div class="container" style="text-align: center;">
+      <p class="caption" style="color: rgba(255,255,255,0.5);">&copy; 2026 Countrysnews Solutions. All Rights Reserved.</p>
+      <p class="caption" style="color: rgba(255,255,255,0.3); margin-top: 6px;">Aviation Training Management Solution — Enterprise platform for flight schools, aviation academies, and pilot training institutes.</p>
+    </div>
+  </footer>
+
+  <script>
+    // ── Mobile Navigation ──
+    const mobileMenuButton = document.getElementById('mobile-menu-button');
+    const mobileMenu       = document.getElementById('mobile-menu');
+    const iconOpen         = document.getElementById('mobile-menu-icon-open');
+    const iconClose        = document.getElementById('mobile-menu-icon-close');
+    if (mobileMenuButton) {
+      mobileMenuButton.addEventListener('click', () => {
+        const hidden = mobileMenu.classList.toggle('hidden');
+        iconOpen  && iconOpen.classList.toggle('hidden', !hidden);
+        iconClose && iconClose.classList.toggle('hidden', hidden);
+      });
+      document.addEventListener('click', e => {
+        if (!mobileMenuButton.contains(e.target) && mobileMenu && !mobileMenu.contains(e.target)) {
+          mobileMenu.classList.add('hidden');
+          iconOpen  && iconOpen.classList.remove('hidden');
+          iconClose && iconClose.classList.add('hidden');
+        }
+      });
+    }
+
+    // ── Parallax ──
+    // bg-layer, mid-layer, front-layer animate at different speeds.
+    // The hero-caption fades out as the user scrolls away.
+    (function initParallax() {
+      const bg      = document.querySelector('.bg-layer');
+      const mid     = document.querySelector('.mid-layer');
+      const front   = document.querySelector('.front-layer');
+      const caption = document.getElementById('hero-caption');
+      if (!bg || !mid || !front) return;
+
+      let ticking = false;
+
+      window.addEventListener('scroll', () => {
+        if (ticking) return;
+        ticking = true;
+        requestAnimationFrame(() => {
+          const y  = window.pageYOffset;
+          const vh = window.innerHeight;
+
+          // Only animate while hero is in view
+          if (y <= vh) {
+            const p = y / vh; // progress 0→1
+            bg.style.transform    = `translate3d(0, ${y * 0.10}px, 0) scale(${1.15 + p * 0.07})`;
+            mid.style.transform   = `translate3d(0, ${y * 0.28}px, 0)`;
+            front.style.transform = `translate3d(0, ${y * 0.52}px, 0)`;
+            // Caption fades as content slides up over it
+            if (caption) caption.style.opacity = Math.max(0, 1 - (y / (vh * 0.45)));
+          }
+
+          ticking = false;
+        });
+      }, { passive: true });
+    })();
+  </script>
+
+</body>
+</html>
