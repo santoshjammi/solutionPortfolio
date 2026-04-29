@@ -198,6 +198,7 @@
       z-index: 0;
       overflow: hidden;
       background: #000;
+      border-bottom: 1px solid rgba(255,255,255,0.2);
     }
 
     .parallax-layer {
@@ -207,15 +208,26 @@
       background-position: center center;
       will-change: transform;
     }
-    .bg-layer   { background-image: url('/images/aviation/heroParallax/background.jpg'); z-index: 1; transform: scale(1.15); }
-    .mid-layer  { background-image: url('/images/aviation/heroParallax/midground.jpg');  z-index: 2; mix-blend-mode: screen; opacity: 0.8; }
-    .front-layer{ background-image: url('/images/aviation/heroParallax/foreground.jpg'); z-index: 3; mix-blend-mode: screen; opacity: 0.6; }
+    .bg-layer   { background-image: url('/images/aviation/heroParallax/background.jpg'); z-index: 1; transform: scale(1.15); filter: contrast(1.08) saturate(1.12); }
+    .mid-layer  { background-image: url('/images/aviation/heroParallax/midground.jpg');  z-index: 2; mix-blend-mode: screen; opacity: 0.92; }
+    .front-layer{ background-image: url('/images/aviation/heroParallax/foreground.jpg'); z-index: 3; mix-blend-mode: screen; opacity: 0.72; }
+
+    #hero-scene::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at 70% 22%, rgba(255,255,255,0.22), transparent 40%),
+        linear-gradient(110deg, rgba(0,0,0,0.58) 15%, rgba(0,0,0,0.16) 60%, rgba(0,0,0,0.62) 100%);
+      z-index: 4;
+      pointer-events: none;
+    }
 
     #hero-scene::after {
       content: '';
       position: absolute;
       bottom: 0; left: 0; right: 0;
-      height: 35%;
+      height: 42%;
       background: linear-gradient(to bottom, transparent, #000);
       z-index: 5;
       pointer-events: none;
@@ -238,7 +250,7 @@
     #hero-caption {
       position: fixed;
       bottom: 0; left: 0; right: 0;
-      z-index: 2;
+      z-index: 6;
       pointer-events: none;
       padding-bottom: 56px;
       text-align: center;
@@ -246,7 +258,10 @@
     #hero-caption .inner {
       max-width: 900px;
       margin: 0 auto;
-      padding: 0 24px;
+      padding: 28px 24px;
+      background: linear-gradient(180deg, rgba(0,0,0,0.12) 0%, rgba(0,0,0,0.55) 100%);
+      border: 1px solid rgba(255,255,255,0.16);
+      backdrop-filter: blur(3px);
     }
     #hero-caption.hide { opacity: 0; }
 
@@ -416,9 +431,9 @@
   <!-- Hero caption scrolls away with the page naturally -->
   <div id="hero-caption">
     <div class="inner">
-      <p class="overline" style="color: #85C8F5; margin-bottom: 16px;">Enterprise Aviation Solutions</p>
-      <h1 class="display-1" style="margin-bottom: 24px;">Aviation Training<br>Management Solution</h1>
-      <p style="font-size: 18px; color: rgba(255,255,255,0.75); max-width: 600px; margin: 0 auto 36px; line-height: 1.6;">
+      <p class="overline" style="color: #9CD9FF; margin-bottom: 16px;">Enterprise Aviation Solutions</p>
+      <h1 class="display-1" style="margin-bottom: 24px; text-shadow: 0 8px 26px rgba(0,0,0,0.55);">Aviation Training<br>Management Solution</h1>
+      <p style="font-size: 18px; color: rgba(255,255,255,0.9); max-width: 600px; margin: 0 auto 36px; line-height: 1.6; text-shadow: 0 2px 10px rgba(0,0,0,0.45);">
         Digitize flight training operations, instructor approvals, student readiness tracking, and compliance workflows.
       </p>
       <div style="display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; pointer-events: all;">
